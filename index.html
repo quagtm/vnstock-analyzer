@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VNStock Analyzer - Phân Tích Chứng Khoán Việt Nam</title>
+    <meta name="description" content="Hệ thống tổng hợp thống kê và phân tích chứng khoán Việt Nam (VNINDEX, VN30, VN100) tự động.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Boxicons for icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Marked.js for Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class='bx bx-trending-up logo-icon'></i>
+                <h2>VNStock<span class="highlight">AI</span></h2>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item active" data-target="VNINDEX">
+                    <i class='bx bx-bar-chart-alt-2'></i>
+                    <span>VNINDEX</span>
+                </li>
+                <li class="nav-item" data-target="VN30">
+                    <i class='bx bx-briefcase'></i>
+                    <span>VN30</span>
+                </li>
+                <li class="nav-item" data-target="VN100">
+                    <i class='bx bx-line-chart'></i>
+                    <span>VN100</span>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <p>Updated: <span id="update-date">...</span></p>
+                <p class="credit">Powered by DeepSeek & Vnstock</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="page-title">
+                    <h1 id="page-title">VNINDEX Dashboard</h1>
+                    <p class="subtitle">Phân tích đa chiều bằng Trí tuệ Nhân tạo</p>
+                </div>
+                <div class="market-status">
+                    <div class="status-indicator"></div>
+                    <span>Thị trường đóng cửa</span>
+                </div>
+            </header>
+
+            <div class="dashboard" id="dashboard-content">
+                <!-- Data will be populated here by JS -->
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Đang tải dữ liệu phân tích...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Template for Dashboard Content -->
+    <template id="dashboard-template">
+        <div class="stats-grid">
+            <div class="stat-card glass">
+                <div class="stat-icon"><i class='bx bx-dollar-circle'></i></div>
+                <div class="stat-details">
+                    <h3>Giá đóng cửa</h3>
+                    <p class="stat-value" id="val-close">0.00</p>
+                </div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-icon"><i class='bx bx-bar-chart'></i></div>
+                <div class="stat-details">
+                    <h3>Khối lượng</h3>
+                    <p class="stat-value" id="val-volume">0</p>
+                </div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-icon"><i class='bx bx-target-lock'></i></div>
+                <div class="stat-details">
+                    <h3>Pivot (Hỗ trợ/Kháng cự)</h3>
+                    <p class="stat-value" id="val-pivot">0.00</p>
+                </div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-icon"><i class='bx bx-pulse'></i></div>
+                <div class="stat-details">
+                    <h3>Xu hướng (MA20)</h3>
+                    <p class="stat-value" id="val-ma20">0.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-section glass mt-6">
+            <div class="section-header">
+                <i class='bx bx-brain'></i>
+                <h2>AI Analysis Report</h2>
+            </div>
+            <div id="markdown-content" class="markdown-body">
+                <!-- Markdown content injected here -->
+            </div>
+        </div>
+    </template>
+
+    <script src="app.js"></script>
+</body>
+</html>
