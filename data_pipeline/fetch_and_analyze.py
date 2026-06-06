@@ -8,17 +8,17 @@ import pandas as pd
 import ta
 import requests
 from vnstock import Vnstock
-from google import genai
+from openai import OpenAI
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Ensure we have API key
-api_key = os.environ.get("GEMINI_API_KEY")
+api_key = os.environ.get("OPENROUTER_API_KEY")
 if not api_key:
-    print("Error: GEMINI_API_KEY environment variable not set.")
+    print("Error: OPENROUTER_API_KEY environment variable not set.")
     sys.exit(1)
 
-client = genai.Client(api_key=api_key)
+client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
 
 def calculate_technical_indicators(df):
     if df.empty:
@@ -64,15 +64,20 @@ def calculate_technical_indicators(df):
         
     return df.iloc[-1]
 
-def ask_gemini(prompt):
+def ask_openrouter(prompt):
     try:
-        response = client.models.generate_content(
-            model='gemini-2.0-flash',
-            contents="Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng.\n\n" + prompt
+        response = client.chat.completions.create(
+            model="meta-llama/llama-3.3-70b-instruct:free",
+            messages=[
+                {"role": "system", "content": "Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=2000
         )
-        return response.text
+        return response.choices[0].message.content
     except Exception as e:
-        return f"Lỗi khi gọi Gemini API: {str(e)}"
+        return f"Lỗi khi gọi OpenRouter API: {str(e)}"
 
 def process_symbol(symbol):
     print(f"Processing {symbol}...")
@@ -123,7 +128,7 @@ Phân tích chi tiết hành động giá khối lượng và xu hướng thị 
 Kết hợp các chỉ báo kỹ thuật trên, đưa ra 2 kịch bản (Tích cực và Tiêu cực) và gán xác suất (%), kèm luận điểm nguyên nhân - kết quả rõ ràng tại sao lại có xác suất đó.
 """
         
-        analysis = ask_gemini(prompt)
+        analysis = ask_openrouter(prompt)
         
         return {
             "symbol": symbol,
