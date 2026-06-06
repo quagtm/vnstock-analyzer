@@ -8,7 +8,7 @@
       "ma20": 1880.1209999999999,
       "pivot": 1838.6599999999999
     },
-    "analysis_markdown": "Lỗi khi gọi DeepSeek API: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}"
+    "analysis_markdown": "Lỗi khi gọi Gemini API: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-pro-latest is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}"
   },
   "VN30": {
     "symbol": "VN30",
@@ -19,7 +19,7 @@
       "ma20": 2018.661,
       "pivot": 1984.5666666666666
     },
-    "analysis_markdown": "Lỗi khi gọi DeepSeek API: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}"
+    "analysis_markdown": "Lỗi khi gọi Gemini API: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-pro-latest is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}"
   },
   "VN100": {
     "symbol": "VN100",
@@ -30,6 +30,6 @@
       "ma20": 1947.0639999999999,
       "pivot": 1904.24
     },
-    "analysis_markdown": "Lỗi khi gọi DeepSeek API: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}"
+    "analysis_markdown": "Lỗi khi gọi Gemini API: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-pro-latest is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}"
   }
 }
