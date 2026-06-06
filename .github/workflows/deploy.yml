@@ -1,6 +1,10 @@
 name: Data Pipeline and Deploy
 
 on:
+  push:
+    branches:
+      - main
+      - master
   schedule:
     # Chạy lúc 9:00 UTC (16:00 VN) từ Thứ 2 đến Thứ 6
     - cron: '0 9 * * 1-5'
