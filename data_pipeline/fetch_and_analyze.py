@@ -8,7 +8,7 @@ import pandas as pd
 import ta
 import requests
 from vnstock import Vnstock
-import google.generativeai as genai
+from google import genai
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -18,8 +18,7 @@ if not api_key:
     print("Error: GEMINI_API_KEY environment variable not set.")
     sys.exit(1)
 
-genai.configure(api_key=api_key)
-model = genai.GenerativeModel('gemini-1.5-pro-latest')
+client = genai.Client(api_key=api_key)
 
 def calculate_technical_indicators(df):
     if df.empty:
@@ -67,8 +66,9 @@ def calculate_technical_indicators(df):
 
 def ask_gemini(prompt):
     try:
-        response = model.generate_content(
-            "Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng.\n\n" + prompt
+        response = client.models.generate_content(
+            model='gemini-1.5-pro-latest',
+            contents="Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng.\n\n" + prompt
         )
         return response.text
     except Exception as e:
