@@ -2,5 +2,5 @@ vnstock
 pandas
 ta
 requests
-openai
+google-generativeai
 vnstock3

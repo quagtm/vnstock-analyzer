@@ -33,7 +33,7 @@ jobs:
           
       - name: Run Data Pipeline
         env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           cd data_pipeline
           python fetch_and_analyze.py

@@ -8,17 +8,18 @@ import pandas as pd
 import ta
 import requests
 from vnstock import Vnstock
-from openai import OpenAI
+import google.generativeai as genai
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Ensure we have API key
-api_key = os.environ.get("DEEPSEEK_API_KEY")
+api_key = os.environ.get("GEMINI_API_KEY")
 if not api_key:
-    print("Error: DEEPSEEK_API_KEY environment variable not set.")
+    print("Error: GEMINI_API_KEY environment variable not set.")
     sys.exit(1)
 
-client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
+genai.configure(api_key=api_key)
+model = genai.GenerativeModel('gemini-1.5-pro-latest')
 
 def calculate_technical_indicators(df):
     if df.empty:
@@ -64,20 +65,14 @@ def calculate_technical_indicators(df):
         
     return df.iloc[-1]
 
-def ask_deepseek(prompt):
+def ask_gemini(prompt):
     try:
-        response = client.chat.completions.create(
-            model="deepseek-chat",
-            messages=[
-                {"role": "system", "content": "Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            max_tokens=2000
+        response = model.generate_content(
+            "Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng.\n\n" + prompt
         )
-        return response.choices[0].message.content
+        return response.text
     except Exception as e:
-        return f"Lỗi khi gọi DeepSeek API: {str(e)}"
+        return f"Lỗi khi gọi Gemini API: {str(e)}"
 
 def process_symbol(symbol):
     print(f"Processing {symbol}...")
@@ -128,7 +123,7 @@ Phân tích chi tiết hành động giá khối lượng và xu hướng thị 
 Kết hợp các chỉ báo kỹ thuật trên, đưa ra 2 kịch bản (Tích cực và Tiêu cực) và gán xác suất (%), kèm luận điểm nguyên nhân - kết quả rõ ràng tại sao lại có xác suất đó.
 """
         
-        analysis = ask_deepseek(prompt)
+        analysis = ask_gemini(prompt)
         
         return {
             "symbol": symbol,
