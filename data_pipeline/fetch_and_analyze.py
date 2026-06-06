@@ -65,19 +65,33 @@ def calculate_technical_indicators(df):
     return df.iloc[-1]
 
 def ask_openrouter(prompt):
-    try:
-        response = client.chat.completions.create(
-            model="meta-llama/llama-3.3-70b-instruct:free",
-            messages=[
-                {"role": "system", "content": "Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            max_tokens=2000
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        return f"Lỗi khi gọi OpenRouter API: {str(e)}"
+    models = [
+        "meta-llama/llama-3.3-70b-instruct:free",
+        "google/gemma-2-9b-it:free",
+        "meta-llama/llama-3.1-8b-instruct:free",
+        "mistralai/mistral-7b-instruct:free"
+    ]
+    
+    last_error = ""
+    for model_name in models:
+        try:
+            print(f"  -> Trying model: {model_name}")
+            response = client.chat.completions.create(
+                model=model_name,
+                messages=[
+                    {"role": "system", "content": "Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=2000
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            print(f"  -> Failed with {model_name}: {str(e)}")
+            last_error = str(e)
+            continue
+            
+    return f"Lỗi khi gọi OpenRouter API (Tất cả mô hình đều bận): {last_error}"
 
 def process_symbol(symbol):
     print(f"Processing {symbol}...")
