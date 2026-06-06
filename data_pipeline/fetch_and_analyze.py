@@ -15,8 +15,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 # Ensure we have API key
 api_key = os.environ.get("DEEPSEEK_API_KEY")
 if not api_key:
-    # Fallback to hardcoded if we are testing locally
-    api_key = "sk-e96ed0fd68bc4c91b0a6730ac216453b"
+    print("Error: DEEPSEEK_API_KEY environment variable not set.")
+    sys.exit(1)
 
 client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
 

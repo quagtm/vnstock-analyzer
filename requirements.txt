@@ -1,0 +1,6 @@
+vnstock
+pandas
+ta
+requests
+openai
+vnstock3
