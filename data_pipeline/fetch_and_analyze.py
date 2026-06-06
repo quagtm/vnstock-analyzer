@@ -67,7 +67,7 @@ def calculate_technical_indicators(df):
 def ask_gemini(prompt):
     try:
         response = client.models.generate_content(
-            model='gemini-1.5-flash',
+            model='gemini-2.0-flash',
             contents="Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng.\n\n" + prompt
         )
         return response.text
