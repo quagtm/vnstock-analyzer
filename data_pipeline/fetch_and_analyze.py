@@ -13,12 +13,12 @@ from openai import OpenAI
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Ensure we have API key
-api_key = os.environ.get("OPENROUTER_API_KEY")
+api_key = os.environ.get("GROQ_API_KEY")
 if not api_key:
-    print("Error: OPENROUTER_API_KEY environment variable not set.")
+    print("Error: GROQ_API_KEY environment variable not set.")
     sys.exit(1)
 
-client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
+client = OpenAI(base_url="https://api.groq.com/openai/v1", api_key=api_key)
 
 def calculate_technical_indicators(df):
     if df.empty:
@@ -66,35 +66,20 @@ def calculate_technical_indicators(df):
 
 import time
 
-def ask_openrouter(prompt):
-    models = [
-        "google/gemma-2-9b-it:free",
-        "meta-llama/llama-3.1-8b-instruct:free",
-        "microsoft/phi-3-mini-128k-instruct:free",
-        "qwen/qwen-2-7b-instruct:free"
-    ]
-    
-    last_error = ""
-    for model_name in models:
-        try:
-            print(f"  -> Trying model: {model_name}")
-            response = client.chat.completions.create(
-                model=model_name,
-                messages=[
-                    {"role": "system", "content": "Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.7,
-                max_tokens=2000
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            print(f"  -> Failed with {model_name}: {str(e)}")
-            last_error = str(e)
-            time.sleep(3) # Tránh bị dính lỗi giới hạn nhịp độ (Rate Limit) của OpenRouter
-            continue
-            
-    return f"Lỗi khi gọi OpenRouter API (Tất cả mô hình đều bận): {last_error}"
+def ask_groq(prompt):
+    try:
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": "Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=2000
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"Lỗi khi gọi Groq API: {str(e)}"
 
 def process_symbol(symbol):
     print(f"Processing {symbol}...")
@@ -145,7 +130,7 @@ Phân tích chi tiết hành động giá khối lượng và xu hướng thị 
 Kết hợp các chỉ báo kỹ thuật trên, đưa ra 2 kịch bản (Tích cực và Tiêu cực) và gán xác suất (%), kèm luận điểm nguyên nhân - kết quả rõ ràng tại sao lại có xác suất đó.
 """
         
-        analysis = ask_openrouter(prompt)
+        analysis = ask_groq(prompt)
         
         return {
             "symbol": symbol,
