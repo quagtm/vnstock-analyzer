@@ -3,6 +3,7 @@ import sys
 import io
 import json
 import traceback
+import time
 from datetime import datetime, timedelta
 import pandas as pd
 import ta
@@ -28,28 +29,33 @@ def calculate_technical_indicators(df):
     if 'time' in df.columns:
         df['time'] = pd.to_datetime(df['time'])
         df = df.sort_values(by='time')
+        
+    close = df['close']
+    high = df['high']
+    low = df['low']
+    volume = df['volume']
     
     # MAs
-    df['ma5'] = ta.trend.sma_indicator(df['close'], window=5)
-    df['ma10'] = ta.trend.sma_indicator(df['close'], window=10)
-    df['ma20'] = ta.trend.sma_indicator(df['close'], window=20)
-    df['ma50'] = ta.trend.sma_indicator(df['close'], window=50)
-    df['ma100'] = ta.trend.sma_indicator(df['close'], window=100)
-    df['ma200'] = ta.trend.sma_indicator(df['close'], window=200)
+    df['ma5'] = ta.trend.sma_indicator(close, window=5)
+    df['ma10'] = ta.trend.sma_indicator(close, window=10)
+    df['ma20'] = ta.trend.sma_indicator(close, window=20)
+    df['ma50'] = ta.trend.sma_indicator(close, window=50)
+    df['ma100'] = ta.trend.sma_indicator(close, window=100)
+    df['ma200'] = ta.trend.sma_indicator(close, window=200)
     
     # Bollinger Bands
-    df['bb_upper'] = ta.volatility.bollinger_hband(df['close'], window=20, window_dev=2)
-    df['bb_lower'] = ta.volatility.bollinger_lband(df['close'], window=20, window_dev=2)
+    df['bb_upper'] = ta.volatility.bollinger_hband(close, window=20, window_dev=2)
+    df['bb_lower'] = ta.volatility.bollinger_lband(close, window=20, window_dev=2)
     df['bb_middle'] = df['ma20']
     
     # Pivot
-    df['pivot'] = (df['high'] + df['low'] + df['close']) / 3
-    df['r1'] = (2 * df['pivot']) - df['low']
-    df['s1'] = (2 * df['pivot']) - df['high']
-    df['r2'] = df['pivot'] + (df['high'] - df['low'])
-    df['s2'] = df['pivot'] - (df['high'] - df['low'])
+    df['pivot'] = (high + low + close) / 3
+    df['r1'] = (2 * df['pivot']) - low
+    df['s1'] = (2 * df['pivot']) - high
+    df['r2'] = df['pivot'] + (high - low)
+    df['s2'] = df['pivot'] - (high - low)
     
-    # Fibo (simple max high min low of last 252 days)
+    # Fibo
     last_year = df.tail(252)
     if not last_year.empty:
         max_high = last_year['high'].max()
@@ -62,20 +68,30 @@ def calculate_technical_indicators(df):
     else:
         df['fibo_236'] = df['fibo_382'] = df['fibo_500'] = df['fibo_618'] = None
         
+    # NEW: Volume Indicators
+    df['cmf'] = ta.volume.ChaikinMoneyFlowIndicator(high=high, low=low, close=close, volume=volume, window=20).chaikin_money_flow()
+    df['vwap'] = ta.volume.VolumeWeightedAveragePrice(high=high, low=low, close=close, volume=volume, window=14).volume_weighted_average_price()
+    df['kvo'] = ta.volume.KlingerOscillator(high=high, low=low, close=close, volume=volume).klinger_oscillator()
+    
+    # NEW: Trend & Volatility Indicators
+    df['adx'] = ta.trend.ADXIndicator(high=high, low=low, close=close, window=14).adx()
+    df['atr'] = ta.volatility.AverageTrueRange(high=high, low=low, close=close, window=14).average_true_range()
+    keltner = ta.volatility.KeltnerChannel(high=high, low=low, close=close, window=20, window_atr=10)
+    df['keltner_h'] = keltner.keltner_channel_hband()
+    df['keltner_l'] = keltner.keltner_channel_lband()
+        
     return df.iloc[-1]
 
-import time
-
-def ask_groq(prompt):
+def ask_groq(prompt, system_prompt="Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả rõ ràng."):
     try:
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[
-                {"role": "system", "content": "Bạn là chuyên gia phân tích chứng khoán Việt Nam xuất sắc. Hãy phân tích dựa trên số liệu được cung cấp với luận điểm nhân quả (nguyên nhân - kết quả) rõ ràng."},
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7,
-            max_tokens=2000
+            max_tokens=1500
         )
         return response.choices[0].message.content
     except Exception as e:
@@ -84,7 +100,6 @@ def ask_groq(prompt):
 def process_symbol(symbol):
     print(f"Processing {symbol}...")
     try:
-        # Lấy dữ liệu 2 năm để tính MA200
         start_date = (datetime.now() - timedelta(days=730)).strftime("%Y-%m-%d")
         end_date = datetime.now().strftime("%Y-%m-%d")
         
@@ -96,42 +111,70 @@ def process_symbol(symbol):
             return None
             
         latest = calculate_technical_indicators(df)
-        
-        # Lấy thông tin thời gian (cột time hoặc index tùy vào output của vnstock)
         time_val = latest['time'] if 'time' in latest else "N/A"
         
         def safe_float(val):
             return float(val) if pd.notna(val) else 0.0
-        
-        # Tạo prompt
-        prompt = f"""
-Hãy phân tích chỉ số {symbol} cho ngày giao dịch gần nhất ({time_val}).
+            
+        # 1. Prompt General
+        prompt_general = f"""
+Hãy phân tích TỔNG QUAN chỉ số {symbol} cho ngày giao dịch gần nhất ({time_val}).
 Dữ liệu hiện tại:
-- Đóng cửa: {safe_float(latest['close']):.2f}
-- Mở cửa: {safe_float(latest['open']):.2f}, Cao nhất: {safe_float(latest['high']):.2f}, Thấp nhất: {safe_float(latest['low']):.2f}
+- Đóng cửa: {safe_float(latest['close']):.2f} (Mở: {safe_float(latest['open']):.2f}, Cao: {safe_float(latest['high']):.2f}, Thấp: {safe_float(latest['low']):.2f})
 - Khối lượng: {safe_float(latest.get('volume', 0)):.0f}
 
-Chỉ báo kỹ thuật:
-- MA5: {safe_float(latest['ma5']):.2f}, MA10: {safe_float(latest['ma10']):.2f}, MA20: {safe_float(latest['ma20']):.2f}
-- MA50: {safe_float(latest['ma50']):.2f}, MA100: {safe_float(latest['ma100']):.2f}, MA200: {safe_float(latest['ma200']):.2f}
+Chỉ báo hỗ trợ:
+- MA20: {safe_float(latest['ma20']):.2f}, MA50: {safe_float(latest['ma50']):.2f}, MA200: {safe_float(latest['ma200']):.2f}
 - Bollinger Bands: Upper {safe_float(latest['bb_upper']):.2f}, Middle {safe_float(latest['bb_middle']):.2f}, Lower {safe_float(latest['bb_lower']):.2f}
-- Pivot: {safe_float(latest['pivot']):.2f}, Kháng cự (R1, R2): {safe_float(latest['r1']):.2f}, {safe_float(latest['r2']):.2f}, Hỗ trợ (S1, S2): {safe_float(latest['s1']):.2f}, {safe_float(latest['s2']):.2f}
-- Fibonacci Retracement 1 năm: 0.236 ({safe_float(latest['fibo_236']):.2f}), 0.382 ({safe_float(latest['fibo_382']):.2f}), 0.5 ({safe_float(latest['fibo_500']):.2f}), 0.618 ({safe_float(latest['fibo_618']):.2f})
+- Pivot: {safe_float(latest['pivot']):.2f}, Fibo 0.5: {safe_float(latest['fibo_500']):.2f}
 
-Yêu cầu trả về định dạng Markdown, chia làm 3 phần như sau:
+Yêu cầu trả về định dạng Markdown, chia làm 2 phần:
 ### 1. Diễn biến và Đóng góp
-Mô tả thay đổi, tăng giảm (Dựa trên giá đóng/mở và khối lượng). Phân tích các ngưỡng Kháng cự hỗ trợ hiện tại theo BB, Pivot và Fibo.
-(Ghi chú quan trọng: Hãy tự suy luận logic từ dữ liệu vĩ mô và tính chất vốn hóa của {symbol} để chỉ ra Nhóm ngành dẫn dắt, nhóm ngành đi lùi, Top 3 cổ phiếu ảnh hưởng tích cực, top 3 cổ phiếu ảnh hưởng tiêu cực trong nhịp thị trường này).
-
-### 2. Phân tích Hành động giá, Khối lượng và Xu hướng
-Phân tích chi tiết hành động giá khối lượng và xu hướng thị trường theo 3 khung thời gian: ngắn hạn (MA5, 10, 20), trung hạn (MA50), dài hạn (MA100, 200). Đưa ra luận điểm rõ ràng (Nguyên nhân - Kết quả).
-
-### 3. Kịch bản Xác suất Thị trường
-Kết hợp các chỉ báo kỹ thuật trên, đưa ra 2 kịch bản (Tích cực và Tiêu cực) và gán xác suất (%), kèm luận điểm nguyên nhân - kết quả rõ ràng tại sao lại có xác suất đó.
+Mô tả thay đổi, tăng giảm. Chỉ ra Nhóm ngành dẫn dắt, nhóm ngành đi lùi, Top 3 cổ phiếu ảnh hưởng tích cực/tiêu cực (suy luận logic từ vĩ mô).
+### 2. Kịch bản Xác suất
+Đưa ra 2 kịch bản (Tích cực và Tiêu cực) và gán xác suất (%), kèm luận điểm.
 """
+        general_markdown = ask_groq(prompt_general, "Bạn là chuyên gia Vĩ mô & Tổng quan thị trường chứng khoán Việt Nam.")
+        time.sleep(2) # rate limit safe
         
-        analysis = ask_groq(prompt)
+        # 2. Prompt Volume
+        prompt_volume = f"""
+Hãy phân tích DÒNG TIỀN VÀ KHỐI LƯỢNG của {symbol} ngày ({time_val}).
+Giá đóng cửa: {safe_float(latest['close']):.2f}, Khối lượng: {safe_float(latest.get('volume', 0)):.0f}.
+
+Chỉ báo Khối lượng:
+- Chaikin Money Flow (CMF): {safe_float(latest['cmf']):.4f} (Dòng tiền ra/vào)
+- VWAP: {safe_float(latest['vwap']):.2f} (Giá trung bình theo khối lượng)
+- Klinger Volume Oscillator (KVO): {safe_float(latest['kvo']):.4f}
+
+Yêu cầu trả về định dạng Markdown:
+### 1. Thống kê Khối lượng
+Phân tích chi tiết ý nghĩa của 3 chỉ số CMF, VWAP, KVO ở thời điểm hiện tại.
+### 2. Nhận định Trạng thái Dòng tiền
+Tổng hợp lại, dòng tiền đang mua gom (tích lũy) hay phân phối? Phe mua hay phe bán đang kiểm soát?
+"""
+        volume_markdown = ask_groq(prompt_volume, "Bạn là chuyên gia Phân tích Khối lượng & Dòng tiền (VSA) chứng khoán.")
+        time.sleep(2)
         
+        # 3. Prompt Trend
+        prompt_trend = f"""
+Hãy phân tích XU HƯỚNG VÀ BIẾN ĐỘNG của {symbol} ngày ({time_val}).
+Giá đóng cửa: {safe_float(latest['close']):.2f}.
+
+Chỉ báo Xu hướng & Biến động:
+- ADX: {safe_float(latest['adx']):.2f} (Sức mạnh xu hướng, >25 là mạnh)
+- ATR: {safe_float(latest['atr']):.2f} (Mức độ biến động)
+- Keltner Channels: Upper {safe_float(latest['keltner_h']):.2f}, Lower {safe_float(latest['keltner_l']):.2f}
+
+Yêu cầu trả về định dạng Markdown:
+### 1. Thống kê Xu hướng
+Phân tích mức độ biến động (ATR), sức mạnh xu hướng (ADX) và vị trí giá so với kênh Keltner.
+### 2. Nhận định Rủi ro & Hành động
+Đánh giá xu hướng hiện tại là Tăng/Giảm/Đi ngang? Rủi ro hiện tại cao hay thấp? Khuyến nghị hành động giá tiếp theo.
+"""
+        trend_markdown = ask_groq(prompt_trend, "Bạn là chuyên gia Phân tích Kỹ thuật & Quản trị rủi ro chứng khoán.")
+        time.sleep(2)
+
         return {
             "symbol": symbol,
             "date": str(time_val),
@@ -140,8 +183,12 @@ Kết hợp các chỉ báo kỹ thuật trên, đưa ra 2 kịch bản (Tích c
             "technical": {
                 "ma20": safe_float(latest['ma20']),
                 "pivot": safe_float(latest['pivot']),
+                "cmf": safe_float(latest['cmf']),
+                "adx": safe_float(latest['adx'])
             },
-            "analysis_markdown": analysis
+            "general_markdown": general_markdown,
+            "volume_markdown": volume_markdown,
+            "trend_markdown": trend_markdown
         }
         
     except Exception as e:
@@ -161,10 +208,8 @@ def main():
         print("No data collected!")
         sys.exit(1)
             
-    # Lưu vào public folder của frontend
     frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend", "public")
     os.makedirs(frontend_dir, exist_ok=True)
-    
     out_file = os.path.join(frontend_dir, "data.json")
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
