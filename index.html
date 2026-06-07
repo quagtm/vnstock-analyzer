@@ -24,17 +24,41 @@
                 <h2>VNStock<span class="highlight">AI</span></h2>
             </div>
             <ul class="nav-links">
-                <li class="nav-item active" data-target="VNINDEX">
-                    <i class='bx bx-bar-chart-alt-2'></i>
-                    <span>VNINDEX</span>
+                <li class="nav-item-container active" data-symbol="VNINDEX">
+                    <div class="nav-item">
+                        <i class='bx bx-bar-chart-alt-2'></i>
+                        <span>VNINDEX</span>
+                        <i class='bx bx-chevron-down toggle-icon'></i>
+                    </div>
+                    <ul class="sub-nav">
+                        <li class="sub-nav-item active" data-tab="general"><i class='bx bx-layer'></i> Tổng quan</li>
+                        <li class="sub-nav-item" data-tab="volume"><i class='bx bx-bar-chart-alt'></i> Khối lượng</li>
+                        <li class="sub-nav-item" data-tab="trend"><i class='bx bx-line-chart-down'></i> Xu hướng</li>
+                    </ul>
                 </li>
-                <li class="nav-item" data-target="VN30">
-                    <i class='bx bx-briefcase'></i>
-                    <span>VN30</span>
+                <li class="nav-item-container" data-symbol="VN30">
+                    <div class="nav-item">
+                        <i class='bx bx-briefcase'></i>
+                        <span>VN30</span>
+                        <i class='bx bx-chevron-down toggle-icon'></i>
+                    </div>
+                    <ul class="sub-nav">
+                        <li class="sub-nav-item active" data-tab="general"><i class='bx bx-layer'></i> Tổng quan</li>
+                        <li class="sub-nav-item" data-tab="volume"><i class='bx bx-bar-chart-alt'></i> Khối lượng</li>
+                        <li class="sub-nav-item" data-tab="trend"><i class='bx bx-line-chart-down'></i> Xu hướng</li>
+                    </ul>
                 </li>
-                <li class="nav-item" data-target="VN100">
-                    <i class='bx bx-line-chart'></i>
-                    <span>VN100</span>
+                <li class="nav-item-container" data-symbol="VN100">
+                    <div class="nav-item">
+                        <i class='bx bx-line-chart'></i>
+                        <span>VN100</span>
+                        <i class='bx bx-chevron-down toggle-icon'></i>
+                    </div>
+                    <ul class="sub-nav">
+                        <li class="sub-nav-item active" data-tab="general"><i class='bx bx-layer'></i> Tổng quan</li>
+                        <li class="sub-nav-item" data-tab="volume"><i class='bx bx-bar-chart-alt'></i> Khối lượng</li>
+                        <li class="sub-nav-item" data-tab="trend"><i class='bx bx-line-chart-down'></i> Xu hướng</li>
+                    </ul>
                 </li>
             </ul>
             <div class="sidebar-footer">
@@ -96,14 +120,6 @@
                     <h3>Xu hướng (MA20)</h3>
                     <p class="stat-value" id="val-ma20">0.00</p>
                 </div>
-            </div>
-        </div>
-
-        <div class="mini-tabs-container mt-6">
-            <div class="mini-tabs">
-                <button class="mini-tab-btn active" data-tab="general"><i class='bx bx-layer'></i> Tổng quan</button>
-                <button class="mini-tab-btn" data-tab="volume"><i class='bx bx-bar-chart-alt'></i> Dòng tiền (Khối lượng)</button>
-                <button class="mini-tab-btn" data-tab="trend"><i class='bx bx-line-chart-down'></i> Xu hướng (Biến động)</button>
             </div>
         </div>
 

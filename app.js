@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const dashboardContent = document.getElementById('dashboard-content');
     const pageTitle = document.getElementById('page-title');
     const updateDate = document.getElementById('update-date');
-    const navItems = document.querySelectorAll('.nav-item');
 
     // Setup Markdown Options
     if (window.marked) {
@@ -72,66 +71,77 @@ document.addEventListener('DOMContentLoaded', () => {
         dashboardContent.innerHTML = '';
         dashboardContent.appendChild(clone);
 
-        // Attach Mini-tab Events
-        const miniTabBtns = document.querySelectorAll('.mini-tab-btn');
         const markdownContainer = document.getElementById('markdown-content');
         const analysisTitle = document.getElementById('analysis-title');
 
-        function renderTabContent(tabName) {
-            currentMiniTab = tabName;
-            
-            // Update UI buttons
-            miniTabBtns.forEach(btn => {
-                if (btn.getAttribute('data-tab') === tabName) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-
-            // Set Title & Content
-            let markdownText = "";
-            if (tabName === 'general') {
-                analysisTitle.textContent = "Phân tích Tổng quan";
-                // Fallback cho data cũ (analysis_markdown)
-                markdownText = data.general_markdown || data.analysis_markdown || "Không có dữ liệu.";
-            } else if (tabName === 'volume') {
-                analysisTitle.textContent = "Phân tích Dòng tiền (Khối lượng)";
-                markdownText = data.volume_markdown || "Không có dữ liệu.";
-            } else if (tabName === 'trend') {
-                analysisTitle.textContent = "Phân tích Xu hướng (Biến động)";
-                markdownText = data.trend_markdown || "Không có dữ liệu.";
-            }
-
-            if (window.marked) {
-                markdownContainer.innerHTML = marked.parse(markdownText);
-            } else {
-                markdownContainer.innerHTML = "<p>" + markdownText + "</p>";
-            }
+        // Set Title & Content
+        let markdownText = "";
+        if (currentMiniTab === 'general') {
+            analysisTitle.textContent = "Phân tích Tổng quan";
+            markdownText = data.general_markdown || data.analysis_markdown || "Không có dữ liệu.";
+        } else if (currentMiniTab === 'volume') {
+            analysisTitle.textContent = "Phân tích Dòng tiền (Khối lượng)";
+            markdownText = data.volume_markdown || "Không có dữ liệu.";
+        } else if (currentMiniTab === 'trend') {
+            analysisTitle.textContent = "Phân tích Xu hướng (Biến động)";
+            markdownText = data.trend_markdown || "Không có dữ liệu.";
         }
 
-        miniTabBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const tab = e.target.closest('button').getAttribute('data-tab');
-                renderTabContent(tab);
-            });
-        });
-
-        // Init default tab
-        renderTabContent(currentMiniTab);
+        if (window.marked) {
+            markdownContainer.innerHTML = marked.parse(markdownText);
+        } else {
+            markdownContainer.innerHTML = "<p>" + markdownText + "</p>";
+        }
     }
 
     // Navigation setup
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            navItems.forEach(n => n.classList.remove('active'));
-            item.classList.add('active');
-            currentSymbol = item.getAttribute('data-target');
-            // Reset to general tab when switching symbol
-            currentMiniTab = 'general';
-            if (appData) {
-                renderDashboard();
+    const containers = document.querySelectorAll('.nav-item-container');
+    const subNavItems = document.querySelectorAll('.sub-nav-item');
+
+    // Handle clicking main symbols (accordion)
+    containers.forEach(container => {
+        const navItem = container.querySelector('.nav-item');
+        navItem.addEventListener('click', () => {
+            // If already active, don't collapse (or you can toggle it)
+            if(!container.classList.contains('active')) {
+                // Collapse all others
+                containers.forEach(c => c.classList.remove('active'));
+                container.classList.add('active');
+                
+                // Select first sub-tab automatically
+                currentSymbol = container.getAttribute('data-symbol');
+                currentMiniTab = 'general';
+                
+                // Update active state of sub-tabs
+                const allSubTabs = document.querySelectorAll('.sub-nav-item');
+                allSubTabs.forEach(t => t.classList.remove('active'));
+                const firstTab = container.querySelector('.sub-nav-item[data-tab="general"]');
+                if(firstTab) firstTab.classList.add('active');
+
+                if (appData) renderDashboard();
             }
+        });
+    });
+
+    // Handle clicking sub-tabs
+    subNavItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation(); // prevent triggering parent
+            
+            // Update active state of sub-tabs globally
+            document.querySelectorAll('.sub-nav-item').forEach(t => t.classList.remove('active'));
+            item.classList.add('active');
+
+            const parentContainer = item.closest('.nav-item-container');
+            
+            currentSymbol = parentContainer.getAttribute('data-symbol');
+            currentMiniTab = item.getAttribute('data-tab');
+
+            // Ensure parent is active
+            document.querySelectorAll('.nav-item-container').forEach(c => c.classList.remove('active'));
+            parentContainer.classList.add('active');
+
+            if (appData) renderDashboard();
         });
     });
 
