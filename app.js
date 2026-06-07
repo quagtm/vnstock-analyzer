@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     let appData = null;
     let currentSymbol = 'VNINDEX';
+    let currentMiniTab = 'general';
 
     const dashboardContent = document.getElementById('dashboard-content');
     const pageTitle = document.getElementById('page-title');
@@ -18,17 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch Data
     async function fetchData() {
         try {
-            // Because we are on GH Pages or Local, we fetch from public/data.json
             const response = await fetch('public/data.json');
             if (!response.ok) {
-                // If public/data.json not found, try data.json in same dir (useful for GH pages)
                 const fallbackResponse = await fetch('data.json');
                 if (!fallbackResponse.ok) throw new Error("Data not found");
                 appData = await fallbackResponse.json();
             } else {
                 appData = await response.json();
             }
-            
             renderDashboard();
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -70,31 +68,67 @@ document.addEventListener('DOMContentLoaded', () => {
         clone.getElementById('val-pivot').textContent = data.technical.pivot ? formatNum(data.technical.pivot) : 'N/A';
         clone.getElementById('val-ma20').textContent = data.technical.ma20 ? formatNum(data.technical.ma20) : 'N/A';
 
-        // Render Markdown
-        const markdownContainer = clone.getElementById('markdown-content');
-        if (data.analysis_markdown && window.marked) {
-            markdownContainer.innerHTML = marked.parse(data.analysis_markdown);
-        } else {
-            markdownContainer.innerHTML = "<p>Không có bài phân tích nào được tạo.</p>";
-        }
-
-        // Add to DOM
+        // Add to DOM first so we can attach events
         dashboardContent.innerHTML = '';
         dashboardContent.appendChild(clone);
+
+        // Attach Mini-tab Events
+        const miniTabBtns = document.querySelectorAll('.mini-tab-btn');
+        const markdownContainer = document.getElementById('markdown-content');
+        const analysisTitle = document.getElementById('analysis-title');
+
+        function renderTabContent(tabName) {
+            currentMiniTab = tabName;
+            
+            // Update UI buttons
+            miniTabBtns.forEach(btn => {
+                if (btn.getAttribute('data-tab') === tabName) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Set Title & Content
+            let markdownText = "";
+            if (tabName === 'general') {
+                analysisTitle.textContent = "Phân tích Tổng quan";
+                // Fallback cho data cũ (analysis_markdown)
+                markdownText = data.general_markdown || data.analysis_markdown || "Không có dữ liệu.";
+            } else if (tabName === 'volume') {
+                analysisTitle.textContent = "Phân tích Dòng tiền (Khối lượng)";
+                markdownText = data.volume_markdown || "Không có dữ liệu.";
+            } else if (tabName === 'trend') {
+                analysisTitle.textContent = "Phân tích Xu hướng (Biến động)";
+                markdownText = data.trend_markdown || "Không có dữ liệu.";
+            }
+
+            if (window.marked) {
+                markdownContainer.innerHTML = marked.parse(markdownText);
+            } else {
+                markdownContainer.innerHTML = "<p>" + markdownText + "</p>";
+            }
+        }
+
+        miniTabBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const tab = e.target.closest('button').getAttribute('data-tab');
+                renderTabContent(tab);
+            });
+        });
+
+        // Init default tab
+        renderTabContent(currentMiniTab);
     }
 
     // Navigation setup
     navItems.forEach(item => {
         item.addEventListener('click', () => {
-            // Remove active class
             navItems.forEach(n => n.classList.remove('active'));
-            // Add active class
             item.classList.add('active');
-            
-            // Switch symbol
             currentSymbol = item.getAttribute('data-target');
-            
-            // Render
+            // Reset to general tab when switching symbol
+            currentMiniTab = 'general';
             if (appData) {
                 renderDashboard();
             }

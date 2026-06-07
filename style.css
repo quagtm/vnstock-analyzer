@@ -318,6 +318,48 @@ h1, h2, h3, h4 {
     font-weight: 600;
 }
 
+/* Mini Tabs */
+.mini-tabs-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.mini-tabs {
+    display: inline-flex;
+    background: var(--sidebar-bg);
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+}
+
+.mini-tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-main);
+}
+
+.mini-tab-btn:hover {
+    color: var(--text-primary);
+}
+
+.mini-tab-btn.active {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
+}
+
 /* Loading */
 .loading {
     display: flex;
