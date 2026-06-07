@@ -71,7 +71,7 @@ def calculate_technical_indicators(df):
     # NEW: Volume Indicators
     df['cmf'] = ta.volume.ChaikinMoneyFlowIndicator(high=high, low=low, close=close, volume=volume, window=20).chaikin_money_flow()
     df['vwap'] = ta.volume.VolumeWeightedAveragePrice(high=high, low=low, close=close, volume=volume, window=14).volume_weighted_average_price()
-    df['kvo'] = ta.volume.KlingerOscillator(high=high, low=low, close=close, volume=volume).klinger_oscillator()
+    df['mfi'] = ta.volume.MFIIndicator(high=high, low=low, close=close, volume=volume, window=14).money_flow_index()
     
     # NEW: Trend & Volatility Indicators
     df['adx'] = ta.trend.ADXIndicator(high=high, low=low, close=close, window=14).adx()
@@ -145,11 +145,11 @@ Giá đóng cửa: {safe_float(latest['close']):.2f}, Khối lượng: {safe_flo
 Chỉ báo Khối lượng:
 - Chaikin Money Flow (CMF): {safe_float(latest['cmf']):.4f} (Dòng tiền ra/vào)
 - VWAP: {safe_float(latest['vwap']):.2f} (Giá trung bình theo khối lượng)
-- Klinger Volume Oscillator (KVO): {safe_float(latest['kvo']):.4f}
+- Money Flow Index (MFI): {safe_float(latest['mfi']):.4f}
 
 Yêu cầu trả về định dạng Markdown:
 ### 1. Thống kê Khối lượng
-Phân tích chi tiết ý nghĩa của 3 chỉ số CMF, VWAP, KVO ở thời điểm hiện tại.
+Phân tích chi tiết ý nghĩa của 3 chỉ số CMF, VWAP, MFI ở thời điểm hiện tại.
 ### 2. Nhận định Trạng thái Dòng tiền
 Tổng hợp lại, dòng tiền đang mua gom (tích lũy) hay phân phối? Phe mua hay phe bán đang kiểm soát?
 """
