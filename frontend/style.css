@@ -99,12 +99,15 @@ h1, h2, h3, h4 {
     padding: 0 16px;
 }
 
+.nav-item-container {
+    margin-bottom: 8px;
+}
+
 .nav-item {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 14px 16px;
-    margin-bottom: 8px;
     border-radius: 12px;
     cursor: pointer;
     color: var(--text-secondary);
@@ -118,13 +121,13 @@ h1, h2, h3, h4 {
     color: var(--text-primary);
 }
 
-.nav-item.active {
+.nav-item-container.active .nav-item {
     background: rgba(59, 130, 246, 0.1);
     color: var(--accent-primary);
     border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-.nav-item.active::before {
+.nav-item-container.active .nav-item::before {
     content: '';
     position: absolute;
     left: 0;
@@ -142,6 +145,55 @@ h1, h2, h3, h4 {
 }
 
 .nav-item span {
+    font-weight: 500;
+    flex: 1;
+}
+
+.toggle-icon {
+    font-size: 16px !important;
+    transition: transform 0.3s;
+}
+
+.nav-item-container.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.sub-nav {
+    list-style: none;
+    padding-left: 44px;
+    margin-top: 4px;
+    display: none; /* hidden by default */
+}
+
+.nav-item-container.active .sub-nav {
+    display: block; /* show when active */
+}
+
+.sub-nav-item {
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sub-nav-item i {
+    font-size: 16px;
+}
+
+.sub-nav-item:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.sub-nav-item.active {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
     font-weight: 500;
 }
 
