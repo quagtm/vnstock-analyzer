@@ -64,12 +64,14 @@ def calculate_technical_indicators(df):
         
     return df.iloc[-1]
 
+import time
+
 def ask_openrouter(prompt):
     models = [
-        "meta-llama/llama-3.3-70b-instruct:free",
         "google/gemma-2-9b-it:free",
         "meta-llama/llama-3.1-8b-instruct:free",
-        "mistralai/mistral-7b-instruct:free"
+        "microsoft/phi-3-mini-128k-instruct:free",
+        "qwen/qwen-2-7b-instruct:free"
     ]
     
     last_error = ""
@@ -89,6 +91,7 @@ def ask_openrouter(prompt):
         except Exception as e:
             print(f"  -> Failed with {model_name}: {str(e)}")
             last_error = str(e)
+            time.sleep(3) # Tránh bị dính lỗi giới hạn nhịp độ (Rate Limit) của OpenRouter
             continue
             
     return f"Lỗi khi gọi OpenRouter API (Tất cả mô hình đều bận): {last_error}"
