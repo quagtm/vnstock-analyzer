@@ -8,7 +8,7 @@
       "ma20": 1880.1209999999999,
       "pivot": 1838.6599999999999
     },
-    "analysis_markdown": "Lỗi khi gọi OpenRouter API (Tất cả mô hình đều bận): Error code: 404 - {'error': {'message': 'No endpoints found for mistralai/mistral-7b-instruct:free.', 'code': 404}, 'user_id': 'user_3ElsOmdXlY5Wu09memQUALRWAzV'}"
+    "analysis_markdown": "Lỗi khi gọi OpenRouter API (Tất cả mô hình đều bận): Error code: 404 - {'error': {'message': 'No endpoints found for qwen/qwen-2-7b-instruct:free.', 'code': 404}, 'user_id': 'user_3ElsOmdXlY5Wu09memQUALRWAzV'}"
   },
   "VN30": {
     "symbol": "VN30",
@@ -19,7 +19,7 @@
       "ma20": 2018.661,
       "pivot": 1984.5666666666666
     },
-    "analysis_markdown": "Lỗi khi gọi OpenRouter API (Tất cả mô hình đều bận): Error code: 404 - {'error': {'message': 'No endpoints found for mistralai/mistral-7b-instruct:free.', 'code': 404}, 'user_id': 'user_3ElsOmdXlY5Wu09memQUALRWAzV'}"
+    "analysis_markdown": "Lỗi khi gọi OpenRouter API (Tất cả mô hình đều bận): Error code: 404 - {'error': {'message': 'No endpoints found for qwen/qwen-2-7b-instruct:free.', 'code': 404}, 'user_id': 'user_3ElsOmdXlY5Wu09memQUALRWAzV'}"
   },
   "VN100": {
     "symbol": "VN100",
@@ -30,6 +30,6 @@
       "ma20": 1947.0639999999999,
       "pivot": 1904.24
     },
-    "analysis_markdown": "Lỗi khi gọi OpenRouter API (Tất cả mô hình đều bận): Error code: 404 - {'error': {'message': 'No endpoints found for mistralai/mistral-7b-instruct:free.', 'code': 404}, 'user_id': 'user_3ElsOmdXlY5Wu09memQUALRWAzV'}"
+    "analysis_markdown": "Lỗi khi gọi OpenRouter API (Tất cả mô hình đều bận): Error code: 404 - {'error': {'message': 'No endpoints found for qwen/qwen-2-7b-instruct:free.', 'code': 404}, 'user_id': 'user_3ElsOmdXlY5Wu09memQUALRWAzV'}"
   }
 }
