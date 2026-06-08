@@ -256,10 +256,11 @@ def main():
         print("No data collected!")
         sys.exit(1)
         
-    os.makedirs("public", exist_ok=True)
-    with open("public/data.json", "w", encoding="utf-8") as f:
+    out_dir = "../frontend/public"
+    os.makedirs(out_dir, exist_ok=True)
+    with open(f"{out_dir}/data.json", "w", encoding="utf-8") as f:
         json.dump(all_data, f, ensure_ascii=False, indent=2)
-    print("Successfully generated public/data.json")
+    print(f"Successfully generated {out_dir}/data.json")
 
 if __name__ == "__main__":
     main()
