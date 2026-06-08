@@ -175,6 +175,17 @@ Phân tích mức độ biến động (ATR), sức mạnh xu hướng (ADX) và
         trend_markdown = ask_groq(prompt_trend, "Bạn là chuyên gia Phân tích Kỹ thuật & Quản trị rủi ro chứng khoán.")
         time.sleep(2)
 
+        # Prepare chart data
+        chart_df = df.tail(60).copy()
+        if 'time' in chart_df.columns:
+            chart_df['time'] = pd.to_datetime(chart_df['time']).dt.strftime('%Y-%m-%d')
+        
+        # Ensure correct types
+        for col in ['open', 'high', 'low', 'close']:
+            chart_df[col] = pd.to_numeric(chart_df[col], errors='coerce')
+        
+        chart_data = chart_df[['time', 'open', 'high', 'low', 'close']].dropna().to_dict(orient='records')
+
         return {
             "symbol": symbol,
             "date": str(time_val),
@@ -188,7 +199,8 @@ Phân tích mức độ biến động (ATR), sức mạnh xu hướng (ADX) và
             },
             "general_markdown": general_markdown,
             "volume_markdown": volume_markdown,
-            "trend_markdown": trend_markdown
+            "trend_markdown": trend_markdown,
+            "chart_data": chart_data
         }
         
     except Exception as e:

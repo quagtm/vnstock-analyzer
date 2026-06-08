@@ -71,6 +71,43 @@ document.addEventListener('DOMContentLoaded', () => {
         dashboardContent.innerHTML = '';
         dashboardContent.appendChild(clone);
 
+        // Render Chart
+        const chartContainer = document.getElementById('tv-chart');
+        if (data.chart_data && window.LightweightCharts) {
+            const chart = LightweightCharts.createChart(chartContainer, {
+                layout: {
+                    background: { color: 'transparent' },
+                    textColor: '#94a3b8',
+                },
+                grid: {
+                    vertLines: { color: 'rgba(255, 255, 255, 0.05)' },
+                    horzLines: { color: 'rgba(255, 255, 255, 0.05)' },
+                },
+                crosshair: {
+                    mode: LightweightCharts.CrosshairMode.Normal,
+                },
+                rightPriceScale: {
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                },
+                timeScale: {
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                },
+            });
+
+            const candlestickSeries = chart.addCandlestickSeries({
+                upColor: '#10b981',
+                downColor: '#ef4444',
+                borderVisible: false,
+                wickUpColor: '#10b981',
+                wickDownColor: '#ef4444',
+            });
+
+            candlestickSeries.setData(data.chart_data);
+            chart.timeScale().fitContent();
+        } else {
+            chartContainer.innerHTML = "<p style='padding: 20px; color: var(--text-secondary); text-align: center;'>Đang tải dữ liệu biểu đồ hoặc chưa có dữ liệu nến.</p>";
+        }
+
         const markdownContainer = document.getElementById('markdown-content');
         const analysisTitle = document.getElementById('analysis-title');
 
