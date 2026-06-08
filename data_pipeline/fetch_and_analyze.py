@@ -14,13 +14,13 @@ from openai import OpenAI
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Setup OpenRouter with fallback
-api_key = os.environ.get("OPENROUTER_API_KEY")
+api_key = os.environ.get("OPENROUTER_API_KEY") or os.environ.get("GROQ_API_KEY")
 if not api_key:
     print("WARNING: OPENROUTER_API_KEY not found. Analysis will fail.")
 
 client = OpenAI(
   base_url="https://openrouter.ai/api/v1",
-  api_key=api_key,
+  api_key=api_key or "dummy_key",
 )
 
 def ask_groq(prompt, system_prompt="Bạn là chuyên gia phân tích chứng khoán."):
