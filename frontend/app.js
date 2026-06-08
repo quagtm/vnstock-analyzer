@@ -63,6 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const formatNum = (num) => new Intl.NumberFormat('vi-VN').format(num);
         
         clone.getElementById('val-close').textContent = formatNum(data.close);
+        
+        const changeSpan = clone.getElementById('val-change');
+        if (changeSpan && data.change_pc !== undefined) {
+            const isPositive = data.change_pc >= 0;
+            const sign = isPositive ? '+' : '';
+            const color = isPositive ? 'var(--positive)' : 'var(--negative)';
+            changeSpan.style.color = color;
+            changeSpan.textContent = `(${sign}${data.change_pc.toFixed(2)}%)`;
+        }
+
         clone.getElementById('val-volume').textContent = formatNum(data.volume);
         clone.getElementById('val-pivot').textContent = data.technical.pivot ? formatNum(data.technical.pivot) : 'N/A';
         clone.getElementById('val-ma20').textContent = data.technical.ma20 ? formatNum(data.technical.ma20) : 'N/A';
@@ -70,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add to DOM first so we can attach events
         dashboardContent.innerHTML = '';
         dashboardContent.appendChild(clone);
-
 
         const markdownContainer = document.getElementById('markdown-content');
         const analysisTitle = document.getElementById('analysis-title');
@@ -94,11 +103,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (markdownContainer) {
+            let html = "";
             if (window.marked) {
-                markdownContainer.innerHTML = marked.parse(markdownText);
+                html = marked.parse(markdownText);
             } else {
-                markdownContainer.innerHTML = "<p>" + markdownText + "</p>";
+                html = "<p>" + markdownText + "</p>";
             }
+            
+            // Auto-highlight logic
+            html = html.replace(/\b(giảm)\s*([\d.,]+)?(\s*%|\s*điểm|\s*CP)?/gi, '<span style="color: var(--negative); font-weight: 600;">$&</span>');
+            html = html.replace(/\b(tăng)\s*([\d.,]+)?(\s*%|\s*điểm|\s*CP)?/gi, '<span style="color: var(--positive); font-weight: 600;">$&</span>');
+            html = html.replace(/\b(thấp hơn)\s*([\d.,]+)?(\s*%|\s*điểm|\s*CP)?/gi, '<span style="color: var(--negative); font-weight: 600;">$&</span>');
+            html = html.replace(/\b(cao hơn)\s*([\d.,]+)?(\s*%|\s*điểm|\s*CP)?/gi, '<span style="color: var(--positive); font-weight: 600;">$&</span>');
+            html = html.replace(/\b(Hỗ trợ|tích cực)\b/gi, '<span style="color: var(--positive); font-weight: 600;">$&</span>');
+            html = html.replace(/\b(Kháng cự|tiêu cực)\b/gi, '<span style="color: var(--negative); font-weight: 600;">$&</span>');
+
+            markdownContainer.innerHTML = html;
         }
     }
 

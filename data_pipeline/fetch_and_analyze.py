@@ -222,8 +222,10 @@ Phân tích mức độ biến động (ATR), sức mạnh xu hướng (ADX) và
         return {
             "symbol": symbol,
             "date": str(time_val),
-            "close": safe_float(latest['close']),
-            "volume": safe_float(latest.get('volume', 0)),
+            "close": close,
+            "change": close - safe_float(latest['prev_close']),
+            "change_pc": ((close - safe_float(latest['prev_close'])) / safe_float(latest['prev_close']) * 100) if safe_float(latest['prev_close']) > 0 else 0,
+            "volume": current_vol,
             "technical": {
                 "ma20": safe_float(latest.get('ma20', 0)),
                 "pivot": safe_float(latest.get('pivot', 0)),
