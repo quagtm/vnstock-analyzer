@@ -256,7 +256,7 @@ def main():
         print("No data collected!")
         sys.exit(1)
         
-    out_dir = "../frontend/public"
+    out_dir = "output"
     os.makedirs(out_dir, exist_ok=True)
     with open(f"{out_dir}/data.json", "w", encoding="utf-8") as f:
         json.dump(all_data, f, ensure_ascii=False, indent=2)

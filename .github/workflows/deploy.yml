@@ -33,11 +33,18 @@ jobs:
           
       - name: Run Data Pipeline
         env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
           cd data_pipeline
           python fetch_and_analyze.py
           
+      - name: Copy data.json to frontend/public
+        run: |
+          mkdir -p frontend/public
+          cp data_pipeline/output/data.json frontend/public/data.json
+          echo "Copied data.json successfully"
+          cat frontend/public/data.json | head -5
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
