@@ -115,21 +115,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Set Title & Content
         let markdownText = "";
+        let titleText = "";
         if (currentMiniTab === 'general') {
-            analysisTitle.textContent = "Phân tích Tổng quan";
+            titleText = "Phân tích Tổng quan";
             markdownText = data.general_markdown || data.analysis_markdown || "Không có dữ liệu.";
         } else if (currentMiniTab === 'volume') {
-            analysisTitle.textContent = "Phân tích Dòng tiền (Khối lượng)";
+            titleText = "Phân tích Dòng tiền (Khối lượng)";
             markdownText = data.volume_markdown || "Không có dữ liệu.";
         } else if (currentMiniTab === 'trend') {
-            analysisTitle.textContent = "Phân tích Xu hướng (Biến động)";
+            titleText = "Phân tích Xu hướng (Biến động)";
             markdownText = data.trend_markdown || "Không có dữ liệu.";
         }
 
-        if (window.marked) {
-            markdownContainer.innerHTML = marked.parse(markdownText);
-        } else {
-            markdownContainer.innerHTML = "<p>" + markdownText + "</p>";
+        if (analysisTitle) {
+            analysisTitle.textContent = titleText;
+        }
+
+        if (markdownContainer) {
+            if (window.marked) {
+                markdownContainer.innerHTML = marked.parse(markdownText);
+            } else {
+                markdownContainer.innerHTML = "<p>" + markdownText + "</p>";
+            }
         }
     }
 
