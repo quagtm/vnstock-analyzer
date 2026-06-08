@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Boxicons for icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Lightweight Charts -->
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <!-- Marked.js for Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -121,6 +123,14 @@
                     <p class="stat-value" id="val-ma20">0.00</p>
                 </div>
             </div>
+        </div>
+
+        <div class="chart-section glass mt-6">
+            <div class="section-header">
+                <i class='bx bx-line-chart'></i>
+                <h2>Biểu đồ Nến (60 phiên)</h2>
+            </div>
+            <div id="tv-chart" style="width: 100%; height: 400px;"></div>
         </div>
 
         <div class="analysis-section glass mt-6">

@@ -10,9 +10,431 @@
       "cmf": 0.1040150162493546,
       "adx": 27.16942514723993
     },
-    "general_markdown": "### 1. Diễn biến và Đóng góp\nChỉ số VNINDEX đã có một phiên giao dịch khá tích cực với việc đóng cửa tại mức 1838.90, tăng nhẹ so với mức mở cửa là 1833.07. Khối lượng giao dịch đạt 502964274, cho thấy sự tham gia của nhà đầu tư vẫn tương đối cao. \n\nTrong phiên giao dịch này, các nhóm ngành như tài chính, bất động sản và công nghệ thông tin có thể là những nhóm ngành dẫn dắt thị trường, khi mà các cổ phiếu trong những ngành này thường có xu hướng tăng mạnh khi thị trường chung tăng. \n\nNgược lại, các nhóm ngành như năng lượng và vật liệu có thể là những nhóm ngành đi lùi, do sự giảm giá của các mặt hàng nguyên liệu thô trên thế giới.\n\nTop 3 cổ phiếu ảnh hưởng tích cực có thể là những cổ phiếu như VNM, VIC và VCB, khi mà những cổ phiếu này thường có tính dẫn dắt thị trường và có khả năng tăng mạnh khi thị trường chung tăng. \n\nTop 3 cổ phiếu ảnh hưởng tiêu cực có thể là những cổ phiếu như PLX, GAS và HPG, khi mà những cổ phiếu này thường có tính biến động cao và có khả năng giảm mạnh khi thị trường chung giảm.\n\n### 2. Kịch bản Xác suất\n**Kịch bản Tích cực (60%):** Chỉ số VNINDEX có thể tiếp tục tăng trong ngắn hạn, với mục tiêu là thử thách lại vùng kháng cự mạnh tại mức 1900. Việc này có thể xảy ra khi mà các nhà đầu tư vẫn duy trì sự lạc quan về triển vọng kinh tế vĩ mô và tiếp tục đặt mua các cổ phiếu có cơ bản tốt. \n\n**Kịch bản Tiêu cực (40%):** Chỉ số VNINDEX có thể giảm trở lại khi mà các nhà đầu tư bắt đầu lo ngại về rủi ro kinh tế vĩ mô và giảm mua các cổ phiếu. Việc này có thể xảy ra khi mà các chỉ số kinh tế vĩ mô như lạm phát, lãi suất và tỷ giá hối đoái có sự thay đổi bất lợi cho thị trường chứng khoán.",
-    "volume_markdown": "### 1. Thống kê Khối lượng\n- **Chaikin Money Flow (CMF): 0.1040**: Chỉ số này cho biết dòng tiền vào hoặc ra khỏi thị trường. CMF dương cho thấy dòng tiền vào thị trường lớn hơn dòng tiền ra, điều này thường được coi là một tín hiệu tích cực, chỉ ra rằng các nhà đầu tư đang mua vào và có thể dẫn đến sự tăng trưởng của giá. Tuy nhiên, giá trị cụ thể của CMF cần được xem xét cùng với các chỉ số khác để có một cái nhìn toàn diện.\n- **VWAP (Giá trung bình theo khối lượng): 1870.95**: VWAP cho biết giá trung bìnhweighted theo khối lượng giao dịch. Điều này giúp chúng ta hiểu được giá mà tại đó khối lượng giao dịch lớn nhất diễn ra. Nếu giá VWAP cao hơn giá đóng cửa, nó có thể chỉ ra rằng phe bán đang kiểm soát trong phiên giao dịch.\n- **Money Flow Index (MFI): 23.7393**: MFI là một chỉ số đo lường dòng tiền vào và ra khỏi một cổ phiếu hoặc chỉ số. MFI thấp thường chỉ ra rằng có thể có sự phân phối (bán ra) đang diễn ra, trong khi MFI cao có thể chỉ ra sự tích lũy (mua vào). Tuy nhiên, MFI cũng có thể bị ảnh hưởng bởi các điều kiện thị trường khác nhau và cần được xem xét cùng với các chỉ số khác.\n\n### 2. Nhận định Trạng thái Dòng tiền\nDựa trên các chỉ số trên, có thể thấy rằng:\n- CMF dương cho thấy có sự mua vào và dòng tiền vào thị trường đang lớn hơn dòng tiền ra.\n- VWAP cao hơn giá đóng cửa có thể chỉ ra rằng phe bán có sự hiện diện mạnh trong phiên giao dịch, đặc biệt là ở mức giá cao.\n- MFI thấp cho thấy có thể có sự phân phối (bán ra) đang diễn ra.\n\nTổng hợp lại, mặc dù CMF cho thấy dòng tiền vào thị trường đang tích cực, nhưng VWAP và MFI lại gợi ý về sự hiện diện của phe bán và có thể là sự phân phối. Điều này có thể chỉ ra rằng phe bán đang kiểm soát hoặc ít nhất đang gây áp lực lên thị trường. Tuy nhiên, cần phải xem xét các chỉ số này trong bối cảnh thị trường rộng lớn hơn và kết hợp với các phân tích kỹ thuật và cơ bản khác để có một cái nhìn chính xác hơn về trạng thái dòng tiền và xu hướng thị trường.",
-    "trend_markdown": "### 1. Thống kê Xu hướng\nVNINDEX hiện tại có giá đóng cửa tại 1838.90. Phân tích dựa trên các chỉ báo kỹ thuật như sau:\n- **Mức độ biến động (ATR)**: 29.50, cho thấy mức độ biến động của thị trường hiện tại là tương đối cao. Điều này có thể dẫn đến những thay đổi lớn về giá trong thời gian ngắn.\n- **Sức mạnh xu hướng (ADX)**: 27.17, lớn hơn 25, cho thấy sức mạnh của xu hướng hiện tại là mạnh. Điều này ngụ ý rằng xu hướng hiện tại có khả năng sẽ tiếp tục trong tương lai gần.\n- **Vị trí giá so với kênh Keltner**: Giá đóng cửa 1838.90 nằm dưới đường trung bình (Upper 1909.29) nhưng trên đường dưới (Lower 1848.71) của kênh Keltner. Điều này cho thấy giá hiện tại đang ở trong vùng hỗ trợ của kênh, nhưng cũng không quá xa so với vùng kháng cự.\n\n### 2. Nhận định Rủi ro & Hành động\nDựa trên các phân tích trên:\n- **Xu hướng hiện tại**: Xu hướng hiện tại có thể được xem là đi ngang với xu hướng tăng nhẹ do giá vẫn nằm trên đường hỗ trợ của kênh Keltner và ADX cho thấy sức mạnh xu hướng mạnh.\n- **Rủi ro hiện tại**: Rủi ro hiện tại có thể được xem là thấp đến trung bình do giá đang được hỗ trợ bởi vùng giá thấp của kênh Keltner, nhưng biến động cao cho thấy vẫn có thể có những chuyển động giá lớn.\n- **Khuyến nghị hành động giá tiếp theo**: Nhà đầu tư có thể xem xét mua vào nếu giá tiếp tục duy trì trên vùng hỗ trợ của kênh Keltner (1848.71) và có thể bán ra nếu giá vượt qua vùng kháng cự (1909.29) với mục tiêu chốt lời. Tuy nhiên, cần theo dõi chặt chẽ biến động thị trường và điều chỉnh chiến lược đầu tư cho phù hợp."
+    "general_markdown": "### 1. Diễn biến và Đóng góp\nVNINDEX có phiên giao dịch ổn định với sự tăng nhẹ, đóng cửa tại mức 1838.90, tăng so với mức mở cửa 1833.07. Khối lượng giao dịch đạt 502964274, cho thấy sự tham gia của nhà đầu tư vẫn ở mức cao.\n\nNhìn vào các chỉ báo hỗ trợ, chúng ta thấy:\n- MA20 và MA50 đang ở trên mức đóng cửa hiện tại, cho thấy xu hướng trung hạn vẫn còn tích cực nhưng đang có dấu hiệu chững lại.\n- Bollinger Bands cho thấy vùng hỗ trợ gần nhất là Lower 1813.63 và kháng cự gần nhất là Upper 1946.61.\n- Pivot 1838.66 trùng với mức đóng cửa, cho thấy sự cân bằng trong ngắn hạn.\n\nVề nhóm ngành, do không có thông tin cụ thể về diễn biến từng ngành, nhưng dựa trên xu hướng chung của thị trường và các chỉ báo kỹ thuật, có thể suy luận rằng:\n- Nhóm ngành dẫn dắt có thể là những ngành có chỉ số tăng trưởng tốt trong thời gian gần đây, như công nghệ, bất động sản, hoặc các ngành có tính kháng viêm cao như dược phẩm, xăng dầu.\n- Nhóm ngành đi lùi có thể là những ngành chịu ảnh hưởng tiêu cực từ tình hình kinh tế vĩ mô, như ngành hàng tiêu dùng, hoặc những ngành có tính chu kỳ cao như xây dựng, vật liệu.\n\nTop 3 cổ phiếu ảnh hưởng tích cực và tiêu cực đến thị trường có thể bao gồm:\n- Tích cực: Các cổ phiếu như FPT (công nghệ), VHM (bất động sản), hoặc MSN (ngành hàng tiêu dùng nhưng có tính kháng viêm cao).\n- Tiêu cực: Các cổ phiếu như HPG (vật liệu), VCB (ngân hàng), hoặc MWG (bán lẻ), tùy thuộc vào tình hình kinh doanh cụ thể của từng công ty.\n\n### 2. Kịch bản Xác suất\nDựa trên diễn biến thị trường và các chỉ báo kỹ thuật, có thể đưa ra hai kịch bản chính:\n\n**Kịch bản Tích cực (60%):** Thị trường có thể tiếp tục tăng nhẹ trong ngắn hạn, với VNINDEX có thể chạm mức kháng cự 1946.61 (Upper Bollinger Bands) do sự hỗ trợ của MA20 và MA50. Các nhà đầu tư vẫn duy trì niềm tin vào sự phục hồi của kinh tế và các ngành dẫn dắt tiếp tục tăng trưởng.\n\n**Kịch bản Tiêu cực (40%):** Thị trường có thể điều chỉnh về vùng hỗ trợ 1813.63 (Lower Bollinger Bands) do áp lực bán từ những nhà đầu tư ngắn hạn và sự điều chỉnh kỹ thuật sau một giai đoạn tăng. Sự điều chỉnh này có thể là cơ hội cho các nhà đầu tư dài hạn tích lũy cổ phiếu.\n\nXác suất trên được đưa ra dựa trên quan sát về xu hướng thị trường, tính chu kỳ của các ngành và sự ảnh hưởng của các chỉ báo kỹ thuật. Tuy nhiên, thị trường luôn chứa đựng những bất ngờ, và việc phân tích cần được cập nhật liên tục để phản ánh những thay đổi trong tình hình kinh tế và tài chính.",
+    "volume_markdown": "### 1. Thống kê Khối lượng\n- **Chaikin Money Flow (CMF)**: Chỉ số CMF hiện tại là 0.1040, chỉ số này đo lường sự chênh lệch giữa dòng tiền vào và dòng tiền ra. Một giá trị CMF dương cho thấy dòng tiền vào lớn hơn dòng tiền ra, chỉ ra rằng các nhà đầu tư đang tích cực mua vào cổ phiếu. Tuy nhiên, giá trị này không quá cao, cho thấy sự tích lũy không quá mạnh.\n- **VWAP (Volume Weighted Average Price)**: Giá VWAP là 1870.95, cao hơn giá đóng cửa là 1838.90. Điều này cho thấy rằng giá mua trung bình theo khối lượng cao hơn giá bán, có thể là dấu hiệu cho thấy phe mua đang tích cực mua vào, đặc biệt là trong những giai đoạn giá tăng.\n- **Money Flow Index (MFI)**: Chỉ số MFI là 23.7393, nằm trong vùng oversold (dưới 20) nhưng rất gần với đường biên. Chỉ số MFI đo lường áp lực mua/bán trong một khoảng thời gian nhất định. Một giá trị MFI thấp cho thấy áp lực bán đang chiếm ưu thế, nhưng giá trị này cũng gần với vùng quá bán, có thể là tín hiệu cho một sự đảo chiều sắp tới.\n\n### 2. Nhận định Trạng thái Dòng tiền\nTổng hợp lại, mặc dù CMF dương cho thấy dòng tiền vào lớn hơn dòng tiền ra, nhưng giá trị CMF không quá cao. VWAP cao hơn giá đóng cửa cho thấy phe mua tích cực, nhưng MFI thấp cho thấy áp lực bán vẫn đang ảnh hưởng. Điều này cho thấy rằng **dòng tiền đang trong một trạng thái tích lũy nhẹ**, với phe mua đang cố gắng kiểm soát nhưng phe bán vẫn còn ảnh hưởng. Không có tín hiệu mạnh mẽ cho thấy một sự phân phối lớn, và có thể đây là giai đoạn tích lũy trước khi thị trường có thể quay trở lại tăng. Tuy nhiên, cần theo dõi chặt chẽ các chỉ số này và các yếu tố thị trường khác để có được bức tranh toàn diện hơn về xu hướng thị trường.",
+    "trend_markdown": "### 1. Thống kê Xu hướng\n- Giá đóng cửa của VNINDEX vào ngày 2026-06-05 là 1838.90.\n- ADX (Sức mạnh xu hướng) là 27.17, cho thấy sức mạnh xu hướng hiện tại là mạnh vì giá trị này lớn hơn 25.\n- ATR (Mức độ biến động) là 29.50, chỉ ra mức độ biến động của thị trường.\n- Keltner Channels: Giá đóng cửa 1838.90 nằm giữa Upper (1909.29) và Lower (1848.71), cụ thể là gần với đường Lower, cho thấy giá có khả năng đang bị ảnh hưởng bởi mức hỗ trợ của kênh Keltner.\n\n### 2. Nhận định Rủi ro & Hành động\n- Dựa trên thông tin về ADX và vị trí giá trong kênh Keltner, xu hướng hiện tại có thể được xem là đi ngang hoặc có xu hướng tăng nhẹ vì giá đang ở gần mức hỗ trợ của kênh Keltner và chưa vượt qua mức kháng cự.\n- Rủi ro hiện tại có thể được đánh giá là thấp đến trung bình do giá đang được hỗ trợ bởi đường Lower của kênh Keltner và ATR không quá cao, cho thấy biến động không quá cực đoan.\n- Khuyến nghị hành động giá tiếp theo: Có thể xem xét mua (Long) nếu giá tiếp tục được hỗ trợ tại mức Lower của Keltner Channels và có tín hiệu tăng từ các chỉ báo khác. Ngược lại, nếu giá phá vỡ mức hỗ trợ này, nên xem xét bán (Short) hoặc điều chỉnh danh mục đầu tư để giảm thiểu rủi ro. Tuy nhiên, quyết định cuối cùng nên dựa trên phân tích toàn diện hơn, bao gồm cả phân tích cơ bản và kỹ thuật.",
+    "chart_data": [
+      {
+        "time": "2026-03-11",
+        "open": 1675.87,
+        "high": 1729.67,
+        "low": 1675.17,
+        "close": 1728.34
+      },
+      {
+        "time": "2026-03-12",
+        "open": 1716.62,
+        "high": 1725.52,
+        "low": 1701.59,
+        "close": 1709.61
+      },
+      {
+        "time": "2026-03-13",
+        "open": 1697.72,
+        "high": 1716.75,
+        "low": 1688.67,
+        "close": 1696.24
+      },
+      {
+        "time": "2026-03-16",
+        "open": 1701.06,
+        "high": 1707.0,
+        "low": 1680.7,
+        "close": 1693.21
+      },
+      {
+        "time": "2026-03-17",
+        "open": 1709.38,
+        "high": 1732.31,
+        "low": 1708.83,
+        "close": 1710.29
+      },
+      {
+        "time": "2026-03-18",
+        "open": 1718.3,
+        "high": 1742.87,
+        "low": 1693.36,
+        "close": 1713.83
+      },
+      {
+        "time": "2026-03-19",
+        "open": 1700.77,
+        "high": 1709.47,
+        "low": 1677.09,
+        "close": 1699.13
+      },
+      {
+        "time": "2026-03-20",
+        "open": 1698.62,
+        "high": 1698.62,
+        "low": 1628.62,
+        "close": 1647.81
+      },
+      {
+        "time": "2026-03-23",
+        "open": 1630.11,
+        "high": 1636.27,
+        "low": 1586.44,
+        "close": 1591.17
+      },
+      {
+        "time": "2026-03-24",
+        "open": 1626.34,
+        "high": 1630.63,
+        "low": 1602.92,
+        "close": 1614.77
+      },
+      {
+        "time": "2026-03-25",
+        "open": 1634.15,
+        "high": 1658.77,
+        "low": 1629.73,
+        "close": 1658.19
+      },
+      {
+        "time": "2026-03-26",
+        "open": 1661.53,
+        "high": 1661.6,
+        "low": 1634.55,
+        "close": 1644.63
+      },
+      {
+        "time": "2026-03-27",
+        "open": 1643.89,
+        "high": 1673.31,
+        "low": 1640.31,
+        "close": 1672.8
+      },
+      {
+        "time": "2026-03-30",
+        "open": 1646.08,
+        "high": 1671.6,
+        "low": 1637.58,
+        "close": 1662.54
+      },
+      {
+        "time": "2026-03-31",
+        "open": 1669.57,
+        "high": 1677.83,
+        "low": 1663.05,
+        "close": 1674.49
+      },
+      {
+        "time": "2026-04-01",
+        "open": 1713.92,
+        "high": 1715.21,
+        "low": 1700.18,
+        "close": 1702.93
+      },
+      {
+        "time": "2026-04-02",
+        "open": 1706.15,
+        "high": 1706.15,
+        "low": 1684.47,
+        "close": 1694.82
+      },
+      {
+        "time": "2026-04-03",
+        "open": 1700.14,
+        "high": 1713.95,
+        "low": 1679.79,
+        "close": 1684.04
+      },
+      {
+        "time": "2026-04-06",
+        "open": 1682.09,
+        "high": 1693.03,
+        "low": 1669.31,
+        "close": 1674.99
+      },
+      {
+        "time": "2026-04-07",
+        "open": 1677.99,
+        "high": 1690.31,
+        "low": 1665.36,
+        "close": 1677.54
+      },
+      {
+        "time": "2026-04-08",
+        "open": 1706.59,
+        "high": 1756.55,
+        "low": 1706.59,
+        "close": 1756.55
+      },
+      {
+        "time": "2026-04-09",
+        "open": 1750.88,
+        "high": 1754.77,
+        "low": 1736.3,
+        "close": 1736.68
+      },
+      {
+        "time": "2026-04-10",
+        "open": 1750.86,
+        "high": 1762.84,
+        "low": 1747.08,
+        "close": 1750.0
+      },
+      {
+        "time": "2026-04-13",
+        "open": 1738.57,
+        "high": 1765.67,
+        "low": 1733.18,
+        "close": 1758.96
+      },
+      {
+        "time": "2026-04-14",
+        "open": 1775.41,
+        "high": 1784.43,
+        "low": 1765.52,
+        "close": 1775.65
+      },
+      {
+        "time": "2026-04-15",
+        "open": 1787.37,
+        "high": 1801.89,
+        "low": 1786.65,
+        "close": 1800.65
+      },
+      {
+        "time": "2026-04-16",
+        "open": 1806.2,
+        "high": 1824.03,
+        "low": 1799.18,
+        "close": 1819.83
+      },
+      {
+        "time": "2026-04-17",
+        "open": 1832.33,
+        "high": 1846.19,
+        "low": 1814.47,
+        "close": 1817.17
+      },
+      {
+        "time": "2026-04-20",
+        "open": 1819.03,
+        "high": 1838.74,
+        "low": 1802.42,
+        "close": 1837.11
+      },
+      {
+        "time": "2026-04-21",
+        "open": 1851.84,
+        "high": 1866.1,
+        "low": 1833.48,
+        "close": 1833.48
+      },
+      {
+        "time": "2026-04-22",
+        "open": 1834.53,
+        "high": 1861.34,
+        "low": 1819.21,
+        "close": 1857.3
+      },
+      {
+        "time": "2026-04-23",
+        "open": 1868.31,
+        "high": 1888.99,
+        "low": 1855.09,
+        "close": 1870.36
+      },
+      {
+        "time": "2026-04-24",
+        "open": 1873.23,
+        "high": 1881.93,
+        "low": 1843.63,
+        "close": 1853.29
+      },
+      {
+        "time": "2026-04-28",
+        "open": 1850.07,
+        "high": 1887.69,
+        "low": 1848.98,
+        "close": 1875.84
+      },
+      {
+        "time": "2026-04-29",
+        "open": 1878.96,
+        "high": 1881.18,
+        "low": 1840.58,
+        "close": 1854.1
+      },
+      {
+        "time": "2026-05-04",
+        "open": 1870.66,
+        "high": 1876.8,
+        "low": 1840.43,
+        "close": 1854.06
+      },
+      {
+        "time": "2026-05-05",
+        "open": 1853.08,
+        "high": 1875.97,
+        "low": 1849.32,
+        "close": 1874.85
+      },
+      {
+        "time": "2026-05-06",
+        "open": 1881.22,
+        "high": 1892.0,
+        "low": 1868.92,
+        "close": 1891.2
+      },
+      {
+        "time": "2026-05-07",
+        "open": 1897.44,
+        "high": 1924.95,
+        "low": 1896.45,
+        "close": 1909.01
+      },
+      {
+        "time": "2026-05-08",
+        "open": 1911.15,
+        "high": 1921.81,
+        "low": 1897.06,
+        "close": 1915.37
+      },
+      {
+        "time": "2026-05-11",
+        "open": 1918.93,
+        "high": 1927.06,
+        "low": 1892.1,
+        "close": 1895.5
+      },
+      {
+        "time": "2026-05-12",
+        "open": 1893.2,
+        "high": 1906.64,
+        "low": 1871.44,
+        "close": 1901.1
+      },
+      {
+        "time": "2026-05-13",
+        "open": 1908.77,
+        "high": 1908.77,
+        "low": 1865.12,
+        "close": 1898.37
+      },
+      {
+        "time": "2026-05-14",
+        "open": 1896.72,
+        "high": 1927.7,
+        "low": 1883.98,
+        "close": 1925.46
+      },
+      {
+        "time": "2026-05-15",
+        "open": 1928.61,
+        "high": 1930.58,
+        "low": 1909.69,
+        "close": 1921.6
+      },
+      {
+        "time": "2026-05-18",
+        "open": 1916.56,
+        "high": 1932.62,
+        "low": 1908.78,
+        "close": 1927.94
+      },
+      {
+        "time": "2026-05-19",
+        "open": 1933.01,
+        "high": 1933.11,
+        "low": 1902.87,
+        "close": 1912.93
+      },
+      {
+        "time": "2026-05-20",
+        "open": 1907.1,
+        "high": 1919.39,
+        "low": 1859.22,
+        "close": 1913.23
+      },
+      {
+        "time": "2026-05-21",
+        "open": 1920.44,
+        "high": 1923.21,
+        "low": 1886.62,
+        "close": 1896.89
+      },
+      {
+        "time": "2026-05-22",
+        "open": 1896.74,
+        "high": 1896.74,
+        "low": 1856.08,
+        "close": 1877.13
+      },
+      {
+        "time": "2026-05-25",
+        "open": 1876.37,
+        "high": 1891.26,
+        "low": 1876.37,
+        "close": 1886.03
+      },
+      {
+        "time": "2026-05-26",
+        "open": 1889.15,
+        "high": 1889.15,
+        "low": 1876.32,
+        "close": 1884.18
+      },
+      {
+        "time": "2026-05-27",
+        "open": 1889.87,
+        "high": 1889.87,
+        "low": 1861.85,
+        "close": 1874.43
+      },
+      {
+        "time": "2026-05-28",
+        "open": 1869.7,
+        "high": 1882.66,
+        "low": 1857.25,
+        "close": 1863.67
+      },
+      {
+        "time": "2026-05-29",
+        "open": 1864.42,
+        "high": 1873.17,
+        "low": 1854.34,
+        "close": 1863.49
+      },
+      {
+        "time": "2026-06-01",
+        "open": 1867.44,
+        "high": 1871.09,
+        "low": 1840.4,
+        "close": 1844.54
+      },
+      {
+        "time": "2026-06-02",
+        "open": 1845.32,
+        "high": 1858.76,
+        "low": 1822.32,
+        "close": 1826.47
+      },
+      {
+        "time": "2026-06-03",
+        "open": 1824.18,
+        "high": 1831.65,
+        "low": 1798.05,
+        "close": 1819.01
+      },
+      {
+        "time": "2026-06-04",
+        "open": 1822.08,
+        "high": 1831.55,
+        "low": 1812.65,
+        "close": 1831.55
+      },
+      {
+        "time": "2026-06-05",
+        "open": 1833.07,
+        "high": 1846.71,
+        "low": 1830.37,
+        "close": 1838.9
+      }
+    ]
   },
   "VN30": {
     "symbol": "VN30",
@@ -25,9 +447,431 @@
       "cmf": -0.04070257757035306,
       "adx": 25.622722196910356
     },
-    "general_markdown": "### 1. Diễn biến và Đóng góp\nChỉ số VN30 đã có một phiên giao dịch tương đối ổn định với sự tăng nhẹ, đóng cửa tại 1986.28, tăng 1.92 điểm so với phiên mở cửa. Khối lượng giao dịch đạt 261368107, cho thấy sự tham gia của nhà đầu tư vẫn duy trì ở mức cao.\n\nNhìn vào các chỉ báo hỗ trợ, chúng ta có thể thấy rằng:\n- Chỉ số VN30 đang giao dịch dưới đường trung bình động MA20 (2018.66) và MA50 (1972.85), nhưng trên đường trung bình động MA200 (1939.12). Điều này cho thấy xu hướng ngắn hạn đang có sự điều chỉnh, nhưng về dài hạn, xu hướng vẫn duy trì tích cực.\n- Bollinger Bands cho thấy chỉ số VN30 đang nằm trong vùng hỗ trợ (Lower 1963.68), nhưng cách khá xa vùng kháng cự (Upper 2073.64).\n- Pivot (1984.57) và Fibo 0.5 (1751.28) cho thấy mức hỗ trợ mạnh ở vùng giá hiện tại và một mức hỗ trợ dài hạn ở vùng giá thấp hơn.\n\nVề nhóm ngành dẫn dắt và nhóm ngành đi lùi:\n- Nhóm ngành dẫn dắt có thể là các ngành như Tài chính, Bất động sản, và Công nghệ, những ngành này thường có ảnh hưởng lớn đến chỉ số VN30.\n- Nhóm ngành đi lùi có thể là các ngành như Năng lượng, Thực phẩm, và Dược phẩm, những ngành này có thể đang đối mặt với khó khăn hoặc thiếu động lực tăng trưởng.\n\nTop 3 cổ phiếu ảnh hưởng tích cực và tiêu cực:\n- Tích cực: Các cổ phiếu như VIC, VHM, và MSN có thể là những cổ phiếu ảnh hưởng tích cực đến chỉ số VN30, do chúng thường có thanh khoản cao và ảnh hưởng lớn đến thị trường.\n- Tiêu cực: Các cổ phiếu như GAS, SAB, và HPG có thể là những cổ phiếu ảnh hưởng tiêu cực, do chúng có thể đang đối mặt với khó khăn hoặc giảm giá mạnh.\n\n### 2. Kịch bản Xác suất\nDựa trên phân tích trên, chúng ta có thể đưa ra 2 kịch bản cho chỉ số VN30:\n\n- **Kịch bản Tích cực (60%)**: Chỉ số VN30 sẽ tiếp tục tăng và vượt qua đường trung bình động MA20, hướng tới vùng kháng cự của Bollinger Bands (Upper 2073.64). Điều này có thể xảy ra nếu các yếu tố vĩ mô như tăng trưởng kinh tế, lạm phát, và lãi suất tiếp tục ổn định, và nếu các ngành dẫn dắt như Tài chính, Bất động sản, và Công nghệ tiếp tục có diễn biến tích cực.\n- **Kịch bản Tiêu cực (40%)**: Chỉ số VN30 sẽ giảm và xuống dưới vùng hỗ trợ của Bollinger Bands (Lower 1963.68), hướng tới mức hỗ trợ dài hạn ở vùng giá thấp hơn. Điều này có thể xảy ra nếu các yếu tố vĩ mô như tăng trưởng kinh tế, lạm phát, và lãi suất có sự thay đổi tiêu cực, và nếu các ngành đi lùi như Năng lượng, Thực phẩm, và Dược phẩm tiếp tục đối mặt với khó khăn.",
-    "volume_markdown": "### 1. Thống kê Khối lượng\nĐể phân tích tình hình dòng tiền và khối lượng của VN30 tại ngày 2026-06-05, chúng ta sẽ xem xét ý nghĩa của từng chỉ số:\n\n- **Chaikin Money Flow (CMF): -0.0407**\nCMF là chỉ số đo lường sự chênh lệch giữa dòng tiền vào và dòng tiền ra. Giá trị CMF âm (-0.0407) chỉ ra rằng dòng tiền ra nhiều hơn dòng tiền vào, cho thấy phe bán đang có ưu thế hơn phe mua tại thời điểm này.\n\n- **VWAP (Volume Weighted Average Price): 2007.68**\nVWAP là giá trung bình của cổ phiếu được tính toán dựa trên cả giá và khối lượng giao dịch. Giá VWAP (2007.68) cao hơn giá đóng cửa (1986.28) cho thấy rằng nhiều giao dịch xảy ra ở mức giá cao hơn giá đóng cửa, gợi ý rằng phe mua đã tích cực tham gia thị trường trong giai đoạn đầu nhưng không thể duy trì lực mua đến cuối phiên.\n\n- **Money Flow Index (MFI): 32.1753**\nMFI là chỉ số đánh giá áp lực mua/bán dựa trên giá và khối lượng. Giá trị MFI dưới 20 thường được coi là vùng quá bán, trong khi giá trị trên 80 là vùng quá mua. Với giá trị MFI là 32.1753, thị trường đang ở trong vùng quá bán, cho thấy áp lực bán đang chiếm ưu thế.\n\n### 2. Nhận định Trạng thái Dòng tiền\nTổng hợp lại các thông tin trên, có thể thấy rằng:\n\n- Dòng tiền ra đang nhiều hơn dòng tiền vào (CMF âm).\n- Giá VWAP cao hơn giá đóng cửa, nhưng điều này không đủ để thay đổi xu hướng giảm của giá đóng cửa.\n- Áp lực bán đang chiếm ưu thế với MFI ở mức thấp, cho thấy thị trường đang trong vùng quá bán.\n\nNhư vậy, có thể kết luận rằng **phe bán đang kiểm soát** thị trường tại thời điểm này, và **dòng tiền đang trong quá trình phân phối** chứ không phải tích lũy. Điều này cho thấy tâm lý nhà đầu tư đang bi quan, và có thể thị trường sẽ tiếp tục điều chỉnh trong ngắn hạn cho đến khi tìm được điểm cân bằng giữa phe mua và phe bán.",
-    "trend_markdown": "### 1. Thống kê Xu hướng\nPhân tích mức độ biến động (ATR), sức mạnh xu hướng (ADX) và vị trí giá so với kênh Keltner cho thấy:\n- **Mức độ biến động (ATR)**: 26.99, chỉ ra mức độ biến động trung bình.\n- **Sức mạnh xu hướng (ADX)**: 25.62, lớn hơn 25, chỉ ra sức mạnh xu hướng hiện tại là mạnh.\n- **Vị trí giá so với kênh Keltner**:\n  - Giá đóng cửa: 1986.28\n  - Upper Keltner: 2046.08\n  - Lower Keltner: 1992.21\n  - Giá hiện tại nằm dưới đường Upper Keltner và trên đường Lower Keltner, cho thấy giá đang trong kênh Keltner.\n\n### 2. Nhận định Rủi ro & Hành động\nDựa trên phân tích trên:\n- **Xu hướng hiện tại**: Xu hướng có thể được xem là đi ngang hoặc tăng nhẹ do giá vẫn nằm trong kênh Keltner và trên đường Lower Keltner.\n- **Rủi ro hiện tại**: Rủi ro có thể được xem là trung bình do mức độ biến động trung bình và sức mạnh xu hướng mạnh.\n- **Khuyến nghị hành động giá tiếp theo**: Có thể xem xét mua nếu giá chạm đường Lower Keltner (1992.21) và bán nếu giá chạm đường Upper Keltner (2046.08), tuy nhiên cần theo dõi chặt chẽ biến động của thị trường và điều chỉnh chiến lược theo tình hình thực tế."
+    "general_markdown": "### 1. Diễn biến và Đóng góp\nChỉ số VN30 đã đóng cửa tại mức 1986.28, tăng nhẹ so với mức mở cửa là 1984.36. Điều này cho thấy sự phục hồi nhẹ của thị trường sau một giai đoạn điều chỉnh. Khối lượng giao dịch đạt 261368107, cho thấy sự quan tâm của nhà đầu tư vẫn ở mức cao.\n\nNhóm ngành dẫn dắt trong phiên giao dịch này có thể là các ngành như Tài chính, Bất động sản, và Công nghệ, vì những ngành này thường có ảnh hưởng lớn đến chỉ số VN30. Ngược lại, nhóm ngành đi lùi có thể bao gồm các ngành như Năng lượng, Nguyên liệu thô, và Công nghiệp nặng, do những yếu tố như giá nguyên liệu đầu vào tăng cao hoặc nhu cầu giảm.\n\nTop 3 cổ phiếu ảnh hưởng tích cực đến chỉ số VN30 có thể bao gồm:\n- Cổ phiếu của các công ty lớn trong ngành Tài chính như Vietcombank (VCB), Vietinbank (CTG), và BIDV (BID), do sự ổn định và tăng trưởng của ngành này.\n- Cổ phiếu của các công ty công nghệ như FPT (FPT) và CMC (CMG), do sự gia tăng nhu cầu về dịch vụ công nghệ và giải pháp số.\n\nTop 3 cổ phiếu ảnh hưởng tiêu cực có thể bao gồm:\n- Cổ phiếu của các công ty trong ngành Năng lượng như PVN (PVN) và PVD (PVD), do sự biến động của giá dầu và nhu cầu năng lượng.\n- Cổ phiếu của các công ty trong ngành Nguyên liệu thô như HPG (HPG) và NKG (NKG), do sự tăng cao của giá nguyên liệu đầu vào và cạnh tranh trên thị trường.\n\n### 2. Kịch bản Xác suất\nDựa trên diễn biến thị trường và các chỉ báo kỹ thuật, có thể đưa ra hai kịch bản cho tương lai gần của chỉ số VN30:\n\n**Kịch bản Tích cực (60%):** Chỉ số VN30 sẽ tiếp tục tăng trưởng nhẹ trong ngắn hạn, với mức kháng cự gần tại 2000-2020. Sự phục hồi của thị trường sẽ được dẫn dắt bởi các ngành như Tài chính, Bất động sản, và Công nghệ. Các chỉ báo kỹ thuật như MA20 và MA50 cho thấy xu hướng tăng trưởng, và vùng hỗ trợ mạnh tại 1963.68 (Lower Bollinger Bands) sẽ giúp ngăn chặn sự giảm điểm quá sâu.\n\n**Kịch bản Tiêu cực (40%):** Chỉ số VN30 sẽ điều chỉnh xuống mức thấp hơn, với mức hỗ trợ gần tại 1950-1970. Sự giảm điểm sẽ được dẫn dắt bởi các yếu tố như biến động giá nguyên liệu đầu vào, nhu cầu giảm, và sự ảnh hưởng của thị trường quốc tế. Các chỉ báo kỹ thuật như Bollinger Bands cho thấy sự thu hẹp của vùng giao dịch, và nếu chỉ số VN30 giảm qua mức hỗ trợ 1963.68, sẽ có thể dẫn đến sự giảm điểm mạnh hơn.",
+    "volume_markdown": "### 1. Thống kê Khối lượng\n- **Chaikin Money Flow (CMF): -0.0407** chỉ ra rằng dòng tiền ra lớn hơn dòng tiền vào. Chỉ số này được tính toán bằng cách lấy tích của giá đóng cửa và khối lượng giao dịch, sau đó so sánh với giá trung bình của ngày. Giá trị âm cho thấy áp lực bán đang lớn hơn áp lực mua.\n- **VWAP (Giá trung bình theo khối lượng): 2007.68** cao hơn giá đóng cửa (1986.28), chỉ ra rằng phần lớn giao dịch diễn ra ở mức giá cao hơn giá đóng cửa. Điều này có thể cho thấy phe mua đã tích cực mua vào trong suốt phiên giao dịch, nhưng áp lực bán đã đẩy giá xuống vào cuối phiên.\n- **Money Flow Index (MFI): 32.1753** nằm dưới mức 40, chỉ ra rằng có sự phân phối (bán ra) trên thị trường. Chỉ số MFI được sử dụng để đo lường áp lực mua và bán, với giá trị thấp hơn 20 cho thấy phân phối mạnh và giá trị cao hơn 80 cho thấy tích lũy mạnh.\n\n### 2. Nhận định Trạng thái Dòng tiền\nTổng hợp lại, với CMF âm, VWAP cao hơn giá đóng cửa và MFI nằm dưới mức 40, có thể thấy rằng **dòng tiền đang trong trạng thái phân phối**. Áp lực bán dường như đang kiểm soát thị trường tại thời điểm này, với phe bán đang tích cực hơn phe mua. Tuy nhiên, cần lưu ý rằng VWAP cao hơn giá đóng cửa có thể cho thấy phe mua vẫn còn một số sức mạnh, nhưng không đủ để vượt qua áp lực bán trong phiên giao dịch này.",
+    "trend_markdown": "### 1. Thống kê Xu hướng\nPhân tích mức độ biến động (ATR), sức mạnh xu hướng (ADX) và vị trí giá so với kênh Keltner:\n- Mức độ biến động (ATR): 26.99, chỉ ra rằng thị trường đang có mức độ biến động trung bình đến cao.\n- Sức mạnh xu hướng (ADX): 25.62, lớn hơn 25, chỉ ra rằng xu hướng hiện tại là mạnh.\n- Vị trí giá so với kênh Keltner: Giá đóng cửa 1986.28 nằm giữa Upper (2046.08) và Lower (1992.21), cho thấy giá đang ở trong kênh và chưa có dấu hiệu phá vỡ rõ ràng.\n\n### 2. Nhận định Rủi ro & Hành động\n- Xu hướng hiện tại: Với ADX lớn hơn 25 và giá nằm trong kênh Keltner, xu hướng hiện tại có thể được xem là tiếp tục tăng, nhưng cần theo dõi chặt chẽ vì giá đang ở gần đường LOWER của kênh Keltner.\n- Rủi ro hiện tại: Mức độ biến động trung bình đến cao (ATR = 26.99) và sức mạnh xu hướng mạnh (ADX > 25) cho thấy rủi ro hiện tại là trung bình đến cao.\n- Khuyến nghị hành động giá tiếp theo: Cần theo dõi chặt chẽ hành động giá tiếp theo, đặc biệt là nếu giá tiếp tục giảm về gần hoặc phá vỡ đường LOWER (1992.21) của kênh Keltner, có thể xem xét bán hoặc giảm tỷ trọng. Nếu giá tăng và tiếp tục nằm trên đường UPPER (2046.08), có thể xem xét mua hoặc tăng tỷ trọng. Tuy nhiên, quyết định này cần kết hợp với phân tích kỹ thuật và cơ bản khác để có cái nhìn toàn diện hơn về thị trường.",
+    "chart_data": [
+      {
+        "time": "2026-03-11",
+        "open": 1840.08,
+        "high": 1894.44,
+        "low": 1838.38,
+        "close": 1889.94
+      },
+      {
+        "time": "2026-03-12",
+        "open": 1864.26,
+        "high": 1879.64,
+        "low": 1851.2,
+        "close": 1859.8
+      },
+      {
+        "time": "2026-03-13",
+        "open": 1847.51,
+        "high": 1874.42,
+        "low": 1839.49,
+        "close": 1853.6
+      },
+      {
+        "time": "2026-03-16",
+        "open": 1854.8,
+        "high": 1863.8,
+        "low": 1841.7,
+        "close": 1852.99
+      },
+      {
+        "time": "2026-03-17",
+        "open": 1869.15,
+        "high": 1901.94,
+        "low": 1868.63,
+        "close": 1873.65
+      },
+      {
+        "time": "2026-03-18",
+        "open": 1881.21,
+        "high": 1901.76,
+        "low": 1854.71,
+        "close": 1868.84
+      },
+      {
+        "time": "2026-03-19",
+        "open": 1851.7,
+        "high": 1864.35,
+        "low": 1835.48,
+        "close": 1854.19
+      },
+      {
+        "time": "2026-03-20",
+        "open": 1850.01,
+        "high": 1850.01,
+        "low": 1778.49,
+        "close": 1797.99
+      },
+      {
+        "time": "2026-03-23",
+        "open": 1778.11,
+        "high": 1782.95,
+        "low": 1740.29,
+        "close": 1741.05
+      },
+      {
+        "time": "2026-03-24",
+        "open": 1779.34,
+        "high": 1784.83,
+        "low": 1759.43,
+        "close": 1770.16
+      },
+      {
+        "time": "2026-03-25",
+        "open": 1790.95,
+        "high": 1815.19,
+        "low": 1787.85,
+        "close": 1814.73
+      },
+      {
+        "time": "2026-03-26",
+        "open": 1813.98,
+        "high": 1815.49,
+        "low": 1784.38,
+        "close": 1791.25
+      },
+      {
+        "time": "2026-03-27",
+        "open": 1791.67,
+        "high": 1825.6,
+        "low": 1787.02,
+        "close": 1821.53
+      },
+      {
+        "time": "2026-03-30",
+        "open": 1792.4,
+        "high": 1824.82,
+        "low": 1778.32,
+        "close": 1811.92
+      },
+      {
+        "time": "2026-03-31",
+        "open": 1819.84,
+        "high": 1834.79,
+        "low": 1818.07,
+        "close": 1829.59
+      },
+      {
+        "time": "2026-04-01",
+        "open": 1868.92,
+        "high": 1872.8,
+        "low": 1859.43,
+        "close": 1861.84
+      },
+      {
+        "time": "2026-04-02",
+        "open": 1864.83,
+        "high": 1864.83,
+        "low": 1838.81,
+        "close": 1852.99
+      },
+      {
+        "time": "2026-04-03",
+        "open": 1856.74,
+        "high": 1868.91,
+        "low": 1832.52,
+        "close": 1837.43
+      },
+      {
+        "time": "2026-04-06",
+        "open": 1833.61,
+        "high": 1850.09,
+        "low": 1828.18,
+        "close": 1836.25
+      },
+      {
+        "time": "2026-04-07",
+        "open": 1840.92,
+        "high": 1852.58,
+        "low": 1829.44,
+        "close": 1840.96
+      },
+      {
+        "time": "2026-04-08",
+        "open": 1875.69,
+        "high": 1931.56,
+        "low": 1875.69,
+        "close": 1931.01
+      },
+      {
+        "time": "2026-04-09",
+        "open": 1924.48,
+        "high": 1933.8,
+        "low": 1910.46,
+        "close": 1915.01
+      },
+      {
+        "time": "2026-04-10",
+        "open": 1931.83,
+        "high": 1946.6,
+        "low": 1923.84,
+        "close": 1928.23
+      },
+      {
+        "time": "2026-04-13",
+        "open": 1910.44,
+        "high": 1933.96,
+        "low": 1906.14,
+        "close": 1925.66
+      },
+      {
+        "time": "2026-04-14",
+        "open": 1946.0,
+        "high": 1955.16,
+        "low": 1938.06,
+        "close": 1946.55
+      },
+      {
+        "time": "2026-04-15",
+        "open": 1960.17,
+        "high": 1964.34,
+        "low": 1954.64,
+        "close": 1961.6
+      },
+      {
+        "time": "2026-04-16",
+        "open": 1966.13,
+        "high": 1982.79,
+        "low": 1958.76,
+        "close": 1979.19
+      },
+      {
+        "time": "2026-04-17",
+        "open": 1992.29,
+        "high": 2008.98,
+        "low": 1988.11,
+        "close": 1988.11
+      },
+      {
+        "time": "2026-04-20",
+        "open": 1992.8,
+        "high": 2009.95,
+        "low": 1980.83,
+        "close": 2009.04
+      },
+      {
+        "time": "2026-04-21",
+        "open": 2028.6,
+        "high": 2042.12,
+        "low": 2007.08,
+        "close": 2007.08
+      },
+      {
+        "time": "2026-04-22",
+        "open": 2009.76,
+        "high": 2029.47,
+        "low": 1990.45,
+        "close": 2025.41
+      },
+      {
+        "time": "2026-04-23",
+        "open": 2034.37,
+        "high": 2047.68,
+        "low": 2014.71,
+        "close": 2024.74
+      },
+      {
+        "time": "2026-04-24",
+        "open": 2027.72,
+        "high": 2035.48,
+        "low": 2001.22,
+        "close": 2011.42
+      },
+      {
+        "time": "2026-04-28",
+        "open": 2009.19,
+        "high": 2045.19,
+        "low": 2008.7,
+        "close": 2041.4
+      },
+      {
+        "time": "2026-04-29",
+        "open": 2039.26,
+        "high": 2042.72,
+        "low": 2010.24,
+        "close": 2022.75
+      },
+      {
+        "time": "2026-05-04",
+        "open": 2032.06,
+        "high": 2039.83,
+        "low": 2006.63,
+        "close": 2014.62
+      },
+      {
+        "time": "2026-05-05",
+        "open": 2012.86,
+        "high": 2033.63,
+        "low": 2005.7,
+        "close": 2032.3
+      },
+      {
+        "time": "2026-05-06",
+        "open": 2040.17,
+        "high": 2057.82,
+        "low": 2031.75,
+        "close": 2053.41
+      },
+      {
+        "time": "2026-05-07",
+        "open": 2061.77,
+        "high": 2092.06,
+        "low": 2060.85,
+        "close": 2079.1
+      },
+      {
+        "time": "2026-05-08",
+        "open": 2079.07,
+        "high": 2082.8,
+        "low": 2063.83,
+        "close": 2074.06
+      },
+      {
+        "time": "2026-05-11",
+        "open": 2072.57,
+        "high": 2075.71,
+        "low": 2040.51,
+        "close": 2040.51
+      },
+      {
+        "time": "2026-05-12",
+        "open": 2037.94,
+        "high": 2054.34,
+        "low": 2027.34,
+        "close": 2053.97
+      },
+      {
+        "time": "2026-05-13",
+        "open": 2066.09,
+        "high": 2066.09,
+        "low": 2025.88,
+        "close": 2043.51
+      },
+      {
+        "time": "2026-05-14",
+        "open": 2040.43,
+        "high": 2069.4,
+        "low": 2034.83,
+        "close": 2068.62
+      },
+      {
+        "time": "2026-05-15",
+        "open": 2070.83,
+        "high": 2071.44,
+        "low": 2042.97,
+        "close": 2050.58
+      },
+      {
+        "time": "2026-05-18",
+        "open": 2045.71,
+        "high": 2052.99,
+        "low": 2033.48,
+        "close": 2046.37
+      },
+      {
+        "time": "2026-05-19",
+        "open": 2048.54,
+        "high": 2049.02,
+        "low": 2022.73,
+        "close": 2027.45
+      },
+      {
+        "time": "2026-05-20",
+        "open": 2024.02,
+        "high": 2038.02,
+        "low": 1976.41,
+        "close": 2028.94
+      },
+      {
+        "time": "2026-05-21",
+        "open": 2038.04,
+        "high": 2040.69,
+        "low": 2017.22,
+        "close": 2027.51
+      },
+      {
+        "time": "2026-05-22",
+        "open": 2030.24,
+        "high": 2030.24,
+        "low": 1998.61,
+        "close": 2010.93
+      },
+      {
+        "time": "2026-05-25",
+        "open": 2013.96,
+        "high": 2030.25,
+        "low": 2013.96,
+        "close": 2021.72
+      },
+      {
+        "time": "2026-05-26",
+        "open": 2025.56,
+        "high": 2031.05,
+        "low": 2017.06,
+        "close": 2027.9
+      },
+      {
+        "time": "2026-05-27",
+        "open": 2033.88,
+        "high": 2033.95,
+        "low": 2015.72,
+        "close": 2022.46
+      },
+      {
+        "time": "2026-05-28",
+        "open": 2017.7,
+        "high": 2028.16,
+        "low": 1999.82,
+        "close": 1999.82
+      },
+      {
+        "time": "2026-05-29",
+        "open": 2000.62,
+        "high": 2013.13,
+        "low": 1993.08,
+        "close": 1997.06
+      },
+      {
+        "time": "2026-06-01",
+        "open": 2001.23,
+        "high": 2007.43,
+        "low": 1984.83,
+        "close": 1989.71
+      },
+      {
+        "time": "2026-06-02",
+        "open": 1990.55,
+        "high": 2001.07,
+        "low": 1969.58,
+        "close": 1972.99
+      },
+      {
+        "time": "2026-06-03",
+        "open": 1971.77,
+        "high": 1991.08,
+        "low": 1961.88,
+        "close": 1974.6
+      },
+      {
+        "time": "2026-06-04",
+        "open": 1977.21,
+        "high": 1982.33,
+        "low": 1965.93,
+        "close": 1982.29
+      },
+      {
+        "time": "2026-06-05",
+        "open": 1984.36,
+        "high": 1990.8,
+        "low": 1976.62,
+        "close": 1986.28
+      }
+    ]
   },
   "VN100": {
     "symbol": "VN100",
@@ -40,8 +884,430 @@
       "cmf": -0.01963208343572761,
       "adx": 29.911172292375827
     },
-    "general_markdown": "### 1. Diễn biến và Đóng góp\nChỉ số VN100 đã đóng cửa tại mức 1904.58 vào ngày giao dịch gần nhất (2026-06-05 00:00:00), với khối lượng giao dịch đáng kể là 451774266. So sánh với mức mở cửa 1904.26, chỉ số đã có sự biến động nhỏ trong ngày. \n\nNhìn vào các mức giá cao và thấp nhất trong ngày (Cao: 1911.21, Thấp: 1896.93), chúng ta có thể thấy rằng chỉ số đã thử nghiệm cả vùng giá cao hơn và thấp hơn trong ngày nhưng cuối cùng vẫn đóng cửa gần mức mở cửa.\n\nVề các chỉ báo hỗ trợ:\n- Các đường trung bình động (MA20: 1947.06, MA50: 1899.11, MA200: 1857.83) cho thấy xu hướng trung hạn còn tích cực nhưng có tín hiệu giảm tốc trong ngắn hạn do MA20 cao hơn MA50 và MA200.\n- Bollinger Bands với Upper 2010.62, Middle 1947.06, và Lower 1883.51 cho thấy sự biến động của chỉ số trong vùng khá rộng, nhưng hiện tại chỉ số đang ở dưới middle band, thể hiện sự điều chỉnh.\n- Pivot tại 1904.24 gần như trùng với giá đóng cửa, cho thấy sự cân bằng của thị trường tại thời điểm này.\n- Fibo 0.5 tại 1678.28 cho thấy mức hỗ trợ mạnh ở xa, nhưng không liên quan trực tiếp đến diễn biến ngắn hạn hiện tại.\n\nTừ dữ liệu trên, có thể suy luận rằng:\n- Nhóm ngành dẫn dắt có thể là những ngành có tính phòng thủ cao hoặc những ngành đang hưởng lợi từ tình hình kinh tế vĩ mô hiện tại như công nghệ thông tin, y tế, hoặc tài chính.\n- Nhóm ngành đi lùi có thể là những ngành có tính chu kỳ cao hoặc bị ảnh hưởng bởi các yếu tố kinh tế vĩ mô như xây dựng, bất động sản, hoặc hàng tiêu dùng không thiết yếu.\n- Top 3 cổ phiếu ảnh hưởng tích cực có thể là những cổ phiếu trong nhóm ngành công nghệ thông tin, tài chính, hoặc y tế, những ngành này thường có xu hướng tăng trưởng tốt trong giai đoạn kinh tế không chắc chắn.\n- Top 3 cổ phiếu ảnh hưởng tiêu cực có thể là những cổ phiếu trong nhóm ngành hàng tiêu dùng, xây dựng, hoặc bất động sản, những ngành này thường bị ảnh hưởng mạnh bởi sự thay đổi trong nhu cầu tiêu dùng và đầu tư.\n\n### 2. Kịch bản Xác suất\nDựa trên phân tích trên, có thể đưa ra 2 kịch bản cho thị trường trong ngắn hạn:\n\n**Kịch bản Tích cực (60%):** Chỉ số VN100 có thể tiếp tục tăng trưởng trong ngắn hạn do sự hỗ trợ của các đường trung bình động và vùng hỗ trợ mạnh ở phía dưới. Sự tăng trưởng này có thể được dẫn dắt bởi các ngành công nghệ thông tin, y tế, và tài chính, những ngành có tính tăng trưởng cao và ít bị ảnh hưởng bởi các yếu tố kinh tế vĩ mô. Khối lượng giao dịch lớn cũng cho thấy sự quan tâm của nhà đầu tư vào thị trường.\n\n**Kịch bản Tiêu cực (40%):** Chỉ số VN100 có thể điều chỉnh sâu hơn do sự không chắc chắn trong kinh tế vĩ mô và sự giảm tốc trong ngắn hạn. Các ngành như xây dựng, bất động sản, và hàng tiêu dùng có thể tiếp tục bị bán tháo, kéo chỉ số xuống. Tuy nhiên, với sự hỗ trợ của các đường trung bình động và vùng hỗ trợ mạnh, kịch bản này có xác suất thấp hơn.\n\nLưu ý rằng những suy luận và kịch bản trên chỉ mang tính chất dự báo và có thể thay đổi dựa trên các thông tin và sự kiện mới.",
-    "volume_markdown": "### 1. Thống kê Khối lượng\nĐể phân tích tình hình dòng tiền và khối lượng của VN100 vào ngày 2026-06-05, chúng ta cần xem xét ý nghĩa của từng chỉ số:\n\n- **Chaikin Money Flow (CMF)**: Chỉ số này đo lường sự chênh lệch giữa giá đóng cửa và giá trung bình của phiên giao dịch, sau đó so sánh với khối lượng giao dịch. Giá trị CMF hiện tại là -0.0196, chỉ ra rằng dòng tiền có xu hướng ra hơn vào. Điều này cho thấy phe bán đang có chút ưu thế hơn phe mua trong phiên giao dịch này.\n\n- **VWAP (Volume Weighted Average Price)**: VWAP là giá trung bình của một chứng khoán được tính toán dựa trên cả giá và khối lượng trong một khoảng thời gian nhất định. Giá trị VWAP là 1935.53, cao hơn giá đóng cửa 1904.58. Điều này cho thấy rằng trong phiên giao dịch, những giao dịch với khối lượng lớn thường xảy ra ở mức giá cao hơn mức giá đóng cửa, gợi ý về một sự mua mạnh ở những mức giá cao hơn, nhưng sau đó bị bán lại.\n\n- **Money Flow Index (MFI)**: MFI là một chỉ số kỹ thuật được sử dụng để đo lường dòng tiền vào hoặc ra khỏi một chứng khoán. Giá trị MFI hiện tại là 30.5127, nằm dưới ngưỡng 50. Điều này cho thấy rằng dòng tiền đang có xu hướng phân phối (bán ra) hơn là mua gom. MFI dưới 20 thường được coi là vượt bán, nhưng giá trị 30.5127 cho thấy thị trường chưa đạt đến mức độ vượt bán quá mạnh, nhưng có xu hướng tiêu cực.\n\n### 2. Nhận định Trạng thái Dòng tiền\nTổng hợp lại các chỉ số trên, có thể thấy rằng dòng tiền đang có xu hướng phân phối hơn là mua gom. Phe bán đang có chút ưu thế so với phe mua, như được phản ánh qua giá trị âm của CMF và giá trị MFI dưới 50. Mặc dù VWAP cao hơn giá đóng cửa gợi ý về sự mua mạnh ở những mức giá cao, nhưng sự kết hợp của các chỉ số này cho thấy rằng sự phân phối (bán ra) đang là xu hướng chính trong phiên giao dịch này. Do đó, có thể nói rằng phe bán đang kiểm soát thị trường ở thời điểm này.",
-    "trend_markdown": "### 1. Thống kê Xu hướng\nPhân tích mức độ biến động (ATR), sức mạnh xu hướng (ADX) và vị trí giá so với kênh Keltner cho thấy:\n- Độ biến động (ATR): 27.15, chỉ ra mức biến động trung bình.\n- Sức mạnh xu hướng (ADX): 29.91, lớn hơn 25, chỉ ra xu hướng hiện tại là mạnh.\n- Kênh Keltner: Giá đóng cửa 1904.58 nằm giữa Upper (1974.32) và Lower (1920.01), nhưng gần hơn với đường Lower, cho thấy giá đang có xu hướng giảm nhẹ hoặc đi ngang trong kênh này.\n\n### 2. Nhận định Rủi ro & Hành động\nDựa trên phân tích trên, có thể đánh giá như sau:\n- **Xu hướng hiện tại**: Xu hướng đang có dấu hiệu giảm nhẹ hoặc đi ngang. Điều này được thể hiện qua vị trí giá đóng cửa so với kênh Keltner và mức độ biến động trung bình.\n- **Rủi ro hiện tại**: Rủi ro hiện tại có thể được coi là trung bình. Mức độ biến động không quá cao, nhưng sức mạnh xu hướng mạnh cho thấy thị trường có thể tiếp tục di chuyển theo xu hướng hiện tại.\n- **Khuyến nghị hành động**: Nhà đầu tư nên theo dõi chặt chẽ xu hướng và biến động trong những phiên giao dịch tiếp theo. Nếu giá tiếp tục giảm và phá vỡ đường Lower (1920.01) của kênh Keltner, có thể xem xét bán hoặc giảm tỷ trọng. Ngược lại, nếu giá tăng và vượt qua đường Upper (1974.32), có thể xem xét mua hoặc tăng tỷ trọng. Tuy nhiên, mọi quyết định đầu tư nên được cân nhắc kỹ lưỡng và phù hợp với chiến lược đầu tư cá nhân."
+    "general_markdown": "### 1. Diễn biến và Đóng góp\nChỉ số VN100 đã kết thúc ngày giao dịch gần nhất (2026-06-05) với giá đóng cửa tại 1904.58, tăng nhẹ so với giá mở cửa là 1904.26. Khối lượng giao dịch đạt 451774266, cho thấy sự quan tâm của nhà đầu tư vẫn ở mức cao. Giá cao nhất và thấp nhất trong ngày lần lượt là 1911.21 và 1896.93.\n\nNhìn vào các chỉ báo hỗ trợ, đường MA20 (1947.06) và MA50 (1899.11) đang nằm trên đường MA200 (1857.83), chỉ ra xu hướng tăng trung hạn vẫn được duy trì. Tuy nhiên, giá hiện tại đang nằm dưới đường MA20, cho thấy áp lực bán ngắn hạn có thể đang gia tăng.\n\nBollinger Bands với Upper (2010.62), Middle (1947.06), và Lower (1883.51) cho thấy độ rộng của dải biến động đang tăng, chỉ ra sự không chắc chắn trong ngắn hạn.\n\nPivot (1904.24) gần như trùng với giá đóng cửa, chỉ ra sự cân bằng giữa lực mua và bán. Fibo 0.5 (1678.28) nằm khá xa so với giá hiện tại, cho thấy tiềm năng tăng trưởng vẫn còn nếu thị trường vượt qua được các rào cản gần term.\n\nVề Nhóm ngành dẫn dắt, có thể suy luận logic rằng các ngành như Công nghệ, Thực phẩm và Dược phẩm đang có xu hướng tăng trưởng tốt do nhu cầu không ngừng tăng và tính bền vững cao. Ngược lại, nhóm ngành như Năng lượng và Khoáng sản có thể đi lùi do sự chuyển dịch sang năng lượng tái tạo và các quy định môi trường ngày càng nghiêm ngặt.\n\nTop 3 cổ phiếu ảnh hưởng tích cực có thể đến từ các công ty công nghệ hàng đầu với sản phẩm chủ lực là phần mềm, thiết bị điện tử và dịch vụ trực tuyến. Top 3 cổ phiếu ảnh hưởng tiêu cực có thể đến từ các công ty trong ngành năng lượng và khoáng sản, nơi mà sự suy giảm nhu cầu và giá nguyên liệu thô có thể ảnh hưởng đến lợi nhuận.\n\n### 2. Kịch bản Xác suất\n#### Kịch bản Tích cực (60%)\n- Giá dầu thế giới giảm, làm giảm chi phí sản xuất và vận chuyển, từ đó kích thích tăng trưởng kinh tế.\n- Các chính sách hỗ trợ từ chính phủ và ngân hàng trung ương tiếp tục được áp dụng, duy trì thanh khoản và niềm tin trên thị trường.\n- Sự phát triển của công nghệ và đổi mới trong các ngành công nghiệp chủ chốt tiếp tục tạo ra động lực tăng trưởng mới.\n\n#### Kịch bản Tiêu cực (40%)\n- Lạm phát toàn cầu tiếp tục tăng cao, buộc các ngân hàng trung ương phải tăng lãi suất, làm giảm cầu và tăng chi phí vay vốn.\n- Xung đột địa chính trị và các vấn đề môi trường tiếp tục leo thang, ảnh hưởng đến chuỗi cung ứng và tăng sự không chắc chắn trên thị trường.\n- Sự suy giảm trong các ngành công nghiệp truyền thống và sự chậm chạp trong chuyển đổi sang các ngành công nghiệp mới có thể làm giảm tăng trưởng kinh tế.",
+    "volume_markdown": "### 1. Thống kê Khối lượng\nĐể phân tích tình hình dòng tiền và khối lượng của VN100 vào ngày 2026-06-05, chúng ta cần xem xét ý nghĩa của các chỉ số sau:\n\n- **Chaikin Money Flow (CMF)**: Chỉ số này đo lường sự khác biệt giữa giá trị mua và giá trị bán của một cổ phiếu hoặc chỉ số trong một khoảng thời gian nhất định. Giá trị CMF hiện tại là -0.0196, chỉ ra rằng dòng tiền đang có xu hướng thoát ra khỏi thị trường. Giá trị CMF âm thường cho thấy phe bán đang chiếm ưu thế hơn phe mua.\n\n- **VWAP (Volume Weighted Average Price)**: Đây là giá trung bình của một cổ phiếu hoặc chỉ số được tính toán dựa trên cả giá và khối lượng giao dịch. Giá VWAP là 1935.53, cao hơn giá đóng cửa (1904.58), cho thấy rằng phần lớn giao dịch diễn ra ở mức giá cao hơn giá đóng cửa. Điều này có thể chỉ ra rằng phe mua đã tích cực mua vào ở những mức giá cao hơn trong ngày.\n\n- **Money Flow Index (MFI)**: Chỉ số này kết hợp cả giá và khối lượng để đánh giá tình hình dòng tiền. MFI hiện tại là 30.5127, nằm dưới mức 50, cho thấy dòng tiền đang có xu hướng thoát ra. MFI dưới 20 thường được coi là quá bán, trong khi trên 80 là quá mua. Tuy nhiên, ở mức hiện tại, MFI cho thấy có một mức độ nào đó của sự phân phối.\n\n### 2. Nhận định Trạng thái Dòng tiền\nTổng hợp lại thông tin từ các chỉ số, chúng ta có thể thấy rằng:\n\n- Dòng tiền đang có xu hướng thoát ra khỏi thị trường (CMF âm).\n- Giá VWAP cao hơn giá đóng cửa cho thấy phe mua đã mua vào ở mức giá cao hơn trong ngày, nhưng không đủ mạnh để đẩy giá lên cao hơn vào cuối ngày.\n- MFI dưới 50, cho thấy dòng tiền đang yếu đi và có thể đang trong quá trình phân phối.\n\nNhư vậy, phe bán có vẻ đang chiếm ưu thế hơn phe mua tại thời điểm này. Dòng tiền đang trong quá trình phân phối hơn là tích lũy, cho thấy rằng nhà đầu tư đang bán ra nhiều hơn là mua vào. Tuy nhiên, cần xem xét thêm các yếu tố kỹ thuật và cơ bản khác cũng như diễn biến trong những phiên giao dịch tiếp theo để có được cái nhìn toàn diện hơn về thị trường.",
+    "trend_markdown": "### 1. Thống kê Xu hướng\nPhân tích mức độ biến động (ATR), sức mạnh xu hướng (ADX) và vị trí giá so với kênh Keltner cho thấy:\n- Mức độ biến động (ATR) là 27.15, cho thấy sự biến động của thị trường hiện tại là tương đối cao.\n- Sức mạnh xu hướng (ADX) là 29.91, lớn hơn 25, chỉ ra rằng xu hướng hiện tại là mạnh.\n- Giá đóng cửa hiện tại là 1904.58, nằm trong kênh Keltner giữa Upper 1974.32 và Lower 1920.01, gần sát với đường Lower, cho thấy sự hỗ trợ tại mức giá này.\n\n### 2. Nhận định Rủi ro & Hành động\nDựa trên các chỉ báo trên, có thể đánh giá như sau:\n- Xu hướng hiện tại có thể được xem là giảm nhẹ do giá đang ở gần sát với đường Lower của kênh Keltner.\n- Rủi ro hiện tại có thể được coi là cao do sự biến động của thị trường (ATR cao) và sức mạnh xu hướng mạnh (ADX > 25), cho thấy thị trường có thể tiếp tục biến động mạnh.\n- Khuyến nghị hành động giá tiếp theo: Nên cân nhắc mua (long) nếu giá chạm vào đường Lower của kênh Keltner (1920.01) và có tín hiệu tiếp tục tăng, hoặc bán (short) nếu giá phá vỡ đường Lower và có tín hiệu tiếp tục giảm. Tuy nhiên, cần theo dõi chặt chẽ sự biến động của thị trường và điều chỉnh chiến lược phù hợp với tình hình thực tế.",
+    "chart_data": [
+      {
+        "time": "2026-03-11",
+        "open": 1743.38,
+        "high": 1801.73,
+        "low": 1742.24,
+        "close": 1796.23
+      },
+      {
+        "time": "2026-03-12",
+        "open": 1777.17,
+        "high": 1792.81,
+        "low": 1764.88,
+        "close": 1776.44
+      },
+      {
+        "time": "2026-03-13",
+        "open": 1763.8,
+        "high": 1789.89,
+        "low": 1757.23,
+        "close": 1772.56
+      },
+      {
+        "time": "2026-03-16",
+        "open": 1775.63,
+        "high": 1784.02,
+        "low": 1760.49,
+        "close": 1772.6
+      },
+      {
+        "time": "2026-03-17",
+        "open": 1787.22,
+        "high": 1814.26,
+        "low": 1786.7,
+        "close": 1788.73
+      },
+      {
+        "time": "2026-03-18",
+        "open": 1796.92,
+        "high": 1816.11,
+        "low": 1769.96,
+        "close": 1783.56
+      },
+      {
+        "time": "2026-03-19",
+        "open": 1768.29,
+        "high": 1781.8,
+        "low": 1754.94,
+        "close": 1771.74
+      },
+      {
+        "time": "2026-03-20",
+        "open": 1770.53,
+        "high": 1770.53,
+        "low": 1708.71,
+        "close": 1726.81
+      },
+      {
+        "time": "2026-03-23",
+        "open": 1709.01,
+        "high": 1712.03,
+        "low": 1663.12,
+        "close": 1664.96
+      },
+      {
+        "time": "2026-03-24",
+        "open": 1701.34,
+        "high": 1711.93,
+        "low": 1685.54,
+        "close": 1696.93
+      },
+      {
+        "time": "2026-03-25",
+        "open": 1717.39,
+        "high": 1744.94,
+        "low": 1713.54,
+        "close": 1744.4
+      },
+      {
+        "time": "2026-03-26",
+        "open": 1746.87,
+        "high": 1747.38,
+        "low": 1719.05,
+        "close": 1728.57
+      },
+      {
+        "time": "2026-03-27",
+        "open": 1727.36,
+        "high": 1760.71,
+        "low": 1723.37,
+        "close": 1759.1
+      },
+      {
+        "time": "2026-03-30",
+        "open": 1729.78,
+        "high": 1762.31,
+        "low": 1719.32,
+        "close": 1749.23
+      },
+      {
+        "time": "2026-03-31",
+        "open": 1756.61,
+        "high": 1770.93,
+        "low": 1755.31,
+        "close": 1767.05
+      },
+      {
+        "time": "2026-04-01",
+        "open": 1805.71,
+        "high": 1807.53,
+        "low": 1791.68,
+        "close": 1792.16
+      },
+      {
+        "time": "2026-04-02",
+        "open": 1792.95,
+        "high": 1792.95,
+        "low": 1768.67,
+        "close": 1781.33
+      },
+      {
+        "time": "2026-04-03",
+        "open": 1785.32,
+        "high": 1794.41,
+        "low": 1761.73,
+        "close": 1766.97
+      },
+      {
+        "time": "2026-04-06",
+        "open": 1764.44,
+        "high": 1778.66,
+        "low": 1756.63,
+        "close": 1760.97
+      },
+      {
+        "time": "2026-04-07",
+        "open": 1766.8,
+        "high": 1778.24,
+        "low": 1755.48,
+        "close": 1769.19
+      },
+      {
+        "time": "2026-04-08",
+        "open": 1803.48,
+        "high": 1856.95,
+        "low": 1803.48,
+        "close": 1856.15
+      },
+      {
+        "time": "2026-04-09",
+        "open": 1850.45,
+        "high": 1861.37,
+        "low": 1838.83,
+        "close": 1843.49
+      },
+      {
+        "time": "2026-04-10",
+        "open": 1860.29,
+        "high": 1872.3,
+        "low": 1854.26,
+        "close": 1856.76
+      },
+      {
+        "time": "2026-04-13",
+        "open": 1841.68,
+        "high": 1868.38,
+        "low": 1837.44,
+        "close": 1860.33
+      },
+      {
+        "time": "2026-04-14",
+        "open": 1879.87,
+        "high": 1888.91,
+        "low": 1869.79,
+        "close": 1878.19
+      },
+      {
+        "time": "2026-04-15",
+        "open": 1891.67,
+        "high": 1895.95,
+        "low": 1888.6,
+        "close": 1892.92
+      },
+      {
+        "time": "2026-04-16",
+        "open": 1897.1,
+        "high": 1911.55,
+        "low": 1890.51,
+        "close": 1908.08
+      },
+      {
+        "time": "2026-04-17",
+        "open": 1920.29,
+        "high": 1934.03,
+        "low": 1907.34,
+        "close": 1907.34
+      },
+      {
+        "time": "2026-04-20",
+        "open": 1911.52,
+        "high": 1929.09,
+        "low": 1900.03,
+        "close": 1927.96
+      },
+      {
+        "time": "2026-04-21",
+        "open": 1945.31,
+        "high": 1958.08,
+        "low": 1925.79,
+        "close": 1925.79
+      },
+      {
+        "time": "2026-04-22",
+        "open": 1928.55,
+        "high": 1948.44,
+        "low": 1913.39,
+        "close": 1943.91
+      },
+      {
+        "time": "2026-04-23",
+        "open": 1953.91,
+        "high": 1966.98,
+        "low": 1931.69,
+        "close": 1944.05
+      },
+      {
+        "time": "2026-04-24",
+        "open": 1946.53,
+        "high": 1951.87,
+        "low": 1919.84,
+        "close": 1930.67
+      },
+      {
+        "time": "2026-04-28",
+        "open": 1929.4,
+        "high": 1961.04,
+        "low": 1928.77,
+        "close": 1952.67
+      },
+      {
+        "time": "2026-04-29",
+        "open": 1952.96,
+        "high": 1955.25,
+        "low": 1924.25,
+        "close": 1936.31
+      },
+      {
+        "time": "2026-05-04",
+        "open": 1948.27,
+        "high": 1955.64,
+        "low": 1921.72,
+        "close": 1928.89
+      },
+      {
+        "time": "2026-05-05",
+        "open": 1927.32,
+        "high": 1944.47,
+        "low": 1922.56,
+        "close": 1944.47
+      },
+      {
+        "time": "2026-05-06",
+        "open": 1951.84,
+        "high": 1969.75,
+        "low": 1942.66,
+        "close": 1967.64
+      },
+      {
+        "time": "2026-05-07",
+        "open": 1976.25,
+        "high": 2005.04,
+        "low": 1976.02,
+        "close": 1992.48
+      },
+      {
+        "time": "2026-05-08",
+        "open": 1993.72,
+        "high": 2003.53,
+        "low": 1980.19,
+        "close": 1997.02
+      },
+      {
+        "time": "2026-05-11",
+        "open": 1999.21,
+        "high": 2006.41,
+        "low": 1976.73,
+        "close": 1978.37
+      },
+      {
+        "time": "2026-05-12",
+        "open": 1976.83,
+        "high": 1990.7,
+        "low": 1964.71,
+        "close": 1988.39
+      },
+      {
+        "time": "2026-05-13",
+        "open": 2000.47,
+        "high": 2000.47,
+        "low": 1954.43,
+        "close": 1976.98
+      },
+      {
+        "time": "2026-05-14",
+        "open": 1972.67,
+        "high": 1996.95,
+        "low": 1964.77,
+        "close": 1996.22
+      },
+      {
+        "time": "2026-05-15",
+        "open": 1998.65,
+        "high": 1999.79,
+        "low": 1973.97,
+        "close": 1982.89
+      },
+      {
+        "time": "2026-05-18",
+        "open": 1976.87,
+        "high": 1983.51,
+        "low": 1964.74,
+        "close": 1978.45
+      },
+      {
+        "time": "2026-05-19",
+        "open": 1981.53,
+        "high": 1981.68,
+        "low": 1959.58,
+        "close": 1965.64
+      },
+      {
+        "time": "2026-05-20",
+        "open": 1961.37,
+        "high": 1971.61,
+        "low": 1908.84,
+        "close": 1958.35
+      },
+      {
+        "time": "2026-05-21",
+        "open": 1967.32,
+        "high": 1969.65,
+        "low": 1941.15,
+        "close": 1952.0
+      },
+      {
+        "time": "2026-05-22",
+        "open": 1952.43,
+        "high": 1952.43,
+        "low": 1918.86,
+        "close": 1937.14
+      },
+      {
+        "time": "2026-05-25",
+        "open": 1940.26,
+        "high": 1958.44,
+        "low": 1940.26,
+        "close": 1950.39
+      },
+      {
+        "time": "2026-05-26",
+        "open": 1953.1,
+        "high": 1959.86,
+        "low": 1947.87,
+        "close": 1956.87
+      },
+      {
+        "time": "2026-05-27",
+        "open": 1962.69,
+        "high": 1962.69,
+        "low": 1944.16,
+        "close": 1951.75
+      },
+      {
+        "time": "2026-05-28",
+        "open": 1947.96,
+        "high": 1957.99,
+        "low": 1933.02,
+        "close": 1933.02
+      },
+      {
+        "time": "2026-05-29",
+        "open": 1932.89,
+        "high": 1941.58,
+        "low": 1918.84,
+        "close": 1925.55
+      },
+      {
+        "time": "2026-06-01",
+        "open": 1929.14,
+        "high": 1934.37,
+        "low": 1910.56,
+        "close": 1915.27
+      },
+      {
+        "time": "2026-06-02",
+        "open": 1914.87,
+        "high": 1924.9,
+        "low": 1890.04,
+        "close": 1894.18
+      },
+      {
+        "time": "2026-06-03",
+        "open": 1891.94,
+        "high": 1908.87,
+        "low": 1878.5,
+        "close": 1893.09
+      },
+      {
+        "time": "2026-06-04",
+        "open": 1895.3,
+        "high": 1902.83,
+        "low": 1884.85,
+        "close": 1902.15
+      },
+      {
+        "time": "2026-06-05",
+        "open": 1904.26,
+        "high": 1911.21,
+        "low": 1896.93,
+        "close": 1904.58
+      }
+    ]
   }
 }
