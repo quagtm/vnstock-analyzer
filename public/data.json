@@ -1,16 +1,16 @@
 {
   "VNINDEX": {
     "symbol": "VNINDEX",
-    "date": "2026-06-08 00:00:00",
-    "close": 1790.53,
-    "change": -48.37000000000012,
-    "change_pc": -2.630376855728975,
-    "volume": 714568751.0,
+    "date": "2026-06-09 00:00:00",
+    "close": 1793.05,
+    "change": 2.519999999999982,
+    "change_pc": 0.14074045115133407,
+    "volume": 527110166.0,
     "technical": {
-      "ma20": 1874.8725000000002,
-      "pivot": 1838.6599999999999,
-      "cmf": 0.11306858472700705,
-      "adx": 28.52928459105707
+      "ma20": 1869.47,
+      "pivot": 1800.93,
+      "cmf": 0.08897598335005233,
+      "adx": 29.959756486580016
     },
     "general_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
     "volume_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
@@ -18,16 +18,16 @@
   },
   "VN30": {
     "symbol": "VN30",
-    "date": "2026-06-08 00:00:00",
-    "close": 1936.81,
-    "change": -49.47000000000003,
-    "change_pc": -2.4905854159534417,
-    "volume": 319237098.0,
+    "date": "2026-06-09 00:00:00",
+    "close": 1951.92,
+    "change": 15.110000000000127,
+    "change_pc": 0.7801488013795946,
+    "volume": 282000416.0,
     "technical": {
-      "ma20": 2013.4759999999999,
-      "pivot": 1984.5666666666666,
-      "cmf": -0.03851634716683699,
-      "adx": 27.073864087212225
+      "ma20": 2008.3735000000001,
+      "pivot": 1947.4599999999998,
+      "cmf": -0.05890329211106709,
+      "adx": 28.484931284356495
     },
     "general_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
     "volume_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
@@ -35,16 +35,16 @@
   },
   "VN100": {
     "symbol": "VN100",
-    "date": "2026-06-08 00:00:00",
-    "close": 1859.67,
-    "change": -44.909999999999854,
-    "change_pc": -2.3580001890180435,
-    "volume": 630769364.0,
+    "date": "2026-06-09 00:00:00",
+    "close": 1871.55,
+    "change": 11.879999999999882,
+    "change_pc": 0.6388230169868784,
+    "volume": 469661142.0,
     "technical": {
-      "ma20": 1941.1290000000001,
-      "pivot": 1904.24,
-      "cmf": -0.003205387909108308,
-      "adx": 31.468438593841956
+      "ma20": 1935.2870000000003,
+      "pivot": 1868.53,
+      "cmf": -0.022301650845111442,
+      "adx": 32.97003848110205
     },
     "general_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
     "volume_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
