@@ -103,7 +103,12 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
-.highlight { color: var(--accent-primary); }
+.highlight {
+    color: var(--positive);
+    text-shadow: 0 0 12px var(--positive-glow);
+    font-size: 1.3em;
+    line-height: 1;
+}
 
 .nav-links { list-style: none; flex: 1; padding: 0 16px; }
 .nav-item-container { margin-bottom: 8px; }
