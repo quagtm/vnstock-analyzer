@@ -1,53 +1,53 @@
 {
   "VNINDEX": {
     "symbol": "VNINDEX",
-    "date": "2026-06-09 00:00:00",
-    "close": 1793.05,
-    "change": 2.519999999999982,
-    "change_pc": 0.14074045115133407,
-    "volume": 527110166.0,
+    "date": "2026-06-10 00:00:00",
+    "close": 1794.15,
+    "change": 1.1000000000001364,
+    "change_pc": 0.06134798248794716,
+    "volume": 47665312.0,
     "technical": {
-      "ma20": 1869.47,
-      "pivot": 1800.93,
-      "cmf": 0.08897598335005233,
-      "adx": 29.959756486580016
+      "ma20": 1864.259,
+      "pivot": 1791.5200000000002,
+      "cmf": 0.0618176196934889,
+      "adx": 31.288051818137035
     },
-    "general_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
-    "volume_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
-    "trend_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau."
+    "general_markdown": "### 1. Diễn biến và Đóng góp\n\n🟢 **VNINDEX** đóng cửa tại **1794.15** điểm, **tăng 0.70 điểm (0.04%)** so với phiên mở cửa 1793.45.\n\nKhối lượng giao dịch đạt **47,665,312 CP** — thấp hơn 93.17% so với trung bình 20 phiên, cho thấy dòng tiền đang thận trọng, rút lui.\n\n**Vùng Hỗ trợ gần nhất:** MA200 (1748.33)\n**Vùng Kháng cự gần nhất:** MA10 (1826.54), MA50 (1827.86), MA20 (1864.26)\n\nSỐ LIỆU THỰC TẾ TRONG VN30 (FACT): Top 3 tăng mạnh nhất là BID, BSR, CTG. Top 3 giảm mạnh nhất là VPL, MWG, VIC. (Hãy dùng danh sách này để suy ra Nhóm ngành dẫn dắt/đi lùi, TUYỆT ĐỐI KHÔNG tự suy đoán cổ phiếu khác).\n\n### 2. Kịch bản Xác suất\n\n**🟢 Kịch bản Tích cực (55%):** Giá đang giữ được vùng hỗ trợ MA, có thể kiểm tra lại vùng kháng cự 1826.54 (MA10) nếu dòng tiền duy trì. Khối lượng cần cải thiện là tín hiệu cần theo dõi.\n\n**🔴 Kịch bản Tiêu cực (45%):** Nếu mất vùng hỗ trợ MA200 (1748.33), chỉ số có thể điều chỉnh sâu hơn xuống vùng 1789.48–1740.33. Cần chú ý nếu khối lượng tăng đột biến trong phiên giảm.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **CMF** | `0.0618` | Tích cực (dòng tiền vào) |\n| **VWAP** | `1849.00` | Giá < VWAP → Áp lực bán chiếm ưu thế |\n| **OBV** | `53,091,508,426` | Tích lũy — dòng tiền ròng vào |\n| **KL Hiện tại** | `47,665,312 CP` | thấp hơn 93.17% so với TB 20 phiên |\n\n### 2. Nhận định Dòng tiền chung\n\n🟢 **Dòng tiền ĐANG VÀO** — CMF = `0.0618` cho thấy áp lực mua đang chiếm ưu thế.\n\nGiá dưới VWAP (1849.00), bên bán đang kiểm soát phiên giao dịch.\n\nKhối lượng thấp hơn 93.17% cho thấy sự tham gia mạnh, có thể từ tổ chức.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Biến động\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **ADX** | `31.29` | Xu hướng MẠNH |\n| **ATR** | `28.34` | Biến động trung bình 28.34 điểm/phiên |\n| **Keltner Upper** | `1891.34` | Kháng cự trên |\n| **Keltner Lower** | `1836.29` | ⚠️ Giá đang thủng dưới |\n\n### 2. Nhận định Rủi ro & Hành động\n\n**Xu hướng hiện tại:** 🟢 Tăng — ADX = `31.29` (Xu hướng MẠNH).\n\n**Vị trí giá so với Keltner:** Giá < Keltner Lower → QUÁ BÁN\n\n**Mức biến động:** ATR = `28.34` điểm — Biến động bình thường, rủi ro được kiểm soát.\n\n**Khuyến nghị:** 🟢 Tín hiệu giữ vị thế mua nếu ADX > 25 và giá trên MA200.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*"
   },
   "VN30": {
     "symbol": "VN30",
-    "date": "2026-06-09 00:00:00",
-    "close": 1951.92,
-    "change": 15.110000000000127,
-    "change_pc": 0.7801488013795946,
-    "volume": 282000416.0,
+    "date": "2026-06-10 00:00:00",
+    "close": 1952.83,
+    "change": 0.9099999999998545,
+    "change_pc": 0.04662076314602312,
+    "volume": 19956384.0,
     "technical": {
-      "ma20": 2008.3735000000001,
-      "pivot": 1947.4599999999998,
-      "cmf": -0.05890329211106709,
-      "adx": 28.484931284356495
+      "ma20": 2003.8395,
+      "pivot": 1947.5833333333333,
+      "cmf": -0.0524657394522256,
+      "adx": 29.79520796741903
     },
-    "general_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
-    "volume_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
-    "trend_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau."
+    "general_markdown": "### 1. Diễn biến và Đóng góp\n\n🟢 **VN30** đóng cửa tại **1952.83** điểm, **tăng 0.89 điểm (0.05%)** so với phiên mở cửa 1951.94.\n\nKhối lượng giao dịch đạt **19,956,384 CP** — thấp hơn 93.74% so với trung bình 20 phiên, cho thấy dòng tiền đang thận trọng, rút lui.\n\n**Vùng Hỗ trợ gần nhất:** MA200 (1941.51)\n**Vùng Kháng cự gần nhất:** MA10 (1974.43), MA50 (1981.13), MA20 (2003.84)\n\nSỐ LIỆU THỰC TẾ TRONG VN30 (FACT): Top 3 tăng mạnh nhất là BID, BSR, CTG. Top 3 giảm mạnh nhất là MSN, VPL, VIC. (Hãy dùng danh sách này để suy ra Nhóm ngành dẫn dắt/đi lùi, TUYỆT ĐỐI KHÔNG tự suy đoán cổ phiếu khác).\n\n### 2. Kịch bản Xác suất\n\n**🟢 Kịch bản Tích cực (45%):** Giá đang giữ được vùng hỗ trợ MA, có thể kiểm tra lại vùng kháng cự 1974.43 (MA10) nếu dòng tiền duy trì. Khối lượng cần cải thiện là tín hiệu cần theo dõi.\n\n**🔴 Kịch bản Tiêu cực (55%):** Nếu mất vùng hỗ trợ MA200 (1941.51), chỉ số có thể điều chỉnh sâu hơn xuống vùng 1947.88–1894.25. Cần chú ý nếu khối lượng tăng đột biến trong phiên giảm.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **CMF** | `-0.0525` | Tiêu cực (dòng tiền rút ra) |\n| **VWAP** | `1992.84` | Giá < VWAP → Áp lực bán chiếm ưu thế |\n| **OBV** | `15,130,053,745` | Tích lũy — dòng tiền ròng vào |\n| **KL Hiện tại** | `19,956,384 CP` | thấp hơn 93.74% so với TB 20 phiên |\n\n### 2. Nhận định Dòng tiền chung\n\n🔴 **Dòng tiền ĐANG RÚT RA** — CMF = `-0.0525` cho thấy áp lực bán đang chiếm ưu thế.\n\nGiá dưới VWAP (1992.84), bên bán đang kiểm soát phiên giao dịch.\n\nKhối lượng thấp hơn 93.74% cho thấy sự tham gia mạnh, có thể từ tổ chức.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Biến động\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **ADX** | `29.80` | Xu hướng MẠNH |\n| **ATR** | `26.69` | Biến động trung bình 26.69 điểm/phiên |\n| **Keltner Upper** | `2029.30` | Kháng cự trên |\n| **Keltner Lower** | `1979.38` | ⚠️ Giá đang thủng dưới |\n\n### 2. Nhận định Rủi ro & Hành động\n\n**Xu hướng hiện tại:** 🟢 Tăng — ADX = `29.80` (Xu hướng MẠNH).\n\n**Vị trí giá so với Keltner:** Giá < Keltner Lower → QUÁ BÁN\n\n**Mức biến động:** ATR = `26.69` điểm — Biến động bình thường, rủi ro được kiểm soát.\n\n**Khuyến nghị:** 🟢 Tín hiệu giữ vị thế mua nếu ADX > 25 và giá trên MA200.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*"
   },
   "VN100": {
     "symbol": "VN100",
-    "date": "2026-06-09 00:00:00",
-    "close": 1871.55,
-    "change": 11.879999999999882,
-    "change_pc": 0.6388230169868784,
-    "volume": 469661142.0,
+    "date": "2026-06-10 00:00:00",
+    "close": 1873.92,
+    "change": 2.3700000000001182,
+    "change_pc": 0.12663300472870714,
+    "volume": 46274445.0,
     "technical": {
-      "ma20": 1935.2870000000003,
-      "pivot": 1868.53,
-      "cmf": -0.022301650845111442,
-      "adx": 32.97003848110205
+      "ma20": 1930.134,
+      "pivot": 1867.2533333333333,
+      "cmf": -0.019230471511391147,
+      "adx": 34.36438123355786
     },
-    "general_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
-    "volume_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau.",
-    "trend_markdown": "Hệ thống AI hiện đang quá tải. Vui lòng thử lại sau."
+    "general_markdown": "### 1. Diễn biến và Đóng góp\n\n🟢 **VN100** đóng cửa tại **1873.92** điểm, **tăng 2.24 điểm (0.12%)** so với phiên mở cửa 1871.68.\n\nKhối lượng giao dịch đạt **46,274,445 CP** — thấp hơn 92.60% so với trung bình 20 phiên, cho thấy dòng tiền đang thận trọng, rút lui.\n\n**Vùng Hỗ trợ gần nhất:** MA200 (1859.24)\n**Vùng Kháng cự gần nhất:** MA10 (1897.30), MA50 (1906.57), MA20 (1930.13)\n\nSỐ LIỆU THỰC TẾ TRONG VN30 (FACT): Top 3 tăng mạnh nhất là BID, BSR, CTG. Top 3 giảm mạnh nhất là VPL, MWG, LPB. (Hãy dùng danh sách này để suy ra Nhóm ngành dẫn dắt/đi lùi, TUYỆT ĐỐI KHÔNG tự suy đoán cổ phiếu khác).\n\n### 2. Kịch bản Xác suất\n\n**🟢 Kịch bản Tích cực (45%):** Giá đang giữ được vùng hỗ trợ MA, có thể kiểm tra lại vùng kháng cự 1897.30 (MA10) nếu dòng tiền duy trì. Khối lượng cần cải thiện là tín hiệu cần theo dõi.\n\n**🔴 Kịch bản Tiêu cực (55%):** Nếu mất vùng hỗ trợ MA200 (1859.24), chỉ số có thể điều chỉnh sâu hơn xuống vùng 1868.15–1817.70. Cần chú ý nếu khối lượng tăng đột biến trong phiên giảm.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **CMF** | `-0.0192` | Trung tính |\n| **VWAP** | `1918.77` | Giá < VWAP → Áp lực bán chiếm ưu thế |\n| **OBV** | `47,819,721,035` | Tích lũy — dòng tiền ròng vào |\n| **KL Hiện tại** | `46,274,445 CP` | thấp hơn 92.60% so với TB 20 phiên |\n\n### 2. Nhận định Dòng tiền chung\n\n🔴 **Dòng tiền ĐANG RÚT RA** — CMF = `-0.0192` cho thấy áp lực bán đang chiếm ưu thế.\n\nGiá dưới VWAP (1918.77), bên bán đang kiểm soát phiên giao dịch.\n\nKhối lượng thấp hơn 92.60% cho thấy sự tham gia mạnh, có thể từ tổ chức.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Biến động\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **ADX** | `34.36` | Xu hướng MẠNH |\n| **ATR** | `26.46` | Biến động trung bình 26.46 điểm/phiên |\n| **Keltner Upper** | `1955.24` | Kháng cự trên |\n| **Keltner Lower** | `1905.32` | ⚠️ Giá đang thủng dưới |\n\n### 2. Nhận định Rủi ro & Hành động\n\n**Xu hướng hiện tại:** 🟢 Tăng — ADX = `34.36` (Xu hướng MẠNH).\n\n**Vị trí giá so với Keltner:** Giá < Keltner Lower → QUÁ BÁN\n\n**Mức biến động:** ATR = `26.46` điểm — Biến động bình thường, rủi ro được kiểm soát.\n\n**Khuyến nghị:** 🟢 Tín hiệu giữ vị thế mua nếu ADX > 25 và giá trên MA200.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*"
   }
 }
