@@ -47,7 +47,7 @@ def ask_ai(prompt, system_prompt="Bạn là chuyên gia phân tích chứng kho�
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
-                max_tokens=900,
+                max_tokens=2000,
                 stream=False
             )
             result = response.choices[0].message.content
