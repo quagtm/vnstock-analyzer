@@ -13,30 +13,30 @@ from openai import OpenAI
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-# Setup OpenRouter with fallback
-api_key = os.environ.get("OPENROUTER_API_KEY") or os.environ.get("GROQ_API_KEY")
+# Setup DeepSeek API
+api_key = os.environ.get("DEEPSEEK_API_KEY")
 if not api_key:
-    print("WARNING: OPENROUTER_API_KEY not found. Analysis will fail.")
+    print("WARNING: DEEPSEEK_API_KEY not found. Will use rule-based analysis fallback.")
 
 client = OpenAI(
-  base_url="https://openrouter.ai/api/v1",
-  api_key=api_key or "dummy_key",
-)
+    base_url="https://api.deepseek.com",
+    api_key=api_key or "dummy_key",
+) if api_key else None
 
 def ask_ai(prompt, system_prompt="Bạn là chuyên gia phân tích chứng khoán."):
-    if not api_key:
-        return None  # Signal to use rule-based fallback
-        
+    """Gọi DeepSeek API, trả về None nếu thất bại để dùng rule-based fallback."""
+    if not api_key or not client:
+        print("  ⚠ No API key — using rule-based fallback.")
+        return None
+
     models_to_try = [
-        "google/gemini-2.0-flash-exp:free",
-        "meta-llama/llama-3.3-70b-instruct:free",
-        "qwen/qwen-2.5-72b-instruct:free",
-        "mistralai/mistral-7b-instruct:free",
-        "google/gemma-3-27b-it:free",
+        "deepseek-chat",    # DeepSeek V4-Flash — nhanh, rẻ, chất lượng tốt
+        "deepseek-reasoner", # DeepSeek R1 — mạnh hơn, dùng khi Flash fail
     ]
-    
+
     for i, model in enumerate(models_to_try):
         try:
+            print(f"  → Calling DeepSeek [{model}]...")
             response = client.chat.completions.create(
                 model=model,
                 messages=[
@@ -44,17 +44,20 @@ def ask_ai(prompt, system_prompt="Bạn là chuyên gia phân tích chứng kho�
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
-                max_tokens=900
+                max_tokens=900,
+                stream=False
             )
-            print(f"  ✓ Success with model: {model}")
-            return response.choices[0].message.content
+            result = response.choices[0].message.content
+            print(f"  ✓ DeepSeek [{model}] success ({len(result)} chars)")
+            return result
         except Exception as e:
-            wait = 3 + i * 2  # Tăng dần: 3s, 5s, 7s, 9s...
-            print(f"  ✗ Error with model {model}: {e}. Retrying in {wait}s...")
+            wait = 5 + i * 5
+            print(f"  ✗ DeepSeek [{model}] error: {e}. Wait {wait}s...")
             time.sleep(wait)
             continue
-            
-    return None  # Signal to use rule-based fallback
+
+    print("  ✗ All DeepSeek models failed — using rule-based fallback.")
+    return None
 
 
 def generate_rule_based_analysis(symbol, close, open_price, high, low, current_vol,
