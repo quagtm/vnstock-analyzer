@@ -13,10 +13,13 @@ from openai import OpenAI
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-# Setup DeepSeek API
-api_key = os.environ.get("DEEPSEEK_API_KEY")
-if not api_key:
-    print("WARNING: DEEPSEEK_API_KEY not found. Will use rule-based analysis fallback.")
+# Setup DeepSeek API - accept key from multiple possible secret names
+api_key = (
+    os.environ.get("DEEPSEEK_API_KEY") or
+    os.environ.get("GROQ_API_KEY") or
+    os.environ.get("OPENROUTER_API_KEY")
+)
+print(f"[CONFIG] API key found: {'YES (len=' + str(len(api_key)) + ')' if api_key else 'NO - will use rule-based fallback'}")
 
 client = OpenAI(
     base_url="https://api.deepseek.com",
