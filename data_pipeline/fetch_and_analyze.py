@@ -81,27 +81,20 @@ def generate_rule_based_analysis(symbol, close, open_price, high, low, current_v
     resist_str = ", ".join([f"{n} ({v:.2f})" for n, v in resist_levels]) if resist_levels else "không có"
     
     if tab_type == "general":
-        sentiment = "Tích cực" if change >= 0 else "Tiêu cực"
-        scenario_bull_pct = 55 if cmf > 0 and change >= 0 else (45 if change >= 0 else 35)
-        scenario_bear_pct = 100 - scenario_bull_pct
-        top_info = top_movers_str if "FACT" in top_movers_str else ""
-        
-        return f"""### 1. Diễn biến và Đóng góp
+        top_info = top_movers_str
 
-{direction_emoji} **{symbol}** đóng cửa tại **{close:.2f}** điểm, **{direction} {abs(change):.2f} điểm ({abs(change_pc):.2f}%)** so với phiên mở cửa {open_price:.2f}.
+        return f"""### 1. Diễn biến phiên giao dịch
 
-Khối lượng giao dịch đạt **{current_vol:,.0f} CP** — {vol_status} so với trung bình 20 phiên, cho thấy {"sự tham gia tích cực của dòng tiền" if vol_diff > 5 else ("áp lực giao dịch vừa phải" if vol_diff > -5 else "dòng tiền đang thận trọng, rút lui")}.
+{direction_emoji} **{symbol}** đóng cửa tại **{close:.2f}** điểm, **{direction} {abs(change):.2f} điểm ({abs(change_pc):.2f}%)** so với tham chiếu {open_price:.2f}.
 
-**Vùng Hỗ trợ gần nhất:** {support_str}
-**Vùng Kháng cự gần nhất:** {resist_str}
+Khối lượng giao dịch: **{current_vol:,.0f} CP** — {vol_status} so với trung bình 20 phiên.
+
+**Vùng Hỗ trợ (từ gần đến xa):** {support_str}
+**Vùng Kháng cự (từ gần đến xa):** {resist_str}
+
+### 2. Thống kê Cổ phiếu & Nhóm ngành
 
 {top_info}
-
-### 2. Kịch bản Xác suất
-
-**🟢 Kịch bản Tích cực ({scenario_bull_pct}%):** {"Giá đang giữ được vùng hỗ trợ MA" if support_levels else "Nếu lực cầu hồi phục"}, có thể kiểm tra lại vùng kháng cự {resist_levels[0][1]:.2f} ({resist_levels[0][0]}) nếu dòng tiền duy trì. Khối lượng {"cao hơn TB" if vol_diff > 0 else "cần cải thiện"} là tín hiệu cần theo dõi.
-
-**🔴 Kịch bản Tiêu cực ({scenario_bear_pct}%):** Nếu {"mất vùng hỗ trợ " + support_levels[-1][0] + " (" + f"{support_levels[-1][1]:.2f}" + ")" if support_levels else "áp lực bán tiếp tục"}, chỉ số có thể điều chỉnh sâu hơn xuống vùng {low:.2f}–{(close * 0.97):.2f}. Cần chú ý nếu khối lượng tăng đột biến trong phiên giảm.
 
 ---
 *⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*"""
@@ -251,8 +244,27 @@ def process_symbol(symbol):
         mas_sorted = sorted([m for m in mas if m[1] > 0], key=lambda x: abs(close - x[1]))
         ma_str = ", ".join([f"{name} ({eval_ma(close, val)} tại {val:.2f})" for name, val in mas_sorted])
         
-        # Lấy Top 3 cổ phiếu VN30 làm fact
+        # ── Sector mapping VN30 ──────────────────────────────────────
+        SECTOR_MAP = {
+            "ACB":"Ngân hàng","BID":"Ngân hàng","CTG":"Ngân hàng",
+            "HDB":"Ngân hàng","LPB":"Ngân hàng","MBB":"Ngân hàng",
+            "SHB":"Ngân hàng","SSB":"Ngân hàng","STB":"Ngân hàng",
+            "TCB":"Ngân hàng","TPB":"Ngân hàng","VCB":"Ngân hàng",
+            "VIB":"Ngân hàng","VPB":"Ngân hàng",
+            "VHM":"Bất động sản","VIC":"Bất động sản",
+            "VRE":"Bất động sản","VPL":"Bất động sản",
+            "SSI":"Chứng khoán",
+            "MWG":"Bán lẻ",
+            "MSN":"Hàng tiêu dùng","SAB":"Hàng tiêu dùng","VNM":"Hàng tiêu dùng",
+            "GAS":"Dầu khí","PLX":"Dầu khí",
+            "HPG":"Thép","GVR":"Cao su",
+            "FPT":"Công nghệ","VJC":"Hàng không","BSR":"Lọc hóa dầu",
+        }
+
+        # ── Fetch VN30 price board + market breadth + sector flow ─────
         top_movers_str = ""
+        market_breadth_str = ""
+        sector_flow_str = ""
         try:
             v_stock = Vnstock().stock(symbol='VNINDEX', source='VCI')
             vn30_symbols = v_stock.listing.symbols_by_group('VN30').tolist()
@@ -260,14 +272,54 @@ def process_symbol(symbol):
             board.columns = ['_'.join(col).strip() for col in board.columns.values]
             board['change_pc'] = (board['match_match_price'] - board['listing_ref_price']) / board['listing_ref_price'] * 100
             board = board.sort_values('change_pc', ascending=False)
-            top_3 = board.head(3)['listing_symbol'].tolist()
-            bot_3 = board.tail(3)['listing_symbol'].tolist()
-            top_movers_str = f"SỐ LIỆU THỰC TẾ TRONG VN30 (FACT): Top 3 tăng mạnh nhất là {', '.join(top_3)}. Top 3 giảm mạnh nhất là {', '.join(bot_3)}. (Hãy dùng danh sách này để suy ra Nhóm ngành dẫn dắt/đi lùi, TUYỆT ĐỐI KHÔNG tự suy đoán cổ phiếu khác)."
+
+            # Top movers — chỉ liệt kê thống kê, không phân tích lý do
+            top5 = board.head(5)[['listing_symbol','change_pc']]
+            bot5 = board.tail(5)[['listing_symbol','change_pc']]
+            top_lines = ", ".join([f"{r['listing_symbol']} (+{r['change_pc']:.2f}%)" for _, r in top5.iterrows()])
+            bot_lines  = ", ".join([f"{r['listing_symbol']} ({r['change_pc']:.2f}%)"  for _, r in bot5.iterrows()])
+            top_movers_str = (
+                f"**Top 5 tăng mạnh nhất (VN30):** {top_lines}\n"
+                f"**Top 5 giảm mạnh nhất (VN30):** {bot_lines}"
+            )
+
+            # Market Breadth (VN30)
+            n_up   = int((board['change_pc'] > 0).sum())
+            n_down = int((board['change_pc'] < 0).sum())
+            n_flat = int((board['change_pc'] == 0).sum())
+            vn30_total = len(board)
+            breadth_ratio = n_up / max(n_down, 1)
+            if n_up > n_down:
+                breadth_signal = "Thị trường TÍCH CỰC — Bên mua chiếm ưu thế"
+            elif n_down > n_up:
+                breadth_signal = "Thị trường TIÊU CỰC — Bên bán chiếm ưu thế"
+            else:
+                breadth_signal = "Thị trường CÂN BẰNG"
+            market_breadth_str = (
+                f"**Market Breadth VN30:** 🟢 Tăng: **{n_up}/{vn30_total}** | "
+                f"🔴 Giảm: **{n_down}/{vn30_total}** | ➖ Đứng giá: **{n_flat}/{vn30_total}**\n"
+                f"Tỷ lệ A/D: **{breadth_ratio:.2f}** — {breadth_signal}"
+            )
+
+            # Sector money flow
+            board['sector'] = board['listing_symbol'].map(SECTOR_MAP).fillna('Khác')
+            sector_perf = board.groupby('sector')['change_pc'].mean().sort_values(ascending=False)
+            attract = sector_perf[sector_perf > 0]
+            drain   = sector_perf[sector_perf < 0]
+            attract_lines = ", ".join([f"{s} (+{v:.2f}%)" for s, v in attract.items()]) if not attract.empty else "Không có"
+            drain_lines   = ", ".join([f"{s} ({v:.2f}%)"  for s, v in drain.items()])   if not drain.empty  else "Không có"
+            sector_flow_str = (
+                f"**Nhóm ngành thu hút dòng tiền:** {attract_lines}\n"
+                f"**Nhóm ngành bị rút dòng tiền:** {drain_lines}"
+            )
+            print(f"  Market breadth: +{n_up}/-{n_down}/={n_flat}")
         except Exception as e:
-            top_movers_str = "Dữ liệu Top cổ phiếu hiện không khả dụng."
+            top_movers_str = "Dữ liệu VN30 hiện không khả dụng."
             print(f"Error fetching VN30 price board: {e}")
 
-        # Shared fallback args
+        # Gộp tất cả fact data vào top_movers_str cho rule-based fallback
+        combined_market_str = "\n\n".join(filter(None, [top_movers_str, market_breadth_str, sector_flow_str]))
+
         rb_args = dict(
             symbol=symbol, close=close, open_price=safe_float(latest['open']),
             high=safe_float(latest['high']), low=safe_float(latest['low']),
@@ -280,27 +332,36 @@ def process_symbol(symbol):
             atr=safe_float(latest.get('atr', 0)),
             keltner_h=safe_float(latest.get('keltner_h', 0)),
             keltner_l=safe_float(latest.get('keltner_l', 0)),
-            top_movers_str=top_movers_str, time_val=time_val
+            top_movers_str=combined_market_str, time_val=time_val
         )
 
-        # 1. Prompt General
-        prompt_general = f"""
-Hãy phân tích TỔNG QUAN chỉ số {symbol} cho ngày giao dịch gần nhất ({time_val}).
-Dữ liệu hiện tại:
-- Đóng cửa: {close:.2f} (Mở: {safe_float(latest['open']):.2f}, Cao: {safe_float(latest['high']):.2f}, Thấp: {safe_float(latest['low']):.2f})
-- Khối lượng giao dịch: {current_vol:.0f} CP ({vol_status} so với trung bình 20 phiên).
+        # 1. Prompt General — thuần thống kê, không kịch bản/xác suất
+        prompt_general = f"""Tổng hợp dữ liệu phiên giao dịch {symbol} ngày {time_val}.
 
-Khoảng cách tới Hỗ trợ / Kháng cự MAs (từ gần nhất đến xa nhất): {ma_str}
+SỐ LIỆU THỰC TẾ:
+- Đóng cửa: {close:.2f} | Mở: {safe_float(latest['open']):.2f} | Cao: {safe_float(latest['high']):.2f} | Thấp: {safe_float(latest['low']):.2f}
+- Khối lượng: {current_vol:,.0f} CP — {vol_status} so với TB 20 phiên
+- Các mức MA (từ gần đến xa): {ma_str}
 
 {top_movers_str}
 
-Yêu cầu trả về định dạng Markdown, chia làm 2 phần:
-### 1. Diễn biến và Đóng góp
-Dựa VÀO SỐ LIỆU FACT Ở TRÊN để chỉ ra Nhóm ngành dẫn dắt và đi lùi (suy luận logic từ danh sách cổ phiếu thực tế).
-### 2. Kịch bản Xác suất
-Đưa ra 2 kịch bản (Tích cực và Tiêu cực) và gán xác suất (%), kèm luận điểm.
+{market_breadth_str}
+
+{sector_flow_str}
+
+Yêu cầu: Viết bài tổng hợp Markdown gồm 3 phần dưới đây. CHỈ dùng số liệu được cung cấp ở trên, KHÔNG thêm phân tích nguyên nhân tăng/giảm của từng mã, KHÔNG đưa ra kịch bản hay xác suất.
+
+### 1. Diễn biến phiên giao dịch
+Tóm tắt ngắn gọn: giá đóng cửa, biến động so với tham chiếu, khối lượng so với TB 20 phiên, vị trí so với các ngưỡng MA.
+
+### 2. Thống kê Cổ phiếu & Nhóm ngành
+- Liệt kê Top 5 tăng/giảm mạnh nhất kèm đúng % thay đổi (chỉ liệt kê, không bình luận nguyên nhân)
+- Liệt kê nhóm ngành thu hút / bị rút dòng tiền kèm % trung bình
+
+### 3. Market Breadth
+- Số mã tăng/giảm/đứng giá trong VN30 và tỷ lệ A/D, đánh giá 1 câu
 """
-        ai_general = ask_ai(prompt_general, "Bạn là chuyên gia Vĩ mô & Tổng quan thị trường chứng khoán Việt Nam. Bạn luôn dựa vào FACT được cung cấp, không bịa số liệu hay tự đoán cổ phiếu.")
+        ai_general = ask_ai(prompt_general, "Bạn là hệ thống tổng hợp dữ liệu thị trường chứng khoán. Trình bày đúng số liệu được cung cấp. Không thêm phân tích định tính, không suy đoán nguyên nhân, không đưa ra kịch bản hay xác suất.")
         general_markdown = ai_general if ai_general else generate_rule_based_analysis(**rb_args, tab_type="general")
         time.sleep(3)
         
