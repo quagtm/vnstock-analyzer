@@ -6,8 +6,10 @@ on:
       - main
       - master
   schedule:
-    # Chạy lúc 9:00 UTC (16:00 VN) từ Thứ 2 đến Thứ 6
-    - cron: '0 9 * * 1-5'
+    # Lần 1: 15:15 VN (08:15 UTC) - ngay sau khi sàn đóng cửa (14:45 VN)
+    - cron: '15 8 * * 1-5'
+    # Lần 2: 16:30 VN (09:30 UTC) - backup, dữ liệu đã fully settled
+    - cron: '30 9 * * 1-5'
   workflow_dispatch:
 
 permissions:
