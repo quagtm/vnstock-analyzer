@@ -166,46 +166,122 @@ def calculate_technical_indicators(df):
     low = df['low']
     volume = df['volume']
     
-    # Xu hướng
-    df['ma10'] = close.rolling(window=10).mean()
-    df['ma20'] = close.rolling(window=20).mean()
-    df['ma50'] = close.rolling(window=50).mean()
+    # Moving Averages
+    df['ma10']  = close.rolling(window=10).mean()
+    df['ma20']  = close.rolling(window=20).mean()
+    df['ma50']  = close.rolling(window=50).mean()
+    df['ma100'] = close.rolling(window=100).mean()
     df['ma200'] = close.rolling(window=200).mean()
-    
+
+    # ROC — Rate of Change (động lượng thị trường)
+    df['roc10']  = ta.momentum.ROCIndicator(close=close, window=10).roc()   # ngắn hạn
+    df['roc20']  = ta.momentum.ROCIndicator(close=close, window=20).roc()   # trung hạn
+
     # Bollinger Bands
     indicator_bb = ta.volatility.BollingerBands(close=close, window=20, window_dev=2)
-    df['bb_upper'] = indicator_bb.bollinger_hband()
+    df['bb_upper']  = indicator_bb.bollinger_hband()
     df['bb_middle'] = indicator_bb.bollinger_mavg()
-    df['bb_lower'] = indicator_bb.bollinger_lband()
-    
-    # Pivot Points (Sử dụng High, Low, Close của cây nến liền trước)
-    df['prev_high'] = high.shift(1)
-    df['prev_low'] = low.shift(1)
+    df['bb_lower']  = indicator_bb.bollinger_lband()
+
+    # Pivot Points
+    df['prev_high']  = high.shift(1)
+    df['prev_low']   = low.shift(1)
     df['prev_close'] = close.shift(1)
     df['pivot'] = (df['prev_high'] + df['prev_low'] + df['prev_close']) / 3
-    
-    # Khối lượng
-    df['cmf'] = ta.volume.ChaikinMoneyFlowIndicator(high=high, low=low, close=close, volume=volume).chaikin_money_flow()
+
+    # Volume indicators
+    df['cmf']  = ta.volume.ChaikinMoneyFlowIndicator(high=high, low=low, close=close, volume=volume).chaikin_money_flow()
     df['vwap'] = ta.volume.VolumeWeightedAveragePrice(high=high, low=low, close=close, volume=volume).volume_weighted_average_price()
-    
-    # Klinger Oscillator requires a workaround if the standard one doesn't exist.
     try:
-        # Tạm thay thế Klinger bằng OBV vì Klinger đôi khi thiếu trong các phiên bản ta cũ
         df['obv'] = ta.volume.OnBalanceVolumeIndicator(close=close, volume=volume).on_balance_volume()
     except:
         df['obv'] = 0
-        
-    # Xu hướng / Biến động
+
+    # Trend / Volatility
     df['adx'] = ta.trend.ADXIndicator(high=high, low=low, close=close).adx()
     df['atr'] = ta.volatility.AverageTrueRange(high=high, low=low, close=close).average_true_range()
-    
+
     indicator_keltner = ta.volatility.KeltnerChannel(high=high, low=low, close=close)
     df['keltner_h'] = indicator_keltner.keltner_channel_hband()
     df['keltner_l'] = indicator_keltner.keltner_channel_lband()
-    
+
     return df.iloc[-1]
 
-def process_symbol(symbol):
+def build_trend_assessment(close, ma_vals):
+    """Tạo chuỗi nhận định xu hướng kết hợp tất cả MAs."""
+    short_mas  = [(n, v) for n, v in ma_vals if n in ('MA10', 'MA20') and v > 0]
+    mid_mas    = [(n, v) for n, v in ma_vals if n == 'MA50' and v > 0]
+    long_mas   = [(n, v) for n, v in ma_vals if n in ('MA100', 'MA200') and v > 0]
+
+    def direction(pairs):
+        above = [n for n, v in pairs if close >= v]
+        below = [n for n, v in pairs if close < v]
+        if len(above) == len(pairs) and pairs: return "tăng", above
+        if len(below) == len(pairs) and pairs: return "giảm", below
+        return "hỗn hợp", []
+
+    lines = []
+    if short_mas:
+        d, mns = direction(short_mas)
+        label = f"{', '.join([n for n,_ in short_mas])}"
+        lines.append(f"- **Ngắn hạn** ({label}): xu hướng **{d}**")
+    if mid_mas:
+        d, mns = direction(mid_mas)
+        lines.append(f"- **Trung hạn** (MA50): xu hướng **{d}**")
+    if long_mas:
+        d, mns = direction(long_mas)
+        label = f"{', '.join([n for n,_ in long_mas])}"
+        lines.append(f"- **Dài hạn** ({label}): xu hướng **{d}**")
+
+    # Kết hợp tất cả
+    all_valid = [(n, v) for n, v in ma_vals if v > 0]
+    all_above = all(close >= v for _, v in all_valid)
+    all_below = all(close < v for _, v in all_valid)
+    if all_valid:
+        if all_above:
+            lines.append(f"- ✅ **Kết hợp**: Chỉ số **trên tất cả MAs** — xu hướng tăng ở mọi khung thời gian")
+        elif all_below:
+            lines.append(f"- ❌ **Kết hợp**: Chỉ số **dưới tất cả MAs** — xu hướng giảm ở mọi khung thời gian")
+        else:
+            lines.append(f"- ⚠️ **Kết hợp**: Chỉ số đang trong vùng **phân kỳ xu hướng** — cần thêm tín hiệu xác nhận")
+
+    return "\n".join(lines) if lines else "Không đủ dữ liệu MA."
+
+
+def get_vn30_breadth(vn30_symbols):
+    """Tính % CP VN30 nằm trên MA20, MA50, MA200."""
+    start = (datetime.now() - timedelta(days=450)).strftime("%Y-%m-%d")
+    end   = datetime.now().strftime("%Y-%m-%d")
+    above20 = above50 = above200 = total = 0
+    for sym in vn30_symbols:
+        try:
+            s = Vnstock().stock(symbol=sym, source='VCI')
+            df = s.quote.history(start=start, end=end, interval='1D')
+            if df is None or df.empty or len(df) < 20:
+                continue
+            c = df['close']
+            last = c.iloc[-1]
+            ma20  = c.rolling(20).mean().iloc[-1]
+            ma50  = c.rolling(50).mean().iloc[-1] if len(df) >= 50  else None
+            ma200 = c.rolling(200).mean().iloc[-1] if len(df) >= 200 else None
+            total += 1
+            if last > ma20:  above20  += 1
+            if ma50  and last > ma50:  above50  += 1
+            if ma200 and last > ma200: above200 += 1
+            time.sleep(0.3)  # tránh rate limit
+        except Exception as e:
+            print(f"  breadth skip {sym}: {e}")
+    if total == 0:
+        return None
+    return {
+        "total": total,
+        "pct_above_ma20":  round(above20  / total * 100, 1),
+        "pct_above_ma50":  round(above50  / total * 100, 1),
+        "pct_above_ma200": round(above200 / total * 100, 1),
+    }
+
+
+def process_symbol(symbol, breadth_data=None):
     print(f"Processing {symbol}...")
     try:
         start_date = (datetime.now() - timedelta(days=730)).strftime("%Y-%m-%d")
@@ -236,13 +312,26 @@ def process_symbol(symbol):
             return "Hỗ trợ" if c >= ma_val else "Kháng cự"
             
         mas = [
-            ("MA10", safe_float(latest.get('ma10', 0))),
-            ("MA20", safe_float(latest.get('ma20', 0))),
-            ("MA50", safe_float(latest.get('ma50', 0))),
-            ("MA200", safe_float(latest.get('ma200', 0)))
+            ("MA10",  safe_float(latest.get('ma10',  0))),
+            ("MA20",  safe_float(latest.get('ma20',  0))),
+            ("MA50",  safe_float(latest.get('ma50',  0))),
+            ("MA100", safe_float(latest.get('ma100', 0))),
+            ("MA200", safe_float(latest.get('ma200', 0))),
         ]
         mas_sorted = sorted([m for m in mas if m[1] > 0], key=lambda x: abs(close - x[1]))
         ma_str = ", ".join([f"{name} ({eval_ma(close, val)} tại {val:.2f})" for name, val in mas_sorted])
+
+        # ROC — động lượng
+        roc10 = safe_float(latest.get('roc10', 0))
+        roc20 = safe_float(latest.get('roc20', 0))
+        roc_str = (
+            f"ROC10 = {roc10:+.2f}% (ngắn hạn), ROC20 = {roc20:+.2f}% (trung hạn)"
+        )
+        roc_signal = "Động lượng TÍCH CỰC" if roc10 > 0 and roc20 > 0 else (
+            "Động lượng TIÊU CỰC" if roc10 < 0 and roc20 < 0 else "Động lượng PHÂN KỲ")
+
+        # Trend assessment tổng hợp 5 MAs
+        trend_assessment = build_trend_assessment(close, mas)
         
         # ── Sector mapping VN30 ──────────────────────────────────────
         SECTOR_MAP = {
@@ -318,7 +407,18 @@ def process_symbol(symbol):
             print(f"Error fetching VN30 price board: {e}")
 
         # Gộp tất cả fact data vào top_movers_str cho rule-based fallback
-        combined_market_str = "\n\n".join(filter(None, [top_movers_str, market_breadth_str, sector_flow_str]))
+        # % VN30 stocks above MAs (from pre-fetched breadth_data)
+        breadth_ma_str = ""
+        if breadth_data:
+            b = breadth_data
+            breadth_ma_str = (
+                f"**% CP VN30 nằm trên đường MA:**\n"
+                f"- Trên MA20: **{b['pct_above_ma20']}%** ({int(b['pct_above_ma20']*b['total']/100+0.5)}/{b['total']} mã)\n"
+                f"- Trên MA50: **{b['pct_above_ma50']}%** ({int(b['pct_above_ma50']*b['total']/100+0.5)}/{b['total']} mã)\n"
+                f"- Trên MA200: **{b['pct_above_ma200']}%** ({int(b['pct_above_ma200']*b['total']/100+0.5)}/{b['total']} mã)"
+            )
+
+        combined_market_str = "\n\n".join(filter(None, [top_movers_str, market_breadth_str, breadth_ma_str, sector_flow_str]))
 
         rb_args = dict(
             symbol=symbol, close=close, open_price=safe_float(latest['open']),
@@ -340,26 +440,27 @@ def process_symbol(symbol):
 
 SỐ LIỆU THỰC TẾ:
 - Đóng cửa: {close:.2f} | Mở: {safe_float(latest['open']):.2f} | Cao: {safe_float(latest['high']):.2f} | Thấp: {safe_float(latest['low']):.2f}
-- Khối lượng: {current_vol:,.0f} CP — {vol_status} so với TB 20 phiên
+- Khối lượng khớp lệnh: {current_vol/1_000_000:.3f} triệu CP — {vol_status} so với TB 20 phiên
 - Các mức MA (từ gần đến xa): {ma_str}
+- Nhận định xu hướng theo MA:
+{trend_assessment}
+- Động lượng (ROC): {roc_str} → {roc_signal}
 
-{top_movers_str}
+{combined_market_str}
 
-{market_breadth_str}
-
-{sector_flow_str}
-
-Yêu cầu: Viết bài tổng hợp Markdown gồm 3 phần dưới đây. CHỈ dùng số liệu được cung cấp ở trên, KHÔNG thêm phân tích nguyên nhân tăng/giảm của từng mã, KHÔNG đưa ra kịch bản hay xác suất.
+Yêu cầu: Viết bài tổng hợp Markdown gồm 4 phần. CHỈ dùng số liệu được cung cấp, KHÔNG thêm phân tích nguyên nhân của từng mã, KHÔNG đưa ra kịch bản/xác suất.
 
 ### 1. Diễn biến phiên giao dịch
-Tóm tắt ngắn gọn: giá đóng cửa, biến động so với tham chiếu, khối lượng so với TB 20 phiên, vị trí so với các ngưỡng MA.
+Giá đóng cửa, biến động so với tham chiếu, khối lượng (triệu CP) so với TB 20 phiên.
 
-### 2. Thống kê Cổ phiếu & Nhóm ngành
-- Liệt kê Top 5 tăng/giảm mạnh nhất kèm đúng % thay đổi (chỉ liệt kê, không bình luận nguyên nhân)
-- Liệt kê nhóm ngành thu hút / bị rút dòng tiền kèm % trung bình
+### 2. Nhận định Xu hướng & Động lượng
+Tóm tắt nhận định từ 5 MAs và ROC theo đúng số liệu đã cho.
 
-### 3. Market Breadth
-- Số mã tăng/giảm/đứng giá trong VN30 và tỷ lệ A/D, đánh giá 1 câu
+### 3. Thống kê Cổ phiếu & Nhóm ngành
+Top 5 tăng/giảm kèm % | Nhóm ngành thu hút/rút tiền kèm % TB | % CP trên MA20/50/200.
+
+### 4. Market Breadth
+Số mã tăng/giảm/đứng giá VN30, tỷ lệ A/D.
 """
         ai_general = ask_ai(prompt_general, "Bạn là hệ thống tổng hợp dữ liệu thị trường chứng khoán. Trình bày đúng số liệu được cung cấp. Không thêm phân tích định tính, không suy đoán nguyên nhân, không đưa ra kịch bản hay xác suất.")
         general_markdown = ai_general if ai_general else generate_rule_based_analysis(**rb_args, tab_type="general")
@@ -367,19 +468,21 @@ Tóm tắt ngắn gọn: giá đóng cửa, biến động so với tham chiếu
         
         # 2. Prompt Volume
         prompt_volume = f"""
-Hãy phân tích DÒNG TIỀN VÀ KHỐI LƯỢNG của {symbol} ngày ({time_val}).
-Giá đóng cửa: {close:.2f}, Khối lượng: {current_vol:.0f} CP ({vol_status} so với TB 20 phiên).
+Thống kê dòng tiền & khối lượng {symbol} ngày {time_val}.
 
-Các chỉ báo dòng tiền chuyên sâu:
-- Chaikin Money Flow (CMF): {safe_float(latest['cmf']):.4f} (Đo lường áp lực Mua/Bán)
-- VWAP: {safe_float(latest['vwap']):.2f} (Giá trung bình gia quyền khối lượng, nếu Giá > VWAP là Tích cực)
-- OBV: {safe_float(latest['obv']):.0f} (Tích lũy phân phối)
+Số liệu:
+- Giá đóng cửa: {close:.2f}
+- Khối lượng khớp lệnh: {current_vol/1_000_000:.3f} triệu CP — {vol_status} so với TB 20 phiên
+- CMF: {safe_float(latest['cmf']):.4f} (> 0: dòng tiền vào | < 0: dòng tiền ra)
+- VWAP: {safe_float(latest['vwap']):.2f} (Giá {'trên' if close > safe_float(latest.get('vwap',0)) else 'dưới'} VWAP)
+- OBV: {safe_float(latest['obv']):.0f}
 
-Yêu cầu trả về định dạng Markdown, chia làm 2 phần:
+Viết Markdown 2 phần, CHỈ dùng số liệu trên:
 ### 1. Thống kê Chỉ báo Khối lượng
-Phân tích chi tiết ý nghĩa của 3 chỉ báo trên đối với trạng thái hiện tại.
-### 2. Nhận định Dòng tiền chung
-Dòng tiền đang vào hay rút ra? Do tổ chức hay cá nhân? Có rủi ro phân phối không?
+Bảng tóm tắt CMF/VWAP/OBV với giá trị thực tế và nhận định ngắn.
+### 2. Nhận định Dòng tiền
+Dòng tiền ròng vào hay ra (dựa trên CMF và OBV)? Áp lực mua/bán so sánh với VWAP? Có dấu hiệu phân phối không?
+KHÔNG đề cập đến tổ chức hay nhà đầu tư cá nhân.
 """
         ai_volume = ask_ai(prompt_volume, "Bạn là chuyên gia Phân tích Dòng tiền & Khối lượng chứng khoán.")
         volume_markdown = ai_volume if ai_volume else generate_rule_based_analysis(**rb_args, tab_type="volume")
@@ -387,18 +490,23 @@ Dòng tiền đang vào hay rút ra? Do tổ chức hay cá nhân? Có rủi ro 
         
         # 3. Prompt Trend
         prompt_trend = f"""
-Hãy phân tích XU HƯỚNG VÀ BIẾN ĐỘNG của {symbol} ngày ({time_val}).
-Giá đóng cửa: {close:.2f}.
-Khoảng cách tới MAs: {ma_str}
+Thống kê xu hướng & biến động {symbol} ngày {time_val}.
 
-Các chỉ báo biến động chuyên sâu:
-- ADX: {safe_float(latest['adx']):.2f} (Sức mạnh xu hướng, > 25 là xu hướng rõ ràng)
-- ATR: {safe_float(latest['atr']):.2f} (Mức độ biến động trung bình)
-- Keltner Channels: Upper {safe_float(latest['keltner_h']):.2f}, Lower {safe_float(latest['keltner_l']):.2f}.
+Số liệu:
+- Giá đóng cửa: {close:.2f}
+- Nhận định xu hướng theo 5 MAs:
+{trend_assessment}
+- Động lượng (ROC): {roc_str} → {roc_signal}
+- ADX: {safe_float(latest['adx']):.2f} (> 25: xu hướng mạnh | 15-25: trung bình | < 15: đi ngang)
+- ATR: {safe_float(latest['atr']):.2f} điểm/phiên
+- Keltner Upper: {safe_float(latest['keltner_h']):.2f} | Lower: {safe_float(latest['keltner_l']):.2f}
+  Vị trí giá: {'Vượt trên Upper → vùng quá mua' if close > safe_float(latest.get('keltner_h',0)) else ('Thủng dưới Lower → vùng quá bán' if close < safe_float(latest.get('keltner_l',0)) else 'Trong kênh Keltner → bình thường')}
 
-Yêu cầu trả về định dạng Markdown, chia làm 2 phần:
-### 1. Thống kê Xu hướng
-### 2. Nhận định Rủi ro & Hành động
+Viết Markdown 2 phần, CHỈ dùng số liệu trên:
+### 1. Thống kê Xu hướng & Động lượng
+Bảng: MA positions, ROC, ADX, ATR, Keltner.
+### 2. Nhận định Rủi ro
+Đánh giá sức mạnh xu hướng, mức biến động, vùng giá quan trọng tiếp theo.
 """
         ai_trend = ask_ai(prompt_trend, "Bạn là chuyên gia Phân tích Kỹ thuật & Quản trị rủi ro chứng khoán.")
         trend_markdown = ai_trend if ai_trend else generate_rule_based_analysis(**rb_args, tab_type="trend")
@@ -431,9 +539,21 @@ Yêu cầu trả về định dạng Markdown, chia làm 2 phần:
 def main():
     symbols = ["VNINDEX", "VN30", "VN100"]
     all_data = {}
-    
+
+    # Fetch VN30 breadth data once (shared across all symbols)
+    print("[BREADTH] Fetching VN30 per-stock MA breadth...")
+    breadth_data = None
+    try:
+        v = Vnstock().stock(symbol='VNINDEX', source='VCI')
+        vn30_syms = v.listing.symbols_by_group('VN30').tolist()
+        breadth_data = get_vn30_breadth(vn30_syms)
+        if breadth_data:
+            print(f"[BREADTH] Done: above MA20={breadth_data['pct_above_ma20']}%, MA50={breadth_data['pct_above_ma50']}%, MA200={breadth_data['pct_above_ma200']}%")
+    except Exception as e:
+        print(f"[BREADTH] Failed: {e}")
+
     for sym in symbols:
-        data = process_symbol(sym)
+        data = process_symbol(sym, breadth_data=breadth_data)
         if data:
             all_data[sym] = data
             
