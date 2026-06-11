@@ -15,12 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Fetch Data
+    // Fetch Data với cache-busting để luôn lấy dữ liệu mới nhất
     async function fetchData() {
+        const ts = Date.now(); // timestamp để bypass browser cache
         try {
-            const response = await fetch('public/data.json');
+            const response = await fetch(`public/data.json?v=${ts}`);
             if (!response.ok) {
-                const fallbackResponse = await fetch('data.json');
+                const fallbackResponse = await fetch(`data.json?v=${ts}`);
                 if (!fallbackResponse.ok) throw new Error("Data not found");
                 appData = await fallbackResponse.json();
             } else {
@@ -38,6 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
     }
+
+    // Tự động reload data mỗi 5 phút (300.000ms)
+    setInterval(() => {
+        console.log('[Auto-refresh] Reloading data...');
+        fetchData();
+    }, 5 * 60 * 1000);
 
     function renderDashboard() {
         if (!appData || !appData[currentSymbol]) {
