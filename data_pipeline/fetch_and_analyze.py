@@ -38,26 +38,33 @@ def ask_ai(prompt, system_prompt="Bạn là chuyên gia phân tích chứng kho�
     ]
 
     for i, model in enumerate(models_to_try):
-        try:
-            print(f"  → Calling DeepSeek [{model}]...")
-            response = client.chat.completions.create(
-                model=model,
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.7,
-                max_tokens=2000,
-                stream=False
-            )
-            result = response.choices[0].message.content
-            print(f"  ✓ DeepSeek [{model}] success ({len(result)} chars)")
-            return result
-        except Exception as e:
-            wait = 5 + i * 5
-            print(f"  ✗ DeepSeek [{model}] error: {e}. Wait {wait}s...")
-            time.sleep(wait)
-            continue
+        for attempt in range(3):  # retry 3 lần với exponential backoff
+            try:
+                print(f"  → Calling DeepSeek [{model}] attempt {attempt+1}...")
+                response = client.chat.completions.create(
+                    model=model,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=0.7,
+                    max_tokens=2000,
+                    stream=False
+                )
+                result = response.choices[0].message.content
+                print(f"  ✓ DeepSeek [{model}] success ({len(result)} chars)")
+                return result
+            except Exception as e:
+                err_str = str(e).lower()
+                if 'rate' in err_str or '429' in err_str or 'limit' in err_str:
+                    wait = 30 * (2 ** attempt)  # 30s, 60s, 120s
+                    print(f"  ⏳ Rate limit hit. Waiting {wait}s before retry...")
+                    time.sleep(wait)
+                else:
+                    wait = 5 + attempt * 5
+                    print(f"  ✗ DeepSeek [{model}] error: {e}. Wait {wait}s...")
+                    time.sleep(wait)
+                    break  # lỗi khác thì thử model tiếp theo
 
     print("  ✗ All DeepSeek models failed — using rule-based fallback.")
     return None
@@ -248,40 +255,10 @@ def build_trend_assessment(close, ma_vals):
     return "\n".join(lines) if lines else "Không đủ dữ liệu MA."
 
 
-def get_vn30_breadth(vn30_symbols):
-    """Tính % CP VN30 nằm trên MA20, MA50, MA200."""
-    start = (datetime.now() - timedelta(days=450)).strftime("%Y-%m-%d")
-    end   = datetime.now().strftime("%Y-%m-%d")
-    above20 = above50 = above200 = total = 0
-    for sym in vn30_symbols:
-        try:
-            s = Vnstock().stock(symbol=sym, source='VCI')
-            df = s.quote.history(start=start, end=end, interval='1D')
-            if df is None or df.empty or len(df) < 20:
-                continue
-            c = df['close']
-            last = c.iloc[-1]
-            ma20  = c.rolling(20).mean().iloc[-1]
-            ma50  = c.rolling(50).mean().iloc[-1] if len(df) >= 50  else None
-            ma200 = c.rolling(200).mean().iloc[-1] if len(df) >= 200 else None
-            total += 1
-            if last > ma20:  above20  += 1
-            if ma50  and last > ma50:  above50  += 1
-            if ma200 and last > ma200: above200 += 1
-            time.sleep(1.5)  # tránh rate limit vnstock
-        except Exception as e:
-            print(f"  breadth skip {sym}: {e}")
-    if total == 0:
-        return None
-    return {
-        "total": total,
-        "pct_above_ma20":  round(above20  / total * 100, 1),
-        "pct_above_ma50":  round(above50  / total * 100, 1),
-        "pct_above_ma200": round(above200 / total * 100, 1),
-    }
+# get_vn30_breadth đã được loại bỏ — dùng price_board (1 call) thay vì 30 calls lịch sử
 
 
-def process_symbol(symbol, breadth_data=None):
+def process_symbol(symbol):
     print(f"Processing {symbol}...")
     try:
         start_date = (datetime.now() - timedelta(days=730)).strftime("%Y-%m-%d")
@@ -406,19 +383,7 @@ def process_symbol(symbol, breadth_data=None):
             top_movers_str = "Dữ liệu VN30 hiện không khả dụng."
             print(f"Error fetching VN30 price board: {e}")
 
-        # Gộp tất cả fact data vào top_movers_str cho rule-based fallback
-        # % VN30 stocks above MAs (from pre-fetched breadth_data)
-        breadth_ma_str = ""
-        if breadth_data:
-            b = breadth_data
-            breadth_ma_str = (
-                f"**% CP VN30 nằm trên đường MA:**\n"
-                f"- Trên MA20: **{b['pct_above_ma20']}%** ({int(b['pct_above_ma20']*b['total']/100+0.5)}/{b['total']} mã)\n"
-                f"- Trên MA50: **{b['pct_above_ma50']}%** ({int(b['pct_above_ma50']*b['total']/100+0.5)}/{b['total']} mã)\n"
-                f"- Trên MA200: **{b['pct_above_ma200']}%** ({int(b['pct_above_ma200']*b['total']/100+0.5)}/{b['total']} mã)"
-            )
-
-        combined_market_str = "\n\n".join(filter(None, [top_movers_str, market_breadth_str, breadth_ma_str, sector_flow_str]))
+        combined_market_str = "\n\n".join(filter(None, [top_movers_str, market_breadth_str, sector_flow_str]))
 
         rb_args = dict(
             symbol=symbol, close=close, open_price=safe_float(latest['open']),
@@ -545,20 +510,8 @@ def main():
     symbols = ["VNINDEX", "VN30", "VN100"]
     all_data = {}
 
-    # Fetch VN30 breadth data once (shared across all symbols)
-    print("[BREADTH] Fetching VN30 per-stock MA breadth...")
-    breadth_data = None
-    try:
-        v = Vnstock().stock(symbol='VNINDEX', source='VCI')
-        vn30_syms = v.listing.symbols_by_group('VN30').tolist()
-        breadth_data = get_vn30_breadth(vn30_syms)
-        if breadth_data:
-            print(f"[BREADTH] Done: above MA20={breadth_data['pct_above_ma20']}%, MA50={breadth_data['pct_above_ma50']}%, MA200={breadth_data['pct_above_ma200']}%")
-    except Exception as e:
-        print(f"[BREADTH] Failed: {e}")
-
     for sym in symbols:
-        data = process_symbol(sym, breadth_data=breadth_data)
+        data = process_symbol(sym)
         if data:
             all_data[sym] = data
             
