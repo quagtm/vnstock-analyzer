@@ -268,7 +268,7 @@ def get_vn30_breadth(vn30_symbols):
             if last > ma20:  above20  += 1
             if ma50  and last > ma50:  above50  += 1
             if ma200 and last > ma200: above200 += 1
-            time.sleep(0.3)  # tránh rate limit
+            time.sleep(1.5)  # tránh rate limit vnstock
         except Exception as e:
             print(f"  breadth skip {sym}: {e}")
     if total == 0:
@@ -435,82 +435,87 @@ def process_symbol(symbol, breadth_data=None):
             top_movers_str=combined_market_str, time_val=time_val
         )
 
-        # 1. Prompt General — thuần thống kê, không kịch bản/xác suất
-        prompt_general = f"""Tổng hợp dữ liệu phiên giao dịch {symbol} ngày {time_val}.
+        # ── 1 PROMPT DUY NHẤT cho cả 3 tabs — giảm từ 9 API calls xuống 3 ──
+        keltner_pos = ('Vượt trên Upper → quá mua' if close > safe_float(latest.get('keltner_h', 0))
+                       else ('Thủng dưới Lower → quá bán' if close < safe_float(latest.get('keltner_l', 0))
+                             else 'Trong kênh Keltner'))
+        vwap_pos = 'trên' if close > safe_float(latest.get('vwap', 0)) else 'dưới'
 
-SỐ LIỆU THỰC TẾ:
+        prompt_all = f"""Bạn là hệ thống tổng hợp dữ liệu thị trường chứng khoán Việt Nam.
+Chỉ trình bày số liệu được cung cấp. KHÔNG suy đoán nguyên nhân tăng/giảm của từng mã, KHÔNG đưa ra kịch bản/xác suất.
+
+=== DỮ LIỆU {symbol} — {time_val} ===
+
+[GIÁ & KHỐI LƯỢNG]
 - Đóng cửa: {close:.2f} | Mở: {safe_float(latest['open']):.2f} | Cao: {safe_float(latest['high']):.2f} | Thấp: {safe_float(latest['low']):.2f}
 - Khối lượng khớp lệnh: {current_vol/1_000_000:.3f} triệu CP — {vol_status} so với TB 20 phiên
-- Các mức MA (từ gần đến xa): {ma_str}
-- Nhận định xu hướng theo MA:
+
+[XU HƯỚNG MA & ĐỘNG LƯỢNG]
 {trend_assessment}
-- Động lượng (ROC): {roc_str} → {roc_signal}
+- ROC: {roc_str} → {roc_signal}
+- ADX: {safe_float(latest['adx']):.2f} (>25: mạnh | 15-25: TB | <15: đi ngang)
+- ATR: {safe_float(latest['atr']):.2f} điểm/phiên
+- Keltner: Upper {safe_float(latest['keltner_h']):.2f} / Lower {safe_float(latest['keltner_l']):.2f} → {keltner_pos}
 
-{combined_market_str}
-
-Yêu cầu: Viết bài tổng hợp Markdown gồm 4 phần. CHỈ dùng số liệu được cung cấp, KHÔNG thêm phân tích nguyên nhân của từng mã, KHÔNG đưa ra kịch bản/xác suất.
-
-### 1. Diễn biến phiên giao dịch
-Giá đóng cửa, biến động so với tham chiếu, khối lượng (triệu CP) so với TB 20 phiên.
-
-### 2. Nhận định Xu hướng & Động lượng
-Tóm tắt nhận định từ 5 MAs và ROC theo đúng số liệu đã cho.
-
-### 3. Thống kê Cổ phiếu & Nhóm ngành
-Top 5 tăng/giảm kèm % | Nhóm ngành thu hút/rút tiền kèm % TB | % CP trên MA20/50/200.
-
-### 4. Market Breadth
-Số mã tăng/giảm/đứng giá VN30, tỷ lệ A/D.
-"""
-        ai_general = ask_ai(prompt_general, "Bạn là hệ thống tổng hợp dữ liệu thị trường chứng khoán. Trình bày đúng số liệu được cung cấp. Không thêm phân tích định tính, không suy đoán nguyên nhân, không đưa ra kịch bản hay xác suất.")
-        general_markdown = ai_general if ai_general else generate_rule_based_analysis(**rb_args, tab_type="general")
-        time.sleep(3)
-        
-        # 2. Prompt Volume
-        prompt_volume = f"""
-Thống kê dòng tiền & khối lượng {symbol} ngày {time_val}.
-
-Số liệu:
-- Giá đóng cửa: {close:.2f}
-- Khối lượng khớp lệnh: {current_vol/1_000_000:.3f} triệu CP — {vol_status} so với TB 20 phiên
-- CMF: {safe_float(latest['cmf']):.4f} (> 0: dòng tiền vào | < 0: dòng tiền ra)
-- VWAP: {safe_float(latest['vwap']):.2f} (Giá {'trên' if close > safe_float(latest.get('vwap',0)) else 'dưới'} VWAP)
+[DÒNG TIỀN]
+- CMF: {safe_float(latest['cmf']):.4f} (>0: dòng tiền vào | <0: dòng tiền ra)
+- VWAP: {safe_float(latest['vwap']):.2f} — Giá đang {vwap_pos} VWAP
 - OBV: {safe_float(latest['obv']):.0f}
 
-Viết Markdown 2 phần, CHỈ dùng số liệu trên:
+[VN30 & THỊ TRƯỜNG]
+{combined_market_str}
+
+=== YÊU CẦU OUTPUT ===
+Viết 6 section Markdown theo đúng tiêu đề sau (KHÔNG thêm tiêu đề khác):
+
+## [TAB:GENERAL]
+### 1. Diễn biến phiên giao dịch
+Giá đóng cửa, biến động so tham chiếu, khối lượng (triệu CP) vs TB 20 phiên.
+### 2. Xu hướng & Động lượng
+Tóm tắt nhận định 5 MAs và ROC theo số liệu đã cho.
+### 3. Thống kê Cổ phiếu & Nhóm ngành
+Top 5 tăng/giảm kèm % | Ngành thu hút/rút tiền kèm % TB | % CP trên MA20/50/200.
+### 4. Market Breadth
+Số mã tăng/giảm/đứng giá VN30, tỷ lệ A/D.
+
+## [TAB:VOLUME]
 ### 1. Thống kê Chỉ báo Khối lượng
-Bảng tóm tắt CMF/VWAP/OBV với giá trị thực tế và nhận định ngắn.
+Bảng CMF/VWAP/OBV với giá trị thực và nhận định ngắn.
 ### 2. Nhận định Dòng tiền
-Dòng tiền ròng vào hay ra (dựa trên CMF và OBV)? Áp lực mua/bán so sánh với VWAP? Có dấu hiệu phân phối không?
-KHÔNG đề cập đến tổ chức hay nhà đầu tư cá nhân.
-"""
-        ai_volume = ask_ai(prompt_volume, "Bạn là chuyên gia Phân tích Dòng tiền & Khối lượng chứng khoán.")
-        volume_markdown = ai_volume if ai_volume else generate_rule_based_analysis(**rb_args, tab_type="volume")
-        time.sleep(3)
-        
-        # 3. Prompt Trend
-        prompt_trend = f"""
-Thống kê xu hướng & biến động {symbol} ngày {time_val}.
+Dòng tiền ròng vào/ra? Áp lực mua/bán vs VWAP? Dấu hiệu phân phối?
 
-Số liệu:
-- Giá đóng cửa: {close:.2f}
-- Nhận định xu hướng theo 5 MAs:
-{trend_assessment}
-- Động lượng (ROC): {roc_str} → {roc_signal}
-- ADX: {safe_float(latest['adx']):.2f} (> 25: xu hướng mạnh | 15-25: trung bình | < 15: đi ngang)
-- ATR: {safe_float(latest['atr']):.2f} điểm/phiên
-- Keltner Upper: {safe_float(latest['keltner_h']):.2f} | Lower: {safe_float(latest['keltner_l']):.2f}
-  Vị trí giá: {'Vượt trên Upper → vùng quá mua' if close > safe_float(latest.get('keltner_h',0)) else ('Thủng dưới Lower → vùng quá bán' if close < safe_float(latest.get('keltner_l',0)) else 'Trong kênh Keltner → bình thường')}
-
-Viết Markdown 2 phần, CHỈ dùng số liệu trên:
+## [TAB:TREND]
 ### 1. Thống kê Xu hướng & Động lượng
 Bảng: MA positions, ROC, ADX, ATR, Keltner.
 ### 2. Nhận định Rủi ro
-Đánh giá sức mạnh xu hướng, mức biến động, vùng giá quan trọng tiếp theo.
+Sức mạnh xu hướng, biến động, vùng giá quan trọng tiếp theo.
 """
-        ai_trend = ask_ai(prompt_trend, "Bạn là chuyên gia Phân tích Kỹ thuật & Quản trị rủi ro chứng khoán.")
-        trend_markdown = ai_trend if ai_trend else generate_rule_based_analysis(**rb_args, tab_type="trend")
-        time.sleep(3)
+
+        ai_response = ask_ai(prompt_all,
+            "Bạn là hệ thống tổng hợp dữ liệu thị trường chứng khoán. "
+            "Trình bày đúng số liệu, không thêm định tính, không suy đoán nguyên nhân, "
+            "không kịch bản/xác suất. Output phải có đúng 3 block ## [TAB:GENERAL], ## [TAB:VOLUME], ## [TAB:TREND].")
+
+        def parse_tab(response, tag):
+            """Tách nội dung theo tag ## [TAB:XXX]"""
+            if not response:
+                return None
+            import re
+            pattern = rf'## \[TAB:{tag}\](.*?)(?=## \[TAB:|$)'
+            match = re.search(pattern, response, re.DOTALL)
+            return match.group(1).strip() if match else None
+
+        if ai_response:
+            general_markdown = parse_tab(ai_response, "GENERAL") or generate_rule_based_analysis(**rb_args, tab_type="general")
+            volume_markdown  = parse_tab(ai_response, "VOLUME")  or generate_rule_based_analysis(**rb_args, tab_type="volume")
+            trend_markdown   = parse_tab(ai_response, "TREND")   or generate_rule_based_analysis(**rb_args, tab_type="trend")
+        else:
+            general_markdown = generate_rule_based_analysis(**rb_args, tab_type="general")
+            volume_markdown  = generate_rule_based_analysis(**rb_args, tab_type="volume")
+            trend_markdown   = generate_rule_based_analysis(**rb_args, tab_type="trend")
+
+        # Delay giữa các symbol để tránh rate limit
+        time.sleep(5)
 
         return {
             "symbol": symbol,
