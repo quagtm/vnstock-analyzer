@@ -1,53 +1,53 @@
 {
   "VNINDEX": {
     "symbol": "VNINDEX",
-    "date": "2026-06-12 00:00:00",
-    "close": 1791.65,
-    "change": -6.959999999999809,
-    "change_pc": -0.38696549001728053,
-    "volume": 640199320.0,
+    "date": "2026-06-15 00:00:00",
+    "close": 1795.55,
+    "change": 3.8999999999998636,
+    "change_pc": 0.21767644350179238,
+    "volume": 586753900.0,
     "technical": {
-      "ma20": 1851.8969999999997,
-      "pivot": 1796.4133333333332,
-      "cmf": 0.024334444053048607,
-      "adx": 32.34119475303375
+      "ma20": 1845.2775000000001,
+      "pivot": 1797.926666666667,
+      "cmf": -0.004988022372522933,
+      "adx": 32.92408150468207
     },
-    "general_markdown": "### 1. Diễn biến phiên giao dịch\n- Giá đóng cửa: 1,791.65 điểm, giảm so với mức mở cửa 1,813.07 điểm.\n- Khối lượng khớp lệnh: 640.199 triệu CP, thấp hơn 9.66% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- Xu hướng ngắn hạn (MA10, MA20): giảm.\n- Xu hướng trung hạn (MA50): giảm.\n- Xu hướng dài hạn (MA100, MA200): hỗn hợp.\n- Chỉ số đang trong vùng phân kỳ xu hướng.\n- ROC10: -3.86% (ngắn hạn), ROC20: -6.76% (trung hạn) → động lượng tiêu cực.\n\n### 3. Thống kê Cổ phiếu & Nhóm ngành\n- **Top 5 tăng mạnh nhất VN30:** TPB (+3.15%), GAS (+3.15%), VJC (+1.86%), TCB (+1.30%), VIB (+1.25%).\n- **Top 5 giảm mạnh nhất VN30:** GVR (-1.13%), LPB (-1.19%), VRE (-1.89%), VPL (-3.23%), VHM (-4.01%).\n- **Ngành thu hút dòng tiền:** Hàng không (+1.86%), Dầu khí (+1.83%), Công nghệ (+0.55%), Ngân hàng (+0.39%), Lọc hóa dầu (+0.18%).\n- **Ngành bị rút dòng tiền:** Hàng tiêu dùng (-0.07%), Thép (-0.43%), Chứng khoán (-0.57%), Bán lẻ (-0.65%), Cao su (-1.13%), Bất động sản (-2.35%).\n- Không có dữ liệu về % cổ phiếu trên MA20/50/200.\n\n### 4. Market Breadth\n- VN30: Tăng 14 mã, Giảm 12 mã, Đứng giá 4 mã.\n- Tỷ lệ A/D: 1.17 — bên mua chiếm ưu thế.",
-    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | 0.0243 | Dòng tiền vào (>0) |\n| VWAP | 1,834.28 | Giá đóng cửa (1,791.65) dưới VWAP |\n| OBV | 50,916,785,110 | - |\n\n### 2. Nhận định Dòng tiền\n- Dòng tiền ròng vào (CMF > 0).\n- Giá đóng cửa dưới VWAP, cho thấy áp lực bán trong phiên.\n- Không có dấu hiệu phân phối từ dữ liệu.",
-    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| MA10/MA20 | - | Xu hướng giảm |\n| MA50 | - | Xu hướng giảm |\n| MA100/MA200 | - | Hỗn hợp |\n| ROC10 | -3.86% | Động lượng tiêu cực ngắn hạn |\n| ROC20 | -6.76% | Động lượng tiêu cực trung hạn |\n| ADX | 32.34 | Xu hướng mạnh (>25) |\n| ATR | 27.89 điểm/phiên | Biến động trung bình |\n| Keltner Upper/Lower | 1,878.98 / 1,825.47 | Giá thủng dưới Lower → quá bán |\n\n### 2. Nhận định Rủi ro\n- Sức mạnh xu hướng: Mạnh (ADX > 25).\n- Biến động: ATR 27.89 điểm/phiên.\n- Vùng giá quan trọng tiếp theo: Giá đang thủng dưới Lower Keltner (1,825.47), vùng quá bán."
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\n- Giá đóng cửa: 1795.55 điểm.\n- Biến động so với tham chiếu: Mở cửa 1804.24, giảm về đóng cửa 1795.55.\n- Khối lượng khớp lệnh: 586.754 triệu CP, thấp hơn 15.81% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- Xu hướng ngắn hạn (MA10, MA20): giảm.\n- Xu hướng trung hạn (MA50): giảm.\n- Xu hướng dài hạn (MA100, MA200): hỗn hợp.\n- Chỉ số đang trong vùng phân kỳ xu hướng.\n- ROC10: -2.66% (ngắn hạn), ROC20: -6.87% (trung hạn) → động lượng tiêu cực.\n- ADX: 32.92 (>25: mạnh).\n- ATR: 28.37 điểm/phiên.\n- Keltner: Upper 1873.06 / Lower 1818.47 → giá thủng dưới Lower, quá bán.\n\n### 3. Thống kê Cổ phiếu & Nhóm ngành\n- **Top 5 tăng mạnh nhất (VN30):** SSI (+3.63%), HPG (+3.45%), MWG (+3.40%), MSN (+1.97%), LPB (+1.76%).\n- **Top 5 giảm mạnh nhất (VN30):** VIC (-1.89%), VHM (-1.95%), GAS (-2.94%), PLX (-3.12%), BSR (-5.69%).\n- **Nhóm ngành thu hút dòng tiền:** Chứng khoán (+3.63%), Thép (+3.45%), Bán lẻ (+3.40%), Hàng không (+1.71%), Ngân hàng (+0.73%), Hàng tiêu dùng (+0.73%), Công nghệ (+0.41%).\n- **Nhóm ngành bị rút dòng tiền:** Bất động sản (-0.67%), Dầu khí (-3.03%), Lọc hóa dầu (-5.69%).\n- (Không có dữ liệu % CP trên MA20/50/200 trong đầu vào.)\n\n### 4. Market Breadth\n- VN30: Tăng 20/30, Giảm 7/30, Đứng giá 3/30.\n- Tỷ lệ A/D: 2.86 — thị trường tích cực, bên mua chiếm ưu thế.",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---------|---------|-----------|\n| CMF | -0.0050 | <0: dòng tiền ra |\n| VWAP | 1827.50 | Giá đang dưới VWAP |\n| OBV | 52438108255 | (Không có nhận định thêm) |\n\n### 2. Nhận định Dòng tiền\n- Dòng tiền ròng: CMF âm (-0.0050) cho thấy dòng tiền ròng ra.\n- Áp lực mua/bán so với VWAP: Giá đóng cửa (1795.55) thấp hơn VWAP (1827.50), cho thấy áp lực bán chiếm ưu thế trong phiên.\n- Dấu hiệu phân phối: Không có dữ liệu để xác nhận dấu hiệu phân phối.",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị / Nhận định |\n|---------|----------------------|\n| MA10, MA20 | Xu hướng giảm |\n| MA50 | Xu hướng giảm |\n| MA100, MA200 | Hỗn hợp |\n| ROC10 | -2.66% (ngắn hạn) |\n| ROC20 | -6.87% (trung hạn) |\n| ADX | 32.92 (xu hướng mạnh) |\n| ATR | 28.37 điểm/phiên |\n| Keltner | Upper 1873.06 / Lower 1818.47 (giá dưới Lower) |\n\n### 2. Nhận định Rủi ro\n- Sức mạnh xu hướng: ADX ở mức 32.92 (>25) cho thấy xu hướng giảm hiện tại có sức mạnh.\n- Biến động: ATR 28.37 điểm/phiên cho thấy biến động giá cao.\n- Vùng giá quan trọng tiếp theo: Giá thủng dưới Lower Keltner (1818.47) và đang ở vùng quá bán."
   },
   "VN30": {
     "symbol": "VN30",
-    "date": "2026-06-12 00:00:00",
-    "close": 1944.36,
-    "change": -2.9200000000000728,
-    "change_pc": -0.1499527546115645,
-    "volume": 343395294.0,
+    "date": "2026-06-15 00:00:00",
+    "close": 1959.13,
+    "change": 14.77000000000021,
+    "change_pc": 0.7596329897755667,
+    "volume": 291330563.0,
     "technical": {
-      "ma20": 1992.8684999999998,
-      "pivot": 1949.1266666666668,
-      "cmf": -0.11326003412851988,
-      "adx": 30.253562707314426
+      "ma20": 1988.5065000000002,
+      "pivot": 1952.1999999999998,
+      "cmf": -0.12109740472465454,
+      "adx": 30.229228635097115
     },
-    "general_markdown": "### 1. Diễn biến phiên giao dịch\n- Giá đóng cửa: 1944.36 điểm.\n- Biến động so tham chiếu: giảm 20.14 điểm.\n- Khối lượng khớp lệnh: 343.395 triệu CP, cao hơn 6.69% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- MA10, MA20: xu hướng giảm.\n- MA50: xu hướng giảm.\n- MA100, MA200: xu hướng hỗn hợp.\n- Chỉ số đang trong vùng phân kỳ xu hướng.\n- ROC10: -2.64% (ngắn hạn), ROC20: -5.18% (trung hạn) → Động lượng tiêu cực.\n\n### 3. Thống kê Cổ phiếu & Nhóm ngành\n- Top 5 tăng mạnh nhất VN30: TPB (+3.15%), GAS (+3.15%), VJC (+1.86%), TCB (+1.30%), VIB (+1.25%).\n- Top 5 giảm mạnh nhất VN30: GVR (-1.13%), LPB (-1.19%), VRE (-1.89%), VPL (-3.23%), VHM (-4.01%).\n- Nhóm ngành thu hút dòng tiền: Hàng không (+1.86%), Dầu khí (+1.83%), Công nghệ (+0.55%), Ngân hàng (+0.39%), Lọc hóa dầu (+0.18%).\n- Nhóm ngành bị rút dòng tiền: Hàng tiêu dùng (-0.07%), Thép (-0.43%), Chứng khoán (-0.57%), Bán lẻ (-0.65%), Cao su (-1.13%), Bất động sản (-2.35%).\n- Không có số liệu % CP trên MA20/50/200.\n\n### 4. Market Breadth\n- VN30: Tăng 14/30, Giảm 12/30, Đứng giá 4/30.\n- Tỷ lệ A/D: 1.17.",
-    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---------|---------|-----------|\n| CMF | -0.1133 | Dòng tiền ra |\n| VWAP | 1982.37 | Giá đang dưới VWAP |\n| OBV | 14264261993 | Không có nhận định |\n\n### 2. Nhận định Dòng tiền\n- Dòng tiền ròng ra (CMF âm).\n- Áp lực bán chiếm ưu thế khi giá đóng cửa dưới VWAP.\n- Không có dấu hiệu phân phối được cung cấp.",
-    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị |\n|---------|---------|\n| MA10, MA20 | Giảm |\n| MA50 | Giảm |\n| MA100, MA200 | Hỗn hợp |\n| ROC10 | -2.64% |\n| ROC20 | -5.18% |\n| ADX | 30.25 (>25: mạnh) |\n| ATR | 26.62 điểm/phiên |\n| Keltner Upper | 2018.28 |\n| Keltner Lower | 1969.90 |\n\n### 2. Nhận định Rủi ro\n- Sức mạnh xu hướng: Mạnh (ADX > 25).\n- Biến động: 26.62 điểm/phiên.\n- Vùng giá quan trọng tiếp theo: Chỉ số đã thủng dưới Lower Keltner (1969.90), rơi vào vùng quá bán."
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\nGiá đóng cửa: 1,959.13 điểm, giảm so với mức mở cửa 1,959.77. Biên độ dao động trong phiên từ 1,944.76 đến 1,967.82. Khối lượng khớp lệnh: 291.331 triệu CP, thấp hơn 8.57% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- Xu hướng ngắn hạn (MA10, MA20): giảm.\n- Xu hướng trung hạn (MA50): giảm.\n- Xu hướng dài hạn (MA100, MA200): hỗn hợp.\n- Chỉ số đang trong vùng phân kỳ xu hướng, cần thêm tín hiệu xác nhận.\n- ROC10: -1.54% (ngắn hạn), ROC20: -4.26% (trung hạn) → Động lượng tiêu cực.\n- ADX: 30.23 (>25: xu hướng mạnh).\n- ATR: 26.40 điểm/phiên.\n- Keltner: Upper 2014.11 / Lower 1965.37 → Giá thủng dưới Lower, vùng quá bán.\n\n### 3. Thống kê Cổ phiếu & Nhóm ngành\n- **Top 5 tăng mạnh nhất (VN30):** SSI (+3.63%), HPG (+3.45%), MWG (+3.40%), MSN (+1.97%), LPB (+1.76%).\n- **Top 5 giảm mạnh nhất (VN30):** VIC (-1.94%), VHM (-1.95%), GAS (-2.70%), PLX (-3.12%), BSR (-5.69%).\n- **Nhóm ngành thu hút dòng tiền:** Chứng khoán (+3.63%), Thép (+3.45%), Bán lẻ (+3.40%), Hàng không (+1.66%), Hàng tiêu dùng (+0.79%), Ngân hàng (+0.72%), Công nghệ (+0.41%), Cao su (+0.14%).\n- **Nhóm ngành bị rút dòng tiền:** Bất động sản (-0.64%), Dầu khí (-2.91%), Lọc hóa dầu (-5.69%).\n- Tỷ lệ % cổ phiếu trên MA20/MA50/MA200: Không có dữ liệu.\n\n### 4. Market Breadth\n- VN30: Tăng: 22/30, Giảm: 7/30, Đứng giá: 1/30.\n- Tỷ lệ A/D: 3.14 — Bên mua chiếm ưu thế.",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định ngắn |\n|---------|---------|----------------|\n| CMF | -0.1211 | Dòng tiền ra (âm) |\n| VWAP | 1,977.45 | Giá đóng cửa dưới VWAP |\n| OBV | 14,828,322,257 | - |\n\n### 2. Nhận định Dòng tiền\n- Dòng tiền ròng: ra (CMF âm: -0.1211).\n- Áp lực mua/bán so với VWAP: Giá đóng cửa (1,959.13) thấp hơn VWAP (1,977.45), cho thấy áp lực bán chiếm ưu thế trong phiên.\n- Dấu hiệu phân phối: Có, khi giá giảm và khối lượng thấp hơn trung bình, kết hợp với dòng tiền ra.",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Ghi chú |\n|---------|---------|---------|\n| MA10/MA20 | - | Xu hướng giảm |\n| MA50 | - | Xu hướng giảm |\n| MA100/MA200 | - | Xu hướng hỗn hợp |\n| ROC10 | -1.54% | Động lượng tiêu cực |\n| ROC20 | -4.26% | Động lượng tiêu cực |\n| ADX | 30.23 | Xu hướng mạnh (>25) |\n| ATR | 26.40 điểm/phiên | Biến động cao |\n| Keltner Lower | 1,965.37 | Giá thủng dưới Lower |\n\n### 2. Nhận định Rủi ro\n- Sức mạnh xu hướng: Mạnh (ADX 30.23).\n- Biến động: Cao (ATR 26.40 điểm/phiên).\n- Vùng giá quan trọng tiếp theo: Vùng hỗ trợ gần nhất là mức thấp trong phiên 1,944.76; vùng kháng cự gần nhất là VWAP 1,977.45 và Keltner Lower 1,965.37."
   },
   "VN100": {
     "symbol": "VN100",
-    "date": "2026-06-12 00:00:00",
-    "close": 1865.93,
-    "change": -5.460000000000036,
-    "change_pc": -0.2917617386007212,
-    "volume": 572125195.0,
+    "date": "2026-06-15 00:00:00",
+    "close": 1877.84,
+    "change": 11.909999999999854,
+    "change_pc": 0.6382876099317689,
+    "volume": 516114211.0,
     "technical": {
-      "ma20": 1918.4195,
-      "pivot": 1871.5766666666668,
-      "cmf": -0.0650266321854036,
-      "adx": 34.61498197041912
+      "ma20": 1913.389,
+      "pivot": 1872.8700000000001,
+      "cmf": -0.08754827387809651,
+      "adx": 34.68742468268315
     },
-    "general_markdown": "### 1. Diễn biến phiên giao dịch\n- Giá đóng cửa: 1.865,93 điểm.\n- Biến động so tham chiếu: giảm.\n- Khối lượng khớp lệnh: 572,125 triệu CP, thấp hơn 9,53% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- Xu hướng ngắn hạn (MA10, MA20): giảm.\n- Xu hướng trung hạn (MA50): giảm.\n- Xu hướng dài hạn (MA100, MA200): hỗn hợp.\n- Kết hợp: chỉ số đang trong vùng phân kỳ xu hướng.\n- ROC10: -3,10% (ngắn hạn); ROC20: -5,90% (trung hạn) → động lượng tiêu cực.\n\n### 3. Thống kê Cổ phiếu & Nhóm ngành\n- **Top 5 tăng mạnh nhất (VN30):** TPB (+3,15%), GAS (+3,15%), VJC (+1,86%), TCB (+1,30%), VIB (+1,25%).\n- **Top 5 giảm mạnh nhất (VN30):** GVR (-1,13%), LPB (-1,19%), VRE (-1,89%), VPL (-3,23%), VHM (-4,01%).\n- **Nhóm ngành thu hút dòng tiền:** Hàng không (+1,86%), Dầu khí (+1,83%), Công nghệ (+0,55%), Ngân hàng (+0,39%), Lọc hóa dầu (+0,18%).\n- **Nhóm ngành bị rút dòng tiền:** Hàng tiêu dùng (-0,07%), Thép (-0,43%), Chứng khoán (-0,57%), Bán lẻ (-0,65%), Cao su (-1,13%), Bất động sản (-2,35%).\n- Dữ liệu không cung cấp % cổ phiếu trên MA20/50/200.\n\n### 4. Market Breadth\n- VN30: Tăng 14/30, Giảm 12/30, Đứng giá 4/30.\n- Tỷ lệ A/D: 1,17 — bên mua chiếm ưu thế.",
-    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---------|---------|-----------|\n| CMF | -0,0650 | Dòng tiền ra (<0) |\n| VWAP | 1.906,56 | Giá đang dưới VWAP |\n| OBV | 45.743.941.691 | Không có nhận định ngắn |\n\n### 2. Nhận định Dòng tiền\n- Dòng tiền ròng ra (CMF < 0).\n- Áp lực bán chiếm ưu thế khi giá đóng cửa dưới VWAP.\n- Không có dữ liệu về dấu hiệu phân phối.",
-    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---------|---------|-----------|\n| MA10/MA20 | Giảm | Xu hướng ngắn hạn giảm |\n| MA50 | Giảm | Xu hướng trung hạn giảm |\n| MA100/MA200 | Hỗn hợp | Xu hướng dài hạn hỗn hợp |\n| ROC10 | -3,10% | Động lượng ngắn hạn tiêu cực |\n| ROC20 | -5,90% | Động lượng trung hạn tiêu cực |\n| ADX | 34,61 | Xu hướng mạnh (>25) |\n| ATR | 26,22 điểm/phiên | Biến động cao |\n| Keltner | Upper: 1.943,58 / Lower: 1.894,85 | Giá thủng dưới Lower → quá bán |\n\n### 2. Nhận định Rủi ro\n- Sức mạnh xu hướng: mạnh (ADX = 34,61 > 25).\n- Biến động: cao (ATR = 26,22 điểm/phiên).\n- Vùng giá quan trọng: Keltner Lower (1.894,85) đã bị phá vỡ."
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\n- Giá đóng cửa: 1,877.84 điểm.\n- Biến động so tham chiếu: không có dữ liệu tham chiếu.\n- Khối lượng khớp lệnh: 516.114 triệu CP, thấp hơn 16.94% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- Xu hướng ngắn hạn (MA10, MA20): giảm.\n- Xu hướng trung hạn (MA50): giảm.\n- Xu hướng dài hạn (MA100, MA200): hỗn hợp.\n- Kết hợp: chỉ số đang trong vùng phân kỳ xu hướng.\n- ROC10: -1.95% (ngắn hạn), ROC20: -5.09% (trung hạn) → động lượng tiêu cực.\n\n### 3. Thống kê Cổ phiếu & Nhóm ngành\n- Top 5 tăng mạnh nhất VN30: HPG (+3.45%), SSI (+3.44%), MWG (+3.40%), MSN (+1.97%), LPB (+1.76%).\n- Top 5 giảm mạnh nhất VN30: VIC (-1.94%), VHM (-1.95%), GAS (-2.94%), PLX (-3.25%), BSR (-5.69%).\n- Nhóm ngành thu hút dòng tiền: Thép (+3.45%), Chứng khoán (+3.44%), Bán lẻ (+3.40%), Hàng không (+1.60%), Hàng tiêu dùng (+0.76%), Ngân hàng (+0.71%), Công nghệ (+0.41%), Cao su (+0.14%).\n- Nhóm ngành bị rút dòng tiền: Bất động sản (-0.69%), Dầu khí (-3.09%), Lọc hóa dầu (-5.69%).\n- % CP trên MA20/50/200: không có dữ liệu.\n\n### 4. Market Breadth\n- VN30: Tăng 21/30, Giảm 8/30, Đứng giá 1/30.\n- Tỷ lệ A/D: 2.62 — thị trường tích cực, bên mua chiếm ưu thế.",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---------|---------|-----------|\n| CMF | -0.0875 | Dòng tiền ra |\n| VWAP | 1,900.56 | Giá đang dưới VWAP |\n| OBV | 47,070,440,859 | Không có nhận định thêm |\n\n### 2. Nhận định Dòng tiền\n- Dòng tiền ròng ra (CMF < 0).\n- Áp lực bán cao hơn mua so với VWAP (giá dưới VWAP).\n- Không có dấu hiệu phân phối từ dữ liệu.",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---------|---------|-----------|\n| MA10/20 | - | Giảm |\n| MA50 | - | Giảm |\n| MA100/200 | - | Hỗn hợp |\n| ROC10 | -1.95% | Tiêu cực ngắn hạn |\n| ROC20 | -5.09% | Tiêu cực trung hạn |\n| ADX | 34.69 | Xu hướng mạnh (>25) |\n| ATR | 26.29 điểm/phiên | Biến động |\n| Keltner Upper/Lower | 1,939.05 / 1,889.48 | Thủng dưới Lower → quá bán |\n\n### 2. Nhận định Rủi ro\n- Sức mạnh xu hướng: mạnh (ADX > 25).\n- Biến động: 26.29 điểm/phiên.\n- Vùng giá quan trọng tiếp theo: không có dữ liệu."
   }
 }
