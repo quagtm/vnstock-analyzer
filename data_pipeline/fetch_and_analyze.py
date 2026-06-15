@@ -562,9 +562,15 @@ Viết 6 section Markdown theo đúng tiêu đề sau (KHÔNG thêm tiêu đề 
 Giá đóng cửa, biến động so tham chiếu, khối lượng (triệu CP) vs TB 20 phiên.
 ### 2. Xu hướng & Động lượng
 Tóm tắt nhận định 5 MAs và ROC theo số liệu đã cho.
-### 3. Thống kê Cổ phiếu & Nhóm ngành
+### 3. Nhận định Xu hướng Tổng hợp
+
+Dựa trên phân kỳ xu hướng ("{divergence_note}"), đưa ra nhận định ngắn gọn 3-5 câu:
+- {symbol} đang trong xu hướng ngắn/trung/dài hạn như thế nào (dùng đúng số liệu MA)?
+- Xu hướng dài hạn có bị đe dọa không (ADX={safe_float(latest['adx']):.1f}, CMF={safe_float(latest['cmf']):.4f}, khối lượng {vol_status})?
+- Ngưỡng MA nào quan trọng nhất cần theo dõi?
+### 4. Thống kê Cổ phiếu & Nhóm ngành
 Top 5 tăng/giảm kèm % theo đúng nhóm {symbol} | Ngành thu hút/rút tiền kèm % TB.
-### 4. Market Breadth & Độ rộng thị trường
+### 5. Market Breadth & Độ rộng thị trường
 Dựa trên dữ liệu: số mã tăng/giảm/đứng, tỷ lệ A/D, % CP trên MA20/50/200, % đồng thời trên MA20+50+200, % chỉ trên MA20+200.
 Phân tích: Thị trường có phân hóa không? Đà tăng/giảm lan tỏa hay tập trung?
 
@@ -584,6 +590,7 @@ Dựa trên dữ liệu phân kỳ xu hướng ("{divergence_note}"), đưa ra n
 2. **Sức bền xu hướng dài hạn**: Dựa trên ADX ({safe_float(latest['adx']):.1f}), CMF ({safe_float(latest['cmf']):.4f}), khối lượng ({vol_status}), khoảng cách tới các ngưỡng MA dài hạn — xu hướng dài hạn có dễ bị phá vỡ không?
 3. **Ngưỡng giá then chốt**: Các mức MA nào là hỗ trợ/kháng cự quan trọng nhất cần theo dõi?
 """
+
 
         ai_response = ask_ai(prompt_all,
             "Bạn là hệ thống tổng hợp dữ liệu thị trường chứng khoán. "
