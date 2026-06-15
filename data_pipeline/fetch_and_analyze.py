@@ -255,46 +255,72 @@ def build_trend_assessment(close, ma_vals):
     return "\n".join(lines) if lines else "Không đủ dữ liệu MA."
 
 
-def compute_ma_breadth(symbols, delay=1.5):
-    """Tính % CP nằm trên MA20/50/200 từ lịch sử, dùng cho VN30 (30 mã)."""
-    start = (datetime.now() - timedelta(days=450)).strftime("%Y-%m-%d")
-    end   = datetime.now().strftime("%Y-%m-%d")
+def compute_breadth_from_board(board_vn30):
+    """
+    Tính breadth metrics từ price_board — ZERO extra API calls.
+    Price_board có sẵn: match_match_price, listing_ref_price, match_52w_high, match_52w_low
+    và các trường khác có thể dùng để xấp xỉ MA.
+    """
+    if board_vn30 is None or board_vn30.empty:
+        return None
+
+    cols = board_vn30.columns.tolist()
+    print(f"  [BREADTH] Available board columns: {cols[:20]}...")
+
     results = []
-    for sym in symbols:
+    for _, row in board_vn30.iterrows():
         try:
-            s = Vnstock().stock(symbol=sym, source='VCI')
-            df = s.quote.history(start=start, end=end, interval='1D')
-            if df is None or df.empty or len(df) < 20:
+            cur = float(row.get('match_match_price', 0) or 0)
+            ref = float(row.get('listing_ref_price', 0) or 0)
+            if cur <= 0 or ref <= 0:
                 continue
-            c     = df['close']
-            last  = float(c.iloc[-1])
-            ma20  = float(c.rolling(20).mean().iloc[-1]) if len(df) >= 20  else None
-            ma50  = float(c.rolling(50).mean().iloc[-1]) if len(df) >= 50  else None
-            ma200 = float(c.rolling(200).mean().iloc[-1]) if len(df) >= 200 else None
-            results.append({
-                'sym': sym,
-                'above20':  ma20  is not None and last > ma20,
-                'above50':  ma50  is not None and last > ma50,
-                'above200': ma200 is not None and last > ma200,
-            })
-            time.sleep(delay)
+
+            # Tìm các cột 52w high/low nếu có
+            w52h = None
+            w52l = None
+            for col in cols:
+                if '52' in col and ('high' in col.lower() or 'h' == col[-1]):
+                    try: w52h = float(row[col] or 0) or None
+                    except: pass
+                if '52' in col and ('low' in col.lower() or 'l' == col[-1]):
+                    try: w52l = float(row[col] or 0) or None
+                    except: pass
+
+            entry = {
+                'change_pc': float(row.get('change_pc', 0) or 0),
+                'above20': None,   # không thể tính được chính xác
+                'above50': None,
+                'above200': None,
+            }
+
+            # Xấp xỉ: nếu giá hiện tại cách đỉnh 52w < 15% → khả năng cao đang trên MA200
+            if w52h and w52l and w52h > 0:
+                pct_from_52h = (cur - w52h) / w52h * 100  # âm = dưới đỉnh
+                pct_from_52l = (cur - w52l) / max(w52l, 1) * 100
+                mid52 = (w52h + w52l) / 2
+                entry['above200'] = cur > mid52   # proxy: trử giữ tốt hơn nửa năm
+
+            results.append(entry)
         except Exception as e:
-            print(f"  breadth skip {sym}: {e}")
+            continue
+
     n = len(results)
     if n == 0:
         return None
-    a20  = sum(1 for r in results if r['above20'])
-    a50  = sum(1 for r in results if r['above50'])
-    a200 = sum(1 for r in results if r['above200'])
-    all3 = sum(1 for r in results if r['above20'] and r['above50'] and r['above200'])
-    a20_200_only = sum(1 for r in results if r['above20'] and r['above200'] and not r['above50'])
+
+    n_up   = sum(1 for r in results if r['change_pc'] > 0)
+    n_down = sum(1 for r in results if r['change_pc'] < 0)
+    n_flat = sum(1 for r in results if r['change_pc'] == 0)
+    # proxy MA200 breadth từ 52w mid
+    n_above_proxy200 = sum(1 for r in results if r['above200'] is True)
+    pct_proxy200 = round(n_above_proxy200 / n * 100, 1) if n > 0 else 0
+
     return {
         'total': n,
-        'pct_above_ma20':       round(a20  / n * 100, 1),
-        'pct_above_ma50':       round(a50  / n * 100, 1),
-        'pct_above_ma200':      round(a200 / n * 100, 1),
-        'pct_above_all3':       round(all3        / n * 100, 1),
-        'pct_above_ma20_ma200': round(a20_200_only / n * 100, 1),
+        'n_up': n_up, 'n_down': n_down, 'n_flat': n_flat,
+        'ratio': round(n_up / max(n_down, 1), 2),
+        'pct_proxy_above_mid52': pct_proxy200,  # proxy cho long-term breadth
+        'has_exact_ma': False,   # chưa có MA chính xác
     }
 
 
@@ -406,19 +432,18 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
                 f"Tỷ lệ A/D: **{ratio}** — {breadth_signal}"
             )
 
-            # MA breadth chi tiết (từ compute_ma_breadth, chỉ có cho VN30)
+            # MA breadth từ price_board — zero extra API calls
             if ma_breadth:
                 b = ma_breadth
-                n = b['total']
+                pct_proxy = b.get('pct_proxy_above_mid52', 'N/A')
                 ma_breadth_str = (
-                    f"**% CP VN30 nằm trên MA (breadth MA):**\n"
-                    f"| Chỉ báo | Số mã | % |"
-                    f"\n|---|---|---|\n"
-                    f"| Trên MA20 | {round(b['pct_above_ma20']*n/100)} / {n} | **{b['pct_above_ma20']}%** |\n"
-                    f"| Trên MA50 | {round(b['pct_above_ma50']*n/100)} / {n} | **{b['pct_above_ma50']}%** |\n"
-                    f"| Trên MA200 | {round(b['pct_above_ma200']*n/100)} / {n} | **{b['pct_above_ma200']}%** |\n"
-                    f"| Đồng thời trên MA20+50+200 | {round(b['pct_above_all3']*n/100)} / {n} | **{b['pct_above_all3']}%** |\n"
-                    f"| Chỉ trên MA20+200 (không MA50) | {round(b['pct_above_ma20_ma200']*n/100)} / {n} | **{b['pct_above_ma20_ma200']}%** |"
+                    f"**Độ rộng thị trường VN30 (từ price board):**\n"
+                    f"| Chỉ số | Giá trị |\n|---|---|\n"
+                    f"| Mã tăng giá (> 0%) | **{b['n_up']} / {b['total']}** = {round(b['n_up']/b['total']*100,1)}% |\n"
+                    f"| Mã giảm giá (< 0%) | **{b['n_down']} / {b['total']}** = {round(b['n_down']/b['total']*100,1)}% |\n"
+                    f"| Mã đứng giá | **{b['n_flat']} / {b['total']}** |\n"
+                    f"| Tỷ lệ Advance/Decline | **{b['ratio']}** |\n"
+                    f"| % mã trên trung điểm 52 tuần (proxy MA200) | **{pct_proxy}%** |"
                 )
 
             # Sector money flow (dùng SECTOR_MAP — chủ yếu chính xác với VN30)
@@ -595,18 +620,12 @@ def main():
     except Exception as e:
         print(f"[BOARDS] Failed: {e}")
 
-    # ── Compute MA breadth cho VN30 (30 calls × 1.5s ≈ 45s) ─────────
+    # ── Compute breadth từ VN30 board — ZERO extra API calls ─────────
     ma_breadth = None
-    print("[MA-BREADTH] Computing VN30 per-stock MA breadth...")
-    try:
-        if 'VN30' in price_boards and not price_boards['VN30'].empty:
-            vn30_list = price_boards['VN30']['listing_symbol'].tolist()
-            ma_breadth = compute_ma_breadth(vn30_list, delay=1.5)
-            if ma_breadth:
-                print(f"[MA-BREADTH] MA20={ma_breadth['pct_above_ma20']}% | MA50={ma_breadth['pct_above_ma50']}% | MA200={ma_breadth['pct_above_ma200']}%")
-                print(f"             All3={ma_breadth['pct_above_all3']}% | MA20+200only={ma_breadth['pct_above_ma20_ma200']}%")
-    except Exception as e:
-        print(f"[MA-BREADTH] Failed: {e}")
+    if 'VN30' in price_boards and not price_boards['VN30'].empty:
+        ma_breadth = compute_breadth_from_board(price_boards['VN30'])
+        if ma_breadth:
+            print(f"[BREADTH] A/D={ma_breadth['n_up']}/{ma_breadth['n_down']} | proxy-MA200={ma_breadth['pct_proxy_above_mid52']}%")
 
     for sym in symbols:
         board = price_boards.get(sym)  # đúng board cho từng index
