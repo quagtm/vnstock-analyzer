@@ -174,6 +174,7 @@ def calculate_technical_indicators(df):
     volume = df['volume']
     
     # Moving Averages
+    df['ma5']  = close.rolling(window=5).mean()
     df['ma10']  = close.rolling(window=10).mean()
     df['ma20']  = close.rolling(window=20).mean()
     df['ma50']  = close.rolling(window=50).mean()
@@ -183,6 +184,10 @@ def calculate_technical_indicators(df):
     # ROC — Rate of Change (động lượng thị trường)
     df['roc10']  = ta.momentum.ROCIndicator(close=close, window=10).roc()   # ngắn hạn
     df['roc20']  = ta.momentum.ROCIndicator(close=close, window=20).roc()   # trung hạn
+
+    # RSI
+    df['rsi5']  = ta.momentum.RSIIndicator(close=close, window=5).rsi()
+    df['rsi14'] = ta.momentum.RSIIndicator(close=close, window=14).rsi()
 
     # Bollinger Bands
     indicator_bb = ta.volatility.BollingerBands(close=close, window=20, window_dev=2)
@@ -253,6 +258,71 @@ def build_trend_assessment(close, ma_vals):
             lines.append(f"- ⚠️ **Kết hợp**: Chỉ số đang trong vùng **phân kỳ xu hướng** — cần thêm tín hiệu xác nhận")
 
     return "\n".join(lines) if lines else "Không đủ dữ liệu MA."
+
+
+def build_trend_narrative(close, ma5, ma10, ma20, return_5d, return_20d, mom5, rsi5, adx20):
+    """
+    Sinh nhận định ngắn/trung hạn dựa trên template PTKT — 100% rule-based, không dùng AI.
+    """
+    # A. Trạng thái ngắn hạn
+    if close > ma5 and close > ma10:
+        st_short = 'Tăng'
+        pos_short = 'trên'
+    elif close < ma5 and close < ma10:
+        st_short = 'Giảm'
+        pos_short = 'dưới'
+    else:
+        st_short = 'Đi ngang'
+        pos_short = 'gần'
+
+    mom5_sign = 'Dương' if mom5 >= 0 else 'Âm'
+    mom5_str  = f'+{mom5:.2f}' if mom5 >= 0 else f'{mom5:.2f}'
+    r5_str    = f'+{return_5d:.2f}%' if return_5d >= 0 else f'{return_5d:.2f}%'
+    momentum_quality = 'mạnh' if (st_short == 'Tăng' and mom5 > 0) or (st_short == 'Giảm' and mom5 < 0) else 'suy yếu'
+    da_str = 'Tăng' if return_5d >= 0 else 'Giảm'
+
+    # C. RSI5
+    if rsi5 >= 70:
+        rsi_phrase = 'cho thấy vùng quá mua, cảnh báo khả năng điều chỉnh kỹ thuật.'
+    elif rsi5 <= 30:
+        rsi_phrase = 'cho thấy vùng quá bán, cơ hội xuất hiện nhịp hồi kỹ thuật.'
+    else:
+        rsi_phrase = 'ở mức trung tính, xu hướng tiếp diễn ổn định.'
+
+    line1 = (
+        f"• **Ngắn hạn ({st_short}):** Giá **{close:.2f}** đang nằm {pos_short} cả đường xu hướng 5 phiên "
+        f"(**{ma5:.2f}**) và đường xu hướng 10 phiên (**{ma10:.2f}**). "
+        f"Đà {da_str.lower()} 5 phiên ({r5_str}) và Mom5 {mom5_sign} ({mom5_str}) "
+        f"xác nhận động lực ngắn hạn **{momentum_quality}**. "
+        f"Tín hiệu hưng phấn (5 phiên) ở **{rsi5:.1f}** {rsi_phrase}"
+    )
+
+    # B. Trạng thái trung hạn
+    if close > ma20:
+        st_mid   = 'Tăng'
+        pos_mid  = 'vượt trên'
+        dir_mid  = 'tăng'
+    else:
+        st_mid   = 'Giảm'
+        pos_mid  = 'nằm dưới'
+        dir_mid  = 'giảm'
+    r20_str = f'+{return_20d:.2f}%' if return_20d >= 0 else f'{return_20d:.2f}%'
+
+    # D. ADX20
+    if adx20 < 20:
+        adx_phrase = 'cho thấy xu hướng yếu hoặc đang tích lũy đi ngang.'
+    elif adx20 < 25:
+        adx_phrase = 'cho thấy xu hướng đang hình thành (từ mức yếu).'
+    else:
+        adx_phrase = 'xác nhận xu hướng hiện tại đang có độ mạnh rất tốt.'
+
+    line2 = (
+        f"• **Trung hạn ({st_mid}):** Giá {pos_mid} đường xu hướng 20 phiên (**{ma20:.2f}**) "
+        f"và {dir_mid} **{r20_str}** trong 20 phiên. "
+        f"Độ mạnh xu hướng (20 phiên) ở **{adx20:.1f}** {adx_phrase}"
+    )
+
+    return line1 + '\n\n' + line2
 
 
 def compute_tas(close, latest, vol_diff, mas):
@@ -462,7 +532,16 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
         current_vol = safe_float(latest.get('volume', 0))
         vol_diff = ((current_vol - vol_20) / vol_20) * 100 if vol_20 > 0 else 0
         vol_status = f"cao hơn {vol_diff:.2f}%" if vol_diff > 0 else f"thấp hơn {abs(vol_diff):.2f}%"
-        
+
+        # Tính return và momentum để dùng trong narrative & TAS
+        close_series = df['close']
+        _c    = safe_float(close_series.iloc[-1])
+        _c5   = safe_float(close_series.iloc[-6])  if len(close_series) >= 6  else _c
+        _c20  = safe_float(close_series.iloc[-21]) if len(close_series) >= 21 else _c
+        return_5d  = ((_c - _c5)  / _c5  * 100) if _c5  > 0 else 0.0
+        return_20d = ((_c - _c20) / _c20 * 100) if _c20 > 0 else 0.0
+        mom5       = _c - _c5  # điểm thay đổi tuyệt đối 5 phiên
+
         # Đánh giá Hỗ trợ / Kháng cự từ MAs
         close = safe_float(latest['close'])
         def eval_ma(c, ma_val):
@@ -768,7 +847,20 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
             "general_markdown": general_markdown,
             "volume_markdown": volume_markdown,
             "trend_markdown": trend_markdown,
-            "tas": compute_tas(close, latest, vol_diff, mas)
+            "tas": {
+                **compute_tas(close, latest, vol_diff, mas),
+                "narrative": build_trend_narrative(
+                    close      = close,
+                    ma5        = safe_float(latest.get('ma5',  0)) or close,
+                    ma10       = safe_float(latest.get('ma10', 0)) or close,
+                    ma20       = safe_float(latest.get('ma20', 0)) or close,
+                    return_5d  = return_5d,
+                    return_20d = return_20d,
+                    mom5       = mom5,
+                    rsi5       = safe_float(latest.get('rsi5', 50)),
+                    adx20      = safe_float(latest.get('adx',  0))
+                )
+            }
         }
 
         
