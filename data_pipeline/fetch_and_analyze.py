@@ -555,24 +555,34 @@ Chỉ dùng số liệu được cung cấp. KHÔNG suy đoán nguyên nhân tă
 {combined_market_str}
 
 === YÊU CẦU OUTPUT ===
-Viết 6 section Markdown theo đúng tiêu đề sau (KHÔNG thêm tiêu đề khác):
+Viết Markdown theo đúng cấu trúc sau (KHÔNG đổi tiêu đề, KHÔNG thêm block mới):
 
 ## [TAB:GENERAL]
 ### 1. Diễn biến phiên giao dịch
 Giá đóng cửa, biến động so tham chiếu, khối lượng (triệu CP) vs TB 20 phiên.
 ### 2. Xu hướng & Động lượng
-Tóm tắt nhận định 5 MAs và ROC theo số liệu đã cho.
+Liệt kê bullet points: từng mã MA (ngắn/trung/dài hạn), ROC, nhận xét tổng hợp.
 ### 3. Nhận định Xu hướng Tổng hợp
+Viết theo đúng 7 mục dưới đây, mỗi mục 1–2 câu ngắn gọn, dùng đúng số liệu được cung cấp:
 
-Dựa trên phân kỳ xu hướng ("{divergence_note}"), đưa ra nhận định ngắn gọn 3-5 câu:
-- {symbol} đang trong xu hướng ngắn/trung/dài hạn như thế nào (dùng đúng số liệu MA)?
-- Xu hướng dài hạn có bị đe dọa không (ADX={safe_float(latest['adx']):.1f}, CMF={safe_float(latest['cmf']):.4f}, khối lượng {vol_status})?
-- Ngưỡng MA nào quan trọng nhất cần theo dõi?
+**Mở đầu:** Một câu đánh giá tổng quan xu hướng và tâm lý thị trường hiện tại ({divergence_note}), kèm lý do chính dựa trên MA và ROC.
+
+**Độ rộng thị trường:** Dựa trên số mã tăng/giảm/đứng và tỷ lệ A/D trong dữ liệu đã cho — đà tăng/giảm có lan tỏa hay chỉ tập trung vào một số mã?
+
+**Thanh khoản:** Khối lượng hiện tại {current_vol/1_000_000:.2f} triệu CP, {vol_status} so TB 20 phiên. Nhận xét mức độ thận trọng hay hưng phấn của dòng tiền.
+
+**Sức khỏe thị trường:** Nhận xét về % mã trên MA20/50/200 từ dữ liệu breadth đã cho. Nếu không có số chính xác, nhận xét từ tỷ lệ A/D và vị trí giá so với MA. Đưa ra kết luận về mức độ lan tỏa của đợt phục hồi/điều chỉnh.
+
+**Khuỳn nghị hành động:**
+- *Cảnh báo:* Một câu cảnh báo chung dựa trên ADX={safe_float(latest['adx']):.1f}, CMF={safe_float(latest['cmf']):.4f}.
+- *Chiến lược:* Giảm tỷ trọng / Đứng ngoài / Mua nhỏ lẻ / Chờ tín hiệu — chỉ chọn một phương án phù hợp nhất.
+
+**Kết luận:** ➡️ **[Tạm đứng ngoài / Giảm tỷ trọng / Tăng tỷ trọng]** (chọn một) — một câu ngắn gói gọn trạng thái thị trường.
+
 ### 4. Thống kê Cổ phiếu & Nhóm ngành
 Top 5 tăng/giảm kèm % theo đúng nhóm {symbol} | Ngành thu hút/rút tiền kèm % TB.
 ### 5. Market Breadth & Độ rộng thị trường
-Dựa trên dữ liệu: số mã tăng/giảm/đứng, tỷ lệ A/D, % CP trên MA20/50/200, % đồng thời trên MA20+50+200, % chỉ trên MA20+200.
-Phân tích: Thị trường có phân hóa không? Đà tăng/giảm lan tỏa hay tập trung?
+Số mã tăng/giảm/đứng, tỷ lệ A/D, phân tích độ phân hóa.
 
 ## [TAB:VOLUME]
 ### 1. Thống kê Chỉ báo Khối lượng
@@ -583,19 +593,29 @@ Dòng tiền ròng vào/ra? Áp lực mua/bán vs VWAP? Dấu hiệu phân phố
 ## [TAB:TREND]
 ### 1. Thống kê Xu hướng & Động lượng
 Bảng: từng MA với giá trị, khoảng cách % tới giá hiện tại (hỗ trợ/kháng cự), ROC, ADX, ATR, Keltner.
-### 2. Nhận định Xu hướng Tổng hợp
+### 2. Phân tích Xu hướng Chi tiết
+Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
 
-Dựa trên dữ liệu phân kỳ xu hướng ("{divergence_note}"), đưa ra nhận định:
-1. **Tình trạng hiện tại**: {symbol} đang trong xu hướng gì? (Viết 1-2 câu rõ ràng, dùng từng xu hướng ngắn/trung/dài hạn)
-2. **Sức bền xu hướng dài hạn**: Dựa trên ADX ({safe_float(latest['adx']):.1f}), CMF ({safe_float(latest['cmf']):.4f}), khối lượng ({vol_status}), khoảng cách tới các ngưỡng MA dài hạn — xu hướng dài hạn có dễ bị phá vỡ không?
-3. **Ngưỡng giá then chốt**: Các mức MA nào là hỗ trợ/kháng cự quan trọng nhất cần theo dõi?
+**Tình trạng xu hướng:** Một câu mô tả rõ {symbol} đang trong xu hướng ngắn hạn/trung hạn/dài hạn gì (ví dụ: “Giảm ngắn và trung hạn, tăng dài hạn”). Phân kỳ: {divergence_note}
+
+**Sức bền xu hướng dài hạn:** Dựa trên:
+- ADX = {safe_float(latest['adx']):.1f} → sức mạnh xu hướng hiện tại (>25 mạnh, <15 yếu)
+- CMF = {safe_float(latest['cmf']):.4f} → dòng tiền vào/ra
+- Khối lượng: {vol_status} so TB 20 phiên
+- Khoảng cách tới MA dài hạn: {ma_dist_str}
+Đưa ra nhận xét: xu hướng dài hạn có dễ/khó bị phá vỡ không?
+
+**Ngưỡng giá then chốt:** Liệt kê 2–3 mức hỗ trợ/kháng cự quan trọng nhất từ các MA, kèm giá trị.
+
+**Kết luận:** ➡️ **[Tạm đứng ngoài / Giảm tỷ trọng / Tăng tỷ trọng]** — một câu ngắn gói gọn trạng thái và định hướng hành động.
 """
 
 
         ai_response = ask_ai(prompt_all,
-            "Bạn là hệ thống tổng hợp dữ liệu thị trường chứng khoán. "
-            "Trình bày đúng số liệu, không thêm định tính, không suy đoán nguyên nhân, "
-            "không kịch bản/xác suất. Output phải có đúng 3 block ## [TAB:GENERAL], ## [TAB:VOLUME], ## [TAB:TREND].")
+            "Bạn là chuyên gia phân tích kỹ thuật và chiến lược thị trường chứng khoán. "
+            "Dùng đúng số liệu được cung cấp, viết ngắn gọn súc tích, không thêm số liệu bẺ, "
+            "không đưa ra xác suất hay kịch bản tự đoán. "
+            "Output phải có đúng 3 block ## [TAB:GENERAL], ## [TAB:VOLUME], ## [TAB:TREND].")
 
         def parse_tab(response, tag):
             """Tách nội dung theo tag ## [TAB:XXX]"""
