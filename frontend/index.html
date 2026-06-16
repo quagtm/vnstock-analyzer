@@ -127,6 +127,57 @@
             </div>
         </div>
 
+        <!-- TAS Section -->
+        <div class="tas-section glass" id="tas-section">
+            <div class="tas-header">
+                <h2><i class='bx bx-compass'></i> Trend Agreement Score</h2>
+                <span class="tas-subtitle">Đồng thuận xu hướng kỹ thuật</span>
+            </div>
+            <div class="tas-body">
+                <!-- Block 1: TAS Gauge -->
+                <div class="tas-gauge-wrap">
+                    <svg class="tas-arc" viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg">
+                        <!-- background arc -->
+                        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="14" stroke-linecap="round"/>
+                        <!-- colored fill arc -->
+                        <path id="tas-arc-fill" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#4ade80" stroke-width="14" stroke-linecap="round"
+                              stroke-dasharray="251" stroke-dashoffset="251"/>
+                        <!-- needle -->
+                        <line id="tas-needle" x1="100" y1="100" x2="100" y2="28" stroke="white" stroke-width="2" stroke-linecap="round"
+                              transform="rotate(0, 100, 100)"/>
+                        <circle cx="100" cy="100" r="5" fill="white"/>
+                    </svg>
+                    <div class="tas-score-display">
+                        <span class="tas-pct" id="tas-pct">0%</span>
+                        <span class="tas-label" id="tas-label">NEUTRAL</span>
+                    </div>
+                    <div class="tas-zones">
+                        <span class="zone-bear">Bearish</span>
+                        <span class="zone-neutral">Neutral</span>
+                        <span class="zone-bull">Bullish</span>
+                    </div>
+                </div>
+
+                <!-- Block 2: Agreement Grid -->
+                <div class="tas-grid-wrap">
+                    <table class="tas-grid" id="tas-grid">
+                        <thead>
+                            <tr>
+                                <th>Nhóm chỉ báo</th>
+                                <th>Chỉ báo</th>
+                                <th>Trạng thái</th>
+                                <th>Điểm</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tas-grid-body">
+                            <!-- filled by JS -->
+                        </tbody>
+                        <tfoot id="tas-grid-foot"></tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <div class="analysis-section glass mt-6">
             <div class="section-header">
                 <i class='bx bx-brain'></i>

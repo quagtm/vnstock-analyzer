@@ -255,6 +255,116 @@ def build_trend_assessment(close, ma_vals):
     return "\n".join(lines) if lines else "Không đủ dữ liệu MA."
 
 
+def compute_tas(close, latest, vol_diff, mas):
+    """
+    Trend Agreement Score (TAS): tính điểm đồng thuận xu hướng từ 9 chỉ báo.
+    Mỗi chỉ báo: Bullish=+1 | Neutral=0 | Bearish=-1
+    Tổng: đưa về % (-100 → +100)
+    """
+    def sf(key): return float(latest.get(key, 0) or 0) if pd.notna(latest.get(key, 0)) else 0.0
+
+    ma_map = dict(mas)
+    ma20  = ma_map.get('MA20',  0)
+    ma50  = ma_map.get('MA50',  0)
+    ma200 = ma_map.get('MA200', 0)
+    ma100 = ma_map.get('MA100', 0)
+    cmf   = sf('cmf')
+    roc10 = sf('roc10')
+    roc20 = sf('roc20')
+    adx   = sf('adx')
+    vwap  = sf('vwap')
+    kh    = sf('keltner_h')
+    kl    = sf('keltner_l')
+
+    indicators = []
+
+    # ── Nhóm 1: Cấu trúc MA (3 chỉ báo) ─────────────────────────────
+    if ma20 > 0:
+        s = 1 if close > ma20 else -1
+        indicators.append({'group': 'Cấu trúc (MA)', 'name': f'Giá vs MA20 ({ma20:.0f})',
+                           'status': 'Bullish' if s > 0 else 'Bearish', 'score': s})
+    if ma50 > 0:
+        s = 1 if close > ma50 else -1
+        indicators.append({'group': 'Cấu trúc (MA)', 'name': f'Giá vs MA50 ({ma50:.0f})',
+                           'status': 'Bullish' if s > 0 else 'Bearish', 'score': s})
+    if ma200 > 0:
+        s = 1 if close > ma200 else -1
+        indicators.append({'group': 'Cấu trúc (MA)', 'name': f'Giá vs MA200 ({ma200:.0f})',
+                           'status': 'Bullish' if s > 0 else 'Bearish', 'score': s})
+
+    # ── Nhóm 2: Động lượng (3 chỉ báo) ─────────────────────────────
+    if roc10 > 1.5:
+        s, st = 1, 'Bullish'
+    elif roc10 < -1.5:
+        s, st = -1, 'Bearish'
+    else:
+        s, st = 0, 'Neutral'
+    indicators.append({'group': 'Động lượng', 'name': f'ROC10 ({roc10:+.1f}%)', 'status': st, 'score': s})
+
+    if roc20 > 2:
+        s, st = 1, 'Bullish'
+    elif roc20 < -2:
+        s, st = -1, 'Bearish'
+    else:
+        s, st = 0, 'Neutral'
+    indicators.append({'group': 'Động lượng', 'name': f'ROC20 ({roc20:+.1f}%)', 'status': st, 'score': s})
+
+    # Keltner channel position
+    if kh > 0 and kl > 0:
+        if close > kh:
+            s, st = 1, 'Bullish'
+        elif close < kl:
+            s, st = -1, 'Bearish'
+        else:
+            mid_k = (kh + kl) / 2
+            s, st = (1, 'Bullish') if close > mid_k else (-1, 'Bearish')
+        indicators.append({'group': 'Động lượng', 'name': f'Keltner ({kl:.0f}–{kh:.0f})', 'status': st, 'score': s})
+
+    # ── Nhóm 3: Dòng tiền (3 chỉ báo) ─────────────────────────────
+    if cmf > 0.05:
+        s, st = 1, 'Bullish'
+    elif cmf < -0.05:
+        s, st = -1, 'Bearish'
+    else:
+        s, st = 0, 'Neutral'
+    indicators.append({'group': 'Dòng tiền', 'name': f'CMF ({cmf:+.3f})', 'status': st, 'score': s})
+
+    if vwap > 0:
+        s = 1 if close > vwap else -1
+        indicators.append({'group': 'Dòng tiền', 'name': f'Giá vs VWAP ({vwap:.0f})',
+                           'status': 'Bullish' if s > 0 else 'Bearish', 'score': s})
+
+    # Volume vs MA20 Vol
+    if vol_diff > 10:
+        s, st = 1, 'Bullish'
+    elif vol_diff < -10:
+        s, st = -1, 'Bearish'
+    else:
+        s, st = 0, 'Neutral'
+    indicators.append({'group': 'Dòng tiền', 'name': f'Vol vs MA20 ({vol_diff:+.0f}%)', 'status': st, 'score': s})
+
+    # ── Tổng hợp TAS ───────────────────────────────────
+    max_score = len(indicators)
+    total     = sum(i['score'] for i in indicators)
+    pct       = round(total / max(max_score, 1) * 100)
+
+    if pct >= 67:   label = 'STRONG BULLISH'
+    elif pct >= 34: label = 'BULLISH'
+    elif pct >= 1:  label = 'WEAK BULLISH'
+    elif pct == 0:  label = 'NEUTRAL'
+    elif pct >= -33: label = 'WEAK BEARISH'
+    elif pct >= -66: label = 'BEARISH'
+    else:            label = 'STRONG BEARISH'
+
+    return {
+        'score': pct,
+        'label': label,
+        'total_raw': total,
+        'max_raw': max_score,
+        'indicators': indicators
+    }
+
+
 def compute_breadth_from_board(board_vn30):
     """
     Tính breadth metrics từ price_board — ZERO extra API calls.
@@ -657,7 +767,8 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
             },
             "general_markdown": general_markdown,
             "volume_markdown": volume_markdown,
-            "trend_markdown": trend_markdown
+            "trend_markdown": trend_markdown,
+            "tas": compute_tas(close, latest, vol_diff, mas)
         }
 
         
