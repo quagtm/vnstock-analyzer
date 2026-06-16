@@ -46,7 +46,85 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchData();
     }, 5 * 60 * 1000);
 
+    // ─── TAS Renderer ────────────────────────────────────────────────
+    function renderTAS(tas) {
+        if (!tas) return;
+
+        const score  = tas.score;   // -100 → +100
+        const label  = tas.label;
+        const indics = tas.indicators || [];
+
+        // Score text
+        const pctEl  = document.getElementById('tas-pct');
+        const lblEl  = document.getElementById('tas-label');
+        if (pctEl)  pctEl.textContent  = (score >= 0 ? '+' : '') + score + '%';
+        if (lblEl) {
+            lblEl.textContent = label;
+            lblEl.className   = 'tas-label ' + (
+                label.includes('STRONG BULL') ? 'lbl-sbull' :
+                label.includes('BULL')        ? 'lbl-bull'  :
+                label.includes('STRONG BEAR') ? 'lbl-sbear' :
+                label.includes('BEAR')        ? 'lbl-bear'  : 'lbl-neutral'
+            );
+        }
+
+        // Gauge arc — arc total length ≈ 251px for a 80r semicircle
+        const arcFill   = document.getElementById('tas-arc-fill');
+        const needle    = document.getElementById('tas-needle');
+        if (arcFill && needle) {
+            const ARC_LEN  = 251;
+            const pct01    = (score + 100) / 200;  // 0 → 1
+            const offset   = ARC_LEN * (1 - pct01);
+            arcFill.style.strokeDashoffset = offset;
+
+            // Color by zone
+            const color = score >= 34 ? '#4ade80' : score >= 1 ? '#a3e635' :
+                          score === 0 ? '#94a3b8' : score >= -33 ? '#fb923c' : '#f87171';
+            arcFill.style.stroke = color;
+
+            // Needle: 0% = -90deg (left), 100% = +90deg (right)
+            const deg = (pct01 * 180) - 90;
+            needle.setAttribute('transform', `rotate(${deg}, 100, 100)`);
+        }
+
+        // Agreement Grid
+        const tbody = document.getElementById('tas-grid-body');
+        const tfoot = document.getElementById('tas-grid-foot');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        let prevGroup = '';
+        indics.forEach(ind => {
+            const tr = document.createElement('tr');
+            const dotClass = ind.status === 'Bullish' ? 'dot-bull' :
+                             ind.status === 'Bearish' ? 'dot-bear' : 'dot-neutral';
+            const scoreStr = ind.score > 0 ? `+${ind.score}` : `${ind.score}`;
+            const groupCell = ind.group !== prevGroup
+                ? `<td class="tas-group-cell" rowspan="1">${ind.group}</td>`
+                : '<td class="tas-group-hidden"></td>';
+            prevGroup = ind.group;
+            tr.innerHTML = `
+                ${groupCell}
+                <td class="tas-name-cell">${ind.name}</td>
+                <td><span class="tas-dot ${dotClass}"></span> <span class="tas-status">${ind.status}</span></td>
+                <td class="tas-score-cell ${ind.score > 0 ? 'pos' : ind.score < 0 ? 'neg' : ''}">${scoreStr}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        // Footer total
+        if (tfoot) {
+            const scoreStr = score >= 0 ? `+${score}%` : `${score}%`;
+            tfoot.innerHTML = `
+                <tr class="tas-total-row">
+                    <td colspan="2"><strong>T\u1ed4NG \u0110I\u1ec2M</strong></td>
+                    <td><strong>${label}</strong></td>
+                    <td class="tas-score-cell ${score > 0 ? 'pos' : score < 0 ? 'neg' : ''}"><strong>${scoreStr}</strong></td>
+                </tr>`;
+        }
+    }
+
     function renderDashboard() {
+
         if (!appData || !appData[currentSymbol]) {
             dashboardContent.innerHTML = `
                 <div class="glass" style="padding: 32px; text-align: center;">
@@ -127,6 +205,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             markdownContainer.innerHTML = html;
         }
+
+        // Render TAS sau khi DOM đã sẵn sàng
+        const tas = data.tas;
+        if (tas) renderTAS(tas);
     }
 
     // Navigation setup
