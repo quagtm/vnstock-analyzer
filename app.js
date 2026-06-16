@@ -208,7 +208,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Render TAS sau khi DOM đã sẵn sàng
         const tas = data.tas;
-        if (tas) renderTAS(tas);
+        if (tas) {
+            renderTAS(tas);
+            // Narrative
+            const narEl = document.getElementById('tas-narrative');
+            if (narEl && tas.narrative) {
+                narEl.innerHTML = window.marked ? marked.parse(tas.narrative) : tas.narrative.replace(/\n/g, '<br>');
+            }
+        }
     }
 
     // Navigation setup
