@@ -338,7 +338,11 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
             return None
             
         latest = calculate_technical_indicators(df)
-        time_val = latest['time'] if 'time' in latest else "N/A"
+        # time_val = ngày phiên từ dữ liệu lịch sử (chỉ lấy phần ngày)
+        candle_date = str(latest['time']).split(' ')[0] if 'time' in latest else datetime.now().strftime('%Y-%m-%d')
+        # run_time = thời điểm pipeline thực sự chạy (ICT = UTC+7)
+        run_time_ict = datetime.utcnow() + timedelta(hours=7)
+        time_val = run_time_ict.strftime('%Y-%m-%d %H:%M') + ' (ICT)'
         
         def safe_float(val):
             return float(val) if pd.notna(val) else 0.0
