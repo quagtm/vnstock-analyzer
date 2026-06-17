@@ -193,7 +193,9 @@ body {
 .main-content {
     flex: 1;
     margin-left: 260px;
-    padding: 32px 48px;
+    padding: 28px 40px;
+    max-width: 1280px;   /* giới hạn độ rộng tối đa — tránh trải quá rộng trên màn hình lớn */
+    margin-right: auto;
 }
 
 /* ── Topbar / Page Title ── */
@@ -201,18 +203,18 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 40px;
+    margin-bottom: 28px;
 }
 
 .page-title h1 {
-    font-size: 34px;
+    font-size: 28px;
     font-weight: 800;
     letter-spacing: -0.03em;
     background: linear-gradient(135deg, #ffffff 0%, #a0c4ff 50%, #a78bfa 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 0 20px rgba(79,142,247,0.3));
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .subtitle {
@@ -250,9 +252,9 @@ body {
 /* ── Stat Cards ── */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-bottom: 28px;
+    grid-template-columns: repeat(4, 1fr);  /* luôn 4 cột, cân bằng đều */
+    gap: 16px;
+    margin-bottom: 24px;
 }
 
 .stat-card {
@@ -525,6 +527,60 @@ body {
     animation: spin 0.9s ease-in-out infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Outsidebox Stock Row Highlight ── */
+/* Áp dụng class cho tr trong markdown table dựa trên nội dung */
+.markdown-body tr.row-top-gain td { background: rgba(16,232,154,0.07) !important; }
+.markdown-body tr.row-top-gain td:first-child { border-left: 3px solid var(--positive) !important; }
+.markdown-body tr.row-top-loss td { background: rgba(255,77,109,0.07) !important; }
+.markdown-body tr.row-top-loss td:first-child { border-left: 3px solid var(--negative) !important; }
+
+/* Auto-highlight rows by detecting % sign via JS — fallback CSS badge style */
+.markdown-body td.cell-positive {
+    color: var(--positive) !important;
+    font-weight: 700;
+}
+.markdown-body td.cell-negative {
+    color: var(--negative) !important;
+    font-weight: 700;
+}
+
+/* Highlight hàng top tăng / giảm trong bảng CP */
+.markdown-body tbody tr:first-child td { border-left: 3px solid rgba(16,232,154,0.6); }
+.markdown-body tbody tr:last-child  td { border-left: 3px solid rgba(255,77,109,0.4); }
+
+/* Section header compact */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: 0;
+}
+.section-header i { font-size: 1.2rem; color: var(--accent-primary); }
+.section-header h2 { font-size: 1rem; font-weight: 700; margin: 0; }
+
+/* Analysis section compact */
+.analysis-section {
+    padding: 0;
+    overflow: hidden;
+}
+.markdown-body {
+    padding: 20px 24px;
+}
+
+/* Stat card compact */
+.stat-card {
+    padding: 16px 18px;
+}
+.stat-value {
+    font-size: 1.4rem !important;
+}
+
+/* mt-6 utility */
+.mt-6 { margin-top: 0; margin-bottom: 20px; }
+
 
 
 /* ── Responsive ── */
