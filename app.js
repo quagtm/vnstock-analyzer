@@ -54,10 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const label  = tas.label;
         const indics = tas.indicators || [];
 
-        // Score text
+        // Score text — hiển thị dương 0–100%, càng cao càng tốt (không dấu âm)
         const pctEl  = document.getElementById('tas-pct');
         const lblEl  = document.getElementById('tas-label');
-        if (pctEl)  pctEl.textContent  = (score >= 0 ? '+' : '') + score + '%';
+        const absPct = Math.abs(score);  // luôn dương
+        if (pctEl)  pctEl.textContent  = absPct + '%';
         if (lblEl) {
             lblEl.textContent = label;
             lblEl.className   = 'tas-label ' + (
@@ -111,9 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
             tbody.appendChild(tr);
         });
 
-        // Footer total
+        // Footer total — dùng abs score
         if (tfoot) {
-            const scoreStr = score >= 0 ? `+${score}%` : `${score}%`;
+            const scoreStr = `${absPct}%`;
             tfoot.innerHTML = `
                 <tr class="tas-total-row">
                     <td colspan="2"><strong>T\u1ed4NG \u0110I\u1ec2M</strong></td>
@@ -204,6 +205,28 @@ document.addEventListener('DOMContentLoaded', () => {
             html = html.replace(/\b(Kháng cự|tiêu cực)\b/gi, '<span style="color: var(--negative); font-weight: 600;">$&</span>');
 
             markdownContainer.innerHTML = html;
+
+            // ── Outsidebox highlight: scan tables sau khi inject HTML ──
+            markdownContainer.querySelectorAll('table').forEach(table => {
+                const rows = Array.from(table.querySelectorAll('tbody tr'));
+                // Tô màu tất cả cell chứa % (dương/âm)
+                rows.forEach(row => {
+                    row.querySelectorAll('td').forEach(td => {
+                        const txt = td.textContent.trim();
+                        const match = txt.match(/([+-]?\d+\.?\d*)\s*%/);
+                        if (match) {
+                            const val = parseFloat(match[1]);
+                            if (val > 0) td.classList.add('cell-positive');
+                            else if (val < 0) td.classList.add('cell-negative');
+                        }
+                    });
+                });
+                // Highlight hàng đầu (top tăng) và hàng cuối (top giảm) — outsidebox style
+                if (rows.length >= 2) {
+                    rows[0].classList.add('row-top-gain');
+                    rows[rows.length - 1].classList.add('row-top-loss');
+                }
+            });
         }
 
         // Render TAS sau khi DOM đã sẵn sàng
