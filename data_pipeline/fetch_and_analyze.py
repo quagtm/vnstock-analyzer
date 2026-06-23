@@ -4,12 +4,22 @@ import io
 import json
 import traceback
 import time
+import warnings
 from datetime import datetime, timedelta
 import pandas as pd
 import ta
 import requests
-from vnstock import Vnstock
+# ── vnstock 4.x API (deprecated Vnstock() class đã bị loại bỏ) ────────────────
+from vnstock.api.quote   import Quote
+from vnstock.api.listing import Listing
+from vnstock.api.trading import Trading
 from openai import OpenAI
+
+# Tắt cảnh báo deprecation và info của vnstock cho sạch log
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+warnings.filterwarnings('ignore', category=FutureWarning)
+import logging
+logging.getLogger('vnstock').setLevel(logging.ERROR)
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -705,8 +715,9 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
         start_date = (datetime.now() - timedelta(days=730)).strftime("%Y-%m-%d")
         end_date = datetime.now().strftime("%Y-%m-%d")
         
-        stock = Vnstock().stock(symbol=symbol, source="VCI")
-        df = stock.quote.history(start=start_date, end=end_date, interval="1D")
+        # ── Lấy lịch sử giá bằng API mới (Quote) ─────────────────
+        quote = Quote(symbol=symbol, source='VCI')
+        df = quote.history(start=start_date, end=end_date, resolution='1D')
         
         if df is None or df.empty:
             print(f"No data for {symbol}")
@@ -1081,20 +1092,24 @@ def main():
     price_boards = {}
     print("[BOARDS] Pre-fetching index price boards...")
     try:
-        v = Vnstock().stock(symbol='VNINDEX', source='VCI')
+        _listing = Listing(source='VCI')
+        _trading = Trading(source='VCI', symbol='VCI')
+
         # Fetch VN30 board
-        vn30_syms = v.listing.symbols_by_group('VN30').tolist()
-        raw_vn30 = v.trading.price_board(symbols_list=vn30_syms)
+        vn30_syms = _listing.symbols_by_group(group='VN30').tolist()
+        raw_vn30 = _trading.price_board(symbols_list=vn30_syms)
         raw_vn30.columns = ['_'.join(c).strip() for c in raw_vn30.columns.values]
         raw_vn30['change_pc'] = (raw_vn30['match_match_price'] - raw_vn30['listing_ref_price']) / raw_vn30['listing_ref_price'] * 100
         price_boards['VN30'] = raw_vn30.sort_values('change_pc', ascending=False)
         time.sleep(2)
+
         # Fetch VN100 board
-        vn100_syms = v.listing.symbols_by_group('VN100').tolist()
-        raw_vn100 = v.trading.price_board(symbols_list=vn100_syms)
+        vn100_syms = _listing.symbols_by_group(group='VN100').tolist()
+        raw_vn100 = _trading.price_board(symbols_list=vn100_syms)
         raw_vn100.columns = ['_'.join(c).strip() for c in raw_vn100.columns.values]
         raw_vn100['change_pc'] = (raw_vn100['match_match_price'] - raw_vn100['listing_ref_price']) / raw_vn100['listing_ref_price'] * 100
         price_boards['VN100'] = raw_vn100.sort_values('change_pc', ascending=False)
+
         # VNINDEX dùng VN100 làm proxy
         price_boards['VNINDEX'] = price_boards['VN100'].copy()
         print(f"[BOARDS] VN30={len(price_boards['VN30'])} mã | VN100={len(price_boards['VN100'])} mã")

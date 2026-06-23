@@ -38,7 +38,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install "vnstock>=4.0.0" --quiet
+          pip install -r requirements.txt --quiet
+          python -c "from vnstock.api.quote import Quote; from vnstock.api.listing import Listing; from vnstock.api.trading import Trading; print('[OK] vnstock 4.x API imports verified')"
           
       - name: Check if market is closed (skip if before 14:45 VN = 07:45 UTC)
         id: market_check
