@@ -18,6 +18,11 @@ on:
     # Keepalive sáng: 8:30 VN (01:30 UTC) — giữ workflow khỏi bị disable
     - cron: '30 1 * * 1-5'
   workflow_dispatch:
+    inputs:
+      force_run:
+        description: 'Bỏ qua market guard và chạy pipeline ngay (true/false)'
+        required: false
+        default: 'true'
 
 permissions:
   contents: write
@@ -42,15 +47,26 @@ jobs:
           pip install -r requirements.txt --quiet
           python -c "from vnstock.api.quote import Quote; from vnstock.api.listing import Listing; from vnstock.api.trading import Trading; print('[OK] vnstock 4.x API imports verified')"
           
-      - name: Check if market is closed (skip if before 14:45 VN = 07:45 UTC)
+      - name: Check if market is closed
         id: market_check
         run: |
+          EVENT="${{ github.event_name }}"
+          FORCE="${{ github.event.inputs.force_run }}"
+
+          # workflow_dispatch với force_run=true → luôn chạy (bypass market guard)
+          if [ "$EVENT" = "workflow_dispatch" ] && [ "$FORCE" != "false" ]; then
+            echo "Manual trigger (workflow_dispatch) — bypass market guard, running pipeline"
+            echo "skip=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
           HOUR_UTC=$(date -u +%H)
           MIN_UTC=$(date -u +%M)
           TOTAL_MIN=$((HOUR_UTC * 60 + MIN_UTC))
           # 07:45 UTC = 14:45 VN (market close)
           MARKET_CLOSE_MIN=$((7 * 60 + 45))
           DAY=$(date -u +%u)  # 1=Mon ... 7=Sun
+
           if [ "$DAY" -ge 6 ]; then
             echo "Weekend — skip"
             echo "skip=true" >> $GITHUB_OUTPUT
@@ -78,7 +94,7 @@ jobs:
           mkdir -p frontend/public
           cp data_pipeline/output/data.json frontend/public/data.json
           echo "Copied data.json successfully"
-          cat frontend/public/data.json | head -5
+          python -c "import json; d=json.load(open('frontend/public/data.json')); sym=list(d.keys())[0]; print('[CHECK] Fields:', list(d[sym].keys()))"
 
       - name: Deploy to GitHub Pages
         if: steps.market_check.outputs.skip != 'true'

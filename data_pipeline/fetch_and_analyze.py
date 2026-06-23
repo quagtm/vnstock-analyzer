@@ -715,9 +715,17 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
         start_date = (datetime.now() - timedelta(days=730)).strftime("%Y-%m-%d")
         end_date = datetime.now().strftime("%Y-%m-%d")
         
-        # ── Lấy lịch sử giá bằng API mới (Quote) ─────────────────
+        # ── Lấy lịch sử giá bằng API mới (Quote v4.x) ─────────────
         quote = Quote(symbol=symbol, source='VCI')
-        df = quote.history(start=start_date, end=end_date, resolution='1D')
+        # v4: dùng start_date/end_date (không phải start/end), resolution thay interval
+        try:
+            df = quote.history(start_date=start_date, end_date=end_date, resolution='1D')
+        except TypeError:
+            # Fallback: thử với tên tham số ngắn hơn (backward-compat)
+            df = quote.history(start=start_date, end=end_date, resolution='1D')
+
+        if df is not None and not df.empty:
+            print(f"[{symbol}] Columns: {list(df.columns[:8])}")
         
         if df is None or df.empty:
             print(f"No data for {symbol}")
@@ -1095,26 +1103,77 @@ def main():
         _listing = Listing(source='VCI')
         _trading = Trading(source='VCI', symbol='VCI')
 
-        # Fetch VN30 board
-        vn30_syms = _listing.symbols_by_group(group='VN30').tolist()
-        raw_vn30 = _trading.price_board(symbols_list=vn30_syms)
-        raw_vn30.columns = ['_'.join(c).strip() for c in raw_vn30.columns.values]
-        raw_vn30['change_pc'] = (raw_vn30['match_match_price'] - raw_vn30['listing_ref_price']) / raw_vn30['listing_ref_price'] * 100
+        def _get_syms(group):
+            """Lấy list mã — handle cả Series lẫn DataFrame trả về."""
+            res = _listing.symbols_by_group(group=group)
+            if hasattr(res, 'tolist'):
+                return res.tolist()
+            if hasattr(res, 'iloc'):
+                return res.iloc[:, 0].tolist()
+            return list(res)
+
+        def _flatten(raw):
+            """Chuẩn hoá columns price_board cho mọi phiên bản vnstock."""
+            # Flatten MultiIndex nếu có
+            if hasattr(raw.columns, 'levels'):
+                raw = raw.copy()
+                raw.columns = ['_'.join(str(x) for x in col if str(x)).strip('_')
+                               for col in raw.columns.values]
+            else:
+                raw = raw.copy()
+
+            print(f"  [board cols] {list(raw.columns[:6])}")
+
+            # Tìm cột giá khớp và giá tham chiếu linh hoạt
+            close_col = next((c for c in raw.columns
+                              if 'match_price' in c or c in ('close', 'price')), None)
+            ref_col   = next((c for c in raw.columns
+                              if 'ref_price' in c or 'reference' in c.lower()
+                              or c in ('ref', 'basic_price')), None)
+
+            if close_col and ref_col and 'change_pc' not in raw.columns:
+                raw['change_pc'] = (
+                    (raw[close_col] - raw[ref_col])
+                    / raw[ref_col].replace(0, float('nan')) * 100
+                )
+            elif 'change_pc' not in raw.columns:
+                raw['change_pc'] = 0.0
+
+            # Alias để downstream code dùng được
+            if close_col and close_col != 'match_match_price':
+                raw['match_match_price'] = raw[close_col]
+            if ref_col and ref_col != 'listing_ref_price':
+                raw['listing_ref_price'] = raw[ref_col]
+
+            # Alias ticker column
+            ticker = next((c for c in raw.columns
+                           if 'code' in c.lower() or c in ('ticker', 'symbol')), None)
+            if ticker and ticker != 'listing_code':
+                raw['listing_code'] = raw[ticker]
+
+            return raw
+
+        # Fetch VN30
+        vn30_syms = _get_syms('VN30')
+        print(f"[BOARDS] VN30={len(vn30_syms)} mã")
+        raw_vn30 = _flatten(_trading.price_board(symbols_list=vn30_syms))
         price_boards['VN30'] = raw_vn30.sort_values('change_pc', ascending=False)
         time.sleep(2)
 
-        # Fetch VN100 board
-        vn100_syms = _listing.symbols_by_group(group='VN100').tolist()
-        raw_vn100 = _trading.price_board(symbols_list=vn100_syms)
-        raw_vn100.columns = ['_'.join(c).strip() for c in raw_vn100.columns.values]
-        raw_vn100['change_pc'] = (raw_vn100['match_match_price'] - raw_vn100['listing_ref_price']) / raw_vn100['listing_ref_price'] * 100
+        # Fetch VN100
+        vn100_syms = _get_syms('VN100')
+        print(f"[BOARDS] VN100={len(vn100_syms)} mã")
+        raw_vn100 = _flatten(_trading.price_board(symbols_list=vn100_syms))
         price_boards['VN100'] = raw_vn100.sort_values('change_pc', ascending=False)
 
         # VNINDEX dùng VN100 làm proxy
         price_boards['VNINDEX'] = price_boards['VN100'].copy()
-        print(f"[BOARDS] VN30={len(price_boards['VN30'])} mã | VN100={len(price_boards['VN100'])} mã")
+        print(f"[BOARDS] Done: VN30={len(price_boards['VN30'])} | VN100={len(price_boards['VN100'])}")
+
     except Exception as e:
         print(f"[BOARDS] Failed: {e}")
+        traceback.print_exc()
+
 
     # ── Compute breadth từ VN30 board — ZERO extra API calls ─────────
     ma_breadth = None
