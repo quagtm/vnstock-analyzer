@@ -127,6 +127,22 @@
             </div>
         </div>
 
+        <!-- Candle Pattern Badges -->
+        <div id="candle-badges" class="candle-badges-row"></div>
+
+        <!-- S/R Zones strip -->
+        <div id="sr-zones" class="sr-zones-strip glass"></div>
+
+        <!-- Sector Heatmap -->
+        <div class="sector-section glass">
+            <div class="sector-header">
+                <i class='bx bx-grid-alt'></i>
+                <span>Phân tích Ngành</span>
+                <span class="sector-sub">% thay đổi TB hôm nay</span>
+            </div>
+            <div id="sector-heatmap" class="sector-heatmap"></div>
+        </div>
+
         <!-- TAS Section -->
         <div class="tas-section glass" id="tas-section">
             <div class="tas-header">
@@ -150,6 +166,14 @@
                     <div class="tas-score-display">
                         <span class="tas-pct" id="tas-pct">0%</span>
                         <span class="tas-label" id="tas-label">NEUTRAL</span>
+                    </div>
+                    <!-- TAS History Sparkline -->
+                    <div class="tas-sparkline-wrap">
+                        <svg id="tas-sparkline" class="tas-sparkline" viewBox="0 0 160 40" preserveAspectRatio="none">
+                            <polyline id="tas-spark-line" points="" fill="none" stroke="#4f8ef7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line id="tas-spark-zero" x1="0" y1="20" x2="160" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="3,3"/>
+                        </svg>
+                        <div class="tas-spark-label">TAS 20 phiên</div>
                     </div>
                     <div class="tas-zones">
                         <span class="zone-bear">Bearish</span>

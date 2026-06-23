@@ -260,6 +260,201 @@ def build_trend_assessment(close, ma_vals):
     return "\n".join(lines) if lines else "Không đủ dữ liệu MA."
 
 
+# ══════════════════════════════════════════════════════════════════
+#  CANDLE PATTERN RECOGNITION
+# ══════════════════════════════════════════════════════════════════
+def detect_candle_patterns(df):
+    """Nhận diện mẫu nến Nhật từ 3 phiên gần nhất — rule-based, không dùng AI."""
+    if df is None or len(df) < 3:
+        return []
+    patterns = []
+
+    def _float(v): return float(v) if pd.notna(v) else 0.0
+
+    c1 = {k: _float(df.iloc[-1][k]) for k in ['open','high','low','close']}
+    c2 = {k: _float(df.iloc[-2][k]) for k in ['open','high','low','close']}
+    c3 = {k: _float(df.iloc[-3][k]) for k in ['open','high','low','close']}
+
+    def body(c):         return abs(c['close'] - c['open'])
+    def upper_sh(c):     return c['high'] - max(c['close'], c['open'])
+    def lower_sh(c):     return min(c['close'], c['open']) - c['low']
+    def rng(c):          return c['high'] - c['low']
+    def bullish(c):      return c['close'] > c['open']
+    def bearish(c):      return c['close'] < c['open']
+
+    r1 = rng(c1)
+    if r1 <= 0:
+        return []
+
+    # 1. Doji — thân nến < 10% biên độ
+    if body(c1) / r1 < 0.10:
+        patterns.append({'name': 'Doji', 'type': 'neutral',
+                         'desc': 'Thị trường do dự, chờ xác nhận chiều'})
+
+    # 2. Hammer — đuôi dưới dài ≥ 2x thân, đuôi trên ngắn
+    elif lower_sh(c1) >= 2 * max(body(c1), 0.001*c1['close']) and upper_sh(c1) <= 0.2 * r1:
+        patterns.append({'name': 'Hammer 🔨', 'type': 'bullish',
+                         'desc': 'Tín hiệu đảo chiều tăng tiềm năng'})
+
+    # 3. Shooting Star — đuôi trên dài ≥ 2x thân, đuôi dưới ngắn
+    elif upper_sh(c1) >= 2 * max(body(c1), 0.001*c1['close']) and lower_sh(c1) <= 0.2 * r1:
+        patterns.append({'name': 'Shooting Star ⭐', 'type': 'bearish',
+                         'desc': 'Tín hiệu đảo chiều giảm tiềm năng'})
+
+    # 4. Marubozu tăng — thân ≥ 90% biên độ, hướng tăng
+    elif bullish(c1) and body(c1) / r1 >= 0.90:
+        patterns.append({'name': 'Marubozu Tăng', 'type': 'bullish',
+                         'desc': 'Lực mua áp đảo, xu hướng tăng mạnh'})
+
+    # 5. Marubozu giảm
+    elif bearish(c1) and body(c1) / r1 >= 0.90:
+        patterns.append({'name': 'Marubozu Giảm', 'type': 'bearish',
+                         'desc': 'Lực bán áp đảo, xu hướng giảm mạnh'})
+
+    # 6. Bullish Engulfing (2 nến)
+    if bearish(c2) and bullish(c1) and c1['close'] > c2['open'] and c1['open'] < c2['close']:
+        patterns.append({'name': 'Bullish Engulfing', 'type': 'bullish',
+                         'desc': 'Bao phủ tăng — đảo chiều mạnh'})
+
+    # 7. Bearish Engulfing
+    elif bullish(c2) and bearish(c1) and c1['close'] < c2['open'] and c1['open'] > c2['close']:
+        patterns.append({'name': 'Bearish Engulfing', 'type': 'bearish',
+                         'desc': 'Bao phủ giảm — đảo chiều mạnh'})
+
+    # 8. Morning Star (3 nến)
+    if (bearish(c3) and body(c2) < 0.35 * body(c3)
+            and bullish(c1) and c1['close'] > (c3['open'] + c3['close']) / 2):
+        patterns.append({'name': 'Morning Star 🌅', 'type': 'bullish',
+                         'desc': 'Sao mai — khả năng đảo chiều tăng trung hạn'})
+
+    # 9. Evening Star (3 nến)
+    elif (bullish(c3) and body(c2) < 0.35 * body(c3)
+            and bearish(c1) and c1['close'] < (c3['open'] + c3['close']) / 2):
+        patterns.append({'name': 'Evening Star 🌆', 'type': 'bearish',
+                         'desc': 'Sao hôm — khả năng đảo chiều giảm trung hạn'})
+
+    return patterns[:3]   # tối đa 3 patterns
+
+
+# ══════════════════════════════════════════════════════════════════
+#  SUPPORT / RESISTANCE ZONES
+# ══════════════════════════════════════════════════════════════════
+def find_sr_zones(df, close, window=5, n_zones=6):
+    """Tìm vùng hỗ trợ/kháng cự từ swing high/low 52 tuần."""
+    if df is None or len(df) < 50:
+        return []
+    # Dùng tối đa 252 phiên (1 năm)
+    sub = df.tail(252).copy()
+    highs = sub['high'].values
+    lows  = sub['low'].values
+
+    sw_highs, sw_lows = [], []
+    for i in range(window, len(highs) - window):
+        if all(highs[i] >= highs[j] for j in range(i - window, i + window + 1) if j != i):
+            sw_highs.append(highs[i])
+        if all(lows[i] <= lows[j] for j in range(i - window, i + window + 1) if j != i):
+            sw_lows.append(lows[i])
+
+    all_levels = sorted(sw_highs + sw_lows)
+    zones, used = [], set()
+
+    for level in all_levels:
+        if id(level) in used:
+            continue
+        cluster = [l for l in all_levels if abs(l - level) / max(level, 1) < 0.012]
+        for l in cluster:
+            used.add(id(l))
+        avg = sum(cluster) / len(cluster)
+        dist_pct = (avg - close) / close * 100
+        zones.append({
+            'level':      round(avg, 2),
+            'type':       'resistance' if avg > close else 'support',
+            'strength':   len(cluster),
+            'dist_pct':   round(dist_pct, 2),
+            'near':       abs(dist_pct) < 1.5,
+        })
+
+    zones.sort(key=lambda z: abs(z['dist_pct']))
+    return zones[:n_zones]
+
+
+# ══════════════════════════════════════════════════════════════════
+#  HISTORICAL TAS (rolling 20 phiên — zero extra API calls)
+# ══════════════════════════════════════════════════════════════════
+def compute_tas_history_fast(df, n=20):
+    """Tính TAS score cho N phiên gần nhất từ df đã có indicators."""
+    history = []
+    if df is None or len(df) < 25:
+        return history
+    vol_ma20 = df['volume'].rolling(20).mean()
+
+    for i in range(-n, 0):
+        try:
+            row = df.iloc[i]
+            close_i = float(row.get('close', 0) or 0)
+            if close_i <= 0:
+                continue
+            vol_i    = float(row.get('volume', 0) or 0)
+            vma_i    = float(vol_ma20.iloc[i]) if pd.notna(vol_ma20.iloc[i]) else vol_i
+            vdiff_i  = ((vol_i - vma_i) / vma_i * 100) if vma_i > 0 else 0
+
+            def _s(k): return float(row.get(k, 0)) if pd.notna(row.get(k)) else 0.0
+            pseudo = {
+                'cmf': _s('cmf'), 'vwap': _s('vwap'),
+                'roc10': _s('roc10'), 'roc20': _s('roc20'),
+                'adx': _s('adx'), 'keltner_h': _s('keltner_h'), 'keltner_l': _s('keltner_l'),
+            }
+            mas_i = [('MA20', _s('ma20')), ('MA50', _s('ma50')), ('MA200', _s('ma200'))]
+            tas_i = compute_tas(close_i, pseudo, vdiff_i, mas_i)
+
+            date_str = str(row['time']).split(' ')[0] if 'time' in row.index else f'D{i}'
+            history.append({'date': date_str, 'score': tas_i['score'], 'label': tas_i['label']})
+        except Exception:
+            continue
+    return history
+
+
+# ══════════════════════════════════════════════════════════════════
+#  SECTOR HEATMAP (từ price_board, zero extra API calls)
+# ══════════════════════════════════════════════════════════════════
+SECTOR_MAP = {
+    'Ngân hàng':         ['VCB','BID','CTG','MBB','TCB','VPB','ACB','HDB','SHB','STB','TPB','LPB','VIB','OCB','MSB'],
+    'Bất động sản':      ['VHM','VIC','NVL','PDR','DXG','KDH','HDC','DIG','NTL','TDC','NLG','SCR'],
+    'Thép - VLXD':       ['HPG','NKG','TLH','POM','HSG','VGS','HT1','BMP'],
+    'Dầu khí':           ['GAS','PLX','PVD','PVS','OIL','BSR','PVC'],
+    'Bán lẻ - Tiêu dùng':['MWG','FRT','MSN','SAB','VNM','MCH','PNJ','VHC','ANV'],
+    'Hàng không - VT':   ['HVN','VJC','GMD','HAH','TCH','SCS'],
+    'Công nghệ - VT':    ['FPT','CMG','VGI','ELC','SGT','FOX'],
+    'Điện - Năng lượng': ['REE','PC1','POW','PPC','VSH','BWE','GEG','TTA'],
+    'Bảo hiểm - TC':     ['BVH','PVI','SSI','VND','HCM','VCI','BSI','AGR'],
+    'Công nghiệp':       ['VGC','DPM','DCM','CSV','CTD','PHR','DRC','CSM'],
+}
+
+
+def compute_sector_heatmap(price_board):
+    """Tính % thay đổi TB mỗi ngành từ price_board — zero extra API calls."""
+    if price_board is None or price_board.empty:
+        return []
+
+    # Tìm cột ticker (linh hoạt với tên cột sau flatten)
+    ticker_col = next((c for c in price_board.columns
+                       if 'code' in c.lower() or 'ticker' in c.lower() or c == 'listing_code'), None)
+    if ticker_col is None:
+        return []
+
+    result = []
+    for sector, tickers in SECTOR_MAP.items():
+        mask = price_board[ticker_col].isin(tickers)
+        grp  = price_board[mask]
+        if grp.empty:
+            continue
+        avg_chg = round(grp['change_pc'].mean(), 2)
+        result.append({'sector': sector, 'avg_change': avg_chg, 'count': int(mask.sum())})
+
+    result.sort(key=lambda x: x['avg_change'], reverse=True)
+    return result
+
+
 def build_trend_narrative(close, ma5, ma10, ma20, return_5d, return_20d, mom5, rsi5, adx20):
     """
     Sinh nhận định ngắn/trung hạn dựa trên template PTKT — 100% rule-based, không dùng AI.
@@ -859,8 +1054,11 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
                     mom5       = mom5,
                     rsi5       = safe_float(latest.get('rsi5', 50)),
                     adx20      = safe_float(latest.get('adx',  0))
-                )
-            }
+                ),
+                "history": compute_tas_history_fast(df)
+            },
+            "candle_patterns": detect_candle_patterns(df),
+            "sr_zones":        find_sr_zones(df, close),
         }
 
         
@@ -922,6 +1120,17 @@ def main():
 
     out_dir = "output"
     os.makedirs(out_dir, exist_ok=True)
+
+    # Sector heatmap từ VN100 board — đủ đại diện, zero extra API
+    sector_heatmap = []
+    if 'VN100' in price_boards and not price_boards['VN100'].empty:
+        sector_heatmap = compute_sector_heatmap(price_boards['VN100'])
+        print(f"[SECTOR] {len(sector_heatmap)} ngành computed")
+
+    # Gắn sector_heatmap vào tất cả index
+    for sym in all_data:
+        all_data[sym]['sector_heatmap'] = sector_heatmap
+
     with open(f"{out_dir}/data.json", "w", encoding="utf-8") as f:
         json.dump(all_data, f, ensure_ascii=False, indent=2)
     print(f"Successfully generated {out_dir}/data.json")

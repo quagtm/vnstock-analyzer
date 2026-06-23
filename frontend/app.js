@@ -46,6 +46,86 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchData();
     }, 5 * 60 * 1000);
 
+    // ─── Candle Pattern Badges ────────────────────────────────────
+    function renderCandleBadges(patterns) {
+        const el = document.getElementById('candle-badges');
+        if (!el) return;
+        if (!patterns || patterns.length === 0) { el.style.display = 'none'; return; }
+        el.style.display = 'flex';
+        el.innerHTML = patterns.map(p => {
+            const cls = p.type === 'bullish' ? 'badge-bull' : p.type === 'bearish' ? 'badge-bear' : 'badge-neutral';
+            return `<div class="candle-badge ${cls}">
+                <span class="badge-name">${p.name}</span>
+                <span class="badge-desc">${p.desc}</span>
+            </div>`;
+        }).join('');
+    }
+
+    // ─── S/R Zones Strip ─────────────────────────────────────────
+    function renderSRZones(zones) {
+        const el = document.getElementById('sr-zones');
+        if (!el) return;
+        if (!zones || zones.length === 0) { el.style.display = 'none'; return; }
+        el.style.display = 'flex';
+        const items = zones.map(z => {
+            const isNear = z.near;
+            const cls  = z.type === 'resistance' ? 'sr-resist' : 'sr-support';
+            const nearBadge = isNear ? '<span class="sr-near">⚠️ Gần</span>' : '';
+            const sign = z.dist_pct >= 0 ? '+' : '';
+            return `<div class="sr-zone ${cls} ${isNear ? 'sr-zone-near' : ''}">
+                <span class="sr-type">${z.type === 'resistance' ? '🔴 KC' : '🟢 HT'}</span>
+                <span class="sr-level">${z.level.toFixed(2)}</span>
+                <span class="sr-dist">${sign}${z.dist_pct.toFixed(1)}%</span>
+                ${nearBadge}
+            </div>`;
+        }).join('');
+        el.innerHTML = `<div class="sr-label"><i class='bx bx-layer'></i> Hỗ trợ / Kháng cự (52 tuần)</div><div class="sr-zones-list">${items}</div>`;
+    }
+
+    // ─── Sector Heatmap ───────────────────────────────────────────
+    function renderSectorHeatmap(sectors) {
+        const el = document.getElementById('sector-heatmap');
+        if (!el) return;
+        if (!sectors || sectors.length === 0) { el.innerHTML = '<span style="color:var(--text-secondary);font-size:.8rem;padding:8px">Chưa có dữ liệu ngành</span>'; return; }
+        el.innerHTML = sectors.map(s => {
+            const v   = s.avg_change;
+            const abs = Math.abs(v);
+            // Color intensity: capped at 3%
+            const intensity = Math.min(abs / 3, 1);
+            const r = v < 0 ? Math.round(255 * intensity) : 0;
+            const g = v > 0 ? Math.round(180 * intensity) : 0;
+            const alpha = 0.08 + intensity * 0.35;
+            const bg  = v > 0 ? `rgba(16,232,154,${alpha})` : v < 0 ? `rgba(255,77,109,${alpha})` : 'rgba(255,255,255,0.05)';
+            const clr = v > 0 ? '#10e89a' : v < 0 ? '#ff4d6d' : '#94a3b8';
+            const sign = v >= 0 ? '+' : '';
+            return `<div class="sector-cell" style="background:${bg};border-color:${clr}22;">
+                <span class="sector-name">${s.sector}</span>
+                <span class="sector-chg" style="color:${clr}">${sign}${v.toFixed(2)}%</span>
+                <span class="sector-cnt">${s.count} CP</span>
+            </div>`;
+        }).join('');
+    }
+
+    // ─── TAS Sparkline (20 sessions) ─────────────────────────────
+    function renderTASSparkline(history) {
+        const line = document.getElementById('tas-spark-line');
+        if (!line || !history || history.length < 2) return;
+        const scores = history.map(h => h.score);
+        const minS = Math.min(...scores), maxS = Math.max(...scores);
+        const range = maxS - minS || 1;
+        const W = 160, H = 40, PAD = 4;
+        const pts = scores.map((s, i) => {
+            const x = PAD + (i / (scores.length - 1)) * (W - 2 * PAD);
+            const y = H - PAD - ((s - minS) / range) * (H - 2 * PAD);
+            return `${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(' ');
+        line.setAttribute('points', pts);
+        // Color by latest TAS
+        const last = scores[scores.length - 1];
+        const color = last >= 34 ? '#4ade80' : last >= 0 ? '#a3e635' : last >= -33 ? '#fb923c' : '#f87171';
+        line.setAttribute('stroke', color);
+    }
+
     // ─── TAS Renderer ────────────────────────────────────────────────
     function renderTAS(tas) {
         if (!tas) return;
@@ -229,16 +309,25 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Render TAS sau khi DOM đã sẵn sàng
+        // Render TAS + sparkline + narrative
         const tas = data.tas;
         if (tas) {
             renderTAS(tas);
-            // Narrative
+            renderTASSparkline(tas.history || []);
             const narEl = document.getElementById('tas-narrative');
             if (narEl && tas.narrative) {
                 narEl.innerHTML = window.marked ? marked.parse(tas.narrative) : tas.narrative.replace(/\n/g, '<br>');
             }
         }
+
+        // Render candle pattern badges
+        renderCandleBadges(data.candle_patterns || []);
+
+        // Render S/R zones strip
+        renderSRZones(data.sr_zones || []);
+
+        // Render sector heatmap
+        renderSectorHeatmap(data.sector_heatmap || []);
     }
 
     // Navigation setup
