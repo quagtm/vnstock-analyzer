@@ -44,7 +44,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt --quiet
-          python -c "from vnstock import Vnstock; print('[OK] vnstock import verified')"
+          python -c "
+import warnings
+warnings.filterwarnings('ignore')
+import logging
+logging.disable(logging.CRITICAL)
+from vnstock import Vnstock
+v = Vnstock()
+print(f'[OK] vnstock imported: {type(v).__name__}')
+"
           
       - name: Check if market is closed
         id: market_check
