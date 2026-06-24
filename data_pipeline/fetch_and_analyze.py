@@ -9,13 +9,13 @@ from datetime import datetime, timedelta
 import pandas as pd
 import ta
 import requests
-# Suppress vnstock deprecation/info warnings
+# vnstock v4 - dùng explorer.vci trực tiếp (API stable)
 import logging
-warnings.filterwarnings('ignore', category=DeprecationWarning)
-warnings.filterwarnings('ignore', category=FutureWarning)
 warnings.filterwarnings('ignore')
-logging.disable(logging.CRITICAL)  # tắt toàn bộ log của vnstock
-from vnstock import Quote, Listing, Trading
+logging.disable(logging.CRITICAL)
+from vnstock.explorer.vci import Quote as VCIQuote
+from vnstock.explorer.vci import Listing as VCIListing
+from vnstock.explorer.vci import Trading as VCITrading
 from openai import OpenAI
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -711,15 +711,9 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
     try:
         start_date = (datetime.now() - timedelta(days=730)).strftime("%Y-%m-%d")
         end_date = datetime.now().strftime("%Y-%m-%d")
-        # ── Lấy lịch sử giá bằng vnstock v4 Quote API ─────────────────
-        q = Quote(symbol=symbol, source='VCI')
-        try:
-            df = q.history(start=start_date, end=end_date, interval='1D')
-        except Exception:
-            try:
-                df = q.history(start=start_date, end=end_date, interval='1d')
-            except Exception:
-                df = q.history(start=start_date, end=end_date, interval='D')
+        # ── Lấy lịch sử giá bằng vnstock.explorer.vci (source code đã xác nhận) ──
+        q = VCIQuote(symbol=symbol, show_log=False)
+        df = q.history(start=start_date, end=end_date, interval='1D')
 
         if df is None or df.empty:
             print(f"No data for {symbol}")
@@ -1091,51 +1085,61 @@ def main():
         "VN30":    "VN30",
         "VN100":   "VN100",
     }
+    # VN30/VN100 fallback (nếu API không lấy được group syms)
+    VN30_FALLBACK = [
+        'ACB','BCM','BID','BVH','CTG','FPT','GAS','GVR','HDB','HPG',
+        'MBB','MSN','MWG','NVL','PDR','PLX','POW','SAB','SHB','SSB',
+        'SSI','STB','TCB','TPB','VCB','VHM','VIB','VIC','VJC','VNM',
+    ]
+    VN100_FALLBACK = VN30_FALLBACK + [
+        'AAA','AGG','AGR','ANV','BAF','BCG','BSI','BWE','C4G','CAV',
+        'CII','CMG','CRE','CSV','CTD','DBC','DCM','DGC','DGW','DHC',
+        'DIG','DPM','DQC','DRC','DXG','EIB','EVF','FCN','FRT','GEX',
+        'GMD','GTC','HAH','HCM','HDC','HDG','HSG','HT1','IMP','IPA',
+        'KBC','KDC','KDH','KHG','KOS','LCG','LPB','LTG','MCH','MIG',
+        'MSB','NAB','NAV','NKG','NT2','NTL','OCB','OGC','PAN','PC1',
+        'PNJ','PSH','PVD','PVT','QNS','REE','SBT','SCS','SJS','SKG',
+        'SRC','SZC','TCH','TDH','TDM','TIP','TLG','TMP','TNH','VCI',
+    ]
     price_boards = {}
     print("[BOARDS] Pre-fetching index price boards...")
     sys.stdout.flush()
     try:
-        _listing = Listing(source='VCI')
-        _trading = Trading(source='VCI')
+        _listing  = VCIListing(show_log=False)
+        _trading  = VCITrading(show_log=False)
 
-        def _get_group_syms(group):
-            """Lấy danh sách mã theo nhóm. Hỗ trợ cả v3 lẫn v4 API."""
+        # Lấy danh sách mã — fallback sang hardcode nếu API không có phương thức
+        def _get_group_syms(group, fallback):
             try:
-                res = _listing.symbols_by_group(group)
-            except Exception:
-                try:
-                    res = _listing.symbols_by_group(group=group)
-                except Exception as e:
-                    print(f"  [BOARDS] symbols_by_group failed: {e}")
-                    return []
-            if res is None:
-                return []
-            if isinstance(res, list):
-                return res
-            if hasattr(res, 'tolist'):
-                return res.tolist()
-            if hasattr(res, 'iloc'):
-                col = next((c for c in res.columns
-                            if 'symbol' in c.lower() or 'ticker' in c.lower() or 'code' in c.lower()), None)
-                return res[col].tolist() if col else res.iloc[:, 0].tolist()
-            return list(res)
+                df_all = _listing.all_symbols()
+                # Tìm cột chứa thông tin group/index
+                grp_col = next(
+                    (c for c in df_all.columns
+                     if 'group' in c.lower() or 'index' in c.lower() or 'type' in c.lower()),
+                    None
+                )
+                if grp_col:
+                    filtered = df_all[df_all[grp_col].str.contains(group, case=False, na=False)]
+                    ticker_col = next(
+                        (c for c in filtered.columns
+                         if 'ticker' in c.lower() or 'symbol' in c.lower() or 'code' in c.lower()),
+                        filtered.columns[0]
+                    )
+                    syms = filtered[ticker_col].tolist()
+                    if syms:
+                        return syms
+            except Exception as e:
+                print(f"  [BOARDS] all_symbols filter failed: {e}")
+            return fallback  # hardcode fallback
 
-        def _get_board(syms):
-            """Lấy price board và chuẩn hoá columns."""
-            try:
-                raw = _trading.price_board(syms)           # positional (v4)
-            except TypeError:
-                raw = _trading.price_board(symbols_list=syms)  # keyword (v3)
-            # Flatten MultiIndex nếu có
+        def _normalize_board(raw):
+            """Chuẩn hoá columns price_board."""
             if hasattr(raw.columns, 'levels'):
                 raw.columns = ['_'.join(str(x) for x in col if str(x))
                                for col in raw.columns.values]
             raw.columns = [str(c).strip() for c in raw.columns]
-            print(f"  [board cols] {list(raw.columns[:6])}")
-            sys.stdout.flush()
-            # Tính change_pc
-            cp = next((c for c in raw.columns if 'match_price' in c or c == 'close' or c == 'price'), None)
-            rp = next((c for c in raw.columns if 'ref_price' in c or c == 'ref' or 'reference' in c.lower()), None)
+            cp = next((c for c in raw.columns if 'match_price' in c or c in ('close', 'price')), None)
+            rp = next((c for c in raw.columns if 'ref_price' in c or c in ('ref',)), None)
             if cp and rp:
                 raw['change_pc'] = (raw[cp] - raw[rp]) / raw[rp].replace(0, float('nan')) * 100
                 if 'match_match_price' not in raw.columns:
@@ -1144,34 +1148,30 @@ def main():
                     raw['listing_ref_price'] = raw[rp]
             else:
                 raw['change_pc'] = 0.0
-            # Alias ticker column
             tc = next((c for c in raw.columns
                        if 'code' in c.lower() or c in ('ticker', 'symbol')), None)
             if tc and 'listing_code' not in raw.columns:
                 raw['listing_code'] = raw[tc]
             return raw
 
-        # Fetch VN30 board
-        vn30_syms = _get_group_syms('VN30')
+        # Fetch VN30
+        vn30_syms = _get_group_syms('VN30', VN30_FALLBACK)
         print(f"[BOARDS] VN30={len(vn30_syms)} mã")
         sys.stdout.flush()
-        if vn30_syms:
-            raw_vn30 = _get_board(vn30_syms)
-            price_boards['VN30'] = raw_vn30.sort_values('change_pc', ascending=False)
+        raw_vn30 = _trading.price_board(symbols_list=vn30_syms)
+        price_boards['VN30'] = _normalize_board(raw_vn30).sort_values('change_pc', ascending=False)
         time.sleep(2)
 
-        # Fetch VN100 board
-        vn100_syms = _get_group_syms('VN100')
+        # Fetch VN100
+        vn100_syms = _get_group_syms('VN100', VN100_FALLBACK)
         print(f"[BOARDS] VN100={len(vn100_syms)} mã")
         sys.stdout.flush()
-        if vn100_syms:
-            raw_vn100 = _get_board(vn100_syms)
-            price_boards['VN100'] = raw_vn100.sort_values('change_pc', ascending=False)
+        raw_vn100 = _trading.price_board(symbols_list=vn100_syms)
+        price_boards['VN100'] = _normalize_board(raw_vn100).sort_values('change_pc', ascending=False)
 
-        # VNINDEX dùng VN100 làm proxy
         if 'VN100' in price_boards:
             price_boards['VNINDEX'] = price_boards['VN100'].copy()
-        print(f"[BOARDS] Done: VN30={len(price_boards.get('VN30', []))} | VN100={len(price_boards.get('VN100', []))}")
+        print(f"[BOARDS] Done: VN30={len(price_boards.get('VN30',[]))} | VN100={len(price_boards.get('VN100',[]))}")
         sys.stdout.flush()
 
     except Exception as e:

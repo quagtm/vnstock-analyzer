@@ -44,7 +44,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt --quiet
-          python -c "import warnings; warnings.filterwarnings('ignore'); import logging; logging.disable(logging.CRITICAL); from vnstock import Quote, Listing, Trading; print('[OK] vnstock v4 imports ok')"
+          python -c "import warnings; warnings.filterwarnings('ignore'); import logging; logging.disable(logging.CRITICAL); from vnstock.explorer.vci import Quote, Listing, Trading; print('[OK] vnstock.explorer.vci imports ok')"
           
       - name: Check if market is closed
         id: market_check
