@@ -1,242 +1,686 @@
 {
   "VNINDEX": {
     "symbol": "VNINDEX",
-    "date": "2026-06-22 18:10 (ICT)",
-    "close": 1857.91,
-    "change": 33.38000000000011,
-    "change_pc": 1.8295122579513687,
-    "volume": 517581557.0,
+    "date": "2026-06-24 16:48 (ICT)",
+    "close": 1878.02,
+    "change": 8.980000000000018,
+    "change_pc": 0.48046055729144466,
+    "volume": 633056398.0,
     "technical": {
-      "ma20": 1827.5075000000002,
-      "pivot": 1820.5366666666666,
-      "cmf": 0.09994788976782262,
-      "adx": 31.842460031548846
+      "ma20": 1826.9300000000003,
+      "pivot": 1873.0133333333333,
+      "cmf": 0.055607981942386135,
+      "adx": 27.741937482131146
     },
-    "general_markdown": "### 1. Diễn biến phiên giao dịch\nVNINDEX đóng cửa tại 1857.91, tăng 30.38 điểm so với tham chiếu. Khối lượng khớp lệnh đạt 517.582 triệu CP, thấp hơn 20.12% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- Ngắn hạn (MA10, MA20): xu hướng tăng.\n- Trung hạn (MA50): xu hướng tăng.\n- Dài hạn (MA100, MA200): xu hướng tăng.\n- ROC10: +3.76% (ngắn hạn tăng), ROC20: -1.49% (trung hạn giảm) → động lượng phân kỳ.\n- Nhận xét tổng hợp: VNINDEX trên tất cả MAs, xu hướng tăng đồng thuận toàn bộ khung thời gian.\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** VNINDEX trên tất cả MAs, xu hướng tăng đồng thuận toàn bộ khung thời gian, nhưng động lượng trung hạn ROC20 âm (-1.49%) cho thấy đà tăng có dấu hiệu chững lại.\n\n**Độ rộng thị trường:** Số mã giảm (46) nhiều hơn số mã tăng (43) trên VNINDEX, tỷ lệ A/D là 0.93 (bên bán chiếm ưu thế). Đà tăng không lan tỏa mà tập trung vào một số mã trụ.\n\n**Thanh khoản:** Khối lượng 517.58 triệu CP, thấp hơn 20.12% so với trung bình 20 phiên, thể hiện sự thận trọng của dòng tiền.\n\n**Sức khỏe thị trường:** VNINDEX đóng cửa trên tất cả các MA, nhưng độ rộng hẹp và thanh khoản thấp cho thấy đợt phục hồi thiếu sự lan tỏa rộng khắp.\n\n**Khuỳn nghị hành động:**\n- *Cảnh báo:* ADX ở mức 31.84 cho thấy xu hướng mạnh, nhưng CMF=0.0999 (dương yếu) và khối lượng thấp cảnh báo rủi ro điều chỉnh nếu dòng tiền suy yếu.\n- *Chiến lược:* Giảm tỷ trọng.\n\n**Kết luận:** ➡️ **Giảm tỷ trọng** — thị trường tăng điểm nhưng thiếu động lượng và dòng tiền, độ rộng hẹp.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n**Top 5 tăng:** VIC (+6.96%), VHM (+6.95%), PC1 (+5.88%), VRE (+4.60%), BMP (+4.34%).\n**Top 5 giảm:** GMD (-1.82%), KDH (-2.17%), DXG (-2.26%), IMP (-2.86%), SJS (-3.24%).\n**Nhóm ngành thu hút dòng tiền:** Bất động sản (+4.87%), Lọc hóa dầu (+1.34%), Dầu khí (+0.31%), Chứng khoán (+0.18%), Ngân hàng (+0.10%).\n**Nhóm ngành bị rút dòng tiền:** Hàng tiêu dùng (-0.42%), Hàng không (-0.71%), Bán lẻ (-1.03%), Công nghệ (-1.26%), Cao su (-1.71%).\n\n### 5. Market Breadth & Độ rộng thị trường\nTrên VNINDEX (100 mã): Tăng 43, Giảm 46, Đứng 11. Tỷ lệ A/D = 0.93. Thị trường phân hóa mạnh, bên bán chiếm ưu thế nhẹ.",
-    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | 0.0999 | Dòng tiền vào nhưng yếu |\n| VWAP | 1810.87 | Giá đóng cửa (1857.91) trên VWAP |\n| OBV | 51139124655 | - |\n\n### 2. Nhận định Dòng tiền\nDòng tiền ròng vào nhưng yếu (CMF=0.0999). Giá đóng cửa trên VWAP cho thấy áp lực mua trong phiên. Khối lượng thấp hơn 20.12% so với trung bình 20 phiên, không có dấu hiệu phân phối rõ rệt.",
-    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách tới giá | Vai trò |\n|---|---|---|---|\n| MA10 | 1811.34 | +2.57% | Hỗ trợ |\n| MA20 | 1827.51 | +1.66% | Hỗ trợ |\n| MA50 | 1847.82 | +0.55% | Hỗ trợ |\n| MA100 | 1801.99 | +3.10% | Hỗ trợ |\n| MA200 | 1754.52 | +5.89% | Hỗ trợ |\n| ROC10 | +3.76% | - | - |\n| ROC20 | -1.49% | - | - |\n| ADX | 31.84 | - | Xu hướng mạnh |\n| ATR | 28.59 điểm/phiên | - | - |\n| Keltner Upper | 1851.63 | Giá vượt trên | Quá mua |\n\n### 2. Phân tích Xu hướng Chi tiết\n**Tình trạng xu hướng:** VNINDEX đang trong xu hướng tăng ở ngắn hạn, trung hạn và dài hạn. Phân kỳ: VNINDEX trên tất cả MAs — xu hướng tăng đồng thuận toàn bộ khung thời gian.\n\n**Sức bền xu hướng dài hạn:** ADX=31.84 cho thấy xu hướng mạnh. Tuy nhiên, CMF=0.0999 (dòng tiền vào yếu) và khối lượng thấp hơn 20.12% so với TB 20 phiên cho thấy sức bền xu hướng dài hạn có thể bị thử thách. Khoảng cách tới các MA dài hạn (MA100, MA200) vẫn dương, hỗ trợ xu hướng.\n\n**Ngưỡng giá then chốt:**\n- Hỗ trợ gần nhất: MA50 tại 1847.82.\n- Hỗ trợ tiếp theo: MA20 tại 1827.51.\n- Kháng cự: Vùng giá cao nhất phiên tại 1859.78.\n\n**Kết luận:** ➡️ **Giảm tỷ trọng** — xu hướng tăng nhưng động lượng suy yếu, dòng tiền vào yếu, độ rộng hẹp.",
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\nVNINDEX đóng cửa tại 1878.02 điểm, biến động trong biên độ 1861.72 - 1894.75. Khối lượng khớp lệnh đạt 633.056 triệu CP, thấp hơn 2.44% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- Ngắn hạn (MA10, MA20): xu hướng tăng\n- Trung hạn (MA50): xu hướng tăng\n- Dài hạn (MA100, MA200): xu hướng tăng\n- ROC10 = +4.12% (ngắn hạn), ROC20 = +0.19% (trung hạn): động lượng tích cực\n- ADX = 27.74: xu hướng mạnh\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** VNINDEX trên tất cả MAs — xu hướng tăng đồng thuận toàn bộ khung thời gian, được hỗ trợ bởi ROC10 dương (+4.12%) và ADX trên 25.\n\n**Độ rộng thị trường:** Độ rộng tiêu cực với tỷ lệ A/D là 0.62 (32 tăng / 52 giảm), cho thấy đà giảm chiếm ưu thế dù chỉ số tăng điểm.\n\n**Thanh khoản:** Khối lượng thấp hơn 2.44% so với trung bình 20 phiên, phản ánh tâm lý thận trọng của dòng tiền.\n\n**Sức khỏe thị trường:** Tỷ lệ A/D thấp (0.62) và % mã trên MA200 là 0.0% cho thấy đà tăng không lan tỏa, chỉ tập trung vào một số mã trụ.\n\n**Khuyến nghị hành động:**\n- *Cảnh báo:* ADX ở mức 27.74 cho thấy xu hướng mạnh, nhưng CMF chỉ 0.0556 (dòng tiền vào yếu) và giá vượt trên Keltner Upper (quá mua) tiềm ẩn rủi ro điều chỉnh.\n- *Chiến lược:* Giảm tỷ trọng\n\n**Kết luận:** ➡️ **Giảm tỷ trọng** — Thị trường tăng điểm nhưng thiếu sự đồng thuận từ độ rộng và dòng tiền yếu.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n- **Top 5 tăng mạnh nhất (VNINDEX):** LPB (+6.84%), DIG (+1.60%), PVD (+1.45%), TCB (+1.40%), PVT (+1.00%)\n- **Top 5 giảm mạnh nhất (VNINDEX):** TDM (-100.00%), TDH (-100.00%), TLG (-100.00%)\n- **Nhóm ngành thu hút dòng tiền:** Ngân hàng (+0.72%), Thép (+0.43%), Công nghệ (+0.28%)\n- **Nhóm ngành bị rút dòng tiền:** Dầu khí (-0.38%), Khác (-24.49%)\n\n### 5. Market Breadth & Độ rộng thị trường\nSố mã tăng 32, giảm 52, đứng 24 trên VNINDEX. Tỷ lệ A/D là 0.62 cho thấy độ phân hóa cao, bên bán chiếm ưu thế.",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | 0.0556 | Dòng tiền vào nhẹ (trên 0) |\n| VWAP | 1820.69 | Giá đóng cửa 1878.02 trên VWAP |\n| OBV | 52717598354 | Khối lượng tích lũy dương |\n\n### 2. Nhận định Dòng tiền\nDòng tiền ròng vào nhẹ (CMF = 0.0556), giá đóng cửa trên VWAP cho thấy áp lực mua chiếm ưu thế trong phiên. Tuy nhiên, khối lượng thấp hơn trung bình 20 phiên không cho thấy dấu hiệu phân phối mạnh.",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách tới Giá | Nhận xét |\n|---|---|---|---|\n| MA10 | 1826.37 | +2.83% | Hỗ trợ ngắn hạn |\n| MA20 | 1826.93 | +2.80% | Hỗ trợ ngắn hạn |\n| MA50 | 1853.03 | +1.35% | Hỗ trợ trung hạn |\n| MA100 | 1801.93 | +4.22% | Hỗ trợ dài hạn |\n| MA200 | 1756.44 | +6.92% | Hỗ trợ dài hạn |\n| ROC10 | +4.12% | | Động lượng ngắn hạn tích cực |\n| ROC20 | +0.19% | | Động lượng trung hạn yếu |\n| ADX | 27.74 | | Xu hướng mạnh |\n| ATR | 28.91 điểm/phiên | | Biến động trung bình |\n| Keltner Upper | 1852.03 | | Giá vượt trên Upper → quá mua |\n\n### 2. Phân tích Xu hướng Chi tiết\n**Tình trạng xu hướng:** VNINDEX đang trong xu hướng tăng ở cả ngắn, trung và dài hạn. Phân kỳ: VNINDEX trên tất cả MAs — xu hướng tăng đồng thuận toàn bộ khung thời gian.\n\n**Sức bền xu hướng dài hạn:** ADX = 27.74 cho thấy xu hướng mạnh, CMF = 0.0556 (dòng tiền vào yếu), khối lượng thấp hơn 2.44% so TB 20 phiên. Khoảng cách tới MA50 chỉ +1.35% và MA200 là +6.92%, cho thấy xu hướng dài hạn vững chắc nhưng dễ bị phá vỡ nếu dòng tiền suy yếu.\n\n**Ngưỡng giá then chốt:**\n- Hỗ trợ gần nhất: MA50 tại 1853.03\n- Hỗ trợ tiếp theo: MA20/MA10 tại 1826.93/1826.37\n- Hỗ trợ xa: MA100 tại 1801.93\n\n**Kết luận:** ➡️ **Giảm tỷ trọng** — Xu hướng tăng mạnh nhưng dòng tiền yếu và giá quá mua (trên Keltner Upper) tiềm ẩn rủi ro điều chỉnh.",
     "tas": {
-      "score": 67,
+      "score": 78,
       "label": "STRONG BULLISH",
-      "total_raw": 6,
+      "total_raw": 7,
       "max_raw": 9,
       "indicators": [
         {
           "group": "Cấu trúc (MA)",
-          "name": "Giá vs MA20 (1828)",
+          "name": "Giá vs MA20 (1827)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Cấu trúc (MA)",
-          "name": "Giá vs MA50 (1848)",
+          "name": "Giá vs MA50 (1853)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Cấu trúc (MA)",
-          "name": "Giá vs MA200 (1755)",
+          "name": "Giá vs MA200 (1756)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Động lượng",
-          "name": "ROC10 (+3.8%)",
+          "name": "ROC10 (+4.1%)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Động lượng",
-          "name": "ROC20 (-1.5%)",
+          "name": "ROC20 (+0.2%)",
           "status": "Neutral",
           "score": 0
         },
         {
           "group": "Động lượng",
-          "name": "Keltner (1803–1852)",
+          "name": "Keltner (1802–1852)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Dòng tiền",
-          "name": "CMF (+0.100)",
+          "name": "CMF (+0.056)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Dòng tiền",
-          "name": "Giá vs VWAP (1811)",
+          "name": "Giá vs VWAP (1821)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Dòng tiền",
-          "name": "Vol vs MA20 (-20%)",
-          "status": "Bearish",
-          "score": -1
+          "name": "Vol vs MA20 (-2%)",
+          "status": "Neutral",
+          "score": 0
         }
       ],
-      "narrative": "• **Ngắn hạn (Tăng):** Giá **1857.91** đang nằm trên cả đường xu hướng 5 phiên (**1825.41**) và đường xu hướng 10 phiên (**1811.34**). Đà tăng 5 phiên (+3.26%) và Mom5 Dương (+58.60) xác nhận động lực ngắn hạn **mạnh**. Tín hiệu hưng phấn (5 phiên) ở **78.1** cho thấy vùng quá mua, cảnh báo khả năng điều chỉnh kỹ thuật.\n\n• **Trung hạn (Tăng):** Giá vượt trên đường xu hướng 20 phiên (**1827.51**) và tăng **-1.49%** trong 20 phiên. Độ mạnh xu hướng (20 phiên) ở **31.8** xác nhận xu hướng hiện tại đang có độ mạnh rất tốt."
-    }
+      "narrative": "• **Ngắn hạn (Tăng):** Giá **1878.02** đang nằm trên cả đường xu hướng 5 phiên (**1851.99**) và đường xu hướng 10 phiên (**1826.37**). Đà tăng 5 phiên (+3.98%) và Mom5 Dương (+71.82) xác nhận động lực ngắn hạn **mạnh**. Tín hiệu hưng phấn (5 phiên) ở **84.0** cho thấy vùng quá mua, cảnh báo khả năng điều chỉnh kỹ thuật.\n\n• **Trung hạn (Tăng):** Giá vượt trên đường xu hướng 20 phiên (**1826.93**) và tăng **+0.19%** trong 20 phiên. Độ mạnh xu hướng (20 phiên) ở **27.7** xác nhận xu hướng hiện tại đang có độ mạnh rất tốt.",
+      "history": [
+        {
+          "date": "2026-05-28",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-05-29",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-01",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-02",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-03",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-04",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-05",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-08",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-09",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-10",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-11",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-12",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-15",
+          "score": 25,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-16",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-17",
+          "score": 25,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-18",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-19",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-22",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-23",
+          "score": 25,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-24",
+          "score": 0,
+          "label": "NEUTRAL"
+        }
+      ]
+    },
+    "candle_patterns": [],
+    "sr_zones": [
+      {
+        "level": 1894.22,
+        "type": "resistance",
+        "strength": 2,
+        "dist_pct": 0.86,
+        "near": true
+      },
+      {
+        "level": 1845.95,
+        "type": "support",
+        "strength": 1,
+        "dist_pct": -1.71,
+        "near": false
+      },
+      {
+        "level": 1917.0,
+        "type": "resistance",
+        "strength": 3,
+        "dist_pct": 2.08,
+        "near": false
+      },
+      {
+        "level": 1792.08,
+        "type": "support",
+        "strength": 3,
+        "dist_pct": -4.58,
+        "near": false
+      },
+      {
+        "level": 1773.88,
+        "type": "support",
+        "strength": 2,
+        "dist_pct": -5.55,
+        "near": false
+      },
+      {
+        "level": 1742.12,
+        "type": "support",
+        "strength": 2,
+        "dist_pct": -7.24,
+        "near": false
+      }
+    ],
+    "sector_heatmap": []
   },
   "VN30": {
     "symbol": "VN30",
-    "date": "2026-06-22 18:11 (ICT)",
-    "close": 1980.13,
-    "change": 16.560000000000173,
-    "change_pc": 0.8433618358398312,
-    "volume": 215407912.0,
+    "date": "2026-06-24 16:49 (ICT)",
+    "close": 2010.15,
+    "change": 15.0300000000002,
+    "change_pc": 0.7533381450739906,
+    "volume": 275340627.0,
     "technical": {
-      "ma20": 1974.2604999999999,
-      "pivot": 1960.9233333333332,
-      "cmf": -0.10973462892562019,
-      "adx": 29.534450410607466
+      "ma20": 1972.006,
+      "pivot": 1999.8566666666666,
+      "cmf": -0.14477231370270097,
+      "adx": 25.629396421929012
     },
-    "general_markdown": "### 1. Diễn biến phiên giao dịch\nGiá đóng cửa VN30 ở 1980.13, tăng so với mở cửa 1970.53. Khối lượng khớp lệnh đạt 215.408 triệu CP, thấp hơn 27.59% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- Xu hướng ngắn hạn (MA10, MA20): tăng\n- Xu hướng trung hạn (MA50): giảm\n- Xu hướng dài hạn (MA100, MA200): tăng\n- ROC10 = +2.24% (ngắn hạn), ROC20 = -2.06% (trung hạn) → động lượng phân kỳ\n- Nhận xét: Tình trạng hỗn hợp: ngắn=up | trung=down | dài=up\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** Thị trường đang trong tình trạng hỗn hợp (ngắn=up | trung=down | dài=up), thể hiện qua sự phân kỳ giữa xu hướng MA và động lượng ROC (ROC10 dương, ROC20 âm).\n\n**Độ rộng thị trường:** Độ rộng tích cực với 15 mã tăng, 12 mã giảm, 3 mã đứng, tỷ lệ A/D là 1.25, cho thấy đà tăng có sự lan tỏa nhưng chưa đồng đều.\n\n**Thanh khoản:** Thanh khoản thấp hơn 27.59% so với trung bình 20 phiên, phản ánh tâm lý thận trọng của dòng tiền.\n\n**Sức khỏe thị trường:** Với tỷ lệ A/D 1.25 và giá đóng cửa trên MA10, MA20, MA100, MA200 nhưng dưới MA50, thị trường cho thấy sự phục hồi chưa hoàn toàn vững chắc khi chưa vượt qua được kháng cự trung hạn.\n\n**Khuyến nghị hành động:**\n- *Cảnh báo:* ADX ở mức 29.5 (xu hướng mạnh) kết hợp CMF âm (-0.1097) cho thấy xu hướng tăng thiếu sự hỗ trợ của dòng tiền.\n- *Chiến lược:* Giảm tỷ trọng\n\n**Kết luận:** ➡️ **Giảm tỷ trọng** — Thị trường tăng trong bối cảnh thanh khoản thấp và dòng tiền yếu, cần thận trọng.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n**Top 5 tăng mạnh nhất (VN30):** VIC (+6.96%), VHM (+6.95%), VRE (+4.60%), LPB (+2.50%), BID (+1.56%)\n**Top 5 giảm mạnh nhất (VN30):** ACB (-0.90%), MWG (-1.03%), FPT (-1.26%), STB (-1.52%), GVR (-1.71%)\n**Ngành thu hút dòng tiền:** Bất động sản (+4.87%), Lọc hóa dầu (+1.34%), Dầu khí (+0.31%), Chứng khoán (+0.18%), Ngân hàng (+0.10%)\n**Ngành bị rút dòng tiền:** Hàng tiêu dùng (-0.42%), Hàng không (-0.71%), Bán lẻ (-1.03%), Công nghệ (-1.26%), Cao su (-1.71%)\n\n### 5. Market Breadth & Độ rộng thị trường\nSố mã tăng/giảm/đứng: 15/12/3. Tỷ lệ A/D: 1.25. Thị trường có sự phân hóa khi số mã tăng nhỉnh hơn giảm, nhưng dòng tiền tập trung mạnh vào nhóm Bất động sản.",
-    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | -0.1097 | Dòng tiền ra |\n| VWAP | 1962.26 | Giá đóng cửa trên VWAP |\n| OBV | 13796456305 | - |\n\n### 2. Nhận định Dòng tiền\nDòng tiền ròng đang có dấu hiệu rút ra (CMF âm). Mặc dù giá đóng cửa trên VWAP cho thấy áp lực mua trong phiên, nhưng khối lượng thấp hơn trung bình 20 phiên cho thấy dòng tiền chưa thực sự hưng phấn.",
-    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách tới giá (%) | Hỗ trợ/Kháng cự |\n|---|---|---|---|\n| MA10 | 1959.53 | +1.05% | Hỗ trợ |\n| MA20 | 1974.26 | +0.30% | Hỗ trợ |\n| MA50 | 1998.90 | -0.94% | Kháng cự |\n| MA100 | 1962.96 | +0.87% | Hỗ trợ |\n| MA200 | 1946.61 | +1.72% | Hỗ trợ |\n| ROC10 | +2.24% | - | - |\n| ROC20 | -2.06% | - | - |\n| ADX | 29.53 | - | - |\n| ATR | 24.74 điểm/phiên | - | - |\n| Keltner | Upper 1996.58 / Lower 1954.39 | - | Trong kênh |\n\n### 2. Phân tích Xu hướng Chi tiết\n**Tình trạng xu hướng:** VN30 đang trong xu hướng tăng ngắn hạn và dài hạn, nhưng giảm trung hạn. Tình trạng hỗn hợp: ngắn=up | trung=down | dài=up.\n\n**Sức bền xu hướng dài hạn:** ADX ở mức 29.5 cho thấy xu hướng hiện tại có sức mạnh, nhưng CMF âm (-0.1097) và khối lượng thấp hơn 27.59% so với trung bình 20 phiên cho thấy xu hướng tăng thiếu sự hỗ trợ từ dòng tiền. Khoảng cách tới MA50 là kháng cự gần nhất (-0.94%), trong khi các MA dài hạn hơn (MA100, MA200) đang hỗ trợ phía dưới.\n\n**Ngưỡng giá then chốt:**\n- Kháng cự: MA50 tại 1998.90\n- Hỗ trợ: MA20 tại 1974.26 và MA100 tại 1962.96\n\n**Kết luận:** ➡️ **Giảm tỷ trọng** — Xu hướng tăng thiếu xác nhận từ dòng tiền và thanh khoản, cần thận trọng với kháng cự trung hạn.",
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\nGiá đóng cửa VN30 ở mức 2010.15, biến động tăng so với tham chiếu. Khối lượng khớp lệnh đạt 275.341 triệu CP, thấp hơn 8.91% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- MA ngắn hạn (MA10, MA20): xu hướng tăng.\n- MA trung hạn (MA50): xu hướng tăng.\n- MA dài hạn (MA100, MA200): xu hướng tăng.\n- Chỉ số trên tất cả MAs — xu hướng tăng đồng thuận toàn bộ khung thời gian.\n- ROC10 = +2.51% (ngắn hạn), ROC20 = -0.61% (trung hạn) → động lượng phân kỳ.\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** VN30 đang trong xu hướng tăng đồng thuận ở mọi khung thời gian, dựa trên vị trí giá trên tất cả các đường MA và xu hướng tăng của các MA, nhưng động lượng trung hạn (ROC20) cho thấy dấu hiệu suy yếu.\n\n**Độ rộng thị trường:** Số mã tăng (13) nhiều hơn số mã giảm (7), tỷ lệ A/D đạt 1.86, cho thấy đà tăng có sự lan tỏa khá tốt trong rổ VN30.\n\n**Thanh khoản:** Khối lượng giao dịch thấp hơn 8.91% so với trung bình 20 phiên, phản ánh tâm lý thận trọng của dòng tiền dù thị trường tăng điểm.\n\n**Sức khỏe thị trường:** Với tỷ lệ A/D là 1.86 và giá đóng cửa trên tất cả các MA, thị trường cho thấy sự lan tỏa tích cực. Tuy nhiên, 0.0% mã nằm trên MA200 cho thấy đà tăng chưa thực sự vững chắc ở khung dài hạn.\n\n**Khuỳn nghị hành động:**\n- *Cảnh báo:* ADX ở mức 25.63 cho thấy xu hướng có sức mạnh, nhưng CMF âm (-0.1448) báo hiệu dòng tiền đang rút ra.\n- *Chiến lược:* Giảm tỷ trọng.\n\n**Kết luận:** ➡️ **Giảm tỷ trọng** — thị trường tăng điểm nhưng thiếu sự hỗ trợ từ dòng tiền và thanh khoản.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n- Top 5 tăng mạnh nhất (VN30): TCB (+1.40%), SHB (+0.73%), HPG (+0.43%), VNM (+0.34%), VIB (+0.31%).\n- Top 5 giảm mạnh nhất (VN30): BVH (-0.15%), CTG (-0.29%), POW (-0.35%), PDR (-0.68%), GAS (-0.89%).\n- Nhóm ngành thu hút dòng tiền: Thép (+0.43%), Công nghệ (+0.28%), Ngân hàng (+0.21%), Chứng khoán (+0.19%), Cao su (+0.15%), Hàng tiêu dùng (+0.07%).\n- Nhóm ngành bị rút dòng tiền: Khác (-0.20%), Dầu khí (-0.38%).\n\n### 5. Market Breadth & Độ rộng thị trường\nSố mã tăng: 13, số mã giảm: 7, số mã đứng: 10. Tỷ lệ A/D là 1.86, cho thấy bên mua chiếm ưu thế và thị trường có sự phân hóa rõ rệt, với số mã tăng gần gấp đôi số mã giảm.",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | -0.1448 | Dòng tiền ra |\n| VWAP | 1967.99 | Giá đóng cửa (2010.15) trên VWAP |\n| OBV | 14630817756 | Khối lượng tích lũy |\n\n### 2. Nhận định Dòng tiền\nCMF âm (-0.1448) cho thấy dòng tiền ròng đang rút ra khỏi thị trường. Giá đóng cửa trên VWAP (1967.99) cho thấy lực mua vẫn đang chiếm ưu thế trong phiên, nhưng dòng tiền vào không bền vững, tiềm ẩn áp lực phân phối.",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách tới giá (Hỗ trợ/Kháng cự) |\n|---|---|---|\n| MA10 | 1968.77 | +2.10% (Hỗ trợ) |\n| MA20 | 1972.01 | +1.93% (Hỗ trợ) |\n| MA50 | 2002.14 | +0.40% (Hỗ trợ) |\n| MA100 | 1961.42 | +2.48% (Hỗ trợ) |\n| MA200 | 1948.01 | +3.19% (Hỗ trợ) |\n| ROC10 | +2.51% | Ngắn hạn tăng |\n| ROC20 | -0.61% | Trung hạn giảm |\n| ADX | 25.63 | Xu hướng mạnh |\n| ATR | 25.56 | Biến động 25.56 điểm/phiên |\n| Keltner | Upper 1995.66 / Lower 1951.13 | Giá vượt trên Upper → quá mua |\n\n### 2. Phân tích Xu hướng Chi tiết\n**Tình trạng xu hướng:** VN30 đang trong xu hướng tăng ở cả ngắn, trung và dài hạn, dựa trên vị trí giá trên tất cả các đường MA.\n\n**Sức bền xu hướng dài hạn:** ADX ở mức 25.63 cho thấy xu hướng tăng có sức mạnh. Tuy nhiên, CMF âm (-0.1448) và khối lượng thấp hơn 8.91% so với trung bình cho thấy xu hướng dài hạn đang thiếu sự hỗ trợ từ dòng tiền, khiến nó dễ bị phá vỡ hơn.\n\n**Ngưỡng giá then chốt:**\n- Hỗ trợ gần nhất: MA50 tại 2002.14.\n- Hỗ trợ mạnh: MA20 tại 1972.01 và MA10 tại 1968.77.\n\n**Kết luận:** ➡️ **Giảm tỷ trọng** — xu hướng tăng nhưng động lượng trung hạn suy yếu và dòng tiền rút ra, cần thận trọng.",
     "tas": {
-      "score": 11,
-      "label": "WEAK BULLISH",
-      "total_raw": 1,
+      "score": 56,
+      "label": "BULLISH",
+      "total_raw": 5,
       "max_raw": 9,
       "indicators": [
         {
           "group": "Cấu trúc (MA)",
-          "name": "Giá vs MA20 (1974)",
+          "name": "Giá vs MA20 (1972)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Cấu trúc (MA)",
-          "name": "Giá vs MA50 (1999)",
-          "status": "Bearish",
-          "score": -1
+          "name": "Giá vs MA50 (2002)",
+          "status": "Bullish",
+          "score": 1
         },
         {
           "group": "Cấu trúc (MA)",
-          "name": "Giá vs MA200 (1947)",
+          "name": "Giá vs MA200 (1948)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Động lượng",
-          "name": "ROC10 (+2.2%)",
+          "name": "ROC10 (+2.5%)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Động lượng",
-          "name": "ROC20 (-2.1%)",
-          "status": "Bearish",
-          "score": -1
+          "name": "ROC20 (-0.6%)",
+          "status": "Neutral",
+          "score": 0
         },
         {
           "group": "Động lượng",
-          "name": "Keltner (1954–1997)",
+          "name": "Keltner (1951–1996)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Dòng tiền",
-          "name": "CMF (-0.110)",
+          "name": "CMF (-0.145)",
           "status": "Bearish",
           "score": -1
         },
         {
           "group": "Dòng tiền",
-          "name": "Giá vs VWAP (1962)",
+          "name": "Giá vs VWAP (1968)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Dòng tiền",
-          "name": "Vol vs MA20 (-28%)",
-          "status": "Bearish",
-          "score": -1
+          "name": "Vol vs MA20 (-9%)",
+          "status": "Neutral",
+          "score": 0
         }
       ],
-      "narrative": "• **Ngắn hạn (Tăng):** Giá **1980.13** đang nằm trên cả đường xu hướng 5 phiên (**1965.66**) và đường xu hướng 10 phiên (**1959.53**). Đà tăng 5 phiên (+0.90%) và Mom5 Dương (+17.65) xác nhận động lực ngắn hạn **mạnh**. Tín hiệu hưng phấn (5 phiên) ở **67.3** ở mức trung tính, xu hướng tiếp diễn ổn định.\n\n• **Trung hạn (Tăng):** Giá vượt trên đường xu hướng 20 phiên (**1974.26**) và tăng **-2.06%** trong 20 phiên. Độ mạnh xu hướng (20 phiên) ở **29.5** xác nhận xu hướng hiện tại đang có độ mạnh rất tốt."
-    }
+      "narrative": "• **Ngắn hạn (Tăng):** Giá **2010.15** đang nằm trên cả đường xu hướng 5 phiên (**1983.24**) và đường xu hướng 10 phiên (**1968.77**). Đà tăng 5 phiên (+2.71%) và Mom5 Dương (+52.98) xác nhận động lực ngắn hạn **mạnh**. Tín hiệu hưng phấn (5 phiên) ở **82.2** cho thấy vùng quá mua, cảnh báo khả năng điều chỉnh kỹ thuật.\n\n• **Trung hạn (Tăng):** Giá vượt trên đường xu hướng 20 phiên (**1972.01**) và tăng **-0.61%** trong 20 phiên. Độ mạnh xu hướng (20 phiên) ở **25.6** xác nhận xu hướng hiện tại đang có độ mạnh rất tốt.",
+      "history": [
+        {
+          "date": "2026-05-28",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-05-29",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-01",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-02",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-03",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-04",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-05",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-08",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-09",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-10",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-11",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-12",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-15",
+          "score": 25,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-16",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-17",
+          "score": 25,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-18",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-19",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-22",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-23",
+          "score": 25,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-24",
+          "score": 0,
+          "label": "NEUTRAL"
+        }
+      ]
+    },
+    "candle_patterns": [],
+    "sr_zones": [
+      {
+        "level": 2011.62,
+        "type": "resistance",
+        "strength": 2,
+        "dist_pct": 0.07,
+        "near": true
+      },
+      {
+        "level": 1971.22,
+        "type": "support",
+        "strength": 2,
+        "dist_pct": -1.94,
+        "near": false
+      },
+      {
+        "level": 2050.89,
+        "type": "resistance",
+        "strength": 3,
+        "dist_pct": 2.03,
+        "near": false
+      },
+      {
+        "level": 2075.09,
+        "type": "resistance",
+        "strength": 3,
+        "dist_pct": 3.23,
+        "near": false
+      },
+      {
+        "level": 1934.64,
+        "type": "support",
+        "strength": 2,
+        "dist_pct": -3.76,
+        "near": false
+      },
+      {
+        "level": 2108.63,
+        "type": "resistance",
+        "strength": 3,
+        "dist_pct": 4.9,
+        "near": false
+      }
+    ],
+    "sector_heatmap": []
   },
   "VN100": {
     "symbol": "VN100",
-    "date": "2026-06-22 18:11 (ICT)",
-    "close": 1915.25,
-    "change": 20.3900000000001,
-    "change_pc": 1.0760689444075078,
-    "volume": 455454701.0,
+    "date": "2026-06-24 16:49 (ICT)",
+    "close": 1940.44,
+    "change": 12.299999999999955,
+    "change_pc": 0.6379204829524804,
+    "volume": 564125330.0,
     "technical": {
-      "ma20": 1899.705,
-      "pivot": 1891.5666666666666,
-      "cmf": -0.02051037607531837,
-      "adx": 33.904444000857886
+      "ma20": 1897.7030000000002,
+      "pivot": 1933.6200000000001,
+      "cmf": -0.06809496342182696,
+      "adx": 29.75903308517085
     },
-    "general_markdown": "### 1. Diễn biến phiên giao dịch\nGiá đóng cửa 1915.25, tăng 15.47 điểm so với mở cửa 1899.78. Khối lượng khớp lệnh đạt 455.455 triệu CP, thấp hơn 20.44% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- MA10 và MA20: xu hướng tăng.\n- MA50: xu hướng giảm.\n- MA100 và MA200: xu hướng tăng.\n- ROC10 = +2.99% (ngắn hạn), ROC20 = -1.80% (trung hạn) → động lượng phân kỳ.\n- Nhận xét tổng hợp: Thị trường đang trong vùng phân kỳ xu hướng (ngắn=up, trung=down, dài=up).\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** Thị trường đang trong tình trạng hỗn hợp (ngắn=up | trung=down | dài=up), thể hiện qua sự phân kỳ giữa xu hướng MA10/MA20 tăng, MA50 giảm và MA100/MA200 tăng, cùng với ROC10 và ROC20 trái chiều.\n\n**Độ rộng thị trường:** VN100 có 43 mã tăng, 46 mã giảm, tỷ lệ A/D là 0.93 cho thấy bên bán chiếm ưu thế nhẹ, đà tăng không lan tỏa rộng. VN30 có tỷ lệ A/D là 1.25 (15 tăng/12 giảm), cho thấy nhóm vốn hóa lớn hỗ trợ chỉ số.\n\n**Thanh khoản:** Khối lượng 455.45 triệu CP thấp hơn 20.44% so với trung bình 20 phiên, phản ánh tâm lý thận trọng, dòng tiền chưa tham gia mạnh.\n\n**Sức khỏe thị trường:** Tỷ lệ A/D VN100 ở mức 0.93 cho thấy sự phục hồi chưa đồng đều, trong khi VN30 có độ lan tỏa tốt hơn. 0.0% mã VN30 trên MA200 cho thấy đa số cổ phiếu lớn đang ở vùng thấp so với dài hạn.\n\n**Khuyến nghị hành động:**\n- *Cảnh báo:* ADX ở mức 33.9 cho thấy xu hướng mạnh nhưng CMF âm (-0.0205) báo hiệu dòng tiền ròng đang rút ra.\n- *Chiến lược:* Chờ tín hiệu.\n\n**Kết luận:** ➡️ **Tạm đứng ngoài** — thị trường phân kỳ xu hướng, thanh khoản thấp và dòng tiền yếu, cần thêm tín hiệu xác nhận.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n**Top 5 tăng mạnh nhất (VN100):** VIC (+6.96%), VHM (+6.95%), PC1 (+5.88%), VRE (+4.60%), BMP (+4.34%).\n**Top 5 giảm mạnh nhất (VN100):** GMD (-1.82%), KDH (-2.17%), DXG (-2.26%), IMP (-2.86%), SJS (-3.24%).\n**Ngành thu hút dòng tiền:** Bất động sản (+4.87%), Lọc hóa dầu (+1.34%), Dầu khí (+0.31%).\n**Ngành bị rút dòng tiền:** Công nghệ (-1.26%), Bán lẻ (-1.03%), Cao su (-1.71%).\n\n### 5. Market Breadth & Độ rộng thị trường\nVN100: 43 mã tăng, 46 mã giảm, 11 mã đứng, tỷ lệ A/D là 0.93. Thị trường phân hóa mạnh, bên bán chiếm ưu thế nhẹ.",
-    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | -0.0205 | Dòng tiền ròng ra |\n| VWAP | 1885.67 | Giá đóng cửa trên VWAP |\n| OBV | 45865764113 | Khối lượng tích lũy |\n\n### 2. Nhận định Dòng tiền\nDòng tiền ròng đang rút ra (CMF âm). Giá đóng cửa 1915.25 cao hơn VWAP 1885.67, cho thấy áp lực mua trong phiên nhưng dòng tiền tổng thể yếu. Không có dấu hiệu phân phối rõ ràng do thanh khoản thấp.",
-    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách % | Hỗ trợ/Kháng cự |\n|---|---|---|---|\n| MA10 | 1885.80 | +1.56% | Hỗ trợ |\n| MA20 | 1899.70 | +0.82% | Hỗ trợ |\n| MA50 | 1923.96 | -0.45% | Kháng cự |\n| MA100 | 1876.18 | +2.08% | Hỗ trợ |\n| MA200 | 1862.24 | +2.85% | Hỗ trợ |\n| ROC10 | +2.99% | | Ngắn hạn |\n| ROC20 | -1.80% | | Trung hạn |\n| ADX | 33.90 | | >25: Xu hướng mạnh |\n| ATR | 24.74 | | Điểm/phiên |\n| Keltner | Upper 1921.39 / Lower 1879.07 | | Trong kênh |\n\n### 2. Phân tích Xu hướng Chi tiết\n**Tình trạng xu hướng:** VN100 đang trong xu hướng tăng ngắn hạn và dài hạn, nhưng giảm trung hạn (phân kỳ: ngắn=up | trung=down | dài=up).\n\n**Sức bền xu hướng dài hạn:** ADX ở mức 33.9 cho thấy xu hướng hiện tại mạnh, nhưng CMF âm (-0.0205) và khối lượng thấp hơn 20.44% so với trung bình 20 phiên cho thấy dòng tiền yếu. Khoảng cách tới MA50 (-0.45%) là kháng cự ngắn, trong khi các MA dài hạn (MA100, MA200) cách xa từ +2.08% đến +2.85%, tạo vùng hỗ trợ vững chắc, khó bị phá vỡ trong ngắn hạn.\n\n**Ngưỡng giá then chốt:** Kháng cự: MA50 tại 1923.96. Hỗ trợ: MA20 tại 1899.70 và MA10 tại 1885.80.\n\n**Kết luận:** ➡️ **Tạm đứng ngoài** — xu hướng phân kỳ giữa các khung thời gian, thanh khoản thấp và dòng tiền yếu, chưa đủ điều kiện để hành động.",
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\nVN100 đóng cửa tại 1940.44, biến động +0.17% so tham chiếu. Khối lượng khớp lệnh đạt 564.13 triệu CP, thấp hơn 1.72% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- Xu hướng ngắn hạn (MA10, MA20): tăng\n- Xu hướng trung hạn (MA50): tăng\n- Xu hướng dài hạn (MA100, MA200): tăng\n- ROC10 = +3.14% (ngắn hạn), ROC20 = -0.58% (trung hạn) → động lượng phân kỳ\n- Nhận xét tổng hợp: VN100 trên tất cả MAs — xu hướng tăng đồng thuận toàn bộ khung thời gian.\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** VN100 trên tất cả MAs — xu hướng tăng đồng thuận toàn bộ khung thời gian, nhưng động lượng trung hạn (ROC20 = -0.58%) cho thấy đà tăng đang chững lại.\n\n**Độ rộng thị trường:** Tỷ lệ A/D là 0.62 với 32 mã tăng, 52 mã giảm và 24 mã đứng — bên bán chiếm ưu thế, đà giảm lan tỏa rộng hơn đà tăng.\n\n**Thanh khoản:** Khối lượng 564.13 triệu CP thấp hơn 1.72% so TB 20 phiên, cho thấy dòng tiền tham gia thận trọng.\n\n**Sức khỏe thị trường:** Tỷ lệ Advance/Decline dưới 1 (0.62) cùng với giá đóng cửa trên tất cả MAs cho thấy xu hướng tăng vẫn còn nhưng sự lan tỏa yếu, phục hồi tập trung vào nhóm mã trụ.\n\n**Khuyến nghị hành động:**\n- *Cảnh báo:* ADX=29.8 cho thấy xu hướng mạnh, nhưng CMF=-0.0681 phản ánh dòng tiền đang rút ra.\n- *Chiến lược:* Giảm tỷ trọng.\n\n**Kết luận:** ➡️ **Giảm tỷ trọng** — thị trường tăng nhưng dòng tiền suy yếu, độ rộng hẹp, cần thận trọng.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n- **Top 5 tăng mạnh nhất (VN100):** LPB (+6.84%), DIG (+1.60%), PVD (+1.45%), TCB (+1.40%), PVT (+1.00%)\n- **Top 5 giảm mạnh nhất (VN100):** TDM (-100.00%), TDH (-100.00%), TLG (-100.00%)\n- **Nhóm ngành thu hút dòng tiền:** Ngân hàng (+0.72%), Thép (+0.43%), Công nghệ (+0.28%), Chứng khoán (+0.19%), Cao su (+0.15%), Hàng tiêu dùng (+0.07%)\n- **Nhóm ngành bị rút dòng tiền:** Dầu khí (-0.38%), Khác (-24.49%)\n\n### 5. Market Breadth & Độ rộng thị trường\nVN100 (110 mã): Tăng 32, Giảm 52, Đứng 24. Tỷ lệ A/D = 0.62 — bên bán chiếm ưu thế. VN30: 13 mã tăng, 7 mã giảm, 10 mã đứng — độ phân hóa rõ rệt, dòng tiền tập trung vào nhóm bluechip.",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | -0.0681 | Dòng tiền ra |\n| VWAP | 1893.22 | Giá đóng cửa trên VWAP |\n| OBV | 47289171183 | Khối lượng tích lũy |\n\n### 2. Nhận định Dòng tiền\nCMF âm (-0.0681) cho thấy dòng tiền ròng đang rút ra. Giá đóng cửa trên VWAP (1940.44 > 1893.22) phản ánh giá vẫn được hỗ trợ, nhưng áp lực bán đang gia tăng. Khối lượng thấp hơn TB 20 phiên cho thấy thiếu vắng lực mua chủ động, tiềm ẩn rủi ro phân phối.",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách tới Giá | Vai trò |\n|---|---|---|---|\n| MA10 | 1897.36 | +2.27% | Hỗ trợ |\n| MA20 | 1897.70 | +2.25% | Hỗ trợ |\n| MA50 | 1927.32 | +0.68% | Hỗ trợ |\n| MA100 | 1875.68 | +3.45% | Hỗ trợ |\n| MA200 | 1863.13 | +4.15% | Hỗ trợ |\n| ROC10 | +3.14% | – | Động lượng ngắn hạn dương |\n| ROC20 | -0.58% | – | Động lượng trung hạn âm |\n| ADX | 29.76 | – | Xu hướng mạnh |\n| ATR | 25.44 | – | Biến động cao |\n| Keltner Upper | 1920.79 | – | Quá mua |\n\n### 2. Phân tích Xu hướng Chi tiết\n**Tình trạng xu hướng:** VN100 trên tất cả MAs — xu hướng tăng đồng thuận toàn bộ khung thời gian. Phân kỳ xuất hiện giữa ROC10 (+3.14%) và ROC20 (-0.58%), cho thấy đà tăng ngắn hạn vẫn còn nhưng trung hạn đang yếu dần.\n\n**Sức bền xu hướng dài hạn:** ADX = 29.8 (>25) xác nhận xu hướng mạnh, nhưng CMF = -0.0681 cho thấy dòng tiền rút ra. Khối lượng thấp hơn 1.72% so TB 20 phiên làm giảm độ tin cậy của xu hướng tăng. Khoảng cách tới MA50 chỉ +0.68% — nếu điều chỉnh, MA50 (1927.32) sẽ là ngưỡng hỗ trợ gần nhất.\n\n**Ngưỡng giá then chốt:**\n- Hỗ trợ gần: MA50 tại 1927.32\n- Hỗ trợ mạnh: MA20 tại 1897.70 và MA10 tại 1897.36\n- Kháng cự: Đỉnh phiên 1950.10\n\n**Kết luận:** ➡️ **Giảm tỷ trọng** — xu hướng tăng dài hạn vẫn còn nhưng động lượng trung hạn suy yếu, dòng tiền rút ra, cần quản trị rủi ro.",
     "tas": {
-      "score": 33,
-      "label": "WEAK BULLISH",
-      "total_raw": 3,
+      "score": 56,
+      "label": "BULLISH",
+      "total_raw": 5,
       "max_raw": 9,
       "indicators": [
         {
           "group": "Cấu trúc (MA)",
-          "name": "Giá vs MA20 (1900)",
+          "name": "Giá vs MA20 (1898)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Cấu trúc (MA)",
-          "name": "Giá vs MA50 (1924)",
-          "status": "Bearish",
-          "score": -1
+          "name": "Giá vs MA50 (1927)",
+          "status": "Bullish",
+          "score": 1
         },
         {
           "group": "Cấu trúc (MA)",
-          "name": "Giá vs MA200 (1862)",
+          "name": "Giá vs MA200 (1863)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Động lượng",
-          "name": "ROC10 (+3.0%)",
+          "name": "ROC10 (+3.1%)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Động lượng",
-          "name": "ROC20 (-1.8%)",
+          "name": "ROC20 (-0.6%)",
           "status": "Neutral",
           "score": 0
         },
         {
           "group": "Động lượng",
-          "name": "Keltner (1879–1921)",
+          "name": "Keltner (1876–1921)",
           "status": "Bullish",
           "score": 1
         },
         {
           "group": "Dòng tiền",
-          "name": "CMF (-0.021)",
-          "status": "Neutral",
-          "score": 0
-        },
-        {
-          "group": "Dòng tiền",
-          "name": "Giá vs VWAP (1886)",
-          "status": "Bullish",
-          "score": 1
-        },
-        {
-          "group": "Dòng tiền",
-          "name": "Vol vs MA20 (-20%)",
+          "name": "CMF (-0.068)",
           "status": "Bearish",
           "score": -1
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "Giá vs VWAP (1893)",
+          "status": "Bullish",
+          "score": 1
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "Vol vs MA20 (-2%)",
+          "status": "Neutral",
+          "score": 0
         }
       ],
-      "narrative": "• **Ngắn hạn (Tăng):** Giá **1915.25** đang nằm trên cả đường xu hướng 5 phiên (**1897.01**) và đường xu hướng 10 phiên (**1885.80**). Đà tăng 5 phiên (+1.73%) và Mom5 Dương (+32.62) xác nhận động lực ngắn hạn **mạnh**. Tín hiệu hưng phấn (5 phiên) ở **72.9** cho thấy vùng quá mua, cảnh báo khả năng điều chỉnh kỹ thuật.\n\n• **Trung hạn (Tăng):** Giá vượt trên đường xu hướng 20 phiên (**1899.70**) và tăng **-1.80%** trong 20 phiên. Độ mạnh xu hướng (20 phiên) ở **33.9** xác nhận xu hướng hiện tại đang có độ mạnh rất tốt."
-    }
+      "narrative": "• **Ngắn hạn (Tăng):** Giá **1940.44** đang nằm trên cả đường xu hướng 5 phiên (**1915.67**) và đường xu hướng 10 phiên (**1897.36**). Đà tăng 5 phiên (+2.82%) và Mom5 Dương (+53.15) xác nhận động lực ngắn hạn **mạnh**. Tín hiệu hưng phấn (5 phiên) ở **83.4** cho thấy vùng quá mua, cảnh báo khả năng điều chỉnh kỹ thuật.\n\n• **Trung hạn (Tăng):** Giá vượt trên đường xu hướng 20 phiên (**1897.70**) và tăng **-0.58%** trong 20 phiên. Độ mạnh xu hướng (20 phiên) ở **29.8** xác nhận xu hướng hiện tại đang có độ mạnh rất tốt.",
+      "history": [
+        {
+          "date": "2026-05-28",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-05-29",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-01",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-02",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-03",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-04",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-05",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-08",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-09",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-10",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-11",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-12",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-15",
+          "score": 25,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-16",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-17",
+          "score": 25,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-18",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-19",
+          "score": 0,
+          "label": "NEUTRAL"
+        },
+        {
+          "date": "2026-06-22",
+          "score": -25,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-06-23",
+          "score": 25,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-24",
+          "score": 0,
+          "label": "NEUTRAL"
+        }
+      ]
+    },
+    "candle_patterns": [],
+    "sr_zones": [
+      {
+        "level": 1957.8,
+        "type": "resistance",
+        "strength": 3,
+        "dist_pct": 0.89,
+        "near": true
+      },
+      {
+        "level": 1966.8,
+        "type": "resistance",
+        "strength": 3,
+        "dist_pct": 1.36,
+        "near": true
+      },
+      {
+        "level": 1905.52,
+        "type": "support",
+        "strength": 3,
+        "dist_pct": -1.8,
+        "near": false
+      },
+      {
+        "level": 2001.82,
+        "type": "resistance",
+        "strength": 2,
+        "dist_pct": 3.16,
+        "near": false
+      },
+      {
+        "level": 1878.42,
+        "type": "support",
+        "strength": 4,
+        "dist_pct": -3.2,
+        "near": false
+      },
+      {
+        "level": 1861.14,
+        "type": "support",
+        "strength": 4,
+        "dist_pct": -4.09,
+        "near": false
+      }
+    ],
+    "sector_heatmap": []
   }
 }
