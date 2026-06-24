@@ -2,11 +2,13 @@ import os
 import sys
 import io
 import json
+import math
 import traceback
 import time
 import warnings
 from datetime import datetime, timedelta
 import pandas as pd
+import numpy as np
 import ta
 import requests
 # vnstock v4 - dùng explorer.vci trực tiếp (API stable)
@@ -17,6 +19,24 @@ from vnstock.explorer.vci import Quote as VCIQuote
 from vnstock.explorer.vci import Listing as VCIListing
 from vnstock.explorer.vci import Trading as VCITrading
 from openai import OpenAI
+
+
+class _SafeEncoder(json.JSONEncoder):
+    """JSON encoder xử lý numpy types và NaN/Inf."""
+    def default(self, obj):
+        if isinstance(obj, (np.integer,)):
+            return int(obj)
+        if isinstance(obj, (np.floating,)):
+            v = float(obj)
+            return None if (math.isnan(v) or math.isinf(v)) else v
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
+            return None
+        if isinstance(obj, np.bool_):
+            return bool(obj)
+        return super().default(obj)
+
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -350,17 +370,17 @@ def find_sr_zones(df, close, window=5, n_zones=6):
     """Tìm vùng hỗ trợ/kháng cự từ swing high/low 52 tuần."""
     if df is None or len(df) < 50:
         return []
-    # Dùng tối đa 252 phiên (1 năm)
     sub = df.tail(252).copy()
-    highs = sub['high'].values
-    lows  = sub['low'].values
+    highs = sub['high'].values.tolist()  # convert sang Python float list
+    lows  = sub['low'].values.tolist()
+    close = float(close)
 
     sw_highs, sw_lows = [], []
     for i in range(window, len(highs) - window):
         if all(highs[i] >= highs[j] for j in range(i - window, i + window + 1) if j != i):
-            sw_highs.append(highs[i])
+            sw_highs.append(float(highs[i]))
         if all(lows[i] <= lows[j] for j in range(i - window, i + window + 1) if j != i):
-            sw_lows.append(lows[i])
+            sw_lows.append(float(lows[i]))
 
     all_levels = sorted(sw_highs + sw_lows)
     zones, used = [], set()
@@ -374,11 +394,11 @@ def find_sr_zones(df, close, window=5, n_zones=6):
         avg = sum(cluster) / len(cluster)
         dist_pct = (avg - close) / close * 100
         zones.append({
-            'level':      round(avg, 2),
-            'type':       'resistance' if avg > close else 'support',
-            'strength':   len(cluster),
-            'dist_pct':   round(dist_pct, 2),
-            'near':       abs(dist_pct) < 1.5,
+            'level':    float(round(avg, 2)),
+            'type':     'resistance' if avg > close else 'support',
+            'strength': int(len(cluster)),
+            'dist_pct': float(round(dist_pct, 2)),
+            'near':     bool(abs(dist_pct) < 1.5),
         })
 
     zones.sort(key=lambda z: abs(z['dist_pct']))
@@ -443,7 +463,6 @@ def compute_sector_heatmap(price_board):
     if price_board is None or price_board.empty:
         return []
 
-    # Tìm cột ticker (linh hoạt với tên cột sau flatten)
     ticker_col = next((c for c in price_board.columns
                        if 'code' in c.lower() or 'ticker' in c.lower() or c == 'listing_code'), None)
     if ticker_col is None:
@@ -455,8 +474,14 @@ def compute_sector_heatmap(price_board):
         grp  = price_board[mask]
         if grp.empty:
             continue
-        avg_chg = round(grp['change_pc'].mean(), 2)
-        result.append({'sector': sector, 'avg_change': avg_chg, 'count': int(mask.sum())})
+        avg_chg = grp['change_pc'].mean()
+        if pd.isna(avg_chg):
+            avg_chg = 0.0
+        result.append({
+            'sector':     sector,
+            'avg_change': float(round(float(avg_chg), 2)),  # ensure Python float
+            'count':      int(mask.sum()),
+        })
 
     result.sort(key=lambda x: x['avg_change'], reverse=True)
     return result
@@ -1211,7 +1236,7 @@ def main():
         all_data[sym]['sector_heatmap'] = sector_heatmap
 
     with open(f"{out_dir}/data.json", "w", encoding="utf-8") as f:
-        json.dump(all_data, f, ensure_ascii=False, indent=2)
+        json.dump(all_data, f, ensure_ascii=False, indent=2, cls=_SafeEncoder)
     print(f"Successfully generated {out_dir}/data.json")
 
 if __name__ == "__main__":
