@@ -14,6 +14,8 @@
     <!-- Marked.js for Markdown -->
     <!-- Marked.js for Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -167,19 +169,6 @@
                         <span class="tas-pct" id="tas-pct">0%</span>
                         <span class="tas-label" id="tas-label">NEUTRAL</span>
                     </div>
-                    <!-- TAS History Sparkline -->
-                    <div class="tas-sparkline-wrap">
-                        <svg id="tas-sparkline" class="tas-sparkline" viewBox="0 0 160 40" preserveAspectRatio="none">
-                            <polyline id="tas-spark-line" points="" fill="none" stroke="#4f8ef7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <line id="tas-spark-zero" x1="0" y1="20" x2="160" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="3,3"/>
-                        </svg>
-                        <div class="tas-spark-label">TAS 20 phiên</div>
-                    </div>
-                    <div class="tas-zones">
-                        <span class="zone-bear">Bearish</span>
-                        <span class="zone-neutral">Neutral</span>
-                        <span class="zone-bull">Bullish</span>
-                    </div>
                 </div>
 
                 <!-- Block 2: Agreement Grid -->
@@ -205,6 +194,11 @@
             <div class="tas-narrative-wrap">
                 <div class="tas-narrative-label"><i class='bx bx-notepad'></i> Nhận định Ngắn &amp; Trung hạn</div>
                 <div id="tas-narrative" class="tas-narrative"></div>
+            </div>
+
+            <!-- TAS History Chart -->
+            <div class="tas-history-chart-wrap" style="position: relative; height: 300px; width: 100%; margin-top: 20px; padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <canvas id="tas-history-chart"></canvas>
             </div>
         </div>
 
