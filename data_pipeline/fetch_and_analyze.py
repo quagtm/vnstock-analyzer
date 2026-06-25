@@ -884,6 +884,25 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
 
         combined_market_str = "\n\n".join(filter(None, [top_movers_str, market_breadth_str, ma_breadth_str, sector_flow_str]))
 
+        # ── TÍNH TOÁN CÁC BIẾN CHO KỊCH BẢN THỊ TRƯỜNG ──
+        sr_zones_res = find_sr_zones(df, close)
+        support_zone = next((z for z in sr_zones_res if z['type'] == 'support'), None)
+        resistance_zone = next((z for z in sr_zones_res if z['type'] == 'resistance'), None)
+        support_price = support_zone['level'] if support_zone else 0
+        resistance_price = resistance_zone['level'] if resistance_zone else 0
+        support_distance = support_zone['dist_pct'] if support_zone else 0
+        resistance_distance = resistance_zone['dist_pct'] if resistance_zone else 0
+
+        sub_20 = df.tail(20)
+        highest_20 = float(sub_20['high'].max()) if not sub_20.empty else close
+        lowest_20 = float(sub_20['low'].min()) if not sub_20.empty else close
+        volatility_value = round((highest_20 - lowest_20) / close * 100, 2) if close > 0 else 0
+        volatility_regime = "ELEVATED_VOL" if volatility_value > 10 else "LOW_VOL"
+
+        tas_res = compute_tas(close, latest, vol_diff, mas)
+        tas_score = tas_res['score']
+        tas_status = tas_res['label']
+
         rb_args = dict(
             symbol=symbol, close=close, open_price=safe_float(latest['open']),
             high=safe_float(latest['high']), low=safe_float(latest['low']),
@@ -999,7 +1018,29 @@ Viết theo đúng 7 mục dưới đây, mỗi mục 1–2 câu ngắn gọn, d
 
 **Kết luận:** ➡️ **[Tạm đứng ngoài / Giảm tỷ trọng / Tăng tỷ trọng]** (chọn một) — một câu ngắn gói gọn trạng thái thị trường.
 
-### 4. Thống kê Cổ phiếu & Nhóm ngành
+### 4. Kịch bản Thị trường
+Bạn PHẢI trả về kết quả theo đúng cấu trúc Markdown chính xác sau, không thêm bớt tiêu đề chính:
+
+#### KỊCH BẢN THỊ TRƯỜNG: [Điền TRUNG TÍNH hoặc TÍCH CỰC hoặc TIÊU CỰC] (Dao động trong range {support_price} - {resistance_price})
+* **Xác suất xảy ra:** [Điền số]%
+* **Độ tin cậy:** [Điền điểm]/10
+
+**Điều kiện kích hoạt:**
+- Giá tiếp tục dao động, không thể vượt {resistance_price} nhưng cũng không thủng {support_price}.
+- Biến động duy trì ở mức {volatility_regime} và Trend Agreement Score duy trì [trên/dưới] mức 50.
+
+**Điều kiện thất bại:**
+- Giá vượt dứt khoát {resistance_price} với độ rộng thị trường (Breadth) xác nhận (chuyển sang tích cực) hoặc thủng {support_price} (chuyển sang tiêu cực).
+
+**Dẫn chứng:**
+- **Volatility regime = {volatility_regime}:** Biên độ dao động (20 phiên) ≈ {volatility_value}% của giá, hỗ trợ cho kịch bản [sideway biên độ rộng / xu hướng rõ ràng].
+- **Trend agreement score = {tas_score}/100 ({tas_status}):** Cho thấy xu hướng [giảm/tăng] vẫn chi phối, khiến mọi đợt [hồi/chỉnh] khó bền vững.
+- **Khoảng đệm kỹ thuật:** Khoảng cách tới hỗ trợ/kháng cự hiện tại là {support_distance}% / {resistance_distance}% cho thấy thị trường đang ở vị trí "[giữa hai mốc / sát vùng ranh giới]" quan trọng.
+- **Horizon (Tầm nhìn):** 5-15 phiên.
+
+*Quy tắc đánh giá:* Nếu Tas_score thấp (<30) nhưng Volatility cao và giá nằm giữa range hỗ trợ/kháng cự, ưu tiên kịch bản Trung tính (45-55%) hoặc Tiêu cực. Nếu Tas_score > 70 và Breadth tích cực, ưu tiên kịch bản Tích cực. Độ tin cậy (Thang điểm 10): Chấm điểm dựa trên tính đồng thuận của dữ liệu. Nếu Volatility đồng nhất với cấu trúc giá và khoảng đệm rõ ràng -> Chấm điểm từ 7-9/10. Nếu các chỉ báo đá nhau (Nhiễu) -> Chấm dưới 6/10.
+
+### 5. Thống kê Cổ phiếu & Nhóm ngành
 Top 5 tăng/giảm kèm % theo đúng nhóm {symbol} | Ngành thu hút/rút tiền kèm % TB.
 ### 5. Market Breadth & Độ rộng thị trường
 Số mã tăng/giảm/đứng, tỷ lệ A/D, phân tích độ phân hóa.
@@ -1075,7 +1116,7 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
             "volume_markdown": volume_markdown,
             "trend_markdown": trend_markdown,
             "tas": {
-                **compute_tas(close, latest, vol_diff, mas),
+                **tas_res,
                 "narrative": build_trend_narrative(
                     close      = close,
                     ma5        = safe_float(latest.get('ma5',  0)) or close,
@@ -1090,7 +1131,7 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
                 "history": compute_tas_history_fast(df)
             },
             "candle_patterns": detect_candle_patterns(df),
-            "sr_zones":        find_sr_zones(df, close),
+            "sr_zones":        sr_zones_res,
         }
 
         
