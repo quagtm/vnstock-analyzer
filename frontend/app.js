@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let appData = null;
     let currentSymbol = 'VNINDEX';
     let currentMiniTab = 'general';
+    let tasChartInstance = null;
 
     const dashboardContent = document.getElementById('dashboard-content');
     const pageTitle = document.getElementById('page-title');
@@ -106,24 +107,67 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
-    // ─── TAS Sparkline (20 sessions) ─────────────────────────────
-    function renderTASSparkline(history) {
-        const line = document.getElementById('tas-spark-line');
-        if (!line || !history || history.length < 2) return;
+    // ─── TAS History Chart (20 sessions) ─────────────────────────
+    function renderTASChart(history) {
+        const canvas = document.getElementById('tas-history-chart');
+        if (!canvas || !history || history.length < 2) return;
+
+        if (tasChartInstance) {
+            tasChartInstance.destroy();
+        }
+
+        const labels = history.map(h => {
+            const dateStr = h.date;
+            if(dateStr.startsWith('D')) return dateStr;
+            const parts = dateStr.split('-');
+            if(parts.length >= 3) return parts[2] + '/' + parts[1];
+            return dateStr;
+        });
         const scores = history.map(h => h.score);
-        const minS = Math.min(...scores), maxS = Math.max(...scores);
-        const range = maxS - minS || 1;
-        const W = 160, H = 40, PAD = 4;
-        const pts = scores.map((s, i) => {
-            const x = PAD + (i / (scores.length - 1)) * (W - 2 * PAD);
-            const y = H - PAD - ((s - minS) / range) * (H - 2 * PAD);
-            return `${x.toFixed(1)},${y.toFixed(1)}`;
-        }).join(' ');
-        line.setAttribute('points', pts);
-        // Color by latest TAS
-        const last = scores[scores.length - 1];
-        const color = last >= 34 ? '#4ade80' : last >= 0 ? '#a3e635' : last >= -33 ? '#fb923c' : '#f87171';
-        line.setAttribute('stroke', color);
+
+        tasChartInstance = new Chart(canvas, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'TAS Score',
+                    data: scores,
+                    borderColor: '#4f8ef7',
+                    backgroundColor: 'rgba(79, 142, 247, 0.1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: scores.map(s => s >= 34 ? '#4ade80' : s >= 0 ? '#a3e635' : s >= -33 ? '#fb923c' : '#f87171'),
+                    pointRadius: 4,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Score: ${context.parsed.y}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: 'rgba(255,255,255,0.6)' }
+                    },
+                    y: {
+                        min: -100,
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: 'rgba(255,255,255,0.6)' }
+                    }
+                }
+            }
+        });
     }
 
     // ─── TAS Renderer ────────────────────────────────────────────────
@@ -313,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tas = data.tas;
         if (tas) {
             renderTAS(tas);
-            renderTASSparkline(tas.history || []);
+            renderTASChart(tas.history || []);
             const narEl = document.getElementById('tas-narrative');
             if (narEl && tas.narrative) {
                 narEl.innerHTML = window.marked ? marked.parse(tas.narrative) : tas.narrative.replace(/\n/g, '<br>');
