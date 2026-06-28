@@ -464,7 +464,7 @@ def compute_sector_heatmap(price_board):
         return []
 
     ticker_col = next((c for c in price_board.columns
-                       if 'code' in c.lower() or 'ticker' in c.lower() or c == 'listing_code'), None)
+                       if 'code' in c.lower() or 'ticker' in c.lower() or 'symbol' in c.lower()), None)
     if ticker_col is None:
         return []
 
