@@ -300,6 +300,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentMiniTab === 'general') {
             titleText = "Phân tích Tổng quan";
             markdownText = data.general_markdown || data.analysis_markdown || "Không có dữ liệu.";
+        } else if (currentMiniTab === 'scenario') {
+            titleText = "Kịch bản Thị trường";
+            markdownText = data.scenario_markdown || "Không có dữ liệu kịch bản.";
         } else if (currentMiniTab === 'volume') {
             titleText = "Phân tích Dòng tiền (Khối lượng)";
             markdownText = data.volume_markdown || "Không có dữ liệu.";

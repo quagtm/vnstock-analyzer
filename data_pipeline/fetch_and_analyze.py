@@ -1018,10 +1018,23 @@ Viết theo đúng 7 mục dưới đây, mỗi mục 1–2 câu ngắn gọn, d
 
 **Kết luận:** ➡️ **[Tạm đứng ngoài / Giảm tỷ trọng / Tăng tỷ trọng]** (chọn một) — một câu ngắn gói gọn trạng thái thị trường.
 
-### 4. Kịch bản Thị trường
-Bạn PHẢI trả về kết quả theo đúng cấu trúc Markdown chính xác sau, không thêm bớt tiêu đề chính:
+### 4. Thống kê Cổ phiếu & Nhóm ngành
+Top 5 tăng/giảm kèm % theo đúng nhóm {symbol} | Ngành thu hút/rút tiền kèm % TB.
+### 5. Market Breadth & Độ rộng thị trường
+Số mã tăng/giảm/đứng, tỷ lệ A/D, phân tích độ phân hóa.
 
-#### KỊCH BẢN THỊ TRƯỜNG: [Điền TRUNG TÍNH hoặc TÍCH CỰC hoặc TIÊU CỰC] (Dao động trong range {support_price} - {resistance_price})
+## [TAB:SCENARIO]
+Bạn PHẢI trả về ĐẦY ĐỦ 3 KỊCH BẢN: TÍCH CỰC, TRUNG TÍNH, TIÊU CỰC. Kịch bản nào có xác suất xảy ra cao nhất, hãy thêm cụm "(Xác suất cao nhất)" vào tiêu đề kịch bản đó. Viết theo đúng cấu trúc Markdown sau:
+
+### 1. KỊCH BẢN TÍCH CỰC [Thêm (Xác suất cao nhất) nếu đúng]
+* **Xác suất xảy ra:** [Điền số]%
+* **Độ tin cậy:** [Điền điểm]/10
+
+**Điều kiện kích hoạt:**
+- Giá vượt dứt khoát kháng cự {resistance_price} với độ rộng thị trường (Breadth) tích cực.
+- [Thêm 1-2 điều kiện phụ dựa trên dữ liệu]
+
+### 2. KỊCH BẢN TRUNG TÍNH (Dao động trong range {support_price} - {resistance_price}) [Thêm (Xác suất cao nhất) nếu đúng]
 * **Xác suất xảy ra:** [Điền số]%
 * **Độ tin cậy:** [Điền điểm]/10
 
@@ -1029,10 +1042,15 @@ Bạn PHẢI trả về kết quả theo đúng cấu trúc Markdown chính xác
 - Giá tiếp tục dao động, không thể vượt {resistance_price} nhưng cũng không thủng {support_price}.
 - Biến động duy trì ở mức {volatility_regime} và Trend Agreement Score duy trì [trên/dưới] mức 50.
 
-**Điều kiện thất bại:**
-- Giá vượt dứt khoát {resistance_price} với độ rộng thị trường (Breadth) xác nhận (chuyển sang tích cực) hoặc thủng {support_price} (chuyển sang tiêu cực).
+### 3. KỊCH BẢN TIÊU CỰC [Thêm (Xác suất cao nhất) nếu đúng]
+* **Xác suất xảy ra:** [Điền số]%
+* **Độ tin cậy:** [Điền điểm]/10
 
-**Dẫn chứng:**
+**Điều kiện kích hoạt:**
+- Giá thủng dứt khoát hỗ trợ {support_price} với khối lượng lớn, độ rộng thị trường tiêu cực.
+- [Thêm 1-2 điều kiện phụ dựa trên dữ liệu]
+
+### Dẫn chứng chung cho các kịch bản:
 - **Volatility regime = {volatility_regime}:** Biên độ dao động (20 phiên) ≈ {volatility_value}% của giá, hỗ trợ cho kịch bản [sideway biên độ rộng / xu hướng rõ ràng].
 - **Trend agreement score = {tas_score}/100 ({tas_status}):** Cho thấy xu hướng [giảm/tăng] vẫn chi phối, khiến mọi đợt [hồi/chỉnh] khó bền vững.
 - **Khoảng đệm kỹ thuật:** Khoảng cách tới hỗ trợ/kháng cự hiện tại là {support_distance}% / {resistance_distance}% cho thấy thị trường đang ở vị trí "[giữa hai mốc / sát vùng ranh giới]" quan trọng.
@@ -1040,10 +1058,6 @@ Bạn PHẢI trả về kết quả theo đúng cấu trúc Markdown chính xác
 
 *Quy tắc đánh giá:* Nếu Tas_score thấp (<30) nhưng Volatility cao và giá nằm giữa range hỗ trợ/kháng cự, ưu tiên kịch bản Trung tính (45-55%) hoặc Tiêu cực. Nếu Tas_score > 70 và Breadth tích cực, ưu tiên kịch bản Tích cực. Độ tin cậy (Thang điểm 10): Chấm điểm dựa trên tính đồng thuận của dữ liệu. Nếu Volatility đồng nhất với cấu trúc giá và khoảng đệm rõ ràng -> Chấm điểm từ 7-9/10. Nếu các chỉ báo đá nhau (Nhiễu) -> Chấm dưới 6/10.
 
-### 5. Thống kê Cổ phiếu & Nhóm ngành
-Top 5 tăng/giảm kèm % theo đúng nhóm {symbol} | Ngành thu hút/rút tiền kèm % TB.
-### 5. Market Breadth & Độ rộng thị trường
-Số mã tăng/giảm/đứng, tỷ lệ A/D, phân tích độ phân hóa.
 
 ## [TAB:VOLUME]
 ### 1. Thống kê Chỉ báo Khối lượng
@@ -1075,8 +1089,8 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
         ai_response = ask_ai(prompt_all,
             "Bạn là chuyên gia phân tích kỹ thuật và chiến lược thị trường chứng khoán. "
             "Dùng đúng số liệu được cung cấp, viết ngắn gọn súc tích, không thêm số liệu bẺ, "
-            "không đưa ra xác suất hay kịch bản tự đoán. "
-            "Output phải có đúng 3 block ## [TAB:GENERAL], ## [TAB:VOLUME], ## [TAB:TREND].")
+            "không đưa ra xác suất hay kịch bản tự đoán ngoài yêu cầu. "
+            "Output phải có đúng 4 block ## [TAB:GENERAL], ## [TAB:SCENARIO], ## [TAB:VOLUME], ## [TAB:TREND].")
 
         def parse_tab(response, tag):
             """Tách nội dung theo tag ## [TAB:XXX]"""
@@ -1088,13 +1102,15 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
             return match.group(1).strip() if match else None
 
         if ai_response:
-            general_markdown = parse_tab(ai_response, "GENERAL") or generate_rule_based_analysis(**rb_args, tab_type="general")
-            volume_markdown  = parse_tab(ai_response, "VOLUME")  or generate_rule_based_analysis(**rb_args, tab_type="volume")
-            trend_markdown   = parse_tab(ai_response, "TREND")   or generate_rule_based_analysis(**rb_args, tab_type="trend")
+            general_markdown  = parse_tab(ai_response, "GENERAL") or generate_rule_based_analysis(**rb_args, tab_type="general")
+            scenario_markdown = parse_tab(ai_response, "SCENARIO")
+            volume_markdown   = parse_tab(ai_response, "VOLUME")  or generate_rule_based_analysis(**rb_args, tab_type="volume")
+            trend_markdown    = parse_tab(ai_response, "TREND")   or generate_rule_based_analysis(**rb_args, tab_type="trend")
         else:
-            general_markdown = generate_rule_based_analysis(**rb_args, tab_type="general")
-            volume_markdown  = generate_rule_based_analysis(**rb_args, tab_type="volume")
-            trend_markdown   = generate_rule_based_analysis(**rb_args, tab_type="trend")
+            general_markdown  = generate_rule_based_analysis(**rb_args, tab_type="general")
+            scenario_markdown = None
+            volume_markdown   = generate_rule_based_analysis(**rb_args, tab_type="volume")
+            trend_markdown    = generate_rule_based_analysis(**rb_args, tab_type="trend")
 
         # Delay giữa các symbol để tránh rate limit
         time.sleep(5)
@@ -1113,6 +1129,7 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
                 "adx": safe_float(latest.get('adx', 0))
             },
             "general_markdown": general_markdown,
+            "scenario_markdown": scenario_markdown,
             "volume_markdown": volume_markdown,
             "trend_markdown": trend_markdown,
             "tas": {
