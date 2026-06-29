@@ -1244,9 +1244,45 @@ def main():
         raw_vn100 = _trading.price_board(symbols_list=vn100_syms)
         price_boards['VN100'] = _normalize_board(raw_vn100).sort_values('change_pc', ascending=False)
 
-        if 'VN100' in price_boards:
-            price_boards['VNINDEX'] = price_boards['VN100'].copy()
-        print(f"[BOARDS] Done: VN30={len(price_boards.get('VN30',[]))} | VN100={len(price_boards.get('VN100',[]))}")
+        # Fetch VNINDEX (HOSE)
+        vnindex_syms = []
+        try:
+            df_all = _listing.all_symbols()
+            # exchange HOSE
+            hose_syms = df_all[df_all['exchange'].str.upper() == 'HOSE']['ticker'].tolist()
+            if hose_syms:
+                vnindex_syms = hose_syms
+        except Exception as e:
+            print(f"  [BOARDS] all_symbols for VNINDEX failed: {e}")
+        
+        if not vnindex_syms:
+            vnindex_syms = VN100_FALLBACK
+            
+        print(f"[BOARDS] VNINDEX={len(vnindex_syms)} mã")
+        sys.stdout.flush()
+        
+        # Split into chunks of 100 to avoid request URL too long
+        vnindex_chunks = [vnindex_syms[i:i+100] for i in range(0, len(vnindex_syms), 100)]
+        vnindex_dfs = []
+        for i, chunk in enumerate(vnindex_chunks):
+            try:
+                raw_chunk = _trading.price_board(symbols_list=chunk)
+                if not raw_chunk.empty:
+                    vnindex_dfs.append(raw_chunk)
+                time.sleep(1)
+            except Exception as e:
+                print(f"  [BOARDS] VNINDEX chunk {i} failed: {e}")
+                
+        if vnindex_dfs:
+            raw_vnindex = pd.concat(vnindex_dfs, ignore_index=True)
+            # Remove duplicates if any
+            raw_vnindex = raw_vnindex.loc[raw_vnindex.astype(str).drop_duplicates().index]
+            price_boards['VNINDEX'] = _normalize_board(raw_vnindex).sort_values('change_pc', ascending=False)
+        else:
+            if 'VN100' in price_boards:
+                price_boards['VNINDEX'] = price_boards['VN100'].copy()
+
+        print(f"[BOARDS] Done: VN30={len(price_boards.get('VN30',[]))} | VN100={len(price_boards.get('VN100',[]))} | VNINDEX={len(price_boards.get('VNINDEX',[]))}")
         sys.stdout.flush()
 
     except Exception as e:
