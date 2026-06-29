@@ -360,10 +360,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tas) {
             renderTAS(tas);
             renderTASChart(tas.history || []);
-            const narEl = document.getElementById('tas-narrative');
-            if (narEl && tas.narrative) {
-                narEl.innerHTML = window.marked ? marked.parse(tas.narrative) : tas.narrative.replace(/\n/g, '<br>');
-            }
         }
 
         // Render candle pattern badges
