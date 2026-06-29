@@ -1134,17 +1134,6 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
             "trend_markdown": trend_markdown,
             "tas": {
                 **tas_res,
-                "narrative": build_trend_narrative(
-                    close      = close,
-                    ma5        = safe_float(latest.get('ma5',  0)) or close,
-                    ma10       = safe_float(latest.get('ma10', 0)) or close,
-                    ma20       = safe_float(latest.get('ma20', 0)) or close,
-                    return_5d  = return_5d,
-                    return_20d = return_20d,
-                    mom5       = mom5,
-                    rsi5       = safe_float(latest.get('rsi5', 50)),
-                    adx20      = safe_float(latest.get('adx',  0))
-                ),
                 "history": compute_tas_history_fast(df)
             },
             "candle_patterns": detect_candle_patterns(df),
