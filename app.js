@@ -236,9 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
             tbody.appendChild(tr);
         });
 
-        // Footer total — dùng abs score
+        // Footer total — dùng score với dấu +/-
         if (tfoot) {
-            const scoreStr = `${absPct}%`;
+            const scoreStr = (score > 0 ? '+' : '') + score + '%';
             tfoot.innerHTML = `
                 <tr class="tas-total-row">
                     <td colspan="2"><strong>T\u1ed4NG \u0110I\u1ec2M</strong></td>
