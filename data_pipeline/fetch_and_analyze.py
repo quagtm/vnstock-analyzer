@@ -1231,6 +1231,9 @@ def main():
                     raw['listing_ref_price'] = raw[rp]
             else:
                 raw['change_pc'] = 0.0
+            
+            # Filter out invalid price drops (e.g. -100%)
+            raw = raw[(raw['change_pc'] >= -20) & (raw['change_pc'] <= 20)]
             tc = next((c for c in raw.columns
                        if 'code' in c.lower() or c in ('ticker', 'symbol')), None)
             if tc and 'listing_code' not in raw.columns:
