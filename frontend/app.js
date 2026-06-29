@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <i class='bx bx-error-circle' style="font-size: 48px; margin-bottom: 16px;"></i>
                     <h3>Lỗi tải dữ liệu</h3>
                     <p>Không thể kết nối đến máy chủ hoặc dữ liệu chưa được cập nhật.</p>
+                    <p style="font-size: 12px; opacity: 0.7; margin-top: 10px;">Chi tiết lỗi: ${error.message}</p>
                 </div>
             `;
         }
