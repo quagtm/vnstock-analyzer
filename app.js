@@ -181,8 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Score text — hiển thị dương 0–100%, càng cao càng tốt (không dấu âm)
         const pctEl  = document.getElementById('tas-pct');
         const lblEl  = document.getElementById('tas-label');
-        const absPct = Math.abs(score);  // luôn dương
-        if (pctEl)  pctEl.textContent  = absPct + '%';
+        if (pctEl)  pctEl.textContent  = (score > 0 ? '+' : '') + score + '%';
         if (lblEl) {
             lblEl.textContent = label;
             lblEl.className   = 'tas-label ' + (
@@ -300,6 +299,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentMiniTab === 'general') {
             titleText = "Phân tích Tổng quan";
             markdownText = data.general_markdown || data.analysis_markdown || "Không có dữ liệu.";
+        } else if (currentMiniTab === 'scenario') {
+            titleText = "Kịch bản Thị trường";
+            markdownText = data.scenario_markdown || "Không có dữ liệu kịch bản.";
         } else if (currentMiniTab === 'volume') {
             titleText = "Phân tích Dòng tiền (Khối lượng)";
             markdownText = data.volume_markdown || "Không có dữ liệu.";
