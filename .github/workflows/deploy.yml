@@ -59,6 +59,13 @@ jobs:
             exit 0
           fi
 
+          # push event → luôn chạy (cho phép test code changes ngay lập tức)
+          if [ "$EVENT" = "push" ]; then
+            echo "Push event — bypass market guard, running pipeline"
+            echo "skip=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
           HOUR_UTC=$(date -u +%H)
           MIN_UTC=$(date -u +%M)
           TOTAL_MIN=$((HOUR_UTC * 60 + MIN_UTC))
