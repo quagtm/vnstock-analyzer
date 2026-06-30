@@ -442,24 +442,56 @@ def compute_tas_history_fast(df, n=20):
 
 
 # ══════════════════════════════════════════════════════════════════
-#  SECTOR HEATMAP (từ price_board, zero extra API calls)
+#  SECTOR HEATMAP — Dynamic ICB mapping from VCI API
 # ══════════════════════════════════════════════════════════════════
-SECTOR_MAP = {
-    'Ngân hàng':         ['VCB','BID','CTG','MBB','TCB','VPB','ACB','HDB','SHB','STB','TPB','LPB','VIB','OCB','MSB'],
-    'Bất động sản':      ['VHM','VIC','NVL','PDR','DXG','KDH','HDC','DIG','NTL','TDC','NLG','SCR'],
-    'Thép - VLXD':       ['HPG','NKG','TLH','POM','HSG','VGS','HT1','BMP'],
-    'Dầu khí':           ['GAS','PLX','PVD','PVS','OIL','BSR','PVC'],
-    'Bán lẻ - Tiêu dùng':['MWG','FRT','MSN','SAB','VNM','MCH','PNJ','VHC','ANV'],
-    'Hàng không - VT':   ['HVN','VJC','GMD','HAH','TCH','SCS'],
-    'Công nghệ - VT':    ['FPT','CMG','VGI','ELC','SGT','FOX'],
-    'Điện - Năng lượng': ['REE','PC1','POW','PPC','VSH','BWE','GEG','TTA'],
-    'Bảo hiểm - TC':     ['BVH','PVI','SSI','VND','HCM','VCI','BSI','AGR'],
-    'Công nghiệp':       ['VGC','DPM','DCM','CSV','CTD','PHR','DRC','CSM'],
+
+# Fallback hardcoded nếu API ICB không khả dụng
+SECTOR_MAP_FALLBACK = {
+    'Ngân hàng':         ['VCB','BID','CTG','MBB','TCB','VPB','ACB','HDB','SHB','STB','TPB','LPB','VIB','OCB','MSB','NAB','BAB','KLB','PGB','BVB','SSB','ABB','SGB','VAB','VBB','EIB'],
+    'Bất động sản':      ['VHM','VIC','NVL','PDR','DXG','KDH','HDC','DIG','NTL','TDC','NLG','SCR','AGG','HDG','KBC','SJS','DPG','IJC','CEO','LDG','NBB','QCG','HQC','CII','BCG','VRE','API','LHG','DXS','PHR','TDH','NTT','ITA','SZC','BCM','KOS','IDC'],
+    'Thép - Xây dựng':   ['HPG','NKG','TLH','POM','HSG','VGS','HT1','BMP','TLG','CTD','HBC','VCG','VGC','C4G','LCG','FCN','CRE','HHV','PC1','REE','DRC','CSM','SRC','DQC','CTR'],
+    'Dầu khí':           ['GAS','PLX','PVD','PVS','OIL','BSR','PVC','PVT','PVB','PVG','PXS','PET'],
+    'Bán lẻ - Tiêu dùng':['MWG','FRT','MSN','SAB','VNM','MCH','PNJ','VHC','ANV','DGW','HAG','QNS','KDC','SBT','LSS','LTG','BAF','MML','VHE','AAM','AGM','ASM','APF','CMX','NAF','SGN'],
+    'Vận tải - Logistics':['HVN','VJC','GMD','HAH','TCH','SCS','VTO','VOS','VNA','STG','ACV','NCT','SGP','PAN','TMS','VSC','DVP'],
+    'Công nghệ - Viễn thông':['FPT','CMG','VGI','ELC','SGT','FOX','ITD','MFS','SAM','VTC','ONE'],
+    'Điện - Nước - Khí': ['POW','PPC','VSH','BWE','GEG','TTA','NT2','HDG','EVG','EVF','HND','TMP','CHP','SBA','TVS','SHP','APH','GAS','SJD','TBC','PGV','QTP','VSB','CNG','HWS'],
+    'Chứng khoán':       ['SSI','VND','HCM','VCI','BSI','AGR','SHS','VIX','CTS','TVB','ORS','APS','DSE','FTS','MBS','TVS','PSI','KIS','EVS','BMS','IVS','WSS','HAC','APG'],
+    'Bảo hiểm':          ['BVH','PVI','BMI','BIC','MIG','ABI','PTI','BLI','VNR'],
+    'Hóa chất - Phân bón':['DPM','DCM','DGC','CSV','DHC','LAS','BFC','NFC','HVT','DDV','SFG','PMB'],
+    'Thủy sản':          ['VHC','ANV','IDI','FMC','ABT','ACL','CMX','AGF','MPC','TS4'],
+    'Dệt may - Da giày': ['TCM','TNG','VGT','MSH','STK','GMC','GIL','TVT','ADS','PPH','TET','HDM','VIT','EVE'],
+    'Cao su - Gỗ':       ['GVR','PHR','DPR','TRC','TNC','SRC','BRC','HRC','RDP','ACG','GDT','TTF','PTB'],
+    'Khoáng sản':        ['MSR','KSV','BMC','DHA','NGC','KSB','NNC','LBM','MIM'],
 }
 
 
-def compute_sector_heatmap(price_board):
-    """Tính % thay đổi TB mỗi ngành từ price_board — zero extra API calls."""
+def fetch_icb_mapping():
+    """Lấy mapping symbol → sector từ VCI ICB API (Level 2).
+    Returns dict {symbol: sector_name} hoặc {} nếu thất bại."""
+    try:
+        _listing = VCIListing(show_log=False)
+        df_icb = _listing.symbols_by_industries(lang='vi')
+        # Lấy ICB Level 2 — đủ chi tiết nhưng không quá nhỏ lẻ
+        lv2 = df_icb[df_icb['icb_level'] == 2][['symbol', 'icb_name']].drop_duplicates(subset='symbol')
+        mapping = dict(zip(lv2['symbol'], lv2['icb_name']))
+        print(f"[ICB] Fetched {len(mapping)} symbol-to-sector mappings (Level 2)")
+        return mapping
+    except Exception as e:
+        print(f"[ICB] Failed to fetch ICB mapping: {e}")
+        return {}
+
+
+def _fallback_sector_mapping():
+    """Tạo mapping symbol → sector từ hardcode fallback."""
+    mapping = {}
+    for sector, tickers in SECTOR_MAP_FALLBACK.items():
+        for t in tickers:
+            mapping[t] = sector
+    return mapping
+
+
+def compute_sector_heatmap(price_board, icb_mapping=None):
+    """Tính % thay đổi TB mỗi ngành từ price_board + ICB mapping."""
     if price_board is None or price_board.empty:
         return []
 
@@ -468,19 +500,26 @@ def compute_sector_heatmap(price_board):
     if ticker_col is None:
         return []
 
+    # Dùng ICB mapping nếu có, không thì fallback
+    if not icb_mapping:
+        icb_mapping = _fallback_sector_mapping()
+
+    price_board = price_board.copy()
+    price_board['_sector'] = price_board[ticker_col].map(icb_mapping)
+    # Bỏ những mã không có sector
+    mapped = price_board[price_board['_sector'].notna()]
+    if mapped.empty:
+        return []
+
     result = []
-    for sector, tickers in SECTOR_MAP.items():
-        mask = price_board[ticker_col].isin(tickers)
-        grp  = price_board[mask]
-        if grp.empty:
-            continue
+    for sector, grp in mapped.groupby('_sector'):
         avg_chg = grp['change_pc'].mean()
         if pd.isna(avg_chg):
             avg_chg = 0.0
         result.append({
             'sector':     sector,
-            'avg_change': float(round(float(avg_chg), 2)),  # ensure Python float
-            'count':      int(mask.sum()),
+            'avg_change': float(round(float(avg_chg), 2)),
+            'count':      int(len(grp)),
         })
 
     result.sort(key=lambda x: x['avg_change'], reverse=True)
@@ -796,21 +835,8 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
         # Trend assessment tổng hợp 5 MAs
         trend_assessment = build_trend_assessment(close, mas)
         
-        # ── Sector mapping (VN30) ────────────────────────────────────
-        SECTOR_MAP = {
-            "ACB":"Ngân hàng","BID":"Ngân hàng","CTG":"Ngân hàng",
-            "HDB":"Ngân hàng","LPB":"Ngân hàng","MBB":"Ngân hàng",
-            "SHB":"Ngân hàng","SSB":"Ngân hàng","STB":"Ngân hàng",
-            "TCB":"Ngân hàng","TPB":"Ngân hàng","VCB":"Ngân hàng",
-            "VIB":"Ngân hàng","VPB":"Ngân hàng",
-            "VHM":"Bất động sản","VIC":"Bất động sản",
-            "VRE":"Bất động sản","VPL":"Bất động sản",
-            "SSI":"Chứng khoán","MWG":"Bán lẻ",
-            "MSN":"Hàng tiêu dùng","SAB":"Hàng tiêu dùng","VNM":"Hàng tiêu dùng",
-            "GAS":"Dầu khí","PLX":"Dầu khí",
-            "HPG":"Thép","GVR":"Cao su",
-            "FPT":"Công nghệ","VJC":"Hàng không","BSR":"Lọc hóa dầu",
-        }
+        # ── Sector mapping (dùng fallback mapping đầy đủ) ────────────
+        SECTOR_MAP = _fallback_sector_mapping()
 
         # ── Dùng pre-fetched board từ main() theo đúng index ─────────
         top_movers_str   = ""
@@ -1244,20 +1270,24 @@ def main():
         raw_vn100 = _trading.price_board(symbols_list=vn100_syms)
         price_boards['VN100'] = _normalize_board(raw_vn100).sort_values('change_pc', ascending=False)
 
-        # Fetch VNINDEX (HOSE)
+        # Fetch VNINDEX (HOSE) — chỉ cổ phiếu, loại CW/ETF
         vnindex_syms = []
         try:
-            df_all = _listing.all_symbols()
-            # exchange HOSE
-            hose_syms = df_all[df_all['exchange'].str.upper() == 'HOSE']['symbol'].tolist()
-            if hose_syms:
-                vnindex_syms = hose_syms
+            df_all = _listing.symbols_by_exchange()
+            # Lọc: exchange HOSE + type STOCK (loại CW, ETF, ...)
+            hose_stocks = df_all[
+                (df_all['exchange'].str.upper() == 'HOSE') &
+                (df_all['type'].str.upper() == 'STOCK')
+            ]['symbol'].tolist()
+            if hose_stocks:
+                vnindex_syms = hose_stocks
+                print(f"[BOARDS] HOSE stocks (excl CW/ETF): {len(vnindex_syms)} mã")
         except Exception as e:
-            print(f"  [BOARDS] all_symbols for VNINDEX failed: {e}")
+            print(f"  [BOARDS] symbols_by_exchange for VNINDEX failed: {e}")
         
         if not vnindex_syms:
             vnindex_syms = VN100_FALLBACK
-            
+            print(f"  [BOARDS] Fallback to VN100: {len(vnindex_syms)} mã")
         print(f"[BOARDS] VNINDEX={len(vnindex_syms)} mã")
         sys.stdout.flush()
         
@@ -1311,11 +1341,13 @@ def main():
     out_dir = "output"
     os.makedirs(out_dir, exist_ok=True)
 
-    # Sector heatmap từ VN100 board — đủ đại diện, zero extra API
+    # Sector heatmap từ VNINDEX board + ICB mapping — đầy đủ toàn sàn HOSE
     sector_heatmap = []
-    if 'VN100' in price_boards and not price_boards['VN100'].empty:
-        sector_heatmap = compute_sector_heatmap(price_boards['VN100'])
-        print(f"[SECTOR] {len(sector_heatmap)} ngành computed")
+    icb_mapping = fetch_icb_mapping()
+    board_for_sector = price_boards.get('VNINDEX', price_boards.get('VN100'))
+    if board_for_sector is not None and not board_for_sector.empty:
+        sector_heatmap = compute_sector_heatmap(board_for_sector, icb_mapping)
+        print(f"[SECTOR] {len(sector_heatmap)} ngành computed from {len(board_for_sector)} stocks")
 
     # Gắn sector_heatmap vào tất cả index
     for sym in all_data:
