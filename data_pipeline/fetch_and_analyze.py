@@ -1199,6 +1199,25 @@ def main():
         'PNJ','PSH','PVD','PVT','QNS','REE','SBT','SCS','SJS','SKG',
         'SRC','SZC','TCH','TDH','TDM','TIP','TLG','TMP','TNH','VCI',
     ]
+    
+    def fetch_hose_stocks_fallback():
+        """Lấy danh sách mã chứng khoán HOSE dự phòng khi VCI API lỗi."""
+        print("  [BOARDS] VCI API failed. Falling back to alternative APIs...")
+        # 1. Thử TCBS API
+        try:
+            res = requests.get("https://apipubaws.tcbs.com.vn/tcanalysis/v1/ticker/list", timeout=5).json()
+            stocks = [s['ticker'] for s in res if s.get('exchange') == 'HOSE']
+            if len(stocks) > 200:
+                print(f"  [BOARDS] Fallback success using TCBS: {len(stocks)} mã")
+                return stocks
+        except Exception as e:
+            print(f"  [BOARDS] TCBS fallback failed: {e}")
+            
+        # 2. Hardcode list (~300 mã thanh khoản)
+        hardcoded = list(set(list(_fallback_sector_mapping().keys()) + VN100_FALLBACK))
+        print(f"  [BOARDS] Fallback to hardcoded list: {len(hardcoded)} mã")
+        return hardcoded
+
     price_boards = {}
     print("[BOARDS] Pre-fetching index price boards...")
     sys.stdout.flush()
@@ -1286,8 +1305,7 @@ def main():
             print(f"  [BOARDS] symbols_by_exchange for VNINDEX failed: {e}")
         
         if not vnindex_syms:
-            vnindex_syms = VN100_FALLBACK
-            print(f"  [BOARDS] Fallback to VN100: {len(vnindex_syms)} mã")
+            vnindex_syms = fetch_hose_stocks_fallback()
         print(f"[BOARDS] VNINDEX={len(vnindex_syms)} mã")
         sys.stdout.flush()
         
