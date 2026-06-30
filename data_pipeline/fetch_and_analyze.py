@@ -1249,7 +1249,7 @@ def main():
         try:
             df_all = _listing.all_symbols()
             # exchange HOSE
-            hose_syms = df_all[df_all['exchange'].str.upper() == 'HOSE']['ticker'].tolist()
+            hose_syms = df_all[df_all['exchange'].str.upper() == 'HOSE']['symbol'].tolist()
             if hose_syms:
                 vnindex_syms = hose_syms
         except Exception as e:
