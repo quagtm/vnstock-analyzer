@@ -15,6 +15,7 @@
     --positive-glow: rgba(16, 232, 154, 0.35);
     --negative: #ff4d6d;
     --negative-glow: rgba(255, 77, 109, 0.35);
+    --flat: #fbbf24;
 
     /* Gradient Tokens */
     --grad-blue-purple: linear-gradient(135deg, #4f8ef7 0%, #a78bfa 100%);

@@ -272,15 +272,36 @@ document.addEventListener('DOMContentLoaded', () => {
         // Format numbers
         const formatNum = (num) => new Intl.NumberFormat('vi-VN').format(num);
         
-        clone.getElementById('val-close').textContent = formatNum(data.close);
-        
+        const closeSpan = clone.getElementById('val-close');
         const changeSpan = clone.getElementById('val-change');
-        if (changeSpan && data.change_pc !== undefined) {
-            const isPositive = data.change_pc >= 0;
+        const scoreCard = clone.getElementById('score-card');
+        
+        if (closeSpan && data.change_pc !== undefined) {
+            const isPositive = data.change_pc > 0;
+            const isNegative = data.change_pc < 0;
             const sign = isPositive ? '+' : '';
-            const color = isPositive ? 'var(--positive)' : 'var(--negative)';
-            changeSpan.style.color = color;
-            changeSpan.textContent = `(${sign}${data.change_pc.toFixed(2)}%)`;
+            
+            let color = 'var(--flat)';
+            let bgGlow = 'rgba(251, 191, 36, 0.05)';
+            if (isPositive) { color = 'var(--positive)'; bgGlow = 'var(--positive-glow)'; }
+            else if (isNegative) { color = 'var(--negative)'; bgGlow = 'var(--negative-glow)'; }
+            
+            closeSpan.textContent = formatNum(data.close);
+            closeSpan.style.color = color;
+            
+            if (changeSpan) {
+                const changeAbs = (data.change > 0 ? '+' : '') + (data.change || 0).toFixed(2);
+                const changePc = sign + data.change_pc.toFixed(2) + '%';
+                changeSpan.textContent = `(${changeAbs}  ${changePc})`;
+                changeSpan.style.color = color;
+            }
+            
+            if (scoreCard) {
+                scoreCard.style.borderColor = color;
+                scoreCard.style.boxShadow = `0 0 15px ${bgGlow}`;
+            }
+        } else if (closeSpan) {
+            closeSpan.textContent = formatNum(data.close);
         }
 
         clone.getElementById('val-volume').textContent = formatNum(data.volume);
