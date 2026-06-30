@@ -490,6 +490,36 @@ def _fallback_sector_mapping():
     return mapping
 
 
+def get_sector_mapping():
+    """Lấy mapping từ custom_sectors.json > VCI API > fallback."""
+    import os
+    import json
+    
+    # 1. Ưu tiên đọc từ file custom_sectors.json do người dùng tự nhập
+    custom_path = 'custom_sectors.json'
+    if os.path.exists(custom_path):
+        try:
+            with open(custom_path, 'r', encoding='utf-8') as f:
+                custom_map = json.load(f)
+            mapping = {}
+            for sector, tickers in custom_map.items():
+                for t in tickers:
+                    mapping[t] = sector
+            print(f"[ICB] Loaded custom sector mapping from {custom_path}")
+            return mapping
+        except Exception as e:
+            print(f"[ICB] Error reading {custom_path}: {e}")
+            
+    # 2. Lấy từ VCI API
+    mapping = fetch_icb_mapping()
+    if mapping:
+        return mapping
+        
+    # 3. Fallback
+    print("[ICB] Using hardcoded fallback mapping")
+    return _fallback_sector_mapping()
+
+
 def compute_sector_heatmap(price_board, icb_mapping=None):
     """Tính % thay đổi TB mỗi ngành từ price_board + ICB mapping."""
     if price_board is None or price_board.empty:
@@ -1389,7 +1419,7 @@ def main():
 
     # Sector heatmap từ VNINDEX board + ICB mapping — đầy đủ toàn sàn HOSE
     sector_heatmap = []
-    icb_mapping = fetch_icb_mapping()
+    icb_mapping = get_sector_mapping()
     board_for_sector = price_boards.get('VNINDEX', price_boards.get('VN100'))
     if board_for_sector is not None and not board_for_sector.empty:
         sector_heatmap = compute_sector_heatmap(board_for_sector, icb_mapping)
