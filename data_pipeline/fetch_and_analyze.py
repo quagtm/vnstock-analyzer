@@ -1309,17 +1309,24 @@ def main():
         print(f"[BOARDS] VNINDEX={len(vnindex_syms)} mã")
         sys.stdout.flush()
         
-        # Split into chunks of 100 to avoid request URL too long
-        vnindex_chunks = [vnindex_syms[i:i+100] for i in range(0, len(vnindex_syms), 100)]
+        # Split into chunks of 50 to avoid request URL too long or payload too large
+        vnindex_chunks = [vnindex_syms[i:i+50] for i in range(0, len(vnindex_syms), 50)]
         vnindex_dfs = []
         for i, chunk in enumerate(vnindex_chunks):
-            try:
-                raw_chunk = _trading.price_board(symbols_list=chunk)
-                if not raw_chunk.empty:
-                    vnindex_dfs.append(raw_chunk)
-                time.sleep(1)
-            except Exception as e:
-                print(f"  [BOARDS] VNINDEX chunk {i} failed: {e}")
+            success = False
+            for attempt in range(3):
+                try:
+                    raw_chunk = _trading.price_board(symbols_list=chunk)
+                    if not raw_chunk.empty:
+                        vnindex_dfs.append(raw_chunk)
+                    success = True
+                    time.sleep(1)
+                    break
+                except Exception as e:
+                    print(f"  [BOARDS] VNINDEX chunk {i} attempt {attempt+1} failed: {e}")
+                    time.sleep(2)
+            if not success:
+                print(f"  [BOARDS] VNINDEX chunk {i} completely failed after 3 attempts.")
                 
         if vnindex_dfs:
             raw_vnindex = pd.concat(vnindex_dfs, ignore_index=True)
