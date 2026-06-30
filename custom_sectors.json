@@ -133,14 +133,13 @@
         "APF",
         "CMX",
         "NAF",
-        "SGN"
+        "PAN"
     ],
     "Vận tải - Logistics": [
         "HVN",
         "VJC",
         "GMD",
         "HAH",
-        "TCH",
         "SCS",
         "VTO",
         "VOS",
@@ -149,7 +148,6 @@
         "ACV",
         "NCT",
         "SGP",
-        "PAN",
         "TMS",
         "VSC",
         "DVP"
@@ -176,15 +174,12 @@
         "TTA",
         "NT2",
         "HDG",
-        "EVG",
-        "EVF",
         "HND",
         "TMP",
         "CHP",
         "SBA",
         "TVS",
         "SHP",
-        "APH",
         "GAS",
         "SJD",
         "TBC",
@@ -212,7 +207,6 @@
         "MBS",
         "TVS",
         "PSI",
-        "KIS",
         "EVS",
         "BMS",
         "IVS",
@@ -255,7 +249,6 @@
         "CMX",
         "AGF",
         "MPC",
-        "TS4"
     ],
     "Dệt may - Da giày": [
         "TCM",
