@@ -193,7 +193,7 @@ def calculate_technical_indicators(df):
     # Sắp xếp thời gian
     if 'time' in df.columns:
         df['time'] = pd.to_datetime(df['time'])
-        df = df.sort_values(by='time')
+        df.sort_values(by='time', inplace=True)
         
     close = df['close']
     high = df['high']
