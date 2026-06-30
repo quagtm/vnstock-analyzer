@@ -1258,6 +1258,10 @@ def main():
             cp = next((c for c in raw.columns if 'match_price' in c or c in ('close', 'price')), None)
             rp = next((c for c in raw.columns if 'ref_price' in c or c in ('ref',)), None)
             if cp and rp:
+                # Nếu cổ phiếu chưa có giao dịch, VCI trả về match_price = 0
+                # Cần gán lại bằng giá tham chiếu để thay đổi = 0%, tránh bị lỗi -100%
+                raw[cp] = raw.apply(lambda row: row[rp] if pd.isna(row[cp]) or row[cp] == 0 else row[cp], axis=1)
+                
                 raw['change_pc'] = (raw[cp] - raw[rp]) / raw[rp].replace(0, float('nan')) * 100
                 if 'match_match_price' not in raw.columns:
                     raw['match_match_price'] = raw[cp]
@@ -1266,8 +1270,8 @@ def main():
             else:
                 raw['change_pc'] = 0.0
             
-            # Filter out invalid price drops (e.g. -100%)
-            raw = raw[(raw['change_pc'] >= -20) & (raw['change_pc'] <= 20)]
+            # Lấp đầy các giá trị NaN để không bị drop
+            raw['change_pc'] = raw['change_pc'].fillna(0.0)
             tc = next((c for c in raw.columns
                        if 'code' in c.lower() or c in ('ticker', 'symbol')), None)
             if tc and 'listing_code' not in raw.columns:
