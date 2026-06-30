@@ -1309,25 +1309,42 @@ def main():
         print(f"[BOARDS] VNINDEX={len(vnindex_syms)} mã")
         sys.stdout.flush()
         
-        # Split into chunks of 50 to avoid request URL too long or payload too large
-        vnindex_chunks = [vnindex_syms[i:i+50] for i in range(0, len(vnindex_syms), 50)]
         vnindex_dfs = []
-        for i, chunk in enumerate(vnindex_chunks):
-            success = False
-            for attempt in range(3):
-                try:
-                    raw_chunk = _trading.price_board(symbols_list=chunk)
-                    if not raw_chunk.empty:
-                        vnindex_dfs.append(raw_chunk)
-                    success = True
-                    time.sleep(1)
-                    break
-                except Exception as e:
-                    print(f"  [BOARDS] VNINDEX chunk {i} attempt {attempt+1} failed: {e}")
-                    time.sleep(2)
-            if not success:
-                print(f"  [BOARDS] VNINDEX chunk {i} completely failed after 3 attempts.")
-                
+        failed_syms = []
+        # Split into chunks of 50 initially
+        chunks_50 = [vnindex_syms[i:i+50] for i in range(0, len(vnindex_syms), 50)]
+        for chunk in chunks_50:
+            try:
+                raw_chunk = _trading.price_board(symbols_list=chunk)
+                if not raw_chunk.empty:
+                    vnindex_dfs.append(raw_chunk)
+                time.sleep(1)
+                continue
+            except Exception as e:
+                print(f"  [BOARDS] Chunk 50 failed: {e}. Splitting to 10...")
+                # Split into 10
+                chunks_10 = [chunk[i:i+10] for i in range(0, len(chunk), 10)]
+                for sub in chunks_10:
+                    try:
+                        raw_sub = _trading.price_board(symbols_list=sub)
+                        if not raw_sub.empty:
+                            vnindex_dfs.append(raw_sub)
+                        time.sleep(0.5)
+                        continue
+                    except Exception as e2:
+                        # Fallback to individual
+                        for sym in sub:
+                            try:
+                                raw_ind = _trading.price_board(symbols_list=[sym])
+                                if not raw_ind.empty:
+                                    vnindex_dfs.append(raw_ind)
+                                time.sleep(0.2)
+                            except:
+                                failed_syms.append(sym)
+                                
+        if failed_syms:
+            print(f"  [BOARDS] Completely failed {len(failed_syms)} symbols: {failed_syms[:10]}...")
+            
         if vnindex_dfs:
             raw_vnindex = pd.concat(vnindex_dfs, ignore_index=True)
             # Remove duplicates if any
