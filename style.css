@@ -195,8 +195,6 @@ body {
     flex: 1;
     margin-left: 260px;
     padding: 28px 40px;
-    max-width: 1280px;   /* giới hạn độ rộng tối đa — tránh trải quá rộng trên màn hình lớn */
-    margin-right: auto;
 }
 
 /* ── Topbar / Page Title ── */
