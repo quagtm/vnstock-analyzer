@@ -546,10 +546,40 @@ def compute_sector_heatmap(price_board, icb_mapping=None):
         avg_chg = grp['change_pc'].mean()
         if pd.isna(avg_chg):
             avg_chg = 0.0
+
+        # Tính tổng giá trị giao dịch (Tỷ VNĐ)
+        total_val = 0
+        if 'match_accumulated_value' in grp.columns:
+            total_val = (grp['match_accumulated_value'].fillna(0).sum()) / 1000  # Triệu -> Tỷ VNĐ
+
+        # Tính Market Cap dòng tiền
+        cap_up = 0
+        cap_down = 0
+        cap_ref = 0
+        
+        has_market_cap = 'listing_listed_share' in grp.columns and 'match_match_price' in grp.columns
+        
+        for _, row in grp.iterrows():
+            chg = float(row.get('change_pc', 0) or 0)
+            mc = 0
+            if has_market_cap:
+                mc = float(row.get('listing_listed_share', 0) or 0) * float(row.get('match_match_price', 0) or 0) / 1e9
+            
+            if chg > 0:
+                cap_up += mc
+            elif chg < 0:
+                cap_down += mc
+            else:
+                cap_ref += mc
+
         result.append({
             'sector':     sector,
             'avg_change': float(round(float(avg_chg), 2)),
             'count':      int(len(grp)),
+            'total_val':  float(round(total_val, 2)),
+            'cap_up':     float(round(cap_up, 2)),
+            'cap_down':   float(round(cap_down, 2)),
+            'cap_ref':    float(round(cap_ref, 2))
         })
 
     result.sort(key=lambda x: x['avg_change'], reverse=True)
@@ -1231,22 +1261,22 @@ def main():
     ]
     
     def fetch_hose_stocks_fallback():
-        """Lấy danh sách mã chứng khoán HOSE dự phòng khi VCI API lỗi."""
-        print("  [BOARDS] VCI API failed. Falling back to alternative APIs...")
-        # 1. Thử TCBS API
+        """Lấy danh sách mã chứng khoán HOSE dự phòng."""
+        import json
+        import os
+        hardcoded = []
         try:
-            res = requests.get("https://apipubaws.tcbs.com.vn/tcanalysis/v1/ticker/list", timeout=5).json()
-            stocks = [s['ticker'] for s in res if s.get('exchange') == 'HOSE']
-            if len(stocks) > 200:
-                print(f"  [BOARDS] Fallback success using TCBS: {len(stocks)} mã")
-                return stocks
+            if os.path.exists('custom_sectors.json'):
+                with open('custom_sectors.json', 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    for sector, syms in data.items():
+                        hardcoded.extend(syms)
+            hardcoded = list(set(hardcoded + VN100_FALLBACK))
+            print(f"  [BOARDS] Fallback to custom_sectors + VN100: {len(hardcoded)} mã")
+            return hardcoded
         except Exception as e:
-            print(f"  [BOARDS] TCBS fallback failed: {e}")
-            
-        # 2. Hardcode list (~300 mã thanh khoản)
-        hardcoded = list(set(list(_fallback_sector_mapping().keys()) + VN100_FALLBACK))
-        print(f"  [BOARDS] Fallback to hardcoded list: {len(hardcoded)} mã")
-        return hardcoded
+            print(f"  [BOARDS] Fallback failed: {e}")
+            return VN100_FALLBACK
 
     price_boards = {}
     print("[BOARDS] Pre-fetching index price boards...")
