@@ -109,6 +109,82 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─── TAS History Chart (20 sessions) ─────────────────────────
+    function renderSectorTable(sectors) {
+        const tbody = document.getElementById('sector-table-body');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        
+        if (!sectors || sectors.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4">Không có dữ liệu ngành</td></tr>';
+            return;
+        }
+
+        sectors.forEach(s => {
+            const tr = document.createElement('tr');
+            
+            // Name
+            const tdName = document.createElement('td');
+            tdName.textContent = s.sector;
+            
+            // Change
+            const tdChange = document.createElement('td');
+            const chg = (s.avg_change || 0);
+            const isPos = chg > 0;
+            const isNeg = chg < 0;
+            tdChange.textContent = (isPos ? '+' : '') + chg.toFixed(2) + '%';
+            tdChange.style.color = isPos ? 'var(--positive)' : (isNeg ? 'var(--negative)' : 'var(--text-secondary)');
+            
+            // Value
+            const tdVal = document.createElement('td');
+            tdVal.textContent = (s.total_val || 0).toLocaleString('vi-VN', {maximumFractionDigits: 2});
+            
+            // Money Flow Bar
+            const tdFlow = document.createElement('td');
+            const capUp = s.cap_up || 0;
+            const capDown = s.cap_down || 0;
+            const capRef = s.cap_ref || 0;
+            const totalCap = capUp + capDown + capRef;
+            
+            let pctUp = 0, pctDown = 0, pctRef = 0;
+            if (totalCap > 0) {
+                pctUp = (capUp / totalCap) * 100;
+                pctDown = (capDown / totalCap) * 100;
+                pctRef = (capRef / totalCap) * 100;
+            }
+            
+            const barWrap = document.createElement('div');
+            barWrap.className = 'money-flow-bar';
+            
+            if (pctUp > 0) {
+                const bUp = document.createElement('div');
+                bUp.className = 'flow-up';
+                bUp.style.width = pctUp + '%';
+                barWrap.appendChild(bUp);
+            }
+            if (pctRef > 0) {
+                const bRef = document.createElement('div');
+                bRef.className = 'flow-ref';
+                bRef.style.width = pctRef + '%';
+                barWrap.appendChild(bRef);
+            }
+            if (pctDown > 0) {
+                const bDown = document.createElement('div');
+                bDown.className = 'flow-down';
+                bDown.style.width = pctDown + '%';
+                barWrap.appendChild(bDown);
+            }
+            
+            tdFlow.appendChild(barWrap);
+            
+            tr.appendChild(tdName);
+            tr.appendChild(tdChange);
+            tr.appendChild(tdVal);
+            tr.appendChild(tdFlow);
+            
+            tbody.appendChild(tr);
+        });
+    }
+
     function renderTASChart(history) {
         const canvas = document.getElementById('tas-history-chart');
         if (!canvas || !history || history.length < 2) return;
@@ -392,6 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Render sector heatmap
         renderSectorHeatmap(data.sector_heatmap || []);
+        renderSectorTable(data.sector_heatmap || []);
     }
 
     // Navigation setup

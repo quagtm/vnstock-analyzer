@@ -67,7 +67,7 @@ body {
     padding: 24px 0;
     position: fixed;
     height: 100vh;
-    z-index: 100;
+    z-index: 1000;
     box-shadow: 4px 0 32px rgba(0,0,0,0.4);
 }
 
@@ -983,3 +983,64 @@ body {
     .sector-heatmap { grid-template-columns: repeat(2, 1fr); }
     .candle-badge { min-width: 140px; }
 }
+
+
+/* -- Sector Table -- */
+.sector-table-wrapper {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1px;
+}
+
+.sector-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.sector-table th {
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.sector-table td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    text-align: center;
+    font-weight: 500;
+}
+
+.sector-table tr:last-child td {
+    border-bottom: none;
+}
+
+.sector-table tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.sector-table td:first-child {
+    text-align: left;
+    font-weight: 600;
+}
+
+.money-flow-bar {
+    display: flex;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+
+.flow-up { background: var(--positive); }
+.flow-ref { background: var(--neutral); }
+.flow-down { background: var(--negative); }
+
