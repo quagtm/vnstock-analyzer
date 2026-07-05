@@ -476,6 +476,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderSectorHeatmap(sectorData);
         renderSectorTable(sectorData);
+        
+        if (window.bindEditSectorButton) window.bindEditSectorButton();
     }
 
     // Expose for sectors.js
