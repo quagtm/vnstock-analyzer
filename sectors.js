@@ -43,7 +43,6 @@ function computeCustomSectors(rawStocks) {
 }
 
 function initSectorModal(appData) {
-    const btnEdit = document.getElementById('btn-edit-sectors');
     const modal = document.getElementById('sector-modal');
     const btnClose = document.getElementById('btn-close-modal');
     const editor = document.getElementById('sector-list-editor');
@@ -51,7 +50,7 @@ function initSectorModal(appData) {
     const btnReset = document.getElementById('btn-reset-sectors');
     const btnSave = document.getElementById('btn-save-sectors');
     
-    if (!btnEdit || !modal) return;
+    if (!modal) return;
     
     let workingSectors = {};
 
@@ -120,14 +119,19 @@ function initSectorModal(appData) {
         }
     }
 
-    btnEdit.onclick = () => {
-        if (customSectors) {
-            workingSectors = JSON.parse(JSON.stringify(customSectors));
-        } else {
-            workingSectors = extractDefaultSectors();
+    window.bindEditSectorButton = () => {
+        const btnEdit = document.getElementById('btn-edit-sectors');
+        if (btnEdit) {
+            btnEdit.onclick = () => {
+                if (customSectors) {
+                    workingSectors = JSON.parse(JSON.stringify(customSectors));
+                } else {
+                    workingSectors = extractDefaultSectors();
+                }
+                renderEditor();
+                modal.style.display = 'flex';
+            };
         }
-        renderEditor();
-        modal.style.display = 'flex';
     };
 
     btnClose.onclick = () => {
