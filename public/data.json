@@ -1,7 +1,7 @@
 {
   "VNINDEX": {
     "symbol": "VNINDEX",
-    "date": "2026-07-05 22:11 (ICT)",
+    "date": "2026-07-05 22:51 (ICT)",
     "close": 1862.08,
     "change": -4.269999999999982,
     "change_pc": -0.22878881238781482,
@@ -12,10 +12,10 @@
       "cmf": 0.09274333690974397,
       "adx": 17.60966066628634
     },
-    "general_markdown": "### 1. Diễn biến phiên giao dịch\nGiá đóng cửa 1862.08, giảm nhẹ so với mở cửa 1867.17. Khối lượng khớp lệnh 610.755 triệu CP, thấp hơn 3.44% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- MA10 (1865.06): kháng cự ngắn hạn, giá đóng cửa dưới MA10.\n- MA20 (1834.83): hỗ trợ, giá đóng cửa trên MA20.\n- MA50 (1861.09): hỗ trợ, giá đóng cửa trên MA50.\n- MA100 (1804.97): hỗ trợ, giá đóng cửa trên MA100.\n- MA200 (1763.70): hỗ trợ, giá đóng cửa trên MA200.\n- ROC10 = +2.06%, ROC20 = +1.26%: động lượng tích cực.\n- ADX = 17.61: xu hướng trung bình.\n- Kết hợp: Tình trạng hỗn hợp: ngắn=down | trung=up | dài=up.\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** Thị trường đang trong tình trạng hỗn hợp (ngắn hạn giảm, trung và dài hạn tăng), dựa trên MA10 kháng cự, MA50/100/200 hỗ trợ và ROC tích cực.\n\n**Độ rộng thị trường:** Tỷ lệ A/D là 1.28, với 32 mã tăng và 25 mã giảm, cho thấy đà tăng có lan tỏa nhưng không mạnh.\n\n**Thanh khoản:** Khối lượng 610.75 triệu CP thấp hơn 3.44% so TB 20 phiên, thể hiện sự thận trọng của dòng tiền.\n\n**Sức khỏe thị trường:** Tỷ lệ A/D tích cực và giá đóng cửa trên các MA dài hạn cho thấy đà phục hồi vẫn duy trì, nhưng % mã trên MA200 là 0% cho thấy sự lan tỏa hạn chế.\n\n**Khuyến nghị hành động:**\n- *Cảnh báo:* ADX ở mức 17.6 cho thấy xu hướng chưa mạnh, CMF dương 0.0927 nhưng thanh khoản thấp.\n- *Chiến lược:* Chờ tín hiệu.\n\n**Kết luận:** ➡️ **Chờ tín hiệu** — Thị trường đang trong giai đoạn hỗn hợp, cần thêm xác nhận từ khối lượng và độ rộng.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n**Top 5 tăng mạnh nhất (VNINDEX):** FCN (+1.67%), AGR (+1.62%), TDH (+1.10%), HAH (+0.97%), PLX (+0.67%).\n**Top 5 giảm mạnh nhất (VNINDEX):** DHC (-1.17%), PC1 (-1.34%), DGC (-1.35%), SKG (-1.81%), PNJ (-6.97%).\n**Ngành thu hút dòng tiền:** Chứng khoán (+0.48%), Dầu khí (+0.36%), Ngân hàng (+0.13%).\n**Ngành rút dòng tiền:** Bán lẻ - Tiêu dùng (-0.59%), Thủy sản (-0.47%), Hóa chất - Phân bón (-0.36%).\n\n### 5. Market Breadth & Độ rộng thị trường\nVNINDEX: 32 mã tăng, 25 mã giảm, 53 mã đứng, tỷ lệ A/D 1.28. VN30: 16 mã tăng, 6 mã giảm, 8 mã đứng, tỷ lệ A/D 2.67. Thị trường có độ phân hóa, với VN30 mạnh hơn.",
-    "scenario_markdown": "### 1. KỊCH BẢN TÍCH CỰC (Xác suất cao nhất)\n* **Xác suất xảy ra:** 35%\n* **Độ tin cậy:** 6/10\n\n**Điều kiện kích hoạt:**\n- Giá vượt dứt khoát kháng cự 1894.39 với độ rộng thị trường tích cực.\n- Khối lượng giao dịch tăng trên mức TB 20 phiên.\n\n### 2. KỊCH BẢN TRUNG TÍNH (Dao động trong range 1845.95 - 1894.39)\n* **Xác suất xảy ra:** 40%\n* **Độ tin cậy:** 7/10\n\n**Điều kiện kích hoạt:**\n- Giá tiếp tục dao động, không thể vượt 1894.39 nhưng cũng không thủng 1845.95.\n- Biến động duy trì ở mức LOW_VOL và Trend Agreement Score duy trì trên mức 50.\n\n### 3. KỊCH BẢN TIÊU CỰC\n* **Xác suất xảy ra:** 25%\n* **Độ tin cậy:** 5/10\n\n**Điều kiện kích hoạt:**\n- Giá thủng dứt khoát hỗ trợ 1845.95 với khối lượng lớn, độ rộng thị trường tiêu cực.\n- Giá đóng cửa dưới MA50 (1861.09) kèm thanh khoản cao.\n\n### Dẫn chứng chung cho các kịch bản:\n- **Volatility regime = LOW_VOL:** Biên độ dao động (20 phiên) ≈ 6.39% của giá, hỗ trợ cho kịch bản sideway biên độ rộng.\n- **Trend agreement score = 78/100 (STRONG BULLISH):** Cho thấy xu hướng tăng vẫn chi phối, khiến mọi đợt chỉnh khó bền vững.\n- **Khoảng đệm kỹ thuật:** Khoảng cách tới hỗ trợ/kháng cự hiện tại là -0.87% / 1.74% cho thấy thị trường đang ở vị trí giữa hai mốc quan trọng.\n- **Horizon (Tầm nhìn):** 5-15 phiên.",
-    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | 0.0927 | Dòng tiền vào nhẹ |\n| VWAP | 1849.09 | Giá đóng cửa trên VWAP, cho thấy giá đang ở vùng cao hơn giá trị giao dịch bình quân |\n| OBV | 54188921320 | Xu hướng tăng, xác nhận dòng tiền vào |\n\n### 2. Nhận định Dòng tiền\nDòng tiền ròng vào nhẹ (CMF dương). Giá đóng cửa trên VWAP cho thấy áp lực mua chiếm ưu thế. OBV tăng cho thấy không có dấu hiệu phân phối rõ rệt.",
-    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách % | Vai trò |\n|---|---|---|---|\n| MA10 | 1865.06 | -0.16% | Kháng cự |\n| MA20 | 1834.83 | +1.49% | Hỗ trợ |\n| MA50 | 1861.09 | +0.05% | Hỗ trợ |\n| MA100 | 1804.97 | +3.16% | Hỗ trợ |\n| MA200 | 1763.70 | +5.58% | Hỗ trợ |\n| ROC10 | +2.06% | - | Động lượng tích",
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\nVNINDEX đóng cửa ở 1862.08, giảm nhẹ so với mức mở 1867.17. Khối lượng khớp lệnh đạt 610.755 triệu CP, thấp hơn 3.44% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- **Ngắn hạn (MA10, MA20):** Xu hướng hỗn hợp.\n- **Trung hạn (MA50):** Xu hướng tăng.\n- **Dài hạn (MA100, MA200):** Xu hướng tăng.\n- **ROC:** ROC10 = +2.06% (ngắn hạn), ROC20 = +1.26% (trung hạn) → Động lượng TÍCH CỰC.\n- **Nhận xét tổng hợp:** Chỉ số đang trong vùng phân kỳ xu hướng, cần thêm tín hiệu xác nhận.\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** Xu hướng thị trường hiện tại là hỗn hợp (ngắn=down | trung=up | dài=up), với động lượng tích cực từ ROC nhưng chưa có sự đồng thuận giữa các MA.\n\n**Độ rộng thị trường:** Độ rộng tích cực với 32 mã tăng và 25 mã giảm (tỷ lệ A/D = 1.28), cho thấy đà tăng có lan tỏa hơn là tập trung vào một số mã.\n\n**Thanh khoản:** Khối lượng giao dịch thấp hơn 3.44% so với trung bình 20 phiên, phản ánh tâm lý thận trọng của dòng tiền.\n\n**Sức khỏe thị trường:** Tỷ lệ A/D = 2.67 ở nhóm VN30 cho thấy sự lan tỏa tích cực, nhưng 0% mã trên MA200 cho thấy đà phục hồi chưa bền vững trên dài hạn.\n\n**Khuỳn nghị hành động:**\n- *Cảnh báo:* ADX ở mức 17.6 (trung bình) và CMF dương 0.0927 cho thấy xu hướng chưa mạnh và dòng tiền vào yếu.\n- *Chiến lược:* Chờ tín hiệu.\n\n**Kết luận:** ➡️ **Chờ tín hiệu** — thị trường đang trong giai đoạn phân kỳ, cần thêm xác nhận từ khối lượng và độ rộng.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n- **Top 5 tăng mạnh nhất (VNINDEX):** FCN (+1.67%), AGR (+1.62%), TDH (+1.10%), HAH (+0.97%), PLX (+0.67%).\n- **Top 5 giảm mạnh nhất (VNINDEX):** DHC (-1.17%), PC1 (-1.34%), DGC (-1.35%), SKG (-1.81%), PNJ (-6.97%).\n- **Ngành thu hút dòng tiền:** Chứng khoán (+0.48%), Dầu khí (+0.36%), Ngân hàng (+0.13%).\n- **Ngành bị rút dòng tiền:** Bán lẻ - Tiêu dùng (-0.59%), Thủy sản (-0.47%), Bảo hiểm (-0.38%).\n\n### 5. Market Breadth & Độ rộng thị trường\n- **VNINDEX (110 mã):** Tăng 32, Giảm 25, Đứng 53. Tỷ lệ A/D = 1.28.\n- **VN30:** Tăng 16, Giảm 6, Đứng 8. Tỷ lệ A/D = 2.67.\n- **Nhận xét:** Độ rộng tích cực ở cả hai nhóm, nhưng thị trường vẫn có sự phân hóa với nhiều mã đứng giá.",
+    "scenario_markdown": "### 1. KỊCH BẢN TÍCH CỰC\n* **Xác suất xảy ra:** 30%\n* **Độ tin cậy:** 6/10\n\n**Điều kiện kích hoạt:**\n- Giá vượt dứt khoát kháng cự 1894.39 với độ rộng thị trường (Breadth) tích cực.\n- Khối lượng giao dịch tăng trở lại trên mức trung bình 20 phiên, xác nhận dòng tiền mạnh.\n\n### 2. KỊCH BẢN TRUNG TÍNH (Dao động trong range 1845.95 - 1894.39) (Xác suất cao nhất)\n* **Xác suất xảy ra:** 55%\n* **Độ tin cậy:** 8/10\n\n**Điều kiện kích hoạt:**\n- Giá tiếp tục dao động, không thể vượt 1894.39 nhưng cũng không thủng 1845.95.\n- Biến động duy trì ở mức LOW_VOL và Trend Agreement Score duy trì trên mức 70.\n\n### 3. KỊCH BẢN TIÊU CỰC\n* **Xác suất xảy ra:** 15%\n* **Độ tin cậy:** 5/10\n\n**Điều kiện kích hoạt:**\n- Giá thủng dứt khoát hỗ trợ 1845.95 với khối lượng lớn, độ rộng thị trường tiêu cực.\n- CMF chuyển sang âm, báo hiệu dòng tiền rút ra mạnh.\n\n### Dẫn chứng chung cho các kịch bản:\n- **Volatility regime = LOW_VOL:** Biên độ dao động (20 phiên) ≈ 6.39% của giá, hỗ trợ cho kịch bản sideway biên độ rộng.\n- **Trend agreement score = 78/100 (STRONG BULLISH):** Cho thấy xu hướng tăng vẫn chi phối, khiến mọi đợt chỉnh khó bền vững.\n- **Khoảng đệm kỹ thuật:** Khoảng cách tới hỗ trợ/kháng cự hiện tại là -0.87% / 1.74% cho thấy thị trường đang ở vị trí sát vùng ranh giới quan trọng.\n- **Horizon (Tầm nhìn):** 5-15 phiên.",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | 0.0927 | Dòng tiền vào |\n| VWAP | 1849.09 | Giá đang trên VWAP, xác nhận xu hướng tăng |\n| OBV | 54188921320 | Tích lũy, chưa có dấu hiệu phân phối |\n\n### 2. Nhận định Dòng tiền\nDòng tiền ròng vào nhẹ (CMF = 0.0927), giá đóng cửa trên VWAP cho thấy áp lực mua chiếm ưu thế. Khối lượng thấp hơn trung bình 20 phiên cho thấy dòng tiền chưa thực sự hưng phấn, chưa có dấu hiệu phân phối rõ ràng.",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách % | Vai trò |\n|---|---|---|---|\n| MA10 | 1865.06 | -0.16% | Kháng cự |\n| MA20 | 1834.83 | +1.49% | Hỗ trợ |\n| MA50 | 1861.09 | +0.05% | Hỗ trợ |\n| MA100 | 1804.97 | +3.16% | Hỗ trợ |\n|",
     "tas": {
       "score": 78,
       "label": "STRONG BULLISH",
@@ -383,7 +383,7 @@
   },
   "VN30": {
     "symbol": "VN30",
-    "date": "2026-07-05 22:11 (ICT)",
+    "date": "2026-07-05 22:51 (ICT)",
     "close": 2002.56,
     "change": -6.480000000000018,
     "change_pc": -0.3225421096643182,
@@ -394,10 +394,10 @@
       "cmf": -0.0621727659604284,
       "adx": 17.512034823430234
     },
-    "general_markdown": "### 1. Diễn biến phiên giao dịch\nVN30 đóng cửa tại 2002.56, giảm nhẹ so với mức mở 2010.56. Khối lượng khớp lệnh đạt 230.583 triệu CP, thấp hơn 21.04% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- MA10 (2002.35) và MA20 (1978.78): xu hướng tăng.\n- MA50 (2006.56): xu hướng giảm.\n- MA100 (1960.80) và MA200 (1953.65): xu hướng tăng.\n- ROC10 = +1.99%, ROC20 = +0.82%: động lượng tích cực.\n- Nhận xét tổng hợp: Tình trạng hỗn hợp: ngắn=up, trung=down, dài=up.\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** Thị trường đang trong tình trạng hỗn hợp (ngắn=up, trung=down, dài=up), với động lượng tích cực (ROC10 +1.99%) nhưng xu hướng trung hạn vẫn giảm.\n\n**Độ rộng thị trường:** Độ rộng tích cực với 16 mã tăng, 6 mã giảm, tỷ lệ A/D 2.67, cho thấy đà tăng lan tỏa rộng.\n\n**Thanh khoản:** Thanh khoản thấp hơn 21.04% so với trung bình 20 phiên, phản ánh tâm lý thận trọng của dòng tiền.\n\n**Sức khỏe thị trường:** Tỷ lệ A/D 2.67 và giá đóng cửa trên các MA10, MA20, MA100, MA200 cho thấy phục hồi ngắn hạn lan tỏa, nhưng dưới MA50 cho thấy trung hạn còn yếu.\n\n**Khuyến nghị hành động:**\n- *Cảnh báo:* ADX ở mức 17.5 (trung bình) và CMF âm (-0.0622) cho thấy xu hướng chưa rõ ràng, dòng tiền yếu.\n- *Chiến lược:* Chờ tín hiệu.\n\n**Kết luận:** ➡️ **Chờ tín hiệu** — Thị trường phân kỳ xu hướng, cần thêm xác nhận trước khi hành động.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n- **Top 5 tăng:** PLX (+0.67%), MBB (+0.58%), SSI (+0.55%), STB (+0.41%), SAB (+0.41%).\n- **Top 5 giảm:** VIC (-0.18%), BCM (-0.19%), MSN (-0.41%), ACB (-0.44%), BVH (-0.47%).\n- **Ngành thu hút dòng tiền:** Dầu khí (+0.67%), Chứng khoán (+0.55%).\n- **Ngành rút dòng tiền:** Bảo hiểm (-0.47%), Bán lẻ - Tiêu dùng (-0.03%).\n\n### 5. Market Breadth & Độ rộng thị trường\nSố mã tăng/giảm/đứng: 16/6/8, tỷ lệ A/D 2.67. Thị trường phân hóa rõ rệt, bên mua chiếm ưu thế.",
-    "scenario_markdown": "### 1. KỊCH BẢN TÍCH CỰC (Xác suất cao nhất)\n* **Xác suất xảy ra:** 45%\n* **Độ tin cậy:** 6/10\n\n**Điều kiện kích hoạt:**\n- Giá vượt dứt khoát kháng cự 2013.9 với độ rộng thị trường tích cực.\n- ROC và ADX tăng, xác nhận động lượng mạnh lên.\n\n### 2. KỊCH BẢN TRUNG TÍNH (Dao động trong range 1971.22 - 2013.9)\n* **Xác suất xảy ra:** 35%\n* **Độ tin cậy:** 5/10\n\n**Điều kiện kích hoạt:**\n- Giá tiếp tục dao động, không thể vượt 2013.9 nhưng cũng không thủng 1971.22.\n- Biến động duy trì ở mức thấp và Trend Agreement Score dưới 50.\n\n### 3. KỊCH BẢN TIÊU CỰC\n* **Xác suất xảy ra:** 20%\n* **Độ tin cậy:** 4/10\n\n**Điều kiện kích hoạt:**\n- Giá thủng dứt khoát hỗ trợ 1971.22 với khối lượng lớn, độ rộng thị trường tiêu cực.\n- CMF duy trì âm và ADX giảm dưới 15.\n\n### Dẫn chứng chung cho các kịch bản:\n- **Volatility regime = LOW_VOL:** Biên độ dao động (20 phiên) ≈ 4.54% của giá, hỗ trợ cho kịch bản sideway.\n- **Trend agreement score = 22/100 (WEAK BULLISH):** Cho thấy xu hướng tăng yếu, khiến mọi đợt hồi khó bền vững.\n- **Khoảng đệm kỹ thuật:** Khoảng cách tới hỗ trợ/kháng cự hiện tại là -1.56% / 0.57% cho thấy thị trường đang ở vị trí sát vùng ranh giới quan trọng.\n- **Horizon (Tầm nhìn):** 5-15 phiên.",
-    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | -0.0622 | Dòng tiền ròng ra |\n| VWAP | 1990.73 | Giá đóng cửa trên VWAP, hỗ trợ ngắn hạn |\n| OBV | 14442653777 | Khối lượng tích lũy dương |\n\n### 2. Nhận định Dòng tiền\nDòng tiền ròng ra (CMF âm) dù giá trên VWAP, cho thấy áp lực bán nhẹ. Không có dấu hiệu phân phối rõ rệt.",
-    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách % | Hỗ trợ/Kháng cự |\n|---|---|---|---|\n| MA10 | 2002.35 | +0.01% | Hỗ trợ |\n| MA20 | 1978.78 | +1.20% | Hỗ trợ |\n| MA50 | 2006.56 | -0.20% | Kháng cự |\n| MA100 | 1960.80 | +2.13% | Hỗ trợ |\n| MA200 | 1953.65 | +2.50% | Hỗ trợ |\n| ROC10 | +1.99% | - | - |\n| ROC20 | +0.82% | - | - |\n| ADX | 17.51 | - | - |\n| ATR | 21.91 | - | - |\n| Keltner Upper | 1998.97 | - | Vượt trên Upper |\n\n### 2. Phân tích Xu hướng Chi tiết\n**Tình trạng xu hướng:** VN30 đang trong xu hướng tăng ngắn hạn và dài hạn, nhưng giảm trung hạn. Phân kỳ: Tình trạng hỗn hợp: ngắn=up, trung=down, dài=up.\n\n**Sức bền xu hướng dài hạn:** ADX 17.5 cho thấy xu hướng hiện tại ở mức trung bình.",
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\nVN30 đóng cửa tại 2002.56, giảm 8.00 điểm so với mở cửa (2010.56). Biên độ dao động 13.65 điểm (1997.00 - 2010.65). Khối lượng khớp lệnh đạt 230.583 triệu CP, thấp hơn 21.04% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- **Ngắn hạn (MA10, MA20):** Xu hướng tăng.\n- **Trung hạn (MA50):** Xu hướng giảm.\n- **Dài hạn (MA100, MA200):** Xu hướng tăng.\n- **Phân kỳ xu hướng:** Tình trạng hỗn hợp: ngắn=up | trung=down | dài=up.\n- **ROC10:** +1.99% (ngắn hạn tích cực). **ROC20:** +0.82% (trung hạn tích cực). Động lượng tích cực.\n- **ADX:** 17.51 (xu hướng trung bình).\n- **Keltner:** Giá đóng cửa (2002.56) vượt trên Upper Band (1998.97), cho thấy trạng thái quá mua ngắn hạn.\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** Thị trường đang trong trạng thái phân kỳ xu hướng (ngắn=up, trung=down, dài=up) với động lượng tích cực từ ROC nhưng thiếu sự xác nhận từ dòng tiền và khối lượng.\n\n**Độ rộng thị trường:** Độ rộng tích cực với 16 mã tăng, 6 mã giảm, tỷ lệ A/D đạt 2.67, cho thấy đà tăng lan tỏa rộng khắp các mã VN30.\n\n**Thanh khoản:** Khối lượng giao dịch thấp hơn 21.04% so với trung bình 20 phiên, phản ánh tâm lý thận trọng của dòng tiền.\n\n**Sức khỏe thị trường:** Tỷ lệ A/D tích cực và giá đóng cửa trên MA20 (+1.20%), MA100 (+2.13%), MA200 (+2.50%) cho thấy đà phục hồi có sự lan tỏa, nhưng khối lượng thấp làm giảm độ tin cậy.\n\n**Khuyến nghị hành động:**\n- **Cảnh báo:** ADX ở mức 17.5 cho thấy xu hướng chưa rõ ràng, trong khi CMF âm (-0.0622) phản ánh dòng tiền yếu.\n- **Chiến lược:** Chờ tín hiệu xác nhận từ khối lượng và dòng tiền trước khi hành động.\n\n**Kết luận:** ➡️ **Chờ tín hiệu** — Thị trường thiếu động lực mạnh để breakout khỏi vùng tích lũy hiện tại.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n**Top 5 tăng mạnh nhất (VN30):** PLX (+0.67%), MBB (+0.58%), SSI (+0.55%), STB (+0.41%), SAB (+0.41%).\n**Top 5 giảm mạnh nhất (VN30):** BVH (-0.47%), ACB (-0.44%), MSN (-0.41%), BCM (-0.19%), VIC (-0.18%).\n**Ngành thu hút dòng tiền:** Dầu khí (+0.67%), Chứng khoán (+0.55%), Điện - Nước - Khí (+0.23%).\n**Ngành bị rút dòng tiền:** Bảo hiểm (-0.47%), Bán lẻ - Tiêu dùng (-0.03%).\n\n### 5. Market Breadth & Độ rộng thị trường\nSố mã tăng/giảm/đứng lần lượt là 16/6/8. Tỷ lệ A/D đạt 2.67, cho thấy bên mua chiếm ưu thế rõ rệt. Thị trường có sự phân hóa nhưng nghiêng hẳn về phía tích cực.",
+    "scenario_markdown": "### 1. KỊCH BẢN TÍCH CỰC\n* **Xác suất xảy ra:** 20%\n* **Độ tin cậy:** 4/10\n\n**Điều kiện kích hoạt:**\n- Giá vượt dứt khoát kháng cự 2013.9 với khối lượng vượt trội so với TB 20 phiên.\n- CMF chuyển dương và ADX tăng trên 25.\n\n### 2. KỊCH BẢN TRUNG TÍNH (Dao động trong range 1971.22 - 2013.9) (Xác suất cao nhất)\n* **Xác suất xảy ra:** 55%\n* **Độ tin cậy:** 7/10\n\n**Điều kiện kích hoạt:**\n- Giá tiếp tục dao động, không thể vượt 2013.9 nhưng cũng không thủng 1971.22.\n- Biến động duy trì ở mức LOW_VOL và Trend Agreement Score duy trì dưới mức 50.\n\n### 3. KỊCH BẢN TIÊU CỰC\n* **Xác suất xảy ra:** 25%\n* **Độ tin cậy:** 5/10\n\n**Điều kiện kích hoạt:**\n- Giá thủng dứt khoát hỗ trợ 1971.22 với khối lượng lớn, độ rộng thị trường tiêu cực.\n- ROC20 chuyển âm và CMF duy trì dưới -0.1.\n\n### Dẫn chứng chung cho các kịch bản:\n- **Volatility regime = LOW_VOL:** Biên độ dao động (20 phiên) ≈ 4.54% của giá, hỗ trợ cho kịch bản sideway biên độ rộng.\n- **Trend agreement score = 22/100 (WEAK BULLISH):** Cho thấy xu hướng tăng vẫn chi phối, khiến mọi đợt chỉnh khó bền vững.\n- **Khoảng đệm kỹ thuật:** Khoảng cách tới hỗ trợ/kháng cự hiện tại là -1.56% / 0.57% cho thấy thị trường đang ở vị trí sát vùng ranh giới quan trọng.\n- **Horizon (Tầm nhìn):** 5-15 phiên.",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | -0.0622 | Dòng tiền ròng yếu, đang chảy ra |\n| VWAP | 1990.73 | Giá đóng cửa (2002.56) trên VWAP, phản ánh lực mua chủ động |\n| OBV | 14442653777 | Khối lượng tích lũy duy trì ở mức cao |\n\n### 2. Nhận định Dòng tiền\nDòng tiền ròng đang có dấu hiệu chảy ra nhẹ (CMF âm). Giá đóng cửa trên VWAP cho thấy lực mua chủ động vẫn hiện hữu, nhưng khối lượng thấp hơn TB 20 phiên cho thấy áp lực mua không đủ mạnh. Chưa có dấu hiệu phân phối rõ rệt.",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách % | Vai trò |\n|---|---|---|---|\n| MA10 | 2002.35 | +0.01% | Hỗ",
     "tas": {
       "score": 22,
       "label": "WEAK BULLISH",
@@ -765,7 +765,7 @@
   },
   "VN100": {
     "symbol": "VN100",
-    "date": "2026-07-05 22:12 (ICT)",
+    "date": "2026-07-05 22:52 (ICT)",
     "close": 1932.28,
     "change": -6.710000000000036,
     "change_pc": -0.3460564520704097,
@@ -776,10 +776,10 @@
       "cmf": 0.03706064817996371,
       "adx": 20.010207803518764
     },
-    "general_markdown": "### 1. Diễn biến phiên giao dịch\nVN100 đóng cửa tại 1932.28, giảm từ mức mở 1939.67, với biên độ cao-thấp 16.31 điểm. Khối lượng khớp lệnh đạt 515.045 triệu CP, thấp hơn 7.93% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- **Ngắn hạn (MA10, MA20):** Xu hướng hỗn hợp.\n- **Trung hạn (MA50):** Xu hướng giảm.\n- **Dài hạn (MA100, MA200):** Xu hướng tăng.\n- **ROC:** ROC10 = +1.97% (ngắn hạn), ROC20 = +1.45% (trung hạn) → Động lượng tích cực.\n- **Nhận xét tổng hợp:** Chỉ số đang trong vùng phân kỳ xu hướng, cần thêm tín hiệu xác nhận.\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** Thị trường hiện tại có tình trạng hỗn hợp: ngắn hạn và trung hạn giảm, dài hạn tăng, với động lượng tích cực từ ROC nhưng chưa đủ mạnh để xác nhận xu hướng rõ ràng.\n\n**Độ rộng thị trường:** Độ rộng tích cực với tỷ lệ A/D là 1.28 ở VN100 và 2.67 ở VN30, cho thấy đà tăng lan tỏa hơn là tập trung vào một số mã.\n\n**Thanh khoản:** Khối lượng thấp hơn 7.93% so với trung bình 20 phiên, cho thấy dòng tiền đang thận trọng và thiếu hưng phấn.\n\n**Sức khỏe thị trường:** Tỷ lệ A/D tích cực cho thấy phục hồi có sự lan tỏa, nhưng vị trí giá gần MA10 và MA50 (kháng cự) và dưới MA20 (hỗ trợ) cho thấy thị trường đang trong giai đoạn giằng co.\n\n**Khuyến nghị hành động:**\n- *Cảnh báo:* ADX ở mức 20.01 (trung bình) và CMF 0.0371 (dòng tiền yếu) cho thấy xu hướng chưa mạnh, cần thận trọng.\n- *Chiến lược:* Chờ tín hiệu.\n\n**Kết luận:** ➡️ **Tạm đứng ngoài** — Thị trường phân kỳ xu hướng, thanh khoản thấp, cần thêm tín hiệu xác nhận trước khi hành động.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n**Top 5 tăng mạnh nhất (VN100):** FCN (+1.67%), AGR (+1.62%), TDH (+1.10%), HAH (+0.97%), PLX (+0.67%).\n**Top 5 giảm mạnh nhất (VN100):** DHC (-1.17%), PC1 (-1.34%), DGC (-1.35%), SKG (-1.81%), PNJ (-6.97%).\n**Nhóm ngành thu hút dòng tiền:** Chứng khoán (+0.48%), Dầu khí (+0.36%), Ngân hàng (+0.13%).\n**Nhóm ngành bị rút dòng tiền:** Bán lẻ - Tiêu dùng (-0.59%), Thủy sản (-0.47%), Bảo hiểm (-0.38%).\n\n### 5. Market Breadth & Độ rộng thị trường\nVN100: Tăng 32 mã, giảm 25 mã, đứng 53 mã; tỷ lệ A/D là 1.28. VN30: Tăng 16 mã, giảm 6 mã, đứng 8 mã; tỷ lệ A/D là 2.67. Thị trường có độ phân hóa cao với số mã đứng giá chiếm tỷ trọng lớn.",
-    "scenario_markdown": "### 1. KỊCH BẢN TRUNG TÍNH (Dao động trong range 1905.52 - 1956.15) (Xác suất cao nhất)\n* **Xác suất xảy ra:** 55%\n* **Độ tin cậy:** 7/10\n\n**Điều kiện kích hoạt:**\n- Giá tiếp tục dao động, không thể vượt 1956.15 nhưng cũng không thủng 1905.52.\n- Biến động duy trì ở mức LOW_VOL và Trend Agreement Score duy trì dưới mức 50.\n\n### 2. KỊCH BẢN TÍCH CỰC\n* **Xác suất xảy ra:** 25%\n* **Độ tin cậy:** 5/10\n\n**Điều kiện kích hoạt:**\n- Giá vượt dứt khoát kháng cự 1956.15 với độ rộng thị trường (Breadth) tích cực.\n- Khối lượng cải thiện vượt trung bình 20 phiên, kèm dòng tiền vào mạnh (CMF > 0.1).\n\n### 3. KỊCH BẢN TIÊU CỰC\n* **Xác suất xảy ra:** 20%\n* **Độ tin cậy:** 6/10\n\n**Điều kiện kích hoạt:**\n- Giá thủng dứt khoát hỗ trợ 1905.52 với khối lượng lớn, độ rộng thị trường tiêu cực.\n- CMF chuyển âm và ROC suy yếu dưới 0%.\n\n### Dẫn chứng chung cho các kịch bản:\n- **Volatility regime = LOW_VOL:** Biên độ dao động (20 phiên) ≈ 5.04% của giá, hỗ trợ cho kịch bản sideway biên độ rộng.\n- **Trend agreement score = 44/100 (BULLISH):** Cho thấy xu hướng tăng vẫn chi phối, khiến mọi đợt chỉnh khó bền vững.\n- **Khoảng đệm kỹ thuật:** Khoảng cách tới hỗ trợ/kháng cự hiện tại là -1.38% / 1.24% cho thấy thị trường đang ở vị trí giữa hai mốc quan trọng.\n- **Horizon (Tầm nhìn):** 5-15 phiên.",
-    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | 0.0371 | Dòng tiền vào nhẹ, trên 0 nhưng yếu |\n| VWAP | 1920.07 | Giá đóng cửa 1932.28 đang trên VWAP, cho thấy áp lực mua chiếm ưu thế nhẹ |\n| OBV | 46966742099 | Không có biến động đột biến so với dữ liệu trước |\n\n### 2. Nhận định Dòng tiền\nDòng tiền ròng vào nhẹ (CMF = 0.0371), giá đóng cửa trên VWAP cho thấy lực mua vẫn duy trì. Khối lượng thấp hơn trung bình 20 phiên (-7.93%) cho thấy không có dấu hiệu phân phối rõ ràng, nhưng dòng tiền chưa đủ mạnh để tạo đột biến.",
-    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách tới giá | Vai trò |\n|---|---|---|---|\n| MA10 | 1933.25 | -0.05% | Kháng cự |\n| MA20 | 1906.74 |",
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\nVN100 đóng cửa tại 1932.28, giảm từ mức mở 1939.67, với biên độ dao động từ 1924.81 đến 1941.12. Khối lượng khớp lệnh đạt 515.045 triệu CP, thấp hơn 7.93% so với trung bình 20 phiên.\n\n### 2. Xu hướng & Động lượng\n- Ngắn hạn (MA10, MA20): xu hướng hỗn hợp.\n- Trung hạn (MA50): xu hướng giảm.\n- Dài hạn (MA100, MA200): xu hướng tăng.\n- ROC10 = +1.97% (ngắn hạn), ROC20 = +1.45% (trung hạn) → động lượng tích cực.\n- Chỉ số đang trong vùng phân kỳ xu hướng (ngắn=down, trung=down, dài=up).\n\n### 3. Nhận định Xu hướng Tổng hợp\n**Mở đầu:** Thị trường đang trong tình trạng phân kỳ xu hướng (ngắn hạn giảm, trung hạn giảm, dài hạn tăng), với động lượng tích cực từ ROC nhưng chưa đủ mạnh để xác nhận xu hướng tăng.\n\n**Độ rộng thị trường:** Độ rộng tích cực với 32 mã tăng/25 mã giảm, tỷ lệ A/D = 1.28, cho thấy đà tăng có lan tỏa nhưng không mạnh.\n\n**Thanh khoản:** Khối lượng thấp hơn 7.93% so với trung bình 20 phiên, phản ánh tâm lý thận trọng của dòng tiền.\n\n**Sức khỏe thị trường:** Tỷ lệ A/D = 1.28 và vị trí giá trên MA20 (+1.34%), MA100 (+2.82%), MA200 (+3.47%) cho thấy phục hồi chưa lan tỏa mạnh, độ rộng hạn chế.\n\n**Khuyến nghị hành động:**\n- *Cảnh báo:* ADX ở mức 20.0 (trung bình) và CMF = 0.0371 (dòng tiền vào yếu) cho thấy xu hướng chưa rõ ràng.\n- *Chiến lược:* Chờ tín hiệu.\n\n**Kết luận:** ➡️ **Tạm đứng ngoài** — Thị trường phân kỳ xu hướng, thanh khoản thấp, cần thêm tín hiệu xác nhận.\n\n### 4. Thống kê Cổ phiếu & Nhóm ngành\n**Top 5 tăng mạnh nhất (VN100):** FCN (+1.67%), AGR (+1.62%), TDH (+1.10%), HAH (+0.97%), PLX (+0.67%).\n**Top 5 giảm mạnh nhất (VN100):** PNJ (-6.97%), SKG (-1.81%), DGC (-1.35%), PC1 (-1.34%), DHC (-1.17%).\n**Ngành thu hút dòng tiền:** Chứng khoán (+0.48%), Dầu khí (+0.36%), Ngân hàng (+0.13%).\n**Ngành bị rút dòng tiền:** Bán lẻ - Tiêu dùng (-0.59%), Thủy sản (-0.47%), Bảo hiểm (-0.38%).\n\n### 5. Market Breadth & Độ rộng thị trường\nVN100: 32 mã tăng, 25 mã giảm, 53 mã đứng. Tỷ lệ A/D = 1.28. VN30: 16 mã tăng, 6 mã giảm, 8 mã đứng, tỷ lệ A/D = 2.67. Thị trường có độ phân hóa, VN30 mạnh hơn VN100.",
+    "scenario_markdown": "### 1. KỊCH BẢN TÍCH CỰC (Xác suất cao nhất)\n* **Xác suất xảy ra:** 35%\n* **Độ tin cậy:** 6/10\n\n**Điều kiện kích hoạt:**\n- Giá vượt dứt khoát kháng cự 1956.15 với độ rộng thị trường tích cực.\n- Khối lượng tăng vượt trung bình 20 phiên, xác nhận dòng tiền vào mạnh.\n\n### 2. KỊCH BẢN TRUNG TÍNH (Dao động trong range 1905.52 - 1956.15)\n* **Xác suất xảy ra:** 40%\n* **Độ tin cậy:** 7/10\n\n**Điều kiện kích hoạt:**\n- Giá tiếp tục dao động, không thể vượt 1956.15 nhưng cũng không thủng 1905.52.\n- Biến động duy trì ở mức LOW_VOL và Trend Agreement Score duy trì dưới 50.\n\n### 3. KỊCH BẢN TIÊU CỰC\n* **Xác suất xảy ra:** 25%\n* **Độ tin cậy:** 5/10\n\n**Điều kiện kích hoạt:**\n- Giá thủng dứt khoát hỗ trợ 1905.52 với khối lượng lớn, độ rộng thị trường tiêu cực.\n- Các chỉ báo động lượng chuyển sang tiêu cực, xác nhận xu hướng giảm.\n\n### Dẫn chứng chung cho các kịch bản:\n- **Volatility regime = LOW_VOL:** Biên độ dao động (20 phiên) ≈ 5.04% của giá, hỗ trợ cho kịch bản sideway biên độ rộng.\n- **Trend agreement score = 44/100 (BULLISH):** Cho thấy xu hướng tăng vẫn chi phối, khiến mọi đợt chỉnh khó bền vững.\n- **Khoảng đệm kỹ thuật:** Khoảng cách tới hỗ trợ/kháng cự hiện tại là -1.38% / 1.24% cho thấy thị trường đang ở vị trí giữa hai mốc quan trọng.\n- **Horizon (Tầm nhìn):** 5-15 phiên.",
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| CMF | 0.0371 | Dòng tiền vào yếu |\n| VWAP | 1920.07 | Giá đóng cửa trên VWAP |\n| OBV | 46966742099 | Xu hướng khối lượng tích lũy |\n\n### 2. Nhận định Dòng tiền\nDòng tiền ròng vào yếu (CMF = 0.0371), áp lực mua nhẹ khi giá đóng cửa trên VWAP (1920.07). Không có dấu hiệu phân phối rõ rệt.",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Động lượng\n| Chỉ báo | Giá trị | Khoảng cách % | Vai trò |\n|---|---|---|---|\n| MA10 | 1933.25 | -0.05% | Kháng cự |\n| MA20 | 1906.74 | +1.34% | Hỗ trợ |\n| MA50 | 1932.28 | -0.00% | Kháng cự |\n| MA100 | 1879.26 | +2.82% | Hỗ trợ |\n| MA200 | 1867.43 | +3.47% | Hỗ trợ |\n| ROC10 | +1.97% | - | Động lượng tích cực |\n| ROC20 | +1.45% | - | Động lượng tích cực |\n| ADX | 20.01 | - | Xu hướng trung bình |\n| ATR |",
     "tas": {
       "score": 44,
       "label": "BULLISH",
@@ -1371,40 +1371,26 @@
         "accumulated_value": 165003.15,
         "sector": "Ngân hàng"
       },
-      "OGC": {
+      "QNS": {
         "change_pc": 0.0,
-        "match_price": 2850.0,
-        "listed_share": 300000000.0,
-        "accumulated_value": 930.222,
-        "sector": "Dịch vụ tài chính"
+        "match_price": 48900.0,
+        "listed_share": 367648153.0,
+        "accumulated_value": 4095.89,
+        "sector": "Thực phẩm và đồ uống"
       },
-      "CRE": {
+      "SCS": {
         "change_pc": 0.0,
-        "match_price": 6960.0,
-        "listed_share": 463678534.0,
-        "accumulated_value": 558.606,
-        "sector": "Bất động sản"
+        "match_price": 49250.0,
+        "listed_share": 94886982.0,
+        "accumulated_value": 1635.355,
+        "sector": "Du lịch và Giải trí"
       },
-      "TDM": {
+      "SSB": {
         "change_pc": 0.0,
-        "match_price": 59000.0,
-        "listed_share": 111100000.0,
-        "accumulated_value": 296.17,
-        "sector": "Điện, nước & xăng dầu khí đốt"
-      },
-      "HCM": {
-        "change_pc": 0.0,
-        "match_price": 28550.0,
-        "listed_share": 1080797089.0,
-        "accumulated_value": 136339.045,
-        "sector": "Dịch vụ tài chính"
-      },
-      "PDR": {
-        "change_pc": 0.0,
-        "match_price": 14550.0,
-        "listed_share": 997809379.0,
-        "accumulated_value": 90770.77,
-        "sector": "Bất động sản"
+        "match_price": 16500.0,
+        "listed_share": 3428800000.0,
+        "accumulated_value": 34349.285,
+        "sector": "Ngân hàng"
       },
       "KDC": {
         "change_pc": 0.0,
@@ -1420,123 +1406,18 @@
         "accumulated_value": 14697.74,
         "sector": "Tài nguyên Cơ bản"
       },
-      "DQC": {
+      "NVL": {
         "change_pc": 0.0,
-        "match_price": 0.0,
-        "listed_share": 34359416.0,
-        "accumulated_value": 0.0,
-        "sector": "Hàng cá nhân & Gia dụng"
-      },
-      "HPG": {
-        "change_pc": 0.0,
-        "match_price": 23250.0,
-        "listed_share": 8442964520.0,
-        "accumulated_value": 371670.45,
-        "sector": "Tài nguyên Cơ bản"
-      },
-      "NT2": {
-        "change_pc": 0.0,
-        "match_price": 22650.0,
-        "listed_share": 287876029.0,
-        "accumulated_value": 9039.725,
-        "sector": "Điện, nước & xăng dầu khí đốt"
-      },
-      "QNS": {
-        "change_pc": 0.0,
-        "match_price": 48900.0,
-        "listed_share": 367648153.0,
-        "accumulated_value": 4095.89,
-        "sector": "Thực phẩm và đồ uống"
-      },
-      "PSH": {
-        "change_pc": 0.0,
-        "match_price": 0.0,
-        "listed_share": 126196780.0,
-        "accumulated_value": 0.0,
-        "sector": "Điện, nước & xăng dầu khí đốt"
-      },
-      "CSV": {
-        "change_pc": 0.0,
-        "match_price": 23100.0,
-        "listed_share": 110499910.0,
-        "accumulated_value": 3388.79,
-        "sector": "Hóa chất"
-      },
-      "LPB": {
-        "change_pc": 0.0,
-        "match_price": 51000.0,
-        "listed_share": 2987282100.0,
-        "accumulated_value": 105403.81,
-        "sector": "Ngân hàng"
-      },
-      "DRC": {
-        "change_pc": 0.0,
-        "match_price": 11850.0,
-        "listed_share": 154429283.0,
-        "accumulated_value": 1070.115,
-        "sector": "Ô tô và phụ tùng"
-      },
-      "AGG": {
-        "change_pc": 0.0,
-        "match_price": 11700.0,
-        "listed_share": 162528081.0,
-        "accumulated_value": 3231.89,
+        "match_price": 12300.0,
+        "listed_share": 2402067972.0,
+        "accumulated_value": 100128.18,
         "sector": "Bất động sản"
       },
-      "KHG": {
+      "TIP": {
         "change_pc": 0.0,
-        "match_price": 4920.0,
-        "listed_share": 449435205.0,
-        "accumulated_value": 13891.193,
-        "sector": "Bất động sản"
-      },
-      "NAV": {
-        "change_pc": 0.0,
-        "match_price": 15000.0,
-        "listed_share": 8000000.0,
-        "accumulated_value": 3.0,
-        "sector": "Xây dựng và Vật liệu"
-      },
-      "VNM": {
-        "change_pc": 0.0,
-        "match_price": 54900.0,
-        "listed_share": 2089955445.0,
-        "accumulated_value": 227340.65,
-        "sector": "Thực phẩm và đồ uống"
-      },
-      "TMP": {
-        "change_pc": 0.0,
-        "match_price": 48000.0,
-        "listed_share": 70000000.0,
-        "accumulated_value": 141.675,
-        "sector": "Điện, nước & xăng dầu khí đốt"
-      },
-      "KOS": {
-        "change_pc": 0.0,
-        "match_price": 36700.0,
-        "listed_share": 216481335.0,
-        "accumulated_value": 11713.615,
-        "sector": "Bất động sản"
-      },
-      "BAF": {
-        "change_pc": 0.0,
-        "match_price": 30000.0,
-        "listed_share": 304021642.0,
-        "accumulated_value": 15317.375,
-        "sector": "Thực phẩm và đồ uống"
-      },
-      "SBT": {
-        "change_pc": 0.0,
-        "match_price": 21250.0,
-        "listed_share": 906415042.0,
-        "accumulated_value": 11904.48,
-        "sector": "Thực phẩm và đồ uống"
-      },
-      "SZC": {
-        "change_pc": 0.0,
-        "match_price": 22200.0,
-        "listed_share": 179985863.0,
-        "accumulated_value": 9349.075,
+        "match_price": 18150.0,
+        "listed_share": 65007857.0,
+        "accumulated_value": 1956.715,
         "sector": "Bất động sản"
       },
       "MSB": {
@@ -1546,11 +1427,123 @@
         "accumulated_value": 115274.435,
         "sector": "Ngân hàng"
       },
+      "LTG": {
+        "change_pc": 0.0,
+        "match_price": 0.0,
+        "listed_share": 100741465.0,
+        "accumulated_value": 0.0,
+        "sector": "Thực phẩm và đồ uống"
+      },
+      "DIG": {
+        "change_pc": 0.0,
+        "match_price": 12250.0,
+        "listed_share": 796431191.0,
+        "accumulated_value": 65775.565,
+        "sector": "Bất động sản"
+      },
+      "VNM": {
+        "change_pc": 0.0,
+        "match_price": 54900.0,
+        "listed_share": 2089955445.0,
+        "accumulated_value": 227340.65,
+        "sector": "Thực phẩm và đồ uống"
+      },
+      "NAV": {
+        "change_pc": 0.0,
+        "match_price": 15000.0,
+        "listed_share": 8000000.0,
+        "accumulated_value": 3.0,
+        "sector": "Xây dựng và Vật liệu"
+      },
+      "DRC": {
+        "change_pc": 0.0,
+        "match_price": 11850.0,
+        "listed_share": 154429283.0,
+        "accumulated_value": 1070.115,
+        "sector": "Ô tô và phụ tùng"
+      },
+      "CTD": {
+        "change_pc": 0.0,
+        "match_price": 72000.0,
+        "listed_share": 114026467.0,
+        "accumulated_value": 34830.81,
+        "sector": "Xây dựng và Vật liệu"
+      },
       "EVF": {
         "change_pc": 0.0,
         "match_price": 13200.0,
         "listed_share": 760565802.0,
         "accumulated_value": 26537.455,
+        "sector": "Dịch vụ tài chính"
+      },
+      "PDR": {
+        "change_pc": 0.0,
+        "match_price": 14550.0,
+        "listed_share": 997809379.0,
+        "accumulated_value": 90770.77,
+        "sector": "Bất động sản"
+      },
+      "KBC": {
+        "change_pc": 0.0,
+        "match_price": 29250.0,
+        "listed_share": 941754759.0,
+        "accumulated_value": 51005.545,
+        "sector": "Bất động sản"
+      },
+      "HCM": {
+        "change_pc": 0.0,
+        "match_price": 28550.0,
+        "listed_share": 1080797089.0,
+        "accumulated_value": 136339.045,
+        "sector": "Dịch vụ tài chính"
+      },
+      "KHG": {
+        "change_pc": 0.0,
+        "match_price": 4920.0,
+        "listed_share": 449435205.0,
+        "accumulated_value": 13891.193,
+        "sector": "Bất động sản"
+      },
+      "SJS": {
+        "change_pc": 0.0,
+        "match_price": 48000.0,
+        "listed_share": 297474828.0,
+        "accumulated_value": 1098.815,
+        "sector": "Bất động sản"
+      },
+      "PSH": {
+        "change_pc": 0.0,
+        "match_price": 0.0,
+        "listed_share": 126196780.0,
+        "accumulated_value": 0.0,
+        "sector": "Điện, nước & xăng dầu khí đốt"
+      },
+      "AAA": {
+        "change_pc": 0.0,
+        "match_price": 7400.0,
+        "listed_share": 393742730.0,
+        "accumulated_value": 5256.669,
+        "sector": "Hóa chất"
+      },
+      "CRE": {
+        "change_pc": 0.0,
+        "match_price": 6960.0,
+        "listed_share": 463678534.0,
+        "accumulated_value": 558.606,
+        "sector": "Bất động sản"
+      },
+      "TPB": {
+        "change_pc": 0.0,
+        "match_price": 16550.0,
+        "listed_share": 2774046873.0,
+        "accumulated_value": 122155.29,
+        "sector": "Ngân hàng"
+      },
+      "OGC": {
+        "change_pc": 0.0,
+        "match_price": 2850.0,
+        "listed_share": 300000000.0,
+        "accumulated_value": 930.222,
         "sector": "Dịch vụ tài chính"
       },
       "BSI": {
@@ -1560,6 +1553,48 @@
         "accumulated_value": 39926.69,
         "sector": "Dịch vụ tài chính"
       },
+      "HSG": {
+        "change_pc": 0.0,
+        "match_price": 11550.0,
+        "listed_share": 807262704.0,
+        "accumulated_value": 31120.295,
+        "sector": "Tài nguyên Cơ bản"
+      },
+      "KOS": {
+        "change_pc": 0.0,
+        "match_price": 36700.0,
+        "listed_share": 216481335.0,
+        "accumulated_value": 11713.615,
+        "sector": "Bất động sản"
+      },
+      "NT2": {
+        "change_pc": 0.0,
+        "match_price": 22650.0,
+        "listed_share": 287876029.0,
+        "accumulated_value": 9039.725,
+        "sector": "Điện, nước & xăng dầu khí đốt"
+      },
+      "SBT": {
+        "change_pc": 0.0,
+        "match_price": 21250.0,
+        "listed_share": 906415042.0,
+        "accumulated_value": 11904.48,
+        "sector": "Thực phẩm và đồ uống"
+      },
+      "DXG": {
+        "change_pc": 0.0,
+        "match_price": 12150.0,
+        "listed_share": 1269852451.0,
+        "accumulated_value": 186071.34,
+        "sector": "Bất động sản"
+      },
+      "TCH": {
+        "change_pc": 0.0,
+        "match_price": 14300.0,
+        "listed_share": 912109224.0,
+        "accumulated_value": 74006.515,
+        "sector": "Bất động sản"
+      },
       "C4G": {
         "change_pc": 0.0,
         "match_price": 6600.0,
@@ -1567,11 +1602,116 @@
         "accumulated_value": 1041.3,
         "sector": "Xây dựng và Vật liệu"
       },
-      "DIG": {
+      "SZC": {
         "change_pc": 0.0,
-        "match_price": 12250.0,
-        "listed_share": 796431191.0,
-        "accumulated_value": 65775.565,
+        "match_price": 22200.0,
+        "listed_share": 179985863.0,
+        "accumulated_value": 9349.075,
+        "sector": "Bất động sản"
+      },
+      "TMP": {
+        "change_pc": 0.0,
+        "match_price": 48000.0,
+        "listed_share": 70000000.0,
+        "accumulated_value": 141.675,
+        "sector": "Điện, nước & xăng dầu khí đốt"
+      },
+      "TDM": {
+        "change_pc": 0.0,
+        "match_price": 59000.0,
+        "listed_share": 111100000.0,
+        "accumulated_value": 296.17,
+        "sector": "Điện, nước & xăng dầu khí đốt"
+      },
+      "BCG": {
+        "change_pc": 0.0,
+        "match_price": 0.0,
+        "listed_share": 880210644.0,
+        "accumulated_value": 0.0,
+        "sector": "Dịch vụ tài chính"
+      },
+      "BAF": {
+        "change_pc": 0.0,
+        "match_price": 30000.0,
+        "listed_share": 304021642.0,
+        "accumulated_value": 15317.375,
+        "sector": "Thực phẩm và đồ uống"
+      },
+      "CII": {
+        "change_pc": 0.0,
+        "match_price": 17200.0,
+        "listed_share": 671985291.0,
+        "accumulated_value": 142387.61,
+        "sector": "Xây dựng và Vật liệu"
+      },
+      "CAV": {
+        "change_pc": 0.0,
+        "match_price": 0.0,
+        "listed_share": 57600000.0,
+        "accumulated_value": 0.0,
+        "sector": "Hàng & Dịch vụ Công nghiệp"
+      },
+      "GVR": {
+        "change_pc": 0.0,
+        "match_price": 32500.0,
+        "listed_share": 4000000000.0,
+        "accumulated_value": 48547.6,
+        "sector": "Hóa chất"
+      },
+      "SRC": {
+        "change_pc": 0.0,
+        "match_price": 40000.0,
+        "listed_share": 28065765.0,
+        "accumulated_value": 368.0,
+        "sector": "Ô tô và phụ tùng"
+      },
+      "FPT": {
+        "change_pc": 0.0,
+        "match_price": 72300.0,
+        "listed_share": 1703507121.0,
+        "accumulated_value": 543071.86,
+        "sector": "Công nghệ Thông tin"
+      },
+      "LPB": {
+        "change_pc": 0.0,
+        "match_price": 51000.0,
+        "listed_share": 2987282100.0,
+        "accumulated_value": 105403.81,
+        "sector": "Ngân hàng"
+      },
+      "HPG": {
+        "change_pc": 0.0,
+        "match_price": 23250.0,
+        "listed_share": 8442964520.0,
+        "accumulated_value": 371670.45,
+        "sector": "Tài nguyên Cơ bản"
+      },
+      "DBC": {
+        "change_pc": 0.0,
+        "match_price": 18500.0,
+        "listed_share": 431046499.0,
+        "accumulated_value": 18421.675,
+        "sector": "Thực phẩm và đồ uống"
+      },
+      "CSV": {
+        "change_pc": 0.0,
+        "match_price": 23100.0,
+        "listed_share": 110499910.0,
+        "accumulated_value": 3388.79,
+        "sector": "Hóa chất"
+      },
+      "IPA": {
+        "change_pc": 0.0,
+        "match_price": 16000.0,
+        "listed_share": 213835775.0,
+        "accumulated_value": 1814.56,
+        "sector": "Hàng & Dịch vụ Công nghiệp"
+      },
+      "AGG": {
+        "change_pc": 0.0,
+        "match_price": 11700.0,
+        "listed_share": 162528081.0,
+        "accumulated_value": 3231.89,
         "sector": "Bất động sản"
       },
       "MCH": {
@@ -1588,152 +1728,12 @@
         "accumulated_value": 58705.1,
         "sector": "Bán lẻ"
       },
-      "CTD": {
-        "change_pc": 0.0,
-        "match_price": 72000.0,
-        "listed_share": 114026467.0,
-        "accumulated_value": 34830.81,
-        "sector": "Xây dựng và Vật liệu"
-      },
-      "CAV": {
+      "DQC": {
         "change_pc": 0.0,
         "match_price": 0.0,
-        "listed_share": 57600000.0,
+        "listed_share": 34359416.0,
         "accumulated_value": 0.0,
-        "sector": "Hàng & Dịch vụ Công nghiệp"
-      },
-      "TCH": {
-        "change_pc": 0.0,
-        "match_price": 14300.0,
-        "listed_share": 912109224.0,
-        "accumulated_value": 74006.515,
-        "sector": "Bất động sản"
-      },
-      "SCS": {
-        "change_pc": 0.0,
-        "match_price": 49250.0,
-        "listed_share": 94886982.0,
-        "accumulated_value": 1635.355,
-        "sector": "Du lịch và Giải trí"
-      },
-      "DBC": {
-        "change_pc": 0.0,
-        "match_price": 18500.0,
-        "listed_share": 431046499.0,
-        "accumulated_value": 18421.675,
-        "sector": "Thực phẩm và đồ uống"
-      },
-      "SSB": {
-        "change_pc": 0.0,
-        "match_price": 16500.0,
-        "listed_share": 3428800000.0,
-        "accumulated_value": 34349.285,
-        "sector": "Ngân hàng"
-      },
-      "SJS": {
-        "change_pc": 0.0,
-        "match_price": 48000.0,
-        "listed_share": 297474828.0,
-        "accumulated_value": 1098.815,
-        "sector": "Bất động sản"
-      },
-      "AAA": {
-        "change_pc": 0.0,
-        "match_price": 7400.0,
-        "listed_share": 393742730.0,
-        "accumulated_value": 5256.669,
-        "sector": "Hóa chất"
-      },
-      "IPA": {
-        "change_pc": 0.0,
-        "match_price": 16000.0,
-        "listed_share": 213835775.0,
-        "accumulated_value": 1814.56,
-        "sector": "Hàng & Dịch vụ Công nghiệp"
-      },
-      "GVR": {
-        "change_pc": 0.0,
-        "match_price": 32500.0,
-        "listed_share": 4000000000.0,
-        "accumulated_value": 48547.6,
-        "sector": "Hóa chất"
-      },
-      "HSG": {
-        "change_pc": 0.0,
-        "match_price": 11550.0,
-        "listed_share": 807262704.0,
-        "accumulated_value": 31120.295,
-        "sector": "Tài nguyên Cơ bản"
-      },
-      "CII": {
-        "change_pc": 0.0,
-        "match_price": 17200.0,
-        "listed_share": 671985291.0,
-        "accumulated_value": 142387.61,
-        "sector": "Xây dựng và Vật liệu"
-      },
-      "BCG": {
-        "change_pc": 0.0,
-        "match_price": 0.0,
-        "listed_share": 880210644.0,
-        "accumulated_value": 0.0,
-        "sector": "Dịch vụ tài chính"
-      },
-      "TIP": {
-        "change_pc": 0.0,
-        "match_price": 18150.0,
-        "listed_share": 65007857.0,
-        "accumulated_value": 1956.715,
-        "sector": "Bất động sản"
-      },
-      "NVL": {
-        "change_pc": 0.0,
-        "match_price": 12300.0,
-        "listed_share": 2402067972.0,
-        "accumulated_value": 100128.18,
-        "sector": "Bất động sản"
-      },
-      "SRC": {
-        "change_pc": 0.0,
-        "match_price": 40000.0,
-        "listed_share": 28065765.0,
-        "accumulated_value": 368.0,
-        "sector": "Ô tô và phụ tùng"
-      },
-      "KBC": {
-        "change_pc": 0.0,
-        "match_price": 29250.0,
-        "listed_share": 941754759.0,
-        "accumulated_value": 51005.545,
-        "sector": "Bất động sản"
-      },
-      "DXG": {
-        "change_pc": 0.0,
-        "match_price": 12150.0,
-        "listed_share": 1269852451.0,
-        "accumulated_value": 186071.34,
-        "sector": "Bất động sản"
-      },
-      "FPT": {
-        "change_pc": 0.0,
-        "match_price": 72300.0,
-        "listed_share": 1703507121.0,
-        "accumulated_value": 543071.86,
-        "sector": "Công nghệ Thông tin"
-      },
-      "LTG": {
-        "change_pc": 0.0,
-        "match_price": 0.0,
-        "listed_share": 100741465.0,
-        "accumulated_value": 0.0,
-        "sector": "Thực phẩm và đồ uống"
-      },
-      "TPB": {
-        "change_pc": 0.0,
-        "match_price": 16550.0,
-        "listed_share": 2774046873.0,
-        "accumulated_value": 122155.29,
-        "sector": "Ngân hàng"
+        "sector": "Hàng cá nhân & Gia dụng"
       },
       "MWG": {
         "change_pc": -0.12547051442910914,
