@@ -539,7 +539,18 @@ def compute_sector_heatmap(price_board, icb_mapping=None):
     # Bỏ những mã không có sector
     mapped = price_board[price_board['_sector'].notna()]
     if mapped.empty:
-        return []
+        return [], {}
+
+    raw_stocks = {}
+    for _, row in mapped.iterrows():
+        sym = str(row[ticker_col])
+        raw_stocks[sym] = {
+            'change_pc': float(row.get('change_pc', 0) or 0),
+            'match_price': float(row.get('match_match_price', 0) or 0),
+            'listed_share': float(row.get('listing_listed_share', 0) or 0),
+            'accumulated_value': float(row.get('match_accumulated_value', 0) or 0),
+            'sector': str(row.get('_sector', ''))
+        }
 
     result = []
     for sector, grp in mapped.groupby('_sector'):
@@ -583,7 +594,7 @@ def compute_sector_heatmap(price_board, icb_mapping=None):
         })
 
     result.sort(key=lambda x: x['avg_change'], reverse=True)
-    return result
+    return result, raw_stocks
 
 
 def build_trend_narrative(close, ma5, ma10, ma20, return_5d, return_20d, mom5, rsi5, adx20):
@@ -1449,15 +1460,20 @@ def main():
 
     # Sector heatmap từ VNINDEX board + ICB mapping — đầy đủ toàn sàn HOSE
     sector_heatmap = []
+    raw_stocks = {}
     icb_mapping = get_sector_mapping()
     board_for_sector = price_boards.get('VNINDEX', price_boards.get('VN100'))
     if board_for_sector is not None and not board_for_sector.empty:
-        sector_heatmap = compute_sector_heatmap(board_for_sector, icb_mapping)
+        sector_heatmap, raw_stocks = compute_sector_heatmap(board_for_sector, icb_mapping)
         print(f"[SECTOR] {len(sector_heatmap)} ngành computed from {len(board_for_sector)} stocks")
 
     # Gắn sector_heatmap vào tất cả index
     for sym in all_data:
         all_data[sym]['sector_heatmap'] = sector_heatmap
+        
+    all_data['__global__'] = {
+        'raw_stocks': raw_stocks
+    }
 
     with open(f"{out_dir}/data.json", "w", encoding="utf-8") as f:
         json.dump(all_data, f, ensure_ascii=False, indent=2, cls=_SafeEncoder)

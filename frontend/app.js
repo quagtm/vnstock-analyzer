@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 appData = await response.json();
             }
+            if (!appData) throw new Error("Dữ liệu trống");
+            initSectorModal(appData);
             renderDashboard();
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -467,9 +469,17 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSRZones(data.sr_zones || []);
 
         // Render sector heatmap
-        renderSectorHeatmap(data.sector_heatmap || []);
-        renderSectorTable(data.sector_heatmap || []);
+        let sectorData = data.sector_heatmap || [];
+        if (typeof customSectors !== 'undefined' && customSectors && appData['__global__'] && appData['__global__'].raw_stocks) {
+            sectorData = computeCustomSectors(appData['__global__'].raw_stocks) || sectorData;
+        }
+
+        renderSectorHeatmap(sectorData);
+        renderSectorTable(sectorData);
     }
+
+    // Expose for sectors.js
+    window.renderDashboard = renderDashboard;
 
     // Navigation setup
     const containers = document.querySelectorAll('.nav-item-container');
