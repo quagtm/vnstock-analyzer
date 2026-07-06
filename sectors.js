@@ -15,7 +15,19 @@ function computeCustomSectors(rawStocks) {
     let results = [];
     for (const [sectorName, tickers] of Object.entries(customSectors)) {
         let grp = tickers.map(t => rawStocks[t]).filter(x => x);
-        if (grp.length === 0) continue;
+        if (grp.length === 0) {
+            // Hiển thị ngành trống với dữ liệu bằng 0 thay vì bỏ qua
+            results.push({
+                sector: sectorName,
+                avg_change: 0,
+                count: 0,
+                total_val: 0,
+                cap_up: 0,
+                cap_down: 0,
+                cap_ref: 0
+            });
+            continue;
+        }
         
         let avgChg = grp.reduce((acc, s) => acc + (s.change_pc || 0), 0) / grp.length;
         let totalVal = grp.reduce((acc, s) => acc + (s.accumulated_value || 0), 0) / 1000;
@@ -112,6 +124,13 @@ function initSectorModal(appData) {
                     }
                 }
             };
+            input.onblur = () => {
+                let val = input.value.trim().toUpperCase();
+                if (val && !workingSectors[sectorName].includes(val)) {
+                    workingSectors[sectorName].push(val);
+                    renderEditor();
+                }
+            };
             chips.appendChild(input);
             
             card.appendChild(chips);
@@ -159,12 +178,13 @@ function initSectorModal(appData) {
     };
 
     btnSave.onclick = () => {
-        // Remove empty sectors
-        for (const k in workingSectors) {
-            if (workingSectors[k].length === 0) {
-                delete workingSectors[k];
-            }
+        // Collect pending inputs before saving (handled by onblur)
+        
+        if (Object.keys(workingSectors).length === 0) {
+            alert("Bạn đã xóa hết tất cả các nhóm ngành! Vui lòng thêm nhóm mới hoặc khôi phục mặc định.");
+            return;
         }
+
         customSectors = workingSectors;
         localStorage.setItem('custom_sectors', JSON.stringify(customSectors));
         modal.style.display = 'none';
