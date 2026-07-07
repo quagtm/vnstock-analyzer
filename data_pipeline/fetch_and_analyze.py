@@ -542,14 +542,14 @@ def compute_sector_heatmap(price_board, icb_mapping=None):
         return [], {}
 
     raw_stocks = {}
-    for _, row in mapped.iterrows():
+    for _, row in price_board.iterrows():
         sym = str(row[ticker_col])
         raw_stocks[sym] = {
             'change_pc': float(row.get('change_pc', 0) or 0),
             'match_price': float(row.get('match_match_price', 0) or 0),
             'listed_share': float(row.get('listing_listed_share', 0) or 0),
             'accumulated_value': float(row.get('match_accumulated_value', 0) or 0),
-            'sector': str(row.get('_sector', ''))
+            'sector': str(row.get('_sector', '')) if pd.notna(row.get('_sector')) else ""
         }
 
     result = []
