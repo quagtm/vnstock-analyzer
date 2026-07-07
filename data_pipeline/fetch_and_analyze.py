@@ -544,11 +544,18 @@ def compute_sector_heatmap(price_board, icb_mapping=None):
     raw_stocks = {}
     for _, row in price_board.iterrows():
         sym = str(row[ticker_col])
+        def _num(val):
+            try:
+                v = float(val)
+                return 0.0 if math.isnan(v) or math.isinf(v) else v
+            except:
+                return 0.0
+
         raw_stocks[sym] = {
-            'change_pc': float(row.get('change_pc', 0) or 0),
-            'match_price': float(row.get('match_match_price', 0) or 0),
-            'listed_share': float(row.get('listing_listed_share', 0) or 0),
-            'accumulated_value': float(row.get('match_accumulated_value', 0) or 0),
+            'change_pc': _num(row.get('change_pc')),
+            'match_price': _num(row.get('match_match_price')),
+            'listed_share': _num(row.get('listing_listed_share')),
+            'accumulated_value': _num(row.get('match_accumulated_value')),
             'sector': str(row.get('_sector', '')) if pd.notna(row.get('_sector')) else ""
         }
 
@@ -1474,6 +1481,19 @@ def main():
     all_data['__global__'] = {
         'raw_stocks': raw_stocks
     }
+    
+    def clean_nan(obj):
+        if isinstance(obj, dict):
+            return {k: clean_nan(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [clean_nan(v) for v in obj]
+        elif isinstance(obj, float):
+            if math.isnan(obj) or math.isinf(obj):
+                return None
+            return obj
+        return obj
+        
+    all_data = clean_nan(all_data)
 
     with open(f"{out_dir}/data.json", "w", encoding="utf-8") as f:
         json.dump(all_data, f, ensure_ascii=False, indent=2, cls=_SafeEncoder)
