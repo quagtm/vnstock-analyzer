@@ -124,9 +124,25 @@ document.addEventListener('DOMContentLoaded', () => {
         sectors.forEach(s => {
             const tr = document.createElement('tr');
             
-            // Name
+            // Name & Tickers
             const tdName = document.createElement('td');
-            tdName.textContent = s.sector;
+            const nameDiv = document.createElement('div');
+            nameDiv.textContent = s.sector;
+            tdName.appendChild(nameDiv);
+            
+            if (s.tickers && s.tickers.length > 0) {
+                const tickDiv = document.createElement('div');
+                tickDiv.style.fontSize = '0.75rem';
+                tickDiv.style.color = 'var(--text-secondary)';
+                tickDiv.style.marginTop = '4px';
+                tickDiv.style.maxWidth = '250px';
+                tickDiv.style.whiteSpace = 'normal';
+                tickDiv.style.lineHeight = '1.4';
+                // Show up to 15 tickers, then append ... if more
+                const displayTickers = s.tickers.length > 15 ? s.tickers.slice(0, 15).join(', ') + '...' : s.tickers.join(', ');
+                tickDiv.textContent = displayTickers;
+                tdName.appendChild(tickDiv);
+            }
             
             // Change
             const tdChange = document.createElement('td');

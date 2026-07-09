@@ -14,13 +14,15 @@ function computeCustomSectors(rawStocks) {
     
     let results = [];
     for (const [sectorName, tickers] of Object.entries(customSectors)) {
-        let grp = tickers.map(t => rawStocks[t]).filter(x => x);
+        let validTickers = tickers.filter(t => rawStocks[t]);
+        let grp = validTickers.map(t => rawStocks[t]);
         if (grp.length === 0) {
             // Hiển thị ngành trống với dữ liệu bằng 0 thay vì bỏ qua
             results.push({
                 sector: sectorName,
                 avg_change: 0,
                 count: 0,
+                tickers: [],
                 total_val: 0,
                 cap_up: 0,
                 cap_down: 0,
@@ -44,6 +46,7 @@ function computeCustomSectors(rawStocks) {
             sector: sectorName,
             avg_change: avgChg,
             count: grp.length,
+            tickers: validTickers,
             total_val: totalVal,
             cap_up: capUp,
             cap_down: capDown,
