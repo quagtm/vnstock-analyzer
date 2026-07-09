@@ -594,6 +594,7 @@ def compute_sector_heatmap(price_board, icb_mapping=None):
             'sector':     sector,
             'avg_change': float(round(float(avg_chg), 2)),
             'count':      int(len(grp)),
+            'tickers':    grp[ticker_col].tolist(),
             'total_val':  float(round(total_val, 2)),
             'cap_up':     float(round(cap_up, 2)),
             'cap_down':   float(round(cap_down, 2)),
