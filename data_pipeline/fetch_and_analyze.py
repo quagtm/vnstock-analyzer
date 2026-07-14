@@ -1334,8 +1334,8 @@ def main():
                 raw.columns = ['_'.join(str(x) for x in col if str(x))
                                for col in raw.columns.values]
             raw.columns = [str(c).strip() for c in raw.columns]
-            cp = next((c for c in raw.columns if 'match_price' in c or c in ('close', 'price')), None)
-            rp = next((c for c in raw.columns if 'ref_price' in c or c in ('ref',)), None)
+            cp = 'match_match_price' if 'match_match_price' in raw.columns else next((c for c in raw.columns if c in ('close', 'price') or ('match_price' in c and 'ato' not in c and 'atc' not in c)), None)
+            rp = 'listing_ref_price' if 'listing_ref_price' in raw.columns else next((c for c in raw.columns if c in ('ref', 'ref_price') or 'ref_price' in c), None)
             if cp and rp:
                 # Nếu cổ phiếu chưa có giao dịch, VCI trả về match_price = 0
                 # Cần gán lại bằng giá tham chiếu để thay đổi = 0%, tránh bị lỗi -100%
