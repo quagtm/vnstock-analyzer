@@ -14,19 +14,30 @@ function computeCustomSectors(rawStocks) {
     
     let results = [];
     for (const [sectorName, tickers] of Object.entries(customSectors)) {
-        let validTickers = tickers.filter(t => rawStocks[t]);
-        let grp = validTickers.map(t => rawStocks[t]);
+        if (!tickers || tickers.length === 0) {
+            results.push({
+                sector: sectorName,
+                avg_change: 0, count: 0, tickers: [],
+                total_val: 0, cap_up: 0, cap_down: 0, cap_ref: 0
+            });
+            continue;
+        }
+
+        // Tách mã có data và mã không có data trong rawStocks
+        let tickersWithData = tickers.filter(t => rawStocks[t]);
+        let tickersNoData = tickers.filter(t => !rawStocks[t]);
+
+        // Tất cả tickers đều hiển thị (kể cả không có data)
+        let allDisplayTickers = tickers;
+
+        let grp = tickersWithData.map(t => rawStocks[t]);
         if (grp.length === 0) {
-            // Hiển thị ngành trống với dữ liệu bằng 0 thay vì bỏ qua
             results.push({
                 sector: sectorName,
                 avg_change: 0,
-                count: 0,
-                tickers: [],
-                total_val: 0,
-                cap_up: 0,
-                cap_down: 0,
-                cap_ref: 0
+                count: allDisplayTickers.length,
+                tickers: allDisplayTickers,
+                total_val: 0, cap_up: 0, cap_down: 0, cap_ref: 0
             });
             continue;
         }
@@ -45,8 +56,8 @@ function computeCustomSectors(rawStocks) {
         results.push({
             sector: sectorName,
             avg_change: avgChg,
-            count: grp.length,
-            tickers: validTickers,
+            count: allDisplayTickers.length,
+            tickers: allDisplayTickers,
             total_val: totalVal,
             cap_up: capUp,
             cap_down: capDown,
@@ -56,6 +67,7 @@ function computeCustomSectors(rawStocks) {
     results.sort((a,b) => b.avg_change - a.avg_change);
     return results;
 }
+
 
 function initSectorModal(appData) {
     const modal = document.getElementById('sector-modal');
