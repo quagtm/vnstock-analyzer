@@ -496,19 +496,27 @@ def get_sector_mapping():
     import json
     
     # 1. Ưu tiên đọc từ file custom_sectors.json do người dùng tự nhập
-    custom_path = 'custom_sectors.json'
-    if os.path.exists(custom_path):
-        try:
-            with open(custom_path, 'r', encoding='utf-8') as f:
-                custom_map = json.load(f)
-            mapping = {}
-            for sector, tickers in custom_map.items():
-                for t in tickers:
-                    mapping[t] = sector
-            print(f"[ICB] Loaded custom sector mapping from {custom_path}")
-            return mapping
-        except Exception as e:
-            print(f"[ICB] Error reading {custom_path}: {e}")
+    # Tìm file ở nhiều vị trí: cùng thư mục script, thư mục cha, hoặc CWD
+    _script_dir = os.path.dirname(os.path.abspath(__file__))
+    _parent_dir = os.path.dirname(_script_dir)
+    _search_paths = [
+        os.path.join(_script_dir, 'custom_sectors.json'),   # data_pipeline/custom_sectors.json
+        os.path.join(_parent_dir, 'custom_sectors.json'),   # root/custom_sectors.json
+        'custom_sectors.json',                               # CWD
+    ]
+    for custom_path in _search_paths:
+        if os.path.exists(custom_path):
+            try:
+                with open(custom_path, 'r', encoding='utf-8') as f:
+                    custom_map = json.load(f)
+                mapping = {}
+                for sector, tickers in custom_map.items():
+                    for t in tickers:
+                        mapping[t] = sector
+                print(f"[ICB] Loaded custom sector mapping from {custom_path}")
+                return mapping
+            except Exception as e:
+                print(f"[ICB] Error reading {custom_path}: {e}")
             
     # 2. Lấy từ VCI API
     mapping = fetch_icb_mapping()
@@ -541,16 +549,18 @@ def compute_sector_heatmap(price_board, icb_mapping=None):
     if mapped.empty:
         return [], {}
 
+    def _num(val):
+        try:
+            v = float(val)
+            return 0.0 if math.isnan(v) or math.isinf(v) else v
+        except:
+            return 0.0
+
+    # Lưu raw_stocks cho TẤT CẢ mã trong board (không chỉ mã có sector)
+    # Để frontend có thể dùng khi user thêm mã vào custom sector
     raw_stocks = {}
     for _, row in price_board.iterrows():
         sym = str(row[ticker_col])
-        def _num(val):
-            try:
-                v = float(val)
-                return 0.0 if math.isnan(v) or math.isinf(v) else v
-            except:
-                return 0.0
-
         raw_stocks[sym] = {
             'change_pc': _num(row.get('change_pc')),
             'match_price': _num(row.get('match_match_price')),

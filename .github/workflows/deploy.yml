@@ -88,8 +88,14 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
+          # Đảm bảo custom_sectors.json tồn tại trong data_pipeline/
+          if [ -f custom_sectors.json ]; then
+            cp custom_sectors.json data_pipeline/custom_sectors.json
+            echo "Copied custom_sectors.json to data_pipeline/"
+          fi
           cd data_pipeline
           python fetch_and_analyze.py
+
           
       - name: Copy data.json to frontend/public
         if: steps.market_check.outputs.skip != 'true'
