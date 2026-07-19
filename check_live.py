@@ -1,14 +1,8 @@
-import urllib.request, json
-
-url = "https://quagtm.github.io/vnstock-analyzer/public/data.json"
-with urllib.request.urlopen(url) as r:
-    d = json.loads(r.read())
-
-for sym in ["VNINDEX", "VN30", "VN100"]:
-    if sym in d:
-        txt = d[sym].get("general_markdown", "")
-        is_fallback = "\u26a0" in txt or "b\u1ea3o tr\u00ec" in txt
-        print(f"{sym}: date={d[sym]['date']}, is_fallback={is_fallback}")
-        print(f"  First 150 chars: {txt[:150]}")
-        print(f"  Last 100 chars: {txt[-100:]}")
-        print()
+import urllib.request, json, time, io, sys
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+url = f'https://quagtm.github.io/vnstock-analyzer/public/data.json?t={time.time()}'
+d = json.loads(urllib.request.urlopen(url).read())
+print(f"raw_stocks: {len(d['__global__']['raw_stocks'])} mã")
+print(f"Sectors: {len(d['VNINDEX']['sector_heatmap'])} ngành")
+for h in d['VNINDEX']['sector_heatmap']:
+    print(f"  {h['sector']}: {h['count']} CP")

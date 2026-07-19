@@ -244,6 +244,21 @@ def calculate_technical_indicators(df):
     df['keltner_h'] = indicator_keltner.keltner_channel_hband()
     df['keltner_l'] = indicator_keltner.keltner_channel_lband()
 
+    # MACD (12, 26, 9)
+    macd_ind = ta.trend.MACD(close=close, window_slow=26, window_fast=12, window_sign=9)
+    df['macd']        = macd_ind.macd()
+    df['macd_signal'] = macd_ind.macd_signal()
+    df['macd_diff']   = macd_ind.macd_diff()  # histogram
+
+    # Stochastic %K / %D
+    stoch_ind = ta.momentum.StochasticOscillator(high=high, low=low, close=close, window=14, smooth_window=3)
+    df['stoch_k'] = stoch_ind.stoch()
+    df['stoch_d'] = stoch_ind.stoch_signal()
+
+    # Bollinger Band %B  (0 = lower band, 1 = upper band, 0.5 = middle)
+    bb_ind = ta.volatility.BollingerBands(close=close, window=20, window_dev=2)
+    df['bb_pct'] = bb_ind.bollinger_pband()  # %B
+
     return df.iloc[-1]
 
 def build_trend_assessment(close, ma_vals):
@@ -408,34 +423,71 @@ def find_sr_zones(df, close, window=5, n_zones=6):
 # ══════════════════════════════════════════════════════════════════
 #  HISTORICAL TAS (rolling 20 phiên — zero extra API calls)
 # ══════════════════════════════════════════════════════════════════
-def compute_tas_history_fast(df, n=20):
-    """Tính TAS score cho N phiên gần nhất từ df đã có indicators."""
+def compute_tas_history_fast(df, n=50):
+    """Tính TAS score cho N phiên gần nhất từ df đã có indicators.
+    Mỗi record bao gồm giá OHLCV + các chỉ báo để frontend vẽ biểu đồ."""
     history = []
     if df is None or len(df) < 25:
         return history
     vol_ma20 = df['volume'].rolling(20).mean()
 
-    for i in range(-n, 0):
+    start_idx = max(-n, -len(df))
+    for i in range(start_idx, 0):
         try:
             row = df.iloc[i]
             close_i = float(row.get('close', 0) or 0)
             if close_i <= 0:
                 continue
-            vol_i    = float(row.get('volume', 0) or 0)
+
+            def _s(k):
+                v = row.get(k, None)
+                if v is None or (isinstance(v, float) and math.isnan(v)):
+                    return 0.0
+                try:
+                    return float(v)
+                except:
+                    return 0.0
+
+            vol_i    = _s('volume')
             vma_i    = float(vol_ma20.iloc[i]) if pd.notna(vol_ma20.iloc[i]) else vol_i
             vdiff_i  = ((vol_i - vma_i) / vma_i * 100) if vma_i > 0 else 0
 
-            def _s(k): return float(row.get(k, 0)) if pd.notna(row.get(k)) else 0.0
             pseudo = {
                 'cmf': _s('cmf'), 'vwap': _s('vwap'),
                 'roc10': _s('roc10'), 'roc20': _s('roc20'),
                 'adx': _s('adx'), 'keltner_h': _s('keltner_h'), 'keltner_l': _s('keltner_l'),
+                'rsi14': _s('rsi14'),
+                'macd': _s('macd'), 'macd_signal': _s('macd_signal'), 'macd_diff': _s('macd_diff'),
+                'stoch_k': _s('stoch_k'), 'stoch_d': _s('stoch_d'),
+                'bb_pct': _s('bb_pct'),
             }
             mas_i = [('MA20', _s('ma20')), ('MA50', _s('ma50')), ('MA200', _s('ma200'))]
             tas_i = compute_tas(close_i, pseudo, vdiff_i, mas_i)
 
             date_str = str(row['time']).split(' ')[0] if 'time' in row.index else f'D{i}'
-            history.append({'date': date_str, 'score': tas_i['score'], 'label': tas_i['label']})
+            history.append({
+                'date':  date_str,
+                'score': tas_i['score'],
+                'label': tas_i['label'],
+                # OHLCV cho biểu đồ giá
+                'open':   _s('open'),
+                'high':   _s('high'),
+                'low':    _s('low'),
+                'close':  close_i,
+                'volume': vol_i,
+                # Indicators cho sub-chart
+                'ma20':   _s('ma20'),
+                'ma50':   _s('ma50'),
+                'bb_upper': _s('bb_upper'),
+                'bb_lower': _s('bb_lower'),
+                'rsi14':    _s('rsi14'),
+                'macd':     _s('macd'),
+                'macd_signal': _s('macd_signal'),
+                'macd_diff':   _s('macd_diff'),
+                'stoch_k':  _s('stoch_k'),
+                'stoch_d':  _s('stoch_d'),
+                'bb_pct':   _s('bb_pct'),
+            })
         except Exception:
             continue
     return history
@@ -700,6 +752,12 @@ def compute_tas(close, latest, vol_diff, mas):
     vwap  = sf('vwap')
     kh    = sf('keltner_h')
     kl    = sf('keltner_l')
+    rsi14    = sf('rsi14')
+    macd     = sf('macd')
+    macd_sig = sf('macd_signal')
+    stoch_k  = sf('stoch_k')
+    stoch_d  = sf('stoch_d')
+    bb_pct   = sf('bb_pct')
 
     indicators = []
 
@@ -767,6 +825,54 @@ def compute_tas(close, latest, vol_diff, mas):
     else:
         s, st = 0, 'Neutral'
     indicators.append({'group': 'Dòng tiền', 'name': f'Vol vs MA20 ({vol_diff:+.0f}%)', 'status': st, 'score': s})
+
+    # ── Nhóm 4: MACD ─────────────────────────────────────────────
+    if macd != 0 or macd_sig != 0:
+        if macd > macd_sig:
+            s, st = 1, 'Bullish'
+        else:
+            s, st = -1, 'Bearish'
+        cross = 'MACD > Signal' if s > 0 else 'MACD < Signal'
+        indicators.append({'group': 'MACD', 'name': f'MACD vs Signal ({macd:.2f}/{macd_sig:.2f})', 'status': st, 'score': s})
+
+        # MACD histogram hướng
+        if macd_diff := sf('macd_diff'):
+            if macd_diff > 0:
+                s, st = 1, 'Bullish'
+            else:
+                s, st = -1, 'Bearish'
+            indicators.append({'group': 'MACD', 'name': f'MACD Histogram ({macd_diff:+.2f})', 'status': st, 'score': s})
+
+    # ── Nhóm 5: Stochastic & RSI ────────────────────────────────
+    if stoch_k > 0:
+        if stoch_k < 20:
+            s, st = 1, 'Oversold (cơ hội)'
+        elif stoch_k > 80:
+            s, st = -1, 'Overbought (thận trọng)'
+        else:
+            s, st = (1 if stoch_k > stoch_d else -1), ('Bullish' if stoch_k > stoch_d else 'Bearish')
+        indicators.append({'group': 'Stochastic', 'name': f'Stoch %K/%D ({stoch_k:.1f}/{stoch_d:.1f})', 'status': st, 'score': s})
+
+    if rsi14 > 0:
+        if rsi14 < 30:
+            s, st = 1, 'Oversold'
+        elif rsi14 > 70:
+            s, st = -1, 'Overbought'
+        elif rsi14 >= 50:
+            s, st = 1, 'Bullish'
+        else:
+            s, st = -1, 'Bearish'
+        indicators.append({'group': 'Stochastic', 'name': f'RSI14 ({rsi14:.1f})', 'status': st, 'score': s})
+
+    # ── Nhóm 6: Bollinger %B ────────────────────────────────────
+    if bb_pct != 0:
+        if bb_pct < 0.2:
+            s, st = 1, 'Gần Lower Band (cơ hội)'
+        elif bb_pct > 0.8:
+            s, st = -1, 'Gần Upper Band (thận trọng)'
+        else:
+            s, st = (1 if bb_pct >= 0.5 else -1), ('Bullish' if bb_pct >= 0.5 else 'Bearish')
+        indicators.append({'group': 'Bollinger', 'name': f'BB %B ({bb_pct:.2f})', 'status': st, 'score': s})
 
     # ── Tổng hợp TAS ───────────────────────────────────
     max_score = len(indicators)

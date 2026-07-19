@@ -1146,3 +1146,27 @@ body {
     border-color: var(--primary);
 }
 
+
+/* -- TAS Chart Tabs -- */
+.tas-chart-tab {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.tas-chart-tab:hover {
+    background: rgba(79,142,247,0.15);
+    color: rgba(255,255,255,0.85);
+    border-color: rgba(79,142,247,0.4);
+}
+.tas-chart-tab.active {
+    background: rgba(79,142,247,0.25);
+    color: #fff;
+    border-color: #4f8ef7;
+    font-weight: 600;
+}

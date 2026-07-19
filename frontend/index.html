@@ -217,9 +217,29 @@
 
 
 
-            <!-- TAS History Chart -->
-            <div class="tas-history-chart-wrap" style="position: relative; height: 300px; width: 100%; margin-top: 20px; padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
-                <canvas id="tas-history-chart"></canvas>
+
+            <!-- TAS Charts — 50 phiên -->
+            <div class="tas-charts-section" style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
+                <!-- Tab switcher -->
+                <div class="tas-chart-tabs" style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+                    <button class="tas-chart-tab active" id="tab-tas-score" onclick="switchTASTab('score')">📈 TAS Score</button>
+                    <button class="tas-chart-tab" id="tab-tas-price" onclick="switchTASTab('price')">🕯️ Giá + BB</button>
+                    <button class="tas-chart-tab" id="tab-tas-macd" onclick="switchTASTab('macd')">📊 MACD</button>
+                    <button class="tas-chart-tab" id="tab-tas-stoch" onclick="switchTASTab('stoch')">📉 Stochastic</button>
+                </div>
+                <!-- Charts -->
+                <div id="tas-chart-score" class="tas-chart-panel" style="position:relative;height:260px;width:100%;">
+                    <canvas id="tas-history-chart"></canvas>
+                </div>
+                <div id="tas-chart-price" class="tas-chart-panel" style="display:none;position:relative;height:260px;width:100%;">
+                    <canvas id="tas-price-chart"></canvas>
+                </div>
+                <div id="tas-chart-macd" class="tas-chart-panel" style="display:none;position:relative;height:220px;width:100%;">
+                    <canvas id="tas-macd-chart"></canvas>
+                </div>
+                <div id="tas-chart-stoch" class="tas-chart-panel" style="display:none;position:relative;height:220px;width:100%;">
+                    <canvas id="tas-stoch-chart"></canvas>
+                </div>
             </div>
         </div>
 
