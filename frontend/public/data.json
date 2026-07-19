@@ -1,0 +1,3678 @@
+{
+  "VNINDEX": {
+    "symbol": "VNINDEX",
+    "date": "2026-07-19 16:02 (ICT)",
+    "close": 1787.45,
+    "change": -16.789999999999964,
+    "change_pc": -0.9305857313882834,
+    "volume": 436669396.0,
+    "technical": {
+      "ma20": 1842.3020000000001,
+      "pivot": 1788.6533333333334,
+      "cmf": 0.03238013485942385,
+      "adx": 27.7072025975975
+    },
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\n\n🔴 **VNINDEX** đóng cửa tại **1787.45** điểm, **giảm 14.44 điểm (0.80%)** so với tham chiếu 1801.89.\n\nKhối lượng giao dịch: **436,669,396 CP** — thấp hơn 30.96% so với trung bình 20 phiên.\n\n**Vùng Hỗ trợ (từ gần đến xa):** MA200 (1771.61)\n**Vùng Kháng cự (từ gần đến xa):** MA100 (1806.92), MA10 (1819.55), MA20 (1842.30), MA50 (1849.89)\n\n### 2. Thống kê Cổ phiếu & Nhóm ngành\n\n**Top 5 tăng mạnh nhất (VNINDEX):** PSI (+6.48%), TMP (+5.22%), PNJ (+5.13%), DQC (+5.05%), VNM (+4.98%)\n**Top 5 giảm mạnh nhất (VNINDEX):** CEO (-4.38%), DPG (-5.05%), VHG (-6.25%), BVS (-6.89%), GIL (-6.89%)\n\n**Market Breadth (VNINDEX — 237 mã):** 🟢 Tăng: **63** | 🔴 Giảm: **133** | ➖ Đứng: **41**\nTỷ lệ A/D: **0.47** — Bên bán chiếm ưu thế\n\n**Độ rộng thị trường VN30 (từ price board):**\n| Chỉ số | Giá trị |\n|---|---|\n| Mã tăng giá (> 0%) | **4 / 30** = 13.3% |\n| Mã giảm giá (< 0%) | **23 / 30** = 76.7% |\n| Mã đứng giá | **3 / 30** |\n| Tỷ lệ Advance/Decline | **0.17** |\n| % mã trên trung điểm 52 tuần (proxy MA200) | **0.0%** |\n\n**Nhóm ngành thu hút dòng tiền:** Khoáng sản (+1.71%), Bán lẻ - Tiêu dùng (+0.63%), Công nghệ - Viễn thông (+0.58%), Thủy sản (+0.56%), Điện - Nước - Khí (+0.39%), Bảo hiểm (+0.04%)\n**Nhóm ngành bị rút dòng tiền:** Ngân hàng (-0.06%), Khác (-0.51%), Cao su - Gỗ (-0.76%), Thép - Xây dựng (-0.98%), Chứng khoán (-1.04%), Vận tải - Logistics (-1.10%), Hóa chất - Phân bón (-1.17%), Bất động sản (-1.47%), Dầu khí (-1.69%), Dệt may - Da giày (-2.21%)\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "scenario_markdown": null,
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **CMF** | `0.0324` | Trung tính |\n| **VWAP** | `1831.16` | Giá < VWAP → Áp lực bán chiếm ưu thế |\n| **OBV** | `49,698,234,960` | Tích lũy — dòng tiền ròng vào |\n| **KL Hiện tại** | `436,669,396 CP` | thấp hơn 30.96% so với TB 20 phiên |\n\n### 2. Nhận định Dòng tiền chung\n\n🟢 **Dòng tiền ĐANG VÀO** — CMF = `0.0324` cho thấy áp lực mua đang chiếm ưu thế.\n\nGiá dưới VWAP (1831.16), bên bán đang kiểm soát phiên giao dịch.\n\nKhối lượng thấp hơn 30.96% cho thấy sự tham gia mạnh, có thể từ tổ chức.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Biến động\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **ADX** | `27.71` | Xu hướng MẠNH |\n| **ATR** | `27.20` | Biến động trung bình 27.20 điểm/phiên |\n| **Keltner Upper** | `1866.52` | Kháng cự trên |\n| **Keltner Lower** | `1816.26` | ⚠️ Giá đang thủng dưới |\n\n### 2. Nhận định Rủi ro & Hành động\n\n**Xu hướng hiện tại:** 🔴 Giảm — ADX = `27.71` (Xu hướng MẠNH).\n\n**Vị trí giá so với Keltner:** Giá < Keltner Lower → QUÁ BÁN\n\n**Mức biến động:** ATR = `27.20` điểm — Biến động bình thường, rủi ro được kiểm soát.\n\n**Khuyến nghị:** 🔴 Thận trọng, chờ tín hiệu xác nhận đảo chiều trước khi hành động.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "tas": {
+      "score": -67,
+      "label": "STRONG BEARISH",
+      "total_raw": -6,
+      "max_raw": 9,
+      "indicators": [
+        {
+          "group": "Cấu trúc (MA)",
+          "name": "Giá vs MA20 (1842)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Cấu trúc (MA)",
+          "name": "Giá vs MA50 (1850)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Cấu trúc (MA)",
+          "name": "Giá vs MA200 (1772)",
+          "status": "Bullish",
+          "score": 1
+        },
+        {
+          "group": "Động lượng",
+          "name": "ROC10 (-4.0%)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Động lượng",
+          "name": "ROC20 (-2.0%)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Động lượng",
+          "name": "Keltner (1816–1867)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "CMF (+0.032)",
+          "status": "Neutral",
+          "score": 0
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "Giá vs VWAP (1831)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "Vol vs MA20 (-31%)",
+          "status": "Bearish",
+          "score": -1
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-06-22",
+          "score": 67,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-06-23",
+          "score": 78,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-06-24",
+          "score": 78,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-06-25",
+          "score": 67,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-06-26",
+          "score": 67,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-06-29",
+          "score": 56,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-06-30",
+          "score": 78,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-07-01",
+          "score": 89,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-07-02",
+          "score": 78,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-07-03",
+          "score": 78,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-07-06",
+          "score": 44,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-07-07",
+          "score": 22,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-07-08",
+          "score": 33,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-07-09",
+          "score": -11,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-07-10",
+          "score": -22,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-07-13",
+          "score": -22,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-07-14",
+          "score": -44,
+          "label": "BEARISH"
+        },
+        {
+          "date": "2026-07-15",
+          "score": -44,
+          "label": "BEARISH"
+        },
+        {
+          "date": "2026-07-16",
+          "score": -22,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-07-17",
+          "score": -67,
+          "label": "STRONG BEARISH"
+        }
+      ]
+    },
+    "candle_patterns": [],
+    "sr_zones": [
+      {
+        "level": 1792.08,
+        "type": "resistance",
+        "strength": 3,
+        "dist_pct": 0.26,
+        "near": true
+      },
+      {
+        "level": 1773.88,
+        "type": "support",
+        "strength": 2,
+        "dist_pct": -0.76,
+        "near": true
+      },
+      {
+        "level": 1742.12,
+        "type": "support",
+        "strength": 2,
+        "dist_pct": -2.54,
+        "near": false
+      },
+      {
+        "level": 1845.95,
+        "type": "resistance",
+        "strength": 1,
+        "dist_pct": 3.27,
+        "near": false
+      },
+      {
+        "level": 1704.18,
+        "type": "support",
+        "strength": 2,
+        "dist_pct": -4.66,
+        "near": false
+      },
+      {
+        "level": 1894.39,
+        "type": "resistance",
+        "strength": 3,
+        "dist_pct": 5.98,
+        "near": false
+      }
+    ],
+    "sector_heatmap": [
+      {
+        "sector": "Công nghệ",
+        "avg_change": 0.67,
+        "count": 8,
+        "tickers": [
+          "MSR",
+          "FOX",
+          "VGI",
+          "CMG",
+          "ELC",
+          "TTN",
+          "CTR",
+          "FPT"
+        ],
+        "total_val": 326.05,
+        "cap_up": 346174.51,
+        "cap_down": 122084.8,
+        "cap_ref": 473.78
+      },
+      {
+        "sector": "Bán lẻ - Tiêu dùng",
+        "avg_change": 0.51,
+        "count": 13,
+        "tickers": [
+          "PNJ",
+          "VNM",
+          "SAB",
+          "MCH",
+          "FRT",
+          "MWG",
+          "LTG",
+          "MSN",
+          "PAN",
+          "PET",
+          "DGW",
+          "DBC",
+          "VRE"
+        ],
+        "total_val": 1620.73,
+        "cap_up": 404315.77,
+        "cap_down": 82457.1,
+        "cap_ref": 211581.65
+      },
+      {
+        "sector": "Thủy sản",
+        "avg_change": 0.51,
+        "count": 7,
+        "tickers": [
+          "MPC",
+          "CMX",
+          "VHC",
+          "ASM",
+          "FMC",
+          "IDI",
+          "ANV"
+        ],
+        "total_val": 22.05,
+        "cap_up": 21326.26,
+        "cap_down": 6238.98,
+        "cap_ref": 2213.41
+      },
+      {
+        "sector": "Bảo hiểm",
+        "avg_change": 0.04,
+        "count": 4,
+        "tickers": [
+          "BMI",
+          "PVI",
+          "MIG",
+          "BVH"
+        ],
+        "total_val": 24.45,
+        "cap_up": 19536.95,
+        "cap_down": 44539.37,
+        "cap_ref": 3701.31
+      },
+      {
+        "sector": "Khác",
+        "avg_change": -0.04,
+        "count": 11,
+        "tickers": [
+          "NTP",
+          "PTB",
+          "APH",
+          "AAA",
+          "BMP",
+          "QNS",
+          "HUT",
+          "DHC",
+          "SBT",
+          "LSS",
+          "S99"
+        ],
+        "total_val": 64.28,
+        "cap_up": 30181.21,
+        "cap_down": 23611.77,
+        "cap_ref": 34068.88
+      },
+      {
+        "sector": "Ngân hàng",
+        "avg_change": -0.07,
+        "count": 18,
+        "tickers": [
+          "KLB",
+          "STB",
+          "LPB",
+          "HDB",
+          "ABB",
+          "BVB",
+          "MSB",
+          "BID",
+          "EIB",
+          "VIB",
+          "SHB",
+          "VPB",
+          "ACB",
+          "CTG",
+          "TPB",
+          "TCB",
+          "VCB",
+          "MBB"
+        ],
+        "total_val": 3128.97,
+        "cap_up": 440465.25,
+        "cap_down": 1963981.55,
+        "cap_ref": 83986.06
+      },
+      {
+        "sector": "Dược phẩm",
+        "avg_change": -0.25,
+        "count": 6,
+        "tickers": [
+          "JVC",
+          "DBD",
+          "DHT",
+          "DHG",
+          "DCL",
+          "IMP"
+        ],
+        "total_val": 37.39,
+        "cap_up": 10717.62,
+        "cap_down": 20849.18,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Vật liệu xây dựng",
+        "avg_change": -0.36,
+        "count": 9,
+        "tickers": [
+          "DHA",
+          "VCS",
+          "BCC",
+          "HOM",
+          "CTI",
+          "KSB",
+          "GDT",
+          "HT1",
+          "PLC"
+        ],
+        "total_val": 11.65,
+        "cap_up": 6234.29,
+        "cap_down": 6728.18,
+        "cap_ref": 3905.48
+      },
+      {
+        "sector": "Hàng không",
+        "avg_change": -0.42,
+        "count": 6,
+        "tickers": [
+          "NCT",
+          "SCS",
+          "AST",
+          "ACV",
+          "VJC",
+          "HVN"
+        ],
+        "total_val": 152.37,
+        "cap_up": 7111.23,
+        "cap_down": 175035.56,
+        "cap_ref": 151523.17
+      },
+      {
+        "sector": "BĐS Khu công nghiệp",
+        "avg_change": -0.47,
+        "count": 11,
+        "tickers": [
+          "NTC",
+          "SIP",
+          "SZC",
+          "LHG",
+          "BCM",
+          "TIP",
+          "D2D",
+          "VGC",
+          "KBC",
+          "LDG",
+          "IDC"
+        ],
+        "total_val": 76.91,
+        "cap_up": 18510.08,
+        "cap_down": 108858.15,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Điện - Nước",
+        "avg_change": -0.57,
+        "count": 11,
+        "tickers": [
+          "NT2",
+          "HND",
+          "REE",
+          "SJD",
+          "VSH",
+          "GEG",
+          "TV2",
+          "GEX",
+          "POW",
+          "PC1",
+          "TV1"
+        ],
+        "total_val": 258.02,
+        "cap_up": 39812.81,
+        "cap_down": 91453.55,
+        "cap_ref": 10994.42
+      },
+      {
+        "sector": "Dầu khí",
+        "avg_change": -0.9,
+        "count": 10,
+        "tickers": [
+          "CNG",
+          "PXL",
+          "OIL",
+          "PVS",
+          "GAS",
+          "PVB",
+          "PVD",
+          "PLX",
+          "PVC",
+          "BSR"
+        ],
+        "total_val": 393.92,
+        "cap_up": 5636.35,
+        "cap_down": 386098.07,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Hóa chất - Phân bón",
+        "avg_change": -0.92,
+        "count": 8,
+        "tickers": [
+          "HCD",
+          "DDV",
+          "DGC",
+          "BFC",
+          "LAS",
+          "DPM",
+          "DCM",
+          "CSV"
+        ],
+        "total_val": 101.73,
+        "cap_up": 309.06,
+        "cap_down": 40053.89,
+        "cap_ref": 20126.25
+      },
+      {
+        "sector": "Thép",
+        "avg_change": -1.14,
+        "count": 7,
+        "tickers": [
+          "TVN",
+          "SMC",
+          "VGS",
+          "TLH",
+          "HPG",
+          "HSG",
+          "NKG"
+        ],
+        "total_val": 420.71,
+        "cap_up": 6847.8,
+        "cap_down": 201492.8,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Bất động sản",
+        "avg_change": -1.24,
+        "count": 22,
+        "tickers": [
+          "TIG",
+          "EVG",
+          "HTN",
+          "NLG",
+          "DXG",
+          "NTL",
+          "NVL",
+          "AGG",
+          "DTD",
+          "ITC",
+          "NHA",
+          "PDR",
+          "IJC",
+          "SCR",
+          "DXS",
+          "TCH",
+          "HDG",
+          "KDH",
+          "DIG",
+          "HHS",
+          "HDC",
+          "CEO"
+        ],
+        "total_val": 605.15,
+        "cap_up": 14977.87,
+        "cap_down": 91254.32,
+        "cap_ref": 50464.31
+      },
+      {
+        "sector": "Chứng khoán",
+        "avg_change": -1.26,
+        "count": 20,
+        "tickers": [
+          "PSI",
+          "VPX",
+          "HCM",
+          "AAS",
+          "VND",
+          "BMS",
+          "BSI",
+          "TCX",
+          "ORS",
+          "AGR",
+          "MBS",
+          "VIX",
+          "VCK",
+          "VCI",
+          "SHS",
+          "SSI",
+          "FTS",
+          "CTS",
+          "VDS",
+          "BVS"
+        ],
+        "total_val": 1703.71,
+        "cap_up": 108551.47,
+        "cap_down": 391803.47,
+        "cap_ref": 2814.27
+      },
+      {
+        "sector": "Logistics",
+        "avg_change": -1.37,
+        "count": 9,
+        "tickers": [
+          "PHP",
+          "SGP",
+          "VIP",
+          "HAH",
+          "VOS",
+          "MVN",
+          "GMD",
+          "VTP",
+          "VSC"
+        ],
+        "total_val": 156.61,
+        "cap_up": 16683.48,
+        "cap_down": 58470.0,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Dệt may",
+        "avg_change": -1.46,
+        "count": 8,
+        "tickers": [
+          "VGG",
+          "MSH",
+          "HTG",
+          "VGT",
+          "STK",
+          "TNG",
+          "TCM",
+          "GIL"
+        ],
+        "total_val": 28.85,
+        "cap_up": 5246.67,
+        "cap_down": 6481.65,
+        "cap_ref": 6842.09
+      },
+      {
+        "sector": "VN30",
+        "avg_change": -1.46,
+        "count": 4,
+        "tickers": [
+          "SSB",
+          "VIC",
+          "VHM",
+          "VPL"
+        ],
+        "total_val": 1035.5,
+        "cap_up": 0.0,
+        "cap_down": 2470212.94,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Đầu tư - Xây dựng",
+        "avg_change": -1.54,
+        "count": 11,
+        "tickers": [
+          "HBC",
+          "G36",
+          "C4G",
+          "FCN",
+          "HHV",
+          "CSC",
+          "LCG",
+          "VCG",
+          "CII",
+          "CTD",
+          "DPG"
+        ],
+        "total_val": 196.16,
+        "cap_up": 1631.9,
+        "cap_down": 41529.16,
+        "cap_ref": 3226.2
+      },
+      {
+        "sector": "Cao su",
+        "avg_change": -1.62,
+        "count": 8,
+        "tickers": [
+          "DRI",
+          "TRC",
+          "DPR",
+          "DRC",
+          "PHR",
+          "GVR",
+          "CSM",
+          "VHG"
+        ],
+        "total_val": 60.49,
+        "cap_up": 0.0,
+        "cap_down": 133675.25,
+        "cap_ref": 3298.92
+      }
+    ]
+  },
+  "VN30": {
+    "symbol": "VN30",
+    "date": "2026-07-19 16:03 (ICT)",
+    "close": 1931.65,
+    "change": -10.0,
+    "change_pc": -0.5150258800504726,
+    "volume": 200834292.0,
+    "technical": {
+      "ma20": 1982.109,
+      "pivot": 1926.8700000000001,
+      "cmf": 0.029106388117357336,
+      "adx": 27.738236979729123
+    },
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\n\n🔴 **VN30** đóng cửa tại **1931.65** điểm, **giảm 10.00 điểm (0.52%)** so với tham chiếu 1941.65.\n\nKhối lượng giao dịch: **200,834,292 CP** — thấp hơn 29.55% so với trung bình 20 phiên.\n\n**Vùng Hỗ trợ (từ gần đến xa):** không có\n**Vùng Kháng cự (từ gần đến xa):** MA100 (1957.71), MA200 (1959.00), MA10 (1961.86), MA20 (1982.11), MA50 (1991.35)\n\n### 2. Thống kê Cổ phiếu & Nhóm ngành\n\n**Top 5 tăng mạnh nhất (VN30):** VNM (+4.98%), STB (+2.37%), SAB (+1.19%), HDB (+0.37%), MSN (+0.00%)\n**Top 5 giảm mạnh nhất (VN30):** VHM (-1.61%), MBB (-1.66%), GVR (-1.82%), PLX (-1.95%), SSI (-3.00%)\n\n**Market Breadth (VN30 — 30 mã):** 🟢 Tăng: **4** | 🔴 Giảm: **23** | ➖ Đứng: **3**\nTỷ lệ A/D: **0.17** — Bên bán chiếm ưu thế\n\n**Độ rộng thị trường VN30 (từ price board):**\n| Chỉ số | Giá trị |\n|---|---|\n| Mã tăng giá (> 0%) | **4 / 30** = 13.3% |\n| Mã giảm giá (< 0%) | **23 / 30** = 76.7% |\n| Mã đứng giá | **3 / 30** |\n| Tỷ lệ Advance/Decline | **0.17** |\n| % mã trên trung điểm 52 tuần (proxy MA200) | **0.0%** |\n\n**Nhóm ngành thu hút dòng tiền:** Bán lẻ - Tiêu dùng (+1.54%)\n**Nhóm ngành bị rút dòng tiền:** Ngân hàng (-0.51%), Bảo hiểm (-0.83%), Bất động sản (-0.86%), Vận tải - Logistics (-0.91%), Công nghệ - Viễn thông (-1.47%), Điện - Nước - Khí (-1.48%), Thép - Xây dựng (-1.58%), Cao su - Gỗ (-1.82%), Dầu khí (-1.95%), Chứng khoán (-3.00%)\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "scenario_markdown": null,
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **CMF** | `0.0291` | Trung tính |\n| **VWAP** | `1973.15` | Giá < VWAP → Áp lực bán chiếm ưu thế |\n| **OBV** | `12,881,279,573` | Tích lũy — dòng tiền ròng vào |\n| **KL Hiện tại** | `200,834,292 CP` | thấp hơn 29.55% so với TB 20 phiên |\n\n### 2. Nhận định Dòng tiền chung\n\n🟢 **Dòng tiền ĐANG VÀO** — CMF = `0.0291` cho thấy áp lực mua đang chiếm ưu thế.\n\nGiá dưới VWAP (1973.15), bên bán đang kiểm soát phiên giao dịch.\n\nKhối lượng thấp hơn 29.55% cho thấy sự tham gia mạnh, có thể từ tổ chức.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Biến động\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **ADX** | `27.74` | Xu hướng MẠNH |\n| **ATR** | `25.55` | Biến động trung bình 25.55 điểm/phiên |\n| **Keltner Upper** | `2005.07` | Kháng cự trên |\n| **Keltner Lower** | `1958.05` | ⚠️ Giá đang thủng dưới |\n\n### 2. Nhận định Rủi ro & Hành động\n\n**Xu hướng hiện tại:** 🔴 Giảm — ADX = `27.74` (Xu hướng MẠNH).\n\n**Vị trí giá so với Keltner:** Giá < Keltner Lower → QUÁ BÁN\n\n**Mức biến động:** ATR = `25.55` điểm — Biến động bình thường, rủi ro được kiểm soát.\n\n**Khuyến nghị:** 🔴 Thận trọng, chờ tín hiệu xác nhận đảo chiều trước khi hành động.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "tas": {
+      "score": -78,
+      "label": "STRONG BEARISH",
+      "total_raw": -7,
+      "max_raw": 9,
+      "indicators": [
+        {
+          "group": "Cấu trúc (MA)",
+          "name": "Giá vs MA20 (1982)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Cấu trúc (MA)",
+          "name": "Giá vs MA50 (1991)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Cấu trúc (MA)",
+          "name": "Giá vs MA200 (1959)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Động lượng",
+          "name": "ROC10 (-3.5%)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Động lượng",
+          "name": "ROC20 (-1.6%)",
+          "status": "Neutral",
+          "score": 0
+        },
+        {
+          "group": "Động lượng",
+          "name": "Keltner (1958–2005)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "CMF (+0.029)",
+          "status": "Neutral",
+          "score": 0
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "Giá vs VWAP (1973)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "Vol vs MA20 (-30%)",
+          "status": "Bearish",
+          "score": -1
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-06-22",
+          "score": 11,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-23",
+          "score": 44,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-06-24",
+          "score": 56,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-06-25",
+          "score": 44,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-06-26",
+          "score": 56,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-06-29",
+          "score": 33,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-30",
+          "score": 44,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-07-01",
+          "score": 78,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-07-02",
+          "score": 56,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-07-03",
+          "score": 22,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-07-06",
+          "score": 33,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-07-07",
+          "score": 33,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-07-08",
+          "score": 33,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-07-09",
+          "score": -33,
+          "label": "WEAK BEARISH"
+        },
+        {
+          "date": "2026-07-10",
+          "score": -56,
+          "label": "BEARISH"
+        },
+        {
+          "date": "2026-07-13",
+          "score": -67,
+          "label": "STRONG BEARISH"
+        },
+        {
+          "date": "2026-07-14",
+          "score": -67,
+          "label": "STRONG BEARISH"
+        },
+        {
+          "date": "2026-07-15",
+          "score": -89,
+          "label": "STRONG BEARISH"
+        },
+        {
+          "date": "2026-07-16",
+          "score": -44,
+          "label": "BEARISH"
+        },
+        {
+          "date": "2026-07-17",
+          "score": -78,
+          "label": "STRONG BEARISH"
+        }
+      ]
+    },
+    "candle_patterns": [],
+    "sr_zones": [
+      {
+        "level": 1934.64,
+        "type": "resistance",
+        "strength": 2,
+        "dist_pct": 0.15,
+        "near": true
+      },
+      {
+        "level": 1971.22,
+        "type": "resistance",
+        "strength": 2,
+        "dist_pct": 2.05,
+        "near": false
+      },
+      {
+        "level": 1887.63,
+        "type": "support",
+        "strength": 5,
+        "dist_pct": -2.28,
+        "near": false
+      },
+      {
+        "level": 1856.51,
+        "type": "support",
+        "strength": 2,
+        "dist_pct": -3.89,
+        "near": false
+      },
+      {
+        "level": 2016.5,
+        "type": "resistance",
+        "strength": 4,
+        "dist_pct": 4.39,
+        "near": false
+      },
+      {
+        "level": 2044.24,
+        "type": "resistance",
+        "strength": 4,
+        "dist_pct": 5.83,
+        "near": false
+      }
+    ],
+    "sector_heatmap": [
+      {
+        "sector": "Công nghệ",
+        "avg_change": 0.67,
+        "count": 8,
+        "tickers": [
+          "MSR",
+          "FOX",
+          "VGI",
+          "CMG",
+          "ELC",
+          "TTN",
+          "CTR",
+          "FPT"
+        ],
+        "total_val": 326.05,
+        "cap_up": 346174.51,
+        "cap_down": 122084.8,
+        "cap_ref": 473.78
+      },
+      {
+        "sector": "Bán lẻ - Tiêu dùng",
+        "avg_change": 0.51,
+        "count": 13,
+        "tickers": [
+          "PNJ",
+          "VNM",
+          "SAB",
+          "MCH",
+          "FRT",
+          "MWG",
+          "LTG",
+          "MSN",
+          "PAN",
+          "PET",
+          "DGW",
+          "DBC",
+          "VRE"
+        ],
+        "total_val": 1620.73,
+        "cap_up": 404315.77,
+        "cap_down": 82457.1,
+        "cap_ref": 211581.65
+      },
+      {
+        "sector": "Thủy sản",
+        "avg_change": 0.51,
+        "count": 7,
+        "tickers": [
+          "MPC",
+          "CMX",
+          "VHC",
+          "ASM",
+          "FMC",
+          "IDI",
+          "ANV"
+        ],
+        "total_val": 22.05,
+        "cap_up": 21326.26,
+        "cap_down": 6238.98,
+        "cap_ref": 2213.41
+      },
+      {
+        "sector": "Bảo hiểm",
+        "avg_change": 0.04,
+        "count": 4,
+        "tickers": [
+          "BMI",
+          "PVI",
+          "MIG",
+          "BVH"
+        ],
+        "total_val": 24.45,
+        "cap_up": 19536.95,
+        "cap_down": 44539.37,
+        "cap_ref": 3701.31
+      },
+      {
+        "sector": "Khác",
+        "avg_change": -0.04,
+        "count": 11,
+        "tickers": [
+          "NTP",
+          "PTB",
+          "APH",
+          "AAA",
+          "BMP",
+          "QNS",
+          "HUT",
+          "DHC",
+          "SBT",
+          "LSS",
+          "S99"
+        ],
+        "total_val": 64.28,
+        "cap_up": 30181.21,
+        "cap_down": 23611.77,
+        "cap_ref": 34068.88
+      },
+      {
+        "sector": "Ngân hàng",
+        "avg_change": -0.07,
+        "count": 18,
+        "tickers": [
+          "KLB",
+          "STB",
+          "LPB",
+          "HDB",
+          "ABB",
+          "BVB",
+          "MSB",
+          "BID",
+          "EIB",
+          "VIB",
+          "SHB",
+          "VPB",
+          "ACB",
+          "CTG",
+          "TPB",
+          "TCB",
+          "VCB",
+          "MBB"
+        ],
+        "total_val": 3128.97,
+        "cap_up": 440465.25,
+        "cap_down": 1963981.55,
+        "cap_ref": 83986.06
+      },
+      {
+        "sector": "Dược phẩm",
+        "avg_change": -0.25,
+        "count": 6,
+        "tickers": [
+          "JVC",
+          "DBD",
+          "DHT",
+          "DHG",
+          "DCL",
+          "IMP"
+        ],
+        "total_val": 37.39,
+        "cap_up": 10717.62,
+        "cap_down": 20849.18,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Vật liệu xây dựng",
+        "avg_change": -0.36,
+        "count": 9,
+        "tickers": [
+          "DHA",
+          "VCS",
+          "BCC",
+          "HOM",
+          "CTI",
+          "KSB",
+          "GDT",
+          "HT1",
+          "PLC"
+        ],
+        "total_val": 11.65,
+        "cap_up": 6234.29,
+        "cap_down": 6728.18,
+        "cap_ref": 3905.48
+      },
+      {
+        "sector": "Hàng không",
+        "avg_change": -0.42,
+        "count": 6,
+        "tickers": [
+          "NCT",
+          "SCS",
+          "AST",
+          "ACV",
+          "VJC",
+          "HVN"
+        ],
+        "total_val": 152.37,
+        "cap_up": 7111.23,
+        "cap_down": 175035.56,
+        "cap_ref": 151523.17
+      },
+      {
+        "sector": "BĐS Khu công nghiệp",
+        "avg_change": -0.47,
+        "count": 11,
+        "tickers": [
+          "NTC",
+          "SIP",
+          "SZC",
+          "LHG",
+          "BCM",
+          "TIP",
+          "D2D",
+          "VGC",
+          "KBC",
+          "LDG",
+          "IDC"
+        ],
+        "total_val": 76.91,
+        "cap_up": 18510.08,
+        "cap_down": 108858.15,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Điện - Nước",
+        "avg_change": -0.57,
+        "count": 11,
+        "tickers": [
+          "NT2",
+          "HND",
+          "REE",
+          "SJD",
+          "VSH",
+          "GEG",
+          "TV2",
+          "GEX",
+          "POW",
+          "PC1",
+          "TV1"
+        ],
+        "total_val": 258.02,
+        "cap_up": 39812.81,
+        "cap_down": 91453.55,
+        "cap_ref": 10994.42
+      },
+      {
+        "sector": "Dầu khí",
+        "avg_change": -0.9,
+        "count": 10,
+        "tickers": [
+          "CNG",
+          "PXL",
+          "OIL",
+          "PVS",
+          "GAS",
+          "PVB",
+          "PVD",
+          "PLX",
+          "PVC",
+          "BSR"
+        ],
+        "total_val": 393.92,
+        "cap_up": 5636.35,
+        "cap_down": 386098.07,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Hóa chất - Phân bón",
+        "avg_change": -0.92,
+        "count": 8,
+        "tickers": [
+          "HCD",
+          "DDV",
+          "DGC",
+          "BFC",
+          "LAS",
+          "DPM",
+          "DCM",
+          "CSV"
+        ],
+        "total_val": 101.73,
+        "cap_up": 309.06,
+        "cap_down": 40053.89,
+        "cap_ref": 20126.25
+      },
+      {
+        "sector": "Thép",
+        "avg_change": -1.14,
+        "count": 7,
+        "tickers": [
+          "TVN",
+          "SMC",
+          "VGS",
+          "TLH",
+          "HPG",
+          "HSG",
+          "NKG"
+        ],
+        "total_val": 420.71,
+        "cap_up": 6847.8,
+        "cap_down": 201492.8,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Bất động sản",
+        "avg_change": -1.24,
+        "count": 22,
+        "tickers": [
+          "TIG",
+          "EVG",
+          "HTN",
+          "NLG",
+          "DXG",
+          "NTL",
+          "NVL",
+          "AGG",
+          "DTD",
+          "ITC",
+          "NHA",
+          "PDR",
+          "IJC",
+          "SCR",
+          "DXS",
+          "TCH",
+          "HDG",
+          "KDH",
+          "DIG",
+          "HHS",
+          "HDC",
+          "CEO"
+        ],
+        "total_val": 605.15,
+        "cap_up": 14977.87,
+        "cap_down": 91254.32,
+        "cap_ref": 50464.31
+      },
+      {
+        "sector": "Chứng khoán",
+        "avg_change": -1.26,
+        "count": 20,
+        "tickers": [
+          "PSI",
+          "VPX",
+          "HCM",
+          "AAS",
+          "VND",
+          "BMS",
+          "BSI",
+          "TCX",
+          "ORS",
+          "AGR",
+          "MBS",
+          "VIX",
+          "VCK",
+          "VCI",
+          "SHS",
+          "SSI",
+          "FTS",
+          "CTS",
+          "VDS",
+          "BVS"
+        ],
+        "total_val": 1703.71,
+        "cap_up": 108551.47,
+        "cap_down": 391803.47,
+        "cap_ref": 2814.27
+      },
+      {
+        "sector": "Logistics",
+        "avg_change": -1.37,
+        "count": 9,
+        "tickers": [
+          "PHP",
+          "SGP",
+          "VIP",
+          "HAH",
+          "VOS",
+          "MVN",
+          "GMD",
+          "VTP",
+          "VSC"
+        ],
+        "total_val": 156.61,
+        "cap_up": 16683.48,
+        "cap_down": 58470.0,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Dệt may",
+        "avg_change": -1.46,
+        "count": 8,
+        "tickers": [
+          "VGG",
+          "MSH",
+          "HTG",
+          "VGT",
+          "STK",
+          "TNG",
+          "TCM",
+          "GIL"
+        ],
+        "total_val": 28.85,
+        "cap_up": 5246.67,
+        "cap_down": 6481.65,
+        "cap_ref": 6842.09
+      },
+      {
+        "sector": "VN30",
+        "avg_change": -1.46,
+        "count": 4,
+        "tickers": [
+          "SSB",
+          "VIC",
+          "VHM",
+          "VPL"
+        ],
+        "total_val": 1035.5,
+        "cap_up": 0.0,
+        "cap_down": 2470212.94,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Đầu tư - Xây dựng",
+        "avg_change": -1.54,
+        "count": 11,
+        "tickers": [
+          "HBC",
+          "G36",
+          "C4G",
+          "FCN",
+          "HHV",
+          "CSC",
+          "LCG",
+          "VCG",
+          "CII",
+          "CTD",
+          "DPG"
+        ],
+        "total_val": 196.16,
+        "cap_up": 1631.9,
+        "cap_down": 41529.16,
+        "cap_ref": 3226.2
+      },
+      {
+        "sector": "Cao su",
+        "avg_change": -1.62,
+        "count": 8,
+        "tickers": [
+          "DRI",
+          "TRC",
+          "DPR",
+          "DRC",
+          "PHR",
+          "GVR",
+          "CSM",
+          "VHG"
+        ],
+        "total_val": 60.49,
+        "cap_up": 0.0,
+        "cap_down": 133675.25,
+        "cap_ref": 3298.92
+      }
+    ]
+  },
+  "VN100": {
+    "symbol": "VN100",
+    "date": "2026-07-19 16:03 (ICT)",
+    "close": 1852.65,
+    "change": -11.659999999999854,
+    "change_pc": -0.6254324656307081,
+    "volume": 381422711.0,
+    "technical": {
+      "ma20": 1909.083,
+      "pivot": 1848.4866666666665,
+      "cmf": 0.012350201640110558,
+      "adx": 30.651698888211257
+    },
+    "general_markdown": "### 1. Diễn biến phiên giao dịch\n\n🔴 **VN100** đóng cửa tại **1852.65** điểm, **giảm 11.34 điểm (0.61%)** so với tham chiếu 1863.99.\n\nKhối lượng giao dịch: **381,422,711 CP** — thấp hơn 31.15% so với trung bình 20 phiên.\n\n**Vùng Hỗ trợ (từ gần đến xa):** không có\n**Vùng Kháng cự (từ gần đến xa):** MA200 (1870.94), MA100 (1880.58), MA10 (1884.92), MA20 (1909.08), MA50 (1918.51)\n\n### 2. Thống kê Cổ phiếu & Nhóm ngành\n\n**Top 5 tăng mạnh nhất (VN100):** TMP (+5.22%), PNJ (+5.13%), DQC (+5.05%), VNM (+4.98%), TDM (+4.63%)\n**Top 5 giảm mạnh nhất (VN100):** CSV (-4.03%), CII (-4.06%), CTD (-4.08%), OGC (-4.17%), HDC (-4.35%)\n\n**Market Breadth (VN100 — 110 mã):** 🟢 Tăng: **21** | 🔴 Giảm: **69** | ➖ Đứng: **20**\nTỷ lệ A/D: **0.3** — Bên bán chiếm ưu thế\n\n**Độ rộng thị trường VN30 (từ price board):**\n| Chỉ số | Giá trị |\n|---|---|\n| Mã tăng giá (> 0%) | **4 / 30** = 13.3% |\n| Mã giảm giá (< 0%) | **23 / 30** = 76.7% |\n| Mã đứng giá | **3 / 30** |\n| Tỷ lệ Advance/Decline | **0.17** |\n| % mã trên trung điểm 52 tuần (proxy MA200) | **0.0%** |\n\n**Nhóm ngành thu hút dòng tiền:** Bán lẻ - Tiêu dùng (+0.79%), Điện - Nước - Khí (+0.02%)\n**Nhóm ngành bị rút dòng tiền:** Ngân hàng (-0.26%), Công nghệ - Viễn thông (-0.35%), Bảo hiểm (-0.41%), Khác (-0.61%), Thép - Xây dựng (-0.99%), Bất động sản (-1.14%), Vận tải - Logistics (-1.18%), Chứng khoán (-1.25%), Thủy sản (-1.36%), Hóa chất - Phân bón (-1.57%), Cao su - Gỗ (-1.79%), Dầu khí (-2.04%)\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "scenario_markdown": null,
+    "volume_markdown": "### 1. Thống kê Chỉ báo Khối lượng\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **CMF** | `0.0124` | Trung tính |\n| **VWAP** | `1898.48` | Giá < VWAP → Áp lực bán chiếm ưu thế |\n| **OBV** | `43,185,984,098` | Tích lũy — dòng tiền ròng vào |\n| **KL Hiện tại** | `381,422,711 CP` | thấp hơn 31.15% so với TB 20 phiên |\n\n### 2. Nhận định Dòng tiền chung\n\n🟢 **Dòng tiền ĐANG VÀO** — CMF = `0.0124` cho thấy áp lực mua đang chiếm ưu thế.\n\nGiá dưới VWAP (1898.48), bên bán đang kiểm soát phiên giao dịch.\n\nKhối lượng thấp hơn 31.15% cho thấy sự tham gia mạnh, có thể từ tổ chức.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "trend_markdown": "### 1. Thống kê Xu hướng & Biến động\n\n| Chỉ báo | Giá trị | Nhận định |\n|---|---|---|\n| **ADX** | `30.65` | Xu hướng MẠNH |\n| **ATR** | `26.29` | Biến động trung bình 26.29 điểm/phiên |\n| **Keltner Upper** | `1932.55` | Kháng cự trên |\n| **Keltner Lower** | `1884.58` | ⚠️ Giá đang thủng dưới |\n\n### 2. Nhận định Rủi ro & Hành động\n\n**Xu hướng hiện tại:** 🔴 Giảm — ADX = `30.65` (Xu hướng MẠNH).\n\n**Vị trí giá so với Keltner:** Giá < Keltner Lower → QUÁ BÁN\n\n**Mức biến động:** ATR = `26.29` điểm — Biến động bình thường, rủi ro được kiểm soát.\n\n**Khuyến nghị:** 🔴 Thận trọng, chờ tín hiệu xác nhận đảo chiều trước khi hành động.\n\n---\n*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*",
+    "tas": {
+      "score": -89,
+      "label": "STRONG BEARISH",
+      "total_raw": -8,
+      "max_raw": 9,
+      "indicators": [
+        {
+          "group": "Cấu trúc (MA)",
+          "name": "Giá vs MA20 (1909)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Cấu trúc (MA)",
+          "name": "Giá vs MA50 (1919)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Cấu trúc (MA)",
+          "name": "Giá vs MA200 (1871)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Động lượng",
+          "name": "ROC10 (-4.1%)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Động lượng",
+          "name": "ROC20 (-2.2%)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Động lượng",
+          "name": "Keltner (1885–1933)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "CMF (+0.012)",
+          "status": "Neutral",
+          "score": 0
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "Giá vs VWAP (1898)",
+          "status": "Bearish",
+          "score": -1
+        },
+        {
+          "group": "Dòng tiền",
+          "name": "Vol vs MA20 (-31%)",
+          "status": "Bearish",
+          "score": -1
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-06-22",
+          "score": 33,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-06-23",
+          "score": 67,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-06-24",
+          "score": 56,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-06-25",
+          "score": 56,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-06-26",
+          "score": 56,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-06-29",
+          "score": 67,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-06-30",
+          "score": 78,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-07-01",
+          "score": 89,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-07-02",
+          "score": 67,
+          "label": "STRONG BULLISH"
+        },
+        {
+          "date": "2026-07-03",
+          "score": 44,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-07-06",
+          "score": 44,
+          "label": "BULLISH"
+        },
+        {
+          "date": "2026-07-07",
+          "score": 22,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-07-08",
+          "score": 33,
+          "label": "WEAK BULLISH"
+        },
+        {
+          "date": "2026-07-09",
+          "score": -44,
+          "label": "BEARISH"
+        },
+        {
+          "date": "2026-07-10",
+          "score": -44,
+          "label": "BEARISH"
+        },
+        {
+          "date": "2026-07-13",
+          "score": -56,
+          "label": "BEARISH"
+        },
+        {
+          "date": "2026-07-14",
+          "score": -78,
+          "label": "STRONG BEARISH"
+        },
+        {
+          "date": "2026-07-15",
+          "score": -78,
+          "label": "STRONG BEARISH"
+        },
+        {
+          "date": "2026-07-16",
+          "score": -56,
+          "label": "BEARISH"
+        },
+        {
+          "date": "2026-07-17",
+          "score": -89,
+          "label": "STRONG BEARISH"
+        }
+      ]
+    },
+    "candle_patterns": [],
+    "sr_zones": [
+      {
+        "level": 1861.14,
+        "type": "resistance",
+        "strength": 4,
+        "dist_pct": 0.46,
+        "near": true
+      },
+      {
+        "level": 1878.42,
+        "type": "resistance",
+        "strength": 4,
+        "dist_pct": 1.39,
+        "near": true
+      },
+      {
+        "level": 1807.96,
+        "type": "support",
+        "strength": 3,
+        "dist_pct": -2.41,
+        "near": false
+      },
+      {
+        "level": 1905.52,
+        "type": "resistance",
+        "strength": 3,
+        "dist_pct": 2.85,
+        "near": false
+      },
+      {
+        "level": 1779.13,
+        "type": "support",
+        "strength": 3,
+        "dist_pct": -3.97,
+        "near": false
+      },
+      {
+        "level": 1955.35,
+        "type": "resistance",
+        "strength": 5,
+        "dist_pct": 5.54,
+        "near": false
+      }
+    ],
+    "sector_heatmap": [
+      {
+        "sector": "Công nghệ",
+        "avg_change": 0.67,
+        "count": 8,
+        "tickers": [
+          "MSR",
+          "FOX",
+          "VGI",
+          "CMG",
+          "ELC",
+          "TTN",
+          "CTR",
+          "FPT"
+        ],
+        "total_val": 326.05,
+        "cap_up": 346174.51,
+        "cap_down": 122084.8,
+        "cap_ref": 473.78
+      },
+      {
+        "sector": "Bán lẻ - Tiêu dùng",
+        "avg_change": 0.51,
+        "count": 13,
+        "tickers": [
+          "PNJ",
+          "VNM",
+          "SAB",
+          "MCH",
+          "FRT",
+          "MWG",
+          "LTG",
+          "MSN",
+          "PAN",
+          "PET",
+          "DGW",
+          "DBC",
+          "VRE"
+        ],
+        "total_val": 1620.73,
+        "cap_up": 404315.77,
+        "cap_down": 82457.1,
+        "cap_ref": 211581.65
+      },
+      {
+        "sector": "Thủy sản",
+        "avg_change": 0.51,
+        "count": 7,
+        "tickers": [
+          "MPC",
+          "CMX",
+          "VHC",
+          "ASM",
+          "FMC",
+          "IDI",
+          "ANV"
+        ],
+        "total_val": 22.05,
+        "cap_up": 21326.26,
+        "cap_down": 6238.98,
+        "cap_ref": 2213.41
+      },
+      {
+        "sector": "Bảo hiểm",
+        "avg_change": 0.04,
+        "count": 4,
+        "tickers": [
+          "BMI",
+          "PVI",
+          "MIG",
+          "BVH"
+        ],
+        "total_val": 24.45,
+        "cap_up": 19536.95,
+        "cap_down": 44539.37,
+        "cap_ref": 3701.31
+      },
+      {
+        "sector": "Khác",
+        "avg_change": -0.04,
+        "count": 11,
+        "tickers": [
+          "NTP",
+          "PTB",
+          "APH",
+          "AAA",
+          "BMP",
+          "QNS",
+          "HUT",
+          "DHC",
+          "SBT",
+          "LSS",
+          "S99"
+        ],
+        "total_val": 64.28,
+        "cap_up": 30181.21,
+        "cap_down": 23611.77,
+        "cap_ref": 34068.88
+      },
+      {
+        "sector": "Ngân hàng",
+        "avg_change": -0.07,
+        "count": 18,
+        "tickers": [
+          "KLB",
+          "STB",
+          "LPB",
+          "HDB",
+          "ABB",
+          "BVB",
+          "MSB",
+          "BID",
+          "EIB",
+          "VIB",
+          "SHB",
+          "VPB",
+          "ACB",
+          "CTG",
+          "TPB",
+          "TCB",
+          "VCB",
+          "MBB"
+        ],
+        "total_val": 3128.97,
+        "cap_up": 440465.25,
+        "cap_down": 1963981.55,
+        "cap_ref": 83986.06
+      },
+      {
+        "sector": "Dược phẩm",
+        "avg_change": -0.25,
+        "count": 6,
+        "tickers": [
+          "JVC",
+          "DBD",
+          "DHT",
+          "DHG",
+          "DCL",
+          "IMP"
+        ],
+        "total_val": 37.39,
+        "cap_up": 10717.62,
+        "cap_down": 20849.18,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Vật liệu xây dựng",
+        "avg_change": -0.36,
+        "count": 9,
+        "tickers": [
+          "DHA",
+          "VCS",
+          "BCC",
+          "HOM",
+          "CTI",
+          "KSB",
+          "GDT",
+          "HT1",
+          "PLC"
+        ],
+        "total_val": 11.65,
+        "cap_up": 6234.29,
+        "cap_down": 6728.18,
+        "cap_ref": 3905.48
+      },
+      {
+        "sector": "Hàng không",
+        "avg_change": -0.42,
+        "count": 6,
+        "tickers": [
+          "NCT",
+          "SCS",
+          "AST",
+          "ACV",
+          "VJC",
+          "HVN"
+        ],
+        "total_val": 152.37,
+        "cap_up": 7111.23,
+        "cap_down": 175035.56,
+        "cap_ref": 151523.17
+      },
+      {
+        "sector": "BĐS Khu công nghiệp",
+        "avg_change": -0.47,
+        "count": 11,
+        "tickers": [
+          "NTC",
+          "SIP",
+          "SZC",
+          "LHG",
+          "BCM",
+          "TIP",
+          "D2D",
+          "VGC",
+          "KBC",
+          "LDG",
+          "IDC"
+        ],
+        "total_val": 76.91,
+        "cap_up": 18510.08,
+        "cap_down": 108858.15,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Điện - Nước",
+        "avg_change": -0.57,
+        "count": 11,
+        "tickers": [
+          "NT2",
+          "HND",
+          "REE",
+          "SJD",
+          "VSH",
+          "GEG",
+          "TV2",
+          "GEX",
+          "POW",
+          "PC1",
+          "TV1"
+        ],
+        "total_val": 258.02,
+        "cap_up": 39812.81,
+        "cap_down": 91453.55,
+        "cap_ref": 10994.42
+      },
+      {
+        "sector": "Dầu khí",
+        "avg_change": -0.9,
+        "count": 10,
+        "tickers": [
+          "CNG",
+          "PXL",
+          "OIL",
+          "PVS",
+          "GAS",
+          "PVB",
+          "PVD",
+          "PLX",
+          "PVC",
+          "BSR"
+        ],
+        "total_val": 393.92,
+        "cap_up": 5636.35,
+        "cap_down": 386098.07,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Hóa chất - Phân bón",
+        "avg_change": -0.92,
+        "count": 8,
+        "tickers": [
+          "HCD",
+          "DDV",
+          "DGC",
+          "BFC",
+          "LAS",
+          "DPM",
+          "DCM",
+          "CSV"
+        ],
+        "total_val": 101.73,
+        "cap_up": 309.06,
+        "cap_down": 40053.89,
+        "cap_ref": 20126.25
+      },
+      {
+        "sector": "Thép",
+        "avg_change": -1.14,
+        "count": 7,
+        "tickers": [
+          "TVN",
+          "SMC",
+          "VGS",
+          "TLH",
+          "HPG",
+          "HSG",
+          "NKG"
+        ],
+        "total_val": 420.71,
+        "cap_up": 6847.8,
+        "cap_down": 201492.8,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Bất động sản",
+        "avg_change": -1.24,
+        "count": 22,
+        "tickers": [
+          "TIG",
+          "EVG",
+          "HTN",
+          "NLG",
+          "DXG",
+          "NTL",
+          "NVL",
+          "AGG",
+          "DTD",
+          "ITC",
+          "NHA",
+          "PDR",
+          "IJC",
+          "SCR",
+          "DXS",
+          "TCH",
+          "HDG",
+          "KDH",
+          "DIG",
+          "HHS",
+          "HDC",
+          "CEO"
+        ],
+        "total_val": 605.15,
+        "cap_up": 14977.87,
+        "cap_down": 91254.32,
+        "cap_ref": 50464.31
+      },
+      {
+        "sector": "Chứng khoán",
+        "avg_change": -1.26,
+        "count": 20,
+        "tickers": [
+          "PSI",
+          "VPX",
+          "HCM",
+          "AAS",
+          "VND",
+          "BMS",
+          "BSI",
+          "TCX",
+          "ORS",
+          "AGR",
+          "MBS",
+          "VIX",
+          "VCK",
+          "VCI",
+          "SHS",
+          "SSI",
+          "FTS",
+          "CTS",
+          "VDS",
+          "BVS"
+        ],
+        "total_val": 1703.71,
+        "cap_up": 108551.47,
+        "cap_down": 391803.47,
+        "cap_ref": 2814.27
+      },
+      {
+        "sector": "Logistics",
+        "avg_change": -1.37,
+        "count": 9,
+        "tickers": [
+          "PHP",
+          "SGP",
+          "VIP",
+          "HAH",
+          "VOS",
+          "MVN",
+          "GMD",
+          "VTP",
+          "VSC"
+        ],
+        "total_val": 156.61,
+        "cap_up": 16683.48,
+        "cap_down": 58470.0,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Dệt may",
+        "avg_change": -1.46,
+        "count": 8,
+        "tickers": [
+          "VGG",
+          "MSH",
+          "HTG",
+          "VGT",
+          "STK",
+          "TNG",
+          "TCM",
+          "GIL"
+        ],
+        "total_val": 28.85,
+        "cap_up": 5246.67,
+        "cap_down": 6481.65,
+        "cap_ref": 6842.09
+      },
+      {
+        "sector": "VN30",
+        "avg_change": -1.46,
+        "count": 4,
+        "tickers": [
+          "SSB",
+          "VIC",
+          "VHM",
+          "VPL"
+        ],
+        "total_val": 1035.5,
+        "cap_up": 0.0,
+        "cap_down": 2470212.94,
+        "cap_ref": 0.0
+      },
+      {
+        "sector": "Đầu tư - Xây dựng",
+        "avg_change": -1.54,
+        "count": 11,
+        "tickers": [
+          "HBC",
+          "G36",
+          "C4G",
+          "FCN",
+          "HHV",
+          "CSC",
+          "LCG",
+          "VCG",
+          "CII",
+          "CTD",
+          "DPG"
+        ],
+        "total_val": 196.16,
+        "cap_up": 1631.9,
+        "cap_down": 41529.16,
+        "cap_ref": 3226.2
+      },
+      {
+        "sector": "Cao su",
+        "avg_change": -1.62,
+        "count": 8,
+        "tickers": [
+          "DRI",
+          "TRC",
+          "DPR",
+          "DRC",
+          "PHR",
+          "GVR",
+          "CSM",
+          "VHG"
+        ],
+        "total_val": 60.49,
+        "cap_up": 0.0,
+        "cap_down": 133675.25,
+        "cap_ref": 3298.92
+      }
+    ]
+  },
+  "__global__": {
+    "raw_stocks": {
+      "PSI": {
+        "change_pc": 6.481481481481481,
+        "match_price": 11500.0,
+        "listed_share": 59841300.0,
+        "accumulated_value": 18207.18,
+        "sector": "Chứng khoán"
+      },
+      "TMP": {
+        "change_pc": 5.216426193118757,
+        "match_price": 47400.0,
+        "listed_share": 70000000.0,
+        "accumulated_value": 69.98,
+        "sector": ""
+      },
+      "PNJ": {
+        "change_pc": 5.134474327628362,
+        "match_price": 43000.0,
+        "listed_share": 511891518.0,
+        "accumulated_value": 310169.275,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "DQC": {
+        "change_pc": 5.05050505050505,
+        "match_price": 10400.0,
+        "listed_share": 34359416.0,
+        "accumulated_value": 134.33,
+        "sector": ""
+      },
+      "VNM": {
+        "change_pc": 4.98220640569395,
+        "match_price": 59000.0,
+        "listed_share": 2089955445.0,
+        "accumulated_value": 756330.9,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "TDM": {
+        "change_pc": 4.631217838765009,
+        "match_price": 61000.0,
+        "listed_share": 111100000.0,
+        "accumulated_value": 2727.19,
+        "sector": ""
+      },
+      "CNG": {
+        "change_pc": 4.228855721393035,
+        "match_price": 20950.0,
+        "listed_share": 35099625.0,
+        "accumulated_value": 357.895,
+        "sector": "Dầu khí"
+      },
+      "KLB": {
+        "change_pc": 3.6290322580645165,
+        "match_price": 12850.0,
+        "listed_share": 582170526.0,
+        "accumulated_value": 9357.925,
+        "sector": "Ngân hàng"
+      },
+      "MPC": {
+        "change_pc": 3.289473684210526,
+        "match_price": 15700.0,
+        "listed_share": 401093000.0,
+        "accumulated_value": 234.82,
+        "sector": "Thủy sản"
+      },
+      "TIG": {
+        "change_pc": 3.278688524590164,
+        "match_price": 6300.0,
+        "listed_share": 193606205.0,
+        "accumulated_value": 8222.11,
+        "sector": "Bất động sản"
+      },
+      "MSR": {
+        "change_pc": 3.125,
+        "match_price": 36300.0,
+        "listed_share": 1099829520.0,
+        "accumulated_value": 31627.34,
+        "sector": "Công nghệ"
+      },
+      "TVN": {
+        "change_pc": 3.061224489795918,
+        "match_price": 10100.0,
+        "listed_share": 678000000.0,
+        "accumulated_value": 2599.18,
+        "sector": "Thép"
+      },
+      "VPX": {
+        "change_pc": 2.6217228464419478,
+        "match_price": 27400.0,
+        "listed_share": 1875000000.0,
+        "accumulated_value": 30708.745,
+        "sector": "Chứng khoán"
+      },
+      "STB": {
+        "change_pc": 2.3676880222841223,
+        "match_price": 73500.0,
+        "listed_share": 1885215716.0,
+        "accumulated_value": 522134.46,
+        "sector": "Ngân hàng"
+      },
+      "HBC": {
+        "change_pc": 2.1739130434782608,
+        "match_price": 4700.0,
+        "listed_share": 347213270.0,
+        "accumulated_value": 3208.59,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "FOX": {
+        "change_pc": 2.12443095599393,
+        "match_price": 67300.0,
+        "listed_share": 738763463.0,
+        "accumulated_value": 1133.28,
+        "sector": "Công nghệ"
+      },
+      "HCM": {
+        "change_pc": 2.0080321285140563,
+        "match_price": 25400.0,
+        "listed_share": 1080797089.0,
+        "accumulated_value": 221076.16,
+        "sector": "Chứng khoán"
+      },
+      "DHA": {
+        "change_pc": 2.0063357972544877,
+        "match_price": 48300.0,
+        "listed_share": 15119946.0,
+        "accumulated_value": 452.55,
+        "sector": "Vật liệu xây dựng"
+      },
+      "NTP": {
+        "change_pc": 1.8672199170124482,
+        "match_price": 49100.0,
+        "listed_share": 205245204.0,
+        "accumulated_value": 1198.47,
+        "sector": "Khác"
+      },
+      "LPB": {
+        "change_pc": 1.7307692307692308,
+        "match_price": 52900.0,
+        "listed_share": 2987282100.0,
+        "accumulated_value": 420653.15,
+        "sector": "Ngân hàng"
+      },
+      "JVC": {
+        "change_pc": 1.5974440894568689,
+        "match_price": 3180.0,
+        "listed_share": 112500171.0,
+        "accumulated_value": 386.448,
+        "sector": "Dược phẩm"
+      },
+      "VGG": {
+        "change_pc": 1.5789473684210527,
+        "match_price": 38600.0,
+        "listed_share": 44100000.0,
+        "accumulated_value": 3.86,
+        "sector": "Dệt may"
+      },
+      "NTC": {
+        "change_pc": 1.550387596899225,
+        "match_price": 131000.0,
+        "listed_share": 23999980.0,
+        "accumulated_value": 877.48,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "OCB": {
+        "change_pc": 1.3888888888888888,
+        "match_price": 10950.0,
+        "listed_share": 2663052284.0,
+        "accumulated_value": 31334.2,
+        "sector": ""
+      },
+      "HCD": {
+        "change_pc": 1.3636363636363635,
+        "match_price": 6690.0,
+        "listed_share": 46197821.0,
+        "accumulated_value": 109.967,
+        "sector": "Hóa chất - Phân bón"
+      },
+      "AAS": {
+        "change_pc": 1.25,
+        "match_price": 8100.0,
+        "listed_share": 229999521.0,
+        "accumulated_value": 5519.79,
+        "sector": "Chứng khoán"
+      },
+      "SAB": {
+        "change_pc": 1.186623516720604,
+        "match_price": 46900.0,
+        "listed_share": 1282562372.0,
+        "accumulated_value": 15895.315,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "VCS": {
+        "change_pc": 1.1764705882352942,
+        "match_price": 34400.0,
+        "listed_share": 160000000.0,
+        "accumulated_value": 320.27,
+        "sector": "Vật liệu xây dựng"
+      },
+      "NT2": {
+        "change_pc": 1.1737089201877933,
+        "match_price": 21550.0,
+        "listed_share": 287876029.0,
+        "accumulated_value": 13839.75,
+        "sector": "Điện - Nước"
+      },
+      "VND": {
+        "change_pc": 1.13314447592068,
+        "match_price": 17850.0,
+        "listed_share": 1522299908.0,
+        "accumulated_value": 193669.86,
+        "sector": "Chứng khoán"
+      },
+      "HND": {
+        "change_pc": 1.0526315789473684,
+        "match_price": 9600.0,
+        "listed_share": 500000000.0,
+        "accumulated_value": 227.88,
+        "sector": "Điện - Nước"
+      },
+      "CMX": {
+        "change_pc": 0.9523809523809524,
+        "match_price": 5300.0,
+        "listed_share": 101898990.0,
+        "accumulated_value": 87.177,
+        "sector": "Thủy sản"
+      },
+      "VHC": {
+        "change_pc": 0.8818342151675485,
+        "match_price": 57200.0,
+        "listed_share": 209453159.0,
+        "accumulated_value": 10349.21,
+        "sector": "Thủy sản"
+      },
+      "REE": {
+        "change_pc": 0.8724100327153763,
+        "match_price": 46250.0,
+        "listed_share": 622899036.0,
+        "accumulated_value": 22175.195,
+        "sector": "Điện - Nước"
+      },
+      "VGI": {
+        "change_pc": 0.8641975308641975,
+        "match_price": 81700.0,
+        "listed_share": 3043811200.0,
+        "accumulated_value": 12217.44,
+        "sector": "Công nghệ"
+      },
+      "PXL": {
+        "change_pc": 0.8620689655172413,
+        "match_price": 11700.0,
+        "listed_share": 176145500.0,
+        "accumulated_value": 28.19,
+        "sector": "Dầu khí"
+      },
+      "SIP": {
+        "change_pc": 0.8324661810613945,
+        "match_price": 48450.0,
+        "listed_share": 242112943.0,
+        "accumulated_value": 1881.32,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "MCH": {
+        "change_pc": 0.7982583454281567,
+        "match_price": 138900.0,
+        "listed_share": 1294493545.0,
+        "accumulated_value": 42874.4,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "CMG": {
+        "change_pc": 0.7722007722007722,
+        "match_price": 26100.0,
+        "listed_share": 232954608.0,
+        "accumulated_value": 1950.105,
+        "sector": "Công nghệ"
+      },
+      "BMI": {
+        "change_pc": 0.7352941176470588,
+        "match_price": 13700.0,
+        "listed_share": 150547626.0,
+        "accumulated_value": 573.055,
+        "sector": "Bảo hiểm"
+      },
+      "OIL": {
+        "change_pc": 0.7142857142857143,
+        "match_price": 14100.0,
+        "listed_share": 201425936.0,
+        "accumulated_value": 8360.44,
+        "sector": "Dầu khí"
+      },
+      "ELC": {
+        "change_pc": 0.625,
+        "match_price": 16100.0,
+        "listed_share": 110088903.0,
+        "accumulated_value": 1640.735,
+        "sector": "Công nghệ"
+      },
+      "PHP": {
+        "change_pc": 0.5405405405405406,
+        "match_price": 37200.0,
+        "listed_share": 326960000.0,
+        "accumulated_value": 628.63,
+        "sector": "Logistics"
+      },
+      "SGP": {
+        "change_pc": 0.4807692307692308,
+        "match_price": 20900.0,
+        "listed_share": 216294961.0,
+        "accumulated_value": 175.02,
+        "sector": "Logistics"
+      },
+      "PTB": {
+        "change_pc": 0.430416068866571,
+        "match_price": 35000.0,
+        "listed_share": 100407074.0,
+        "accumulated_value": 1475.65,
+        "sector": "Khác"
+      },
+      "EVG": {
+        "change_pc": 0.4,
+        "match_price": 5020.0,
+        "listed_share": 215249836.0,
+        "accumulated_value": 2437.587,
+        "sector": "Bất động sản"
+      },
+      "HDB": {
+        "change_pc": 0.3683241252302026,
+        "match_price": 27250.0,
+        "listed_share": 5005276323.0,
+        "accumulated_value": 267720.9,
+        "sector": "Ngân hàng"
+      },
+      "APH": {
+        "change_pc": 0.3663003663003663,
+        "match_price": 5480.0,
+        "listed_share": 243884268.0,
+        "accumulated_value": 538.479,
+        "sector": "Khác"
+      },
+      "FRT": {
+        "change_pc": 0.3590664272890485,
+        "match_price": 111800.0,
+        "listed_share": 170301785.0,
+        "accumulated_value": 24658.68,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "BAF": {
+        "change_pc": 0.33726812816188867,
+        "match_price": 29750.0,
+        "listed_share": 364824906.0,
+        "accumulated_value": 19078.085,
+        "sector": ""
+      },
+      "MSH": {
+        "change_pc": 0.3184713375796179,
+        "match_price": 31500.0,
+        "listed_share": 112521020.0,
+        "accumulated_value": 1072.61,
+        "sector": "Dệt may"
+      },
+      "HTN": {
+        "change_pc": 0.2869440459110474,
+        "match_price": 6990.0,
+        "listed_share": 89116411.0,
+        "accumulated_value": 344.438,
+        "sector": "Bất động sản"
+      },
+      "AAA": {
+        "change_pc": 0.2777777777777778,
+        "match_price": 7220.0,
+        "listed_share": 393742730.0,
+        "accumulated_value": 3747.73,
+        "sector": "Khác"
+      },
+      "KOS": {
+        "change_pc": 0.2762430939226519,
+        "match_price": 36300.0,
+        "listed_share": 216481335.0,
+        "accumulated_value": 10393.95,
+        "sector": ""
+      },
+      "PVI": {
+        "change_pc": 0.2688172043010753,
+        "match_price": 74600.0,
+        "listed_share": 234241867.0,
+        "accumulated_value": 432.99,
+        "sector": "Bảo hiểm"
+      },
+      "SZC": {
+        "change_pc": 0.24813895781637718,
+        "match_price": 20200.0,
+        "listed_share": 179985863.0,
+        "accumulated_value": 3427.71,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "NCT": {
+        "change_pc": 0.21074815595363539,
+        "match_price": 95100.0,
+        "listed_share": 26166940.0,
+        "accumulated_value": 2174.66,
+        "sector": "Hàng không"
+      },
+      "SCS": {
+        "change_pc": 0.2079002079002079,
+        "match_price": 48200.0,
+        "listed_share": 95907682.0,
+        "accumulated_value": 4367.51,
+        "sector": "Hàng không"
+      },
+      "NLG": {
+        "change_pc": 0.20161290322580644,
+        "match_price": 24850.0,
+        "listed_share": 485097383.0,
+        "accumulated_value": 34410.19,
+        "sector": "Bất động sản"
+      },
+      "DBD": {
+        "change_pc": 0.2008032128514056,
+        "match_price": 49900.0,
+        "listed_share": 94529347.0,
+        "accumulated_value": 164.835,
+        "sector": "Dược phẩm"
+      },
+      "ASM": {
+        "change_pc": 0.16260162601626016,
+        "match_price": 6160.0,
+        "listed_share": 407194183.0,
+        "accumulated_value": 2673.085,
+        "sector": "Thủy sản"
+      },
+      "DHT": {
+        "change_pc": 0.1607717041800643,
+        "match_price": 62300.0,
+        "listed_share": 90575551.0,
+        "accumulated_value": 948.54,
+        "sector": "Dược phẩm"
+      },
+      "BMP": {
+        "change_pc": 0.13210039630118892,
+        "match_price": 151600.0,
+        "listed_share": 81860938.0,
+        "accumulated_value": 13375.28,
+        "sector": "Khác"
+      },
+      "BCG": {
+        "change_pc": 0.0,
+        "match_price": 2530.0,
+        "listed_share": 880210644.0,
+        "accumulated_value": 0.0,
+        "sector": ""
+      },
+      "SJD": {
+        "change_pc": 0.0,
+        "match_price": 14000.0,
+        "listed_share": 68998620.0,
+        "accumulated_value": 406.665,
+        "sector": "Điện - Nước"
+      },
+      "DXG": {
+        "change_pc": 0.0,
+        "match_price": 12200.0,
+        "listed_share": 1269852451.0,
+        "accumulated_value": 70683.24,
+        "sector": "Bất động sản"
+      },
+      "ABB": {
+        "change_pc": 0.0,
+        "match_price": 17500.0,
+        "listed_share": 1397208685.0,
+        "accumulated_value": 18996.88,
+        "sector": "Ngân hàng"
+      },
+      "MWG": {
+        "change_pc": 0.0,
+        "match_price": 76700.0,
+        "listed_share": 1469693177.0,
+        "accumulated_value": 139253.32,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "EVF": {
+        "change_pc": 0.0,
+        "match_price": 12650.0,
+        "listed_share": 760565802.0,
+        "accumulated_value": 11633.03,
+        "sector": ""
+      },
+      "BVB": {
+        "change_pc": 0.0,
+        "match_price": 13300.0,
+        "listed_share": 640820000.0,
+        "accumulated_value": 0.0,
+        "sector": "Ngân hàng"
+      },
+      "NTL": {
+        "change_pc": 0.0,
+        "match_price": 14850.0,
+        "listed_share": 121979900.0,
+        "accumulated_value": 1639.975,
+        "sector": "Bất động sản"
+      },
+      "BCC": {
+        "change_pc": 0.0,
+        "match_price": 6700.0,
+        "listed_share": 123209812.0,
+        "accumulated_value": 9.38,
+        "sector": "Vật liệu xây dựng"
+      },
+      "MIG": {
+        "change_pc": 0.0,
+        "match_price": 17500.0,
+        "listed_share": 211503463.0,
+        "accumulated_value": 4558.35,
+        "sector": "Bảo hiểm"
+      },
+      "QNS": {
+        "change_pc": 0.0,
+        "match_price": 48500.0,
+        "listed_share": 367648153.0,
+        "accumulated_value": 1280.76,
+        "sector": "Khác"
+      },
+      "MSB": {
+        "change_pc": 0.0,
+        "match_price": 16350.0,
+        "listed_share": 3120000000.0,
+        "accumulated_value": 91709.925,
+        "sector": "Ngân hàng"
+      },
+      "NVL": {
+        "change_pc": 0.0,
+        "match_price": 12650.0,
+        "listed_share": 2402067972.0,
+        "accumulated_value": 125302.75,
+        "sector": "Bất động sản"
+      },
+      "TTN": {
+        "change_pc": 0.0,
+        "match_price": 12900.0,
+        "listed_share": 36727500.0,
+        "accumulated_value": 30.94,
+        "sector": "Công nghệ"
+      },
+      "DDV": {
+        "change_pc": 0.0,
+        "match_price": 21300.0,
+        "listed_share": 146109900.0,
+        "accumulated_value": 2392.04,
+        "sector": "Hóa chất - Phân bón"
+      },
+      "NAV": {
+        "change_pc": 0.0,
+        "match_price": 15000.0,
+        "listed_share": 8000000.0,
+        "accumulated_value": 0.0,
+        "sector": ""
+      },
+      "HTG": {
+        "change_pc": 0.0,
+        "match_price": 34500.0,
+        "listed_share": 36002708.0,
+        "accumulated_value": 340.81,
+        "sector": "Dệt may"
+      },
+      "nan": {
+        "change_pc": 0.0,
+        "match_price": 0.0,
+        "listed_share": 0.0,
+        "accumulated_value": 0.0,
+        "sector": ""
+      },
+      "LTG": {
+        "change_pc": 0.0,
+        "match_price": 5300.0,
+        "listed_share": 100741465.0,
+        "accumulated_value": 0.0,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "TDH": {
+        "change_pc": 0.0,
+        "match_price": 3410.0,
+        "listed_share": 112652767.0,
+        "accumulated_value": 67.373,
+        "sector": ""
+      },
+      "HUT": {
+        "change_pc": 0.0,
+        "match_price": 15200.0,
+        "listed_share": 1068285581.0,
+        "accumulated_value": 25918.46,
+        "sector": "Khác"
+      },
+      "HOM": {
+        "change_pc": 0.0,
+        "match_price": 3900.0,
+        "listed_share": 74769131.0,
+        "accumulated_value": 6.93,
+        "sector": "Vật liệu xây dựng"
+      },
+      "VGT": {
+        "change_pc": 0.0,
+        "match_price": 11200.0,
+        "listed_share": 500000000.0,
+        "accumulated_value": 1032.82,
+        "sector": "Dệt may"
+      },
+      "IPA": {
+        "change_pc": 0.0,
+        "match_price": 15300.0,
+        "listed_share": 213835775.0,
+        "accumulated_value": 846.7,
+        "sector": ""
+      },
+      "G36": {
+        "change_pc": 0.0,
+        "match_price": 9400.0,
+        "listed_share": 103745067.0,
+        "accumulated_value": 82.92,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "AST": {
+        "change_pc": 0.0,
+        "match_price": 63000.0,
+        "listed_share": 45000000.0,
+        "accumulated_value": 165.16,
+        "sector": "Hàng không"
+      },
+      "C4G": {
+        "change_pc": 0.0,
+        "match_price": 6300.0,
+        "listed_share": 357300754.0,
+        "accumulated_value": 705.09,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "DGC": {
+        "change_pc": 0.0,
+        "match_price": 44800.0,
+        "listed_share": 379779286.0,
+        "accumulated_value": 7720.325,
+        "sector": "Hóa chất - Phân bón"
+      },
+      "VSH": {
+        "change_pc": 0.0,
+        "match_price": 42450.0,
+        "listed_share": 236241246.0,
+        "accumulated_value": 152.22,
+        "sector": "Điện - Nước"
+      },
+      "ACV": {
+        "change_pc": 0.0,
+        "match_price": 41500.0,
+        "listed_share": 3582847523.0,
+        "accumulated_value": 7328.59,
+        "sector": "Hàng không"
+      },
+      "BMS": {
+        "change_pc": 0.0,
+        "match_price": 13800.0,
+        "listed_share": 203932652.0,
+        "accumulated_value": 1853.78,
+        "sector": "Chứng khoán"
+      },
+      "AGG": {
+        "change_pc": 0.0,
+        "match_price": 11450.0,
+        "listed_share": 162528081.0,
+        "accumulated_value": 1009.62,
+        "sector": "Bất động sản"
+      },
+      "FMC": {
+        "change_pc": 0.0,
+        "match_price": 33850.0,
+        "listed_share": 65388889.0,
+        "accumulated_value": 775.15,
+        "sector": "Thủy sản"
+      },
+      "CTI": {
+        "change_pc": 0.0,
+        "match_price": 19300.0,
+        "listed_share": 62999997.0,
+        "accumulated_value": 1672.025,
+        "sector": "Vật liệu xây dựng"
+      },
+      "CAV": {
+        "change_pc": 0.0,
+        "match_price": 69300.0,
+        "listed_share": 57600000.0,
+        "accumulated_value": 0.0,
+        "sector": ""
+      },
+      "DRI": {
+        "change_pc": 0.0,
+        "match_price": 13100.0,
+        "listed_share": 73200000.0,
+        "accumulated_value": 973.02,
+        "sector": "Cao su"
+      },
+      "TRC": {
+        "change_pc": 0.0,
+        "match_price": 78000.0,
+        "listed_share": 30000000.0,
+        "accumulated_value": 11738.98,
+        "sector": "Cao su"
+      },
+      "PSH": {
+        "change_pc": 0.0,
+        "match_price": 1700.0,
+        "listed_share": 126196780.0,
+        "accumulated_value": 0.0,
+        "sector": ""
+      },
+      "KSB": {
+        "change_pc": 0.0,
+        "match_price": 13700.0,
+        "listed_share": 114779103.0,
+        "accumulated_value": 4151.515,
+        "sector": "Vật liệu xây dựng"
+      },
+      "MSN": {
+        "change_pc": 0.0,
+        "match_price": 68000.0,
+        "listed_share": 1445915457.0,
+        "accumulated_value": 186643.06,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "DTD": {
+        "change_pc": 0.0,
+        "match_price": 13700.0,
+        "listed_share": 66686055.0,
+        "accumulated_value": 1221.06,
+        "sector": "Bất động sản"
+      },
+      "BID": {
+        "change_pc": -0.1287001287001287,
+        "match_price": 38800.0,
+        "listed_share": 7280065210.0,
+        "accumulated_value": 74330.755,
+        "sector": "Ngân hàng"
+      },
+      "DPR": {
+        "change_pc": -0.13227513227513227,
+        "match_price": 37750.0,
+        "listed_share": 86885932.0,
+        "accumulated_value": 3497.8,
+        "sector": "Cao su"
+      },
+      "LHG": {
+        "change_pc": -0.1773049645390071,
+        "match_price": 28150.0,
+        "listed_share": 50012010.0,
+        "accumulated_value": 1435.85,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "KDC": {
+        "change_pc": -0.2012072434607646,
+        "match_price": 49600.0,
+        "listed_share": 289806316.0,
+        "accumulated_value": 14821.43,
+        "sector": ""
+      },
+      "DHG": {
+        "change_pc": -0.21691973969631237,
+        "match_price": 92000.0,
+        "listed_share": 130746071.0,
+        "accumulated_value": 258.32,
+        "sector": "Dược phẩm"
+      },
+      "BCM": {
+        "change_pc": -0.22675736961451248,
+        "match_price": 44000.0,
+        "listed_share": 1035000000.0,
+        "accumulated_value": 11050.11,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "PAN": {
+        "change_pc": -0.2352941176470588,
+        "match_price": 21200.0,
+        "listed_share": 258072996.0,
+        "accumulated_value": 2914.58,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "DCL": {
+        "change_pc": -0.26041666666666663,
+        "match_price": 38300.0,
+        "listed_share": 73041030.0,
+        "accumulated_value": 35325.615,
+        "sector": "Dược phẩm"
+      },
+      "EIB": {
+        "change_pc": -0.26246719160104987,
+        "match_price": 19000.0,
+        "listed_share": 1868810607.0,
+        "accumulated_value": 43189.815,
+        "sector": "Ngân hàng"
+      },
+      "PET": {
+        "change_pc": -0.26666666666666666,
+        "match_price": 37400.0,
+        "listed_share": 107334831.0,
+        "accumulated_value": 11200.455,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "SSB": {
+        "change_pc": -0.3125,
+        "match_price": 15950.0,
+        "listed_share": 3428800000.0,
+        "accumulated_value": 36655.59,
+        "sector": "VN30"
+      },
+      "VIB": {
+        "change_pc": -0.3236245954692557,
+        "match_price": 15400.0,
+        "listed_share": 3404005710.0,
+        "accumulated_value": 49709.35,
+        "sector": "Ngân hàng"
+      },
+      "STK": {
+        "change_pc": -0.3401360544217687,
+        "match_price": 8790.0,
+        "listed_share": 140123130.0,
+        "accumulated_value": 26.009,
+        "sector": "Dệt may"
+      },
+      "IDI": {
+        "change_pc": -0.3853564547206166,
+        "match_price": 5170.0,
+        "listed_share": 273172668.0,
+        "accumulated_value": 2511.907,
+        "sector": "Thủy sản"
+      },
+      "SHB": {
+        "change_pc": -0.39370078740157477,
+        "match_price": 12650.0,
+        "listed_share": 4594200024.0,
+        "accumulated_value": 332523.7,
+        "sector": "Ngân hàng"
+      },
+      "ITC": {
+        "change_pc": -0.4424778761061947,
+        "match_price": 11250.0,
+        "listed_share": 96375409.0,
+        "accumulated_value": 204.735,
+        "sector": "Bất động sản"
+      },
+      "FCN": {
+        "change_pc": -0.4444444444444444,
+        "match_price": 11200.0,
+        "listed_share": 157439005.0,
+        "accumulated_value": 1975.715,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "DRC": {
+        "change_pc": -0.4524886877828055,
+        "match_price": 11000.0,
+        "listed_share": 154429283.0,
+        "accumulated_value": 440.645,
+        "sector": "Cao su"
+      },
+      "HHV": {
+        "change_pc": -0.4830917874396135,
+        "match_price": 10300.0,
+        "listed_share": 547166296.0,
+        "accumulated_value": 11495.265,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "VIP": {
+        "change_pc": -0.49504950495049505,
+        "match_price": 10050.0,
+        "listed_share": 68470941.0,
+        "accumulated_value": 140.285,
+        "sector": "Logistics"
+      },
+      "BWE": {
+        "change_pc": -0.5488474204171241,
+        "match_price": 45300.0,
+        "listed_share": 219928644.0,
+        "accumulated_value": 3797.385,
+        "sector": ""
+      },
+      "TIP": {
+        "change_pc": -0.5681818181818182,
+        "match_price": 17500.0,
+        "listed_share": 65007857.0,
+        "accumulated_value": 388.625,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "VPB": {
+        "change_pc": -0.576923076923077,
+        "match_price": 25850.0,
+        "listed_share": 7933923601.0,
+        "accumulated_value": 298851.9,
+        "sector": "Ngân hàng"
+      },
+      "TNH": {
+        "change_pc": -0.6105006105006106,
+        "match_price": 8140.0,
+        "listed_share": 165799943.0,
+        "accumulated_value": 493.065,
+        "sector": ""
+      },
+      "DHC": {
+        "change_pc": -0.6269592476489028,
+        "match_price": 31700.0,
+        "listed_share": 96591206.0,
+        "accumulated_value": 1926.165,
+        "sector": "Khác"
+      },
+      "NHA": {
+        "change_pc": -0.6637168141592921,
+        "match_price": 8980.0,
+        "listed_share": 64788945.0,
+        "accumulated_value": 318.625,
+        "sector": "Bất động sản"
+      },
+      "D2D": {
+        "change_pc": -0.6791171477079796,
+        "match_price": 29250.0,
+        "listed_share": 30304758.0,
+        "accumulated_value": 428.39,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "SBT": {
+        "change_pc": -0.7125890736342043,
+        "match_price": 20900.0,
+        "listed_share": 906415042.0,
+        "accumulated_value": 14585.715,
+        "sector": "Khác"
+      },
+      "CTR": {
+        "change_pc": -0.7142857142857143,
+        "match_price": 69500.0,
+        "listed_share": 114385879.0,
+        "accumulated_value": 7752.75,
+        "sector": "Công nghệ"
+      },
+      "BFC": {
+        "change_pc": -0.7207207207207207,
+        "match_price": 55100.0,
+        "listed_share": 57167993.0,
+        "accumulated_value": 7857.13,
+        "sector": "Hóa chất - Phân bón"
+      },
+      "LAS": {
+        "change_pc": -0.7407407407407408,
+        "match_price": 13400.0,
+        "listed_share": 112856400.0,
+        "accumulated_value": 1276.54,
+        "sector": "Hóa chất - Phân bón"
+      },
+      "BSI": {
+        "change_pc": -0.7739938080495357,
+        "match_price": 32050.0,
+        "listed_share": 269901549.0,
+        "accumulated_value": 7556.56,
+        "sector": "Chứng khoán"
+      },
+      "GEG": {
+        "change_pc": -0.7751937984496124,
+        "match_price": 12800.0,
+        "listed_share": 376220525.0,
+        "accumulated_value": 1539.645,
+        "sector": "Điện - Nước"
+      },
+      "BVH": {
+        "change_pc": -0.8264462809917356,
+        "match_price": 60000.0,
+        "listed_share": 742322764.0,
+        "accumulated_value": 18886.11,
+        "sector": "Bảo hiểm"
+      },
+      "ACB": {
+        "change_pc": -0.8421052631578947,
+        "match_price": 23550.0,
+        "listed_share": 5804421957.0,
+        "accumulated_value": 240800.965,
+        "sector": "Ngân hàng"
+      },
+      "CSC": {
+        "change_pc": -0.8771929824561403,
+        "match_price": 11300.0,
+        "listed_share": 41149264.0,
+        "accumulated_value": 569.7,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "VJC": {
+        "change_pc": -0.9056603773584906,
+        "match_price": 131300.0,
+        "listed_share": 769092961.0,
+        "accumulated_value": 128433.45,
+        "sector": "Hàng không"
+      },
+      "TCX": {
+        "change_pc": -0.9195402298850575,
+        "match_price": 43100.0,
+        "listed_share": 2773896803.0,
+        "accumulated_value": 41342.45,
+        "sector": "Chứng khoán"
+      },
+      "CTG": {
+        "change_pc": -0.9287925696594427,
+        "match_price": 32000.0,
+        "listed_share": 7766944637.0,
+        "accumulated_value": 117050.425,
+        "sector": "Ngân hàng"
+      },
+      "GDT": {
+        "change_pc": -0.9287925696594427,
+        "match_price": 16000.0,
+        "listed_share": 24930701.0,
+        "accumulated_value": 117.195,
+        "sector": "Vật liệu xây dựng"
+      },
+      "TLG": {
+        "change_pc": -0.9424083769633508,
+        "match_price": 47300.0,
+        "listed_share": 96528340.0,
+        "accumulated_value": 2904.625,
+        "sector": ""
+      },
+      "TV2": {
+        "change_pc": -0.9433962264150944,
+        "match_price": 26250.0,
+        "listed_share": 67526165.0,
+        "accumulated_value": 1027.59,
+        "sector": "Điện - Nước"
+      },
+      "LSS": {
+        "change_pc": -0.9615384615384616,
+        "match_price": 8240.0,
+        "listed_share": 90026592.0,
+        "accumulated_value": 84.565,
+        "sector": "Khác"
+      },
+      "LCG": {
+        "change_pc": -0.984009840098401,
+        "match_price": 8050.0,
+        "listed_share": 208602467.0,
+        "accumulated_value": 3782.943,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "SMC": {
+        "change_pc": -1.0,
+        "match_price": 9900.0,
+        "listed_share": 73678587.0,
+        "accumulated_value": 6301.929,
+        "sector": "Thép"
+      },
+      "VGS": {
+        "change_pc": -1.0101010101010102,
+        "match_price": 19600.0,
+        "listed_share": 61524155.0,
+        "accumulated_value": 1277.02,
+        "sector": "Thép"
+      },
+      "KHG": {
+        "change_pc": -1.0121457489878543,
+        "match_price": 4890.0,
+        "listed_share": 449435205.0,
+        "accumulated_value": 13022.985,
+        "sector": ""
+      },
+      "SJS": {
+        "change_pc": -1.0416666666666665,
+        "match_price": 47500.0,
+        "listed_share": 297474828.0,
+        "accumulated_value": 2427.23,
+        "sector": ""
+      },
+      "DPM": {
+        "change_pc": -1.0526315789473684,
+        "match_price": 23500.0,
+        "listed_share": 679990761.0,
+        "accumulated_value": 37023.05,
+        "sector": "Hóa chất - Phân bón"
+      },
+      "VGC": {
+        "change_pc": -1.076555023923445,
+        "match_price": 41350.0,
+        "listed_share": 448350000.0,
+        "accumulated_value": 8429.85,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "PDR": {
+        "change_pc": -1.1029411764705883,
+        "match_price": 13450.0,
+        "listed_share": 997809379.0,
+        "accumulated_value": 55035.035,
+        "sector": "Bất động sản"
+      },
+      "PHR": {
+        "change_pc": -1.1363636363636365,
+        "match_price": 60900.0,
+        "listed_share": 135499198.0,
+        "accumulated_value": 15971.94,
+        "sector": "Cao su"
+      },
+      "NAB": {
+        "change_pc": -1.1494252873563218,
+        "match_price": 12900.0,
+        "listed_share": 2058822282.0,
+        "accumulated_value": 28701.845,
+        "sector": ""
+      },
+      "S99": {
+        "change_pc": -1.1904761904761905,
+        "match_price": 8300.0,
+        "listed_share": 104088992.0,
+        "accumulated_value": 144.81,
+        "sector": "Khác"
+      },
+      "KBC": {
+        "change_pc": -1.232394366197183,
+        "match_price": 28050.0,
+        "listed_share": 941754759.0,
+        "accumulated_value": 25765.805,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "PVS": {
+        "change_pc": -1.2886597938144329,
+        "match_price": 38300.0,
+        "listed_share": 511420099.0,
+        "accumulated_value": 57754.8,
+        "sector": "Dầu khí"
+      },
+      "TPB": {
+        "change_pc": -1.2987012987012987,
+        "match_price": 15200.0,
+        "listed_share": 2774046873.0,
+        "accumulated_value": 53974.51,
+        "sector": "Ngân hàng"
+      },
+      "CRE": {
+        "change_pc": -1.3062409288824384,
+        "match_price": 6800.0,
+        "listed_share": 463678534.0,
+        "accumulated_value": 646.848,
+        "sector": ""
+      },
+      "VIC": {
+        "change_pc": -1.345291479820628,
+        "match_price": 220000.0,
+        "listed_share": 7706031024.0,
+        "accumulated_value": 630117.26,
+        "sector": "VN30"
+      },
+      "ANV": {
+        "change_pc": -1.3623978201634876,
+        "match_price": 18100.0,
+        "listed_share": 266667500.0,
+        "accumulated_value": 5414.57,
+        "sector": "Thủy sản"
+      },
+      "GEX": {
+        "change_pc": -1.3806706114398422,
+        "match_price": 25000.0,
+        "listed_share": 1308471358.0,
+        "accumulated_value": 124510.845,
+        "sector": "Điện - Nước"
+      },
+      "TCB": {
+        "change_pc": -1.4106583072100314,
+        "match_price": 31450.0,
+        "listed_share": 7086240414.0,
+        "accumulated_value": 223187.375,
+        "sector": "Ngân hàng"
+      },
+      "POW": {
+        "change_pc": -1.4184397163120568,
+        "match_price": 13900.0,
+        "listed_share": 3067845688.0,
+        "accumulated_value": 65596.51,
+        "sector": "Điện - Nước"
+      },
+      "ORS": {
+        "change_pc": -1.4184397163120568,
+        "match_price": 13900.0,
+        "listed_share": 623930904.0,
+        "accumulated_value": 66235.28,
+        "sector": "Chứng khoán"
+      },
+      "TLH": {
+        "change_pc": -1.4218009478672986,
+        "match_price": 4160.0,
+        "listed_share": 112320017.0,
+        "accumulated_value": 444.757,
+        "sector": "Thép"
+      },
+      "FPT": {
+        "change_pc": -1.4705882352941175,
+        "match_price": 67000.0,
+        "listed_share": 1703507121.0,
+        "accumulated_value": 269698.67,
+        "sector": "Công nghệ"
+      },
+      "VCB": {
+        "change_pc": -1.5151515151515151,
+        "match_price": 58500.0,
+        "listed_share": 8355675094.0,
+        "accumulated_value": 117052.67,
+        "sector": "Ngân hàng"
+      },
+      "GAS": {
+        "change_pc": -1.550387596899225,
+        "match_price": 76200.0,
+        "listed_share": 2412949756.0,
+        "accumulated_value": 43492.93,
+        "sector": "Dầu khí"
+      },
+      "HPG": {
+        "change_pc": -1.5765765765765765,
+        "match_price": 21850.0,
+        "listed_share": 8442964520.0,
+        "accumulated_value": 374629.0,
+        "sector": "Thép"
+      },
+      "DGW": {
+        "change_pc": -1.5789473684210527,
+        "match_price": 37400.0,
+        "listed_share": 221320169.0,
+        "accumulated_value": 12103.445,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "VHM": {
+        "change_pc": -1.610644257703081,
+        "match_price": 140500.0,
+        "listed_share": 4107412004.0,
+        "accumulated_value": 305285.24,
+        "sector": "VN30"
+      },
+      "IJC": {
+        "change_pc": -1.6270337922403004,
+        "match_price": 7860.0,
+        "listed_share": 629580640.0,
+        "accumulated_value": 9718.185,
+        "sector": "Bất động sản"
+      },
+      "MBB": {
+        "change_pc": -1.6563146997929608,
+        "match_price": 23750.0,
+        "listed_share": 8054999909.0,
+        "accumulated_value": 247726.91,
+        "sector": "Ngân hàng"
+      },
+      "DBC": {
+        "change_pc": -1.6901408450704223,
+        "match_price": 17450.0,
+        "listed_share": 431046499.0,
+        "accumulated_value": 21780.51,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "HAH": {
+        "change_pc": -1.702127659574468,
+        "match_price": 46200.0,
+        "listed_share": 188340401.0,
+        "accumulated_value": 12430.44,
+        "sector": "Logistics"
+      },
+      "SKG": {
+        "change_pc": -1.7094017094017095,
+        "match_price": 8050.0,
+        "listed_share": 66497697.0,
+        "accumulated_value": 104.939,
+        "sector": ""
+      },
+      "LDG": {
+        "change_pc": -1.7123287671232876,
+        "match_price": 2870.0,
+        "listed_share": 256972585.0,
+        "accumulated_value": 799.214,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "PVB": {
+        "change_pc": -1.7167381974248928,
+        "match_price": 22900.0,
+        "listed_share": 21599998.0,
+        "accumulated_value": 432.09,
+        "sector": "Dầu khí"
+      },
+      "AGR": {
+        "change_pc": -1.7421602787456445,
+        "match_price": 14100.0,
+        "listed_share": 228311823.0,
+        "accumulated_value": 3512.03,
+        "sector": "Chứng khoán"
+      },
+      "VOS": {
+        "change_pc": -1.7543859649122806,
+        "match_price": 11200.0,
+        "listed_share": 140000000.0,
+        "accumulated_value": 2200.58,
+        "sector": "Logistics"
+      },
+      "PVD": {
+        "change_pc": -1.7587939698492463,
+        "match_price": 19550.0,
+        "listed_share": 556296006.0,
+        "accumulated_value": 58790.58,
+        "sector": "Dầu khí"
+      },
+      "SRC": {
+        "change_pc": -1.7632241813602016,
+        "match_price": 39000.0,
+        "listed_share": 36484124.0,
+        "accumulated_value": 3.9,
+        "sector": ""
+      },
+      "MVN": {
+        "change_pc": -1.76678445229682,
+        "match_price": 55600.0,
+        "listed_share": 6374700.0,
+        "accumulated_value": 56.1,
+        "sector": "Logistics"
+      },
+      "SCR": {
+        "change_pc": -1.768172888015717,
+        "match_price": 5000.0,
+        "listed_share": 430595036.0,
+        "accumulated_value": 6730.251,
+        "sector": "Bất động sản"
+      },
+      "GVR": {
+        "change_pc": -1.8181818181818181,
+        "match_price": 29700.0,
+        "listed_share": 4000000000.0,
+        "accumulated_value": 23985.945,
+        "sector": "Cao su"
+      },
+      "GMD": {
+        "change_pc": -1.89873417721519,
+        "match_price": 77500.0,
+        "listed_share": 426495109.0,
+        "accumulated_value": 76763.64,
+        "sector": "Logistics"
+      },
+      "PLX": {
+        "change_pc": -1.9498607242339834,
+        "match_price": 35200.0,
+        "listed_share": 1293878081.0,
+        "accumulated_value": 35351.945,
+        "sector": "Dầu khí"
+      },
+      "HT1": {
+        "change_pc": -1.9607843137254901,
+        "match_price": 12500.0,
+        "listed_share": 381589911.0,
+        "accumulated_value": 1334.675,
+        "sector": "Vật liệu xây dựng"
+      },
+      "MBS": {
+        "change_pc": -1.9704433497536946,
+        "match_price": 19900.0,
+        "listed_share": 1000963451.0,
+        "accumulated_value": 115113.62,
+        "sector": "Chứng khoán"
+      },
+      "VRE": {
+        "change_pc": -1.996007984031936,
+        "match_price": 24550.0,
+        "listed_share": 2328818410.0,
+        "accumulated_value": 96907.48,
+        "sector": "Bán lẻ - Tiêu dùng"
+      },
+      "PC1": {
+        "change_pc": -2.0224719101123596,
+        "match_price": 21800.0,
+        "listed_share": 411285343.0,
+        "accumulated_value": 27484.31,
+        "sector": "Điện - Nước"
+      },
+      "DXS": {
+        "change_pc": -2.046783625730994,
+        "match_price": 6700.0,
+        "listed_share": 579103124.0,
+        "accumulated_value": 7937.544,
+        "sector": "Bất động sản"
+      },
+      "HVN": {
+        "change_pc": -2.05761316872428,
+        "match_price": 23800.0,
+        "listed_share": 3111498211.0,
+        "accumulated_value": 9901.33,
+        "sector": "Hàng không"
+      },
+      "IDC": {
+        "change_pc": -2.094240837696335,
+        "match_price": 37400.0,
+        "listed_share": 379498823.0,
+        "accumulated_value": 22424.62,
+        "sector": "BĐS Khu công nghiệp"
+      },
+      "VIX": {
+        "change_pc": -2.135231316725979,
+        "match_price": 13750.0,
+        "listed_share": 2450287772.0,
+        "accumulated_value": 272811.96,
+        "sector": "Chứng khoán"
+      },
+      "DCM": {
+        "change_pc": -2.1604938271604937,
+        "match_price": 31700.0,
+        "listed_share": 529400000.0,
+        "accumulated_value": 35128.195,
+        "sector": "Hóa chất - Phân bón"
+      },
+      "TNG": {
+        "change_pc": -2.247191011235955,
+        "match_price": 17400.0,
+        "listed_share": 128731266.0,
+        "accumulated_value": 5832.48,
+        "sector": "Dệt may"
+      },
+      "PVC": {
+        "change_pc": -2.272727272727273,
+        "match_price": 12900.0,
+        "listed_share": 81194463.0,
+        "accumulated_value": 4814.8,
+        "sector": "Dầu khí"
+      },
+      "VCK": {
+        "change_pc": -2.34375,
+        "match_price": 31250.0,
+        "listed_share": 2434919704.0,
+        "accumulated_value": 44695.44,
+        "sector": "Chứng khoán"
+      },
+      "PVT": {
+        "change_pc": -2.4258760107816713,
+        "match_price": 18100.0,
+        "listed_share": 469931235.0,
+        "accumulated_value": 26854.28,
+        "sector": ""
+      },
+      "TCH": {
+        "change_pc": -2.536231884057971,
+        "match_price": 13450.0,
+        "listed_share": 912109224.0,
+        "accumulated_value": 29863.4,
+        "sector": "Bất động sản"
+      },
+      "VPL": {
+        "change_pc": -2.564102564102564,
+        "match_price": 79800.0,
+        "listed_share": 1793300377.0,
+        "accumulated_value": 63441.21,
+        "sector": "VN30"
+      },
+      "HSG": {
+        "change_pc": -2.586206896551724,
+        "match_price": 11300.0,
+        "listed_share": 807262704.0,
+        "accumulated_value": 21245.085,
+        "sector": "Thép"
+      },
+      "VTP": {
+        "change_pc": -2.7237354085603114,
+        "match_price": 50000.0,
+        "listed_share": 172029898.0,
+        "accumulated_value": 15192.97,
+        "sector": "Logistics"
+      },
+      "HDG": {
+        "change_pc": -2.73224043715847,
+        "match_price": 17800.0,
+        "listed_share": 406957333.0,
+        "accumulated_value": 17201.965,
+        "sector": "Bất động sản"
+      },
+      "VCI": {
+        "change_pc": -2.745995423340961,
+        "match_price": 21250.0,
+        "listed_share": 1147631925.0,
+        "accumulated_value": 144192.73,
+        "sector": "Chứng khoán"
+      },
+      "TV1": {
+        "change_pc": -2.857142857142857,
+        "match_price": 20400.0,
+        "listed_share": 26691319.0,
+        "accumulated_value": 1058.47,
+        "sector": "Điện - Nước"
+      },
+      "KDH": {
+        "change_pc": -2.8947368421052633,
+        "match_price": 18450.0,
+        "listed_share": 1122214899.0,
+        "accumulated_value": 102572.55,
+        "sector": "Bất động sản"
+      },
+      "SHS": {
+        "change_pc": -2.9585798816568047,
+        "match_price": 16400.0,
+        "listed_share": 899462220.0,
+        "accumulated_value": 104392.09,
+        "sector": "Chứng khoán"
+      },
+      "VSC": {
+        "change_pc": -2.9702970297029703,
+        "match_price": 14700.0,
+        "listed_share": 374370362.0,
+        "accumulated_value": 49023.97,
+        "sector": "Logistics"
+      },
+      "IMP": {
+        "change_pc": -2.977667493796526,
+        "match_price": 39100.0,
+        "listed_share": 154042762.0,
+        "accumulated_value": 304.805,
+        "sector": "Dược phẩm"
+      },
+      "SSI": {
+        "change_pc": -3.0,
+        "match_price": 24250.0,
+        "listed_share": 2503089220.0,
+        "accumulated_value": 284341.755,
+        "sector": "Chứng khoán"
+      },
+      "VCG": {
+        "change_pc": -3.170028818443804,
+        "match_price": 16800.0,
+        "listed_share": 646468336.0,
+        "accumulated_value": 64287.845,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "CSM": {
+        "change_pc": -3.180212014134275,
+        "match_price": 13700.0,
+        "listed_share": 103626467.0,
+        "accumulated_value": 3831.49,
+        "sector": "Cao su"
+      },
+      "DIG": {
+        "change_pc": -3.2128514056224895,
+        "match_price": 12050.0,
+        "listed_share": 796431191.0,
+        "accumulated_value": 69140.64,
+        "sector": "Bất động sản"
+      },
+      "FTS": {
+        "change_pc": -3.3932135728542914,
+        "match_price": 24200.0,
+        "listed_share": 381145750.0,
+        "accumulated_value": 22332.595,
+        "sector": "Chứng khoán"
+      },
+      "NKG": {
+        "change_pc": -3.463203463203463,
+        "match_price": 11150.0,
+        "listed_share": 492323961.0,
+        "accumulated_value": 14210.885,
+        "sector": "Thép"
+      },
+      "PLC": {
+        "change_pc": -3.5000000000000004,
+        "match_price": 19300.0,
+        "listed_share": 80798839.0,
+        "accumulated_value": 3582.34,
+        "sector": "Vật liệu xây dựng"
+      },
+      "HHS": {
+        "change_pc": -3.669724770642202,
+        "match_price": 10500.0,
+        "listed_share": 431985968.0,
+        "accumulated_value": 6020.94,
+        "sector": "Bất động sản"
+      },
+      "CSV": {
+        "change_pc": -4.032258064516129,
+        "match_price": 23800.0,
+        "listed_share": 110499910.0,
+        "accumulated_value": 10222.81,
+        "sector": "Hóa chất - Phân bón"
+      },
+      "CTS": {
+        "change_pc": -4.044117647058823,
+        "match_price": 26100.0,
+        "listed_share": 272244939.0,
+        "accumulated_value": 66558.38,
+        "sector": "Chứng khoán"
+      },
+      "CII": {
+        "change_pc": -4.0625,
+        "match_price": 15350.0,
+        "listed_share": 671985291.0,
+        "accumulated_value": 69762.67,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "CTD": {
+        "change_pc": -4.078549848942599,
+        "match_price": 63500.0,
+        "listed_share": 114026467.0,
+        "accumulated_value": 27506.62,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "TCM": {
+        "change_pc": -4.081632653061225,
+        "match_price": 18800.0,
+        "listed_share": 117739077.0,
+        "accumulated_value": 15052.905,
+        "sector": "Dệt may"
+      },
+      "OGC": {
+        "change_pc": -4.166666666666666,
+        "match_price": 2530.0,
+        "listed_share": 300000000.0,
+        "accumulated_value": 837.448,
+        "sector": ""
+      },
+      "BSR": {
+        "change_pc": -4.230769230769231,
+        "match_price": 24900.0,
+        "listed_share": 5007299686.0,
+        "accumulated_value": 184533.105,
+        "sector": "Dầu khí"
+      },
+      "VDS": {
+        "change_pc": -4.3478260869565215,
+        "match_price": 13200.0,
+        "listed_share": 272000000.0,
+        "accumulated_value": 20437.365,
+        "sector": "Chứng khoán"
+      },
+      "HDC": {
+        "change_pc": -4.3478260869565215,
+        "match_price": 13200.0,
+        "listed_share": 229712443.0,
+        "accumulated_value": 14279.33,
+        "sector": "Bất động sản"
+      },
+      "CEO": {
+        "change_pc": -4.37956204379562,
+        "match_price": 13100.0,
+        "listed_share": 595775755.0,
+        "accumulated_value": 40856.15,
+        "sector": "Bất động sản"
+      },
+      "DPG": {
+        "change_pc": -5.047318611987381,
+        "match_price": 30100.0,
+        "listed_share": 118587096.0,
+        "accumulated_value": 12783.07,
+        "sector": "Đầu tư - Xây dựng"
+      },
+      "VHG": {
+        "change_pc": -6.25,
+        "match_price": 1500.0,
+        "listed_share": 150000000.0,
+        "accumulated_value": 53.39,
+        "sector": "Cao su"
+      },
+      "BVS": {
+        "change_pc": -6.88622754491018,
+        "match_price": 31100.0,
+        "listed_share": 72233937.0,
+        "accumulated_value": 39148.72,
+        "sector": "Chứng khoán"
+      },
+      "GIL": {
+        "change_pc": -6.88836104513064,
+        "match_price": 7840.0,
+        "listed_share": 101600066.0,
+        "accumulated_value": 5488.603,
+        "sector": "Dệt may"
+      }
+    }
+  }
+}
