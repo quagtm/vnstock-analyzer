@@ -110,7 +110,187 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
-    // ─── TAS History Chart (20 sessions) ─────────────────────────
+    // ─── TAS Multi-chart (50 phiên) ───────────────────────────────
+    const _tasCharts = {};
+
+    window.switchTASTab = function(tab) {
+        ['score','price','macd','stoch'].forEach(t => {
+            const panel = document.getElementById(`tas-chart-${t}`);
+            const btn   = document.getElementById(`tab-tas-${t}`);
+            if (panel) panel.style.display = t === tab ? 'block' : 'none';
+            if (btn)   btn.classList.toggle('active', t === tab);
+        });
+        // Trigger Chart.js resize after display
+        const c = _tasCharts[tab];
+        if (c) c.resize();
+    };
+
+    function _destroyTASCharts() {
+        Object.values(_tasCharts).forEach(c => { try { c.destroy(); } catch(e) {} });
+        Object.keys(_tasCharts).forEach(k => delete _tasCharts[k]);
+    }
+
+    function _chartDefaults(title) {
+        return {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 400 },
+            plugins: {
+                legend: { display: true, labels: { color: 'rgba(255,255,255,0.7)', boxWidth: 12, font: { size: 11 } } },
+                tooltip: { mode: 'index', intersect: false,
+                    titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.85)',
+                    backgroundColor: 'rgba(15,23,42,0.95)' }
+            },
+            scales: {
+                x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: 'rgba(255,255,255,0.5)', maxTicksLimit: 12, font: { size: 10 } } },
+                y: { grid: { color: 'rgba(255,255,255,0.07)' }, ticks: { color: 'rgba(255,255,255,0.55)', font: { size: 10 } } }
+            }
+        };
+    }
+
+    function renderTASChart(history) {  // kept for compatibility — calls renderTASCharts
+        renderTASCharts(history);
+    }
+
+    function renderTASCharts(history) {
+        _destroyTASCharts();
+        if (!history || history.length < 2) return;
+
+        const fmt = d => {
+            if (!d || d.startsWith('D')) return d;
+            const p = d.split('-');
+            return p.length >= 3 ? p[2] + '/' + p[1] : d;
+        };
+        const labels = history.map(h => fmt(h.date));
+        const N = history.length;
+
+        // ── Chart 1: TAS Score ──────────────────────────────────────
+        const cvScore = document.getElementById('tas-history-chart');
+        if (cvScore) {
+            const scores = history.map(h => h.score);
+            _tasCharts['score'] = new Chart(cvScore, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'TAS Score',
+                        data: scores,
+                        borderColor: '#4f8ef7',
+                        backgroundColor: 'rgba(79,142,247,0.08)',
+                        borderWidth: 2,
+                        pointBackgroundColor: scores.map(s =>
+                            s >= 34 ? '#4ade80' : s >= 1 ? '#a3e635' : s >= -33 ? '#fb923c' : '#f87171'),
+                        pointRadius: N <= 30 ? 4 : 2,
+                        fill: true, tension: 0.35
+                    }]
+                },
+                options: { ..._chartDefaults('TAS Score'),
+                    plugins: { ..._chartDefaults().plugins, legend: { display: false },
+                        annotation: undefined },
+                    scales: {
+                        x: _chartDefaults().scales.x,
+                        y: { ..._chartDefaults().scales.y, min: -100, max: 100,
+                            ticks: { color: 'rgba(255,255,255,0.55)', font: { size: 10 },
+                                callback: v => v + '%' } }
+                    }
+                }
+            });
+        }
+
+        // ── Chart 2: Giá + MA20/MA50 + Bollinger Bands ─────────────
+        const cvPrice = document.getElementById('tas-price-chart');
+        if (cvPrice) {
+            const closes   = history.map(h => h.close   || null);
+            const ma20arr  = history.map(h => h.ma20    || null);
+            const ma50arr  = history.map(h => h.ma50    || null);
+            const bbUpper  = history.map(h => h.bb_upper || null);
+            const bbLower  = history.map(h => h.bb_lower || null);
+            _tasCharts['price'] = new Chart(cvPrice, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: 'BB Upper', data: bbUpper, borderColor: 'rgba(148,163,184,0.3)',
+                          borderWidth: 1, borderDash: [4,3], pointRadius: 0, fill: '+1',
+                          backgroundColor: 'rgba(148,163,184,0.05)', tension: 0.2 },
+                        { label: 'BB Lower', data: bbLower, borderColor: 'rgba(148,163,184,0.3)',
+                          borderWidth: 1, borderDash: [4,3], pointRadius: 0, fill: false, tension: 0.2 },
+                        { label: 'Giá đóng', data: closes, borderColor: '#f8fafc',
+                          borderWidth: 2, pointRadius: 0, fill: false, tension: 0.2 },
+                        { label: 'MA20', data: ma20arr, borderColor: '#fbbf24',
+                          borderWidth: 1.5, pointRadius: 0, fill: false, tension: 0.2 },
+                        { label: 'MA50', data: ma50arr, borderColor: '#60a5fa',
+                          borderWidth: 1.5, pointRadius: 0, fill: false, tension: 0.2 },
+                    ]
+                },
+                options: _chartDefaults('Giá + BB')
+            });
+        }
+
+        // ── Chart 3: MACD ────────────────────────────────────────────
+        const cvMACD = document.getElementById('tas-macd-chart');
+        if (cvMACD) {
+            const macdLine = history.map(h => h.macd        || null);
+            const sigLine  = history.map(h => h.macd_signal || null);
+            const hist     = history.map(h => h.macd_diff   || null);
+            _tasCharts['macd'] = new Chart(cvMACD, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: 'Histogram', data: hist, type: 'bar',
+                          backgroundColor: hist.map(v => v >= 0 ? 'rgba(74,222,128,0.5)' : 'rgba(248,113,113,0.5)'),
+                          yAxisID: 'y' },
+                        { label: 'MACD', data: macdLine, type: 'line',
+                          borderColor: '#4f8ef7', borderWidth: 1.5, pointRadius: 0,
+                          fill: false, tension: 0.3, yAxisID: 'y' },
+                        { label: 'Signal', data: sigLine, type: 'line',
+                          borderColor: '#fb923c', borderWidth: 1.5, pointRadius: 0,
+                          fill: false, tension: 0.3, yAxisID: 'y' },
+                    ]
+                },
+                options: _chartDefaults('MACD')
+            });
+        }
+
+        // ── Chart 4: Stochastic %K/%D ────────────────────────────────
+        const cvStoch = document.getElementById('tas-stoch-chart');
+        if (cvStoch) {
+            const kLine = history.map(h => h.stoch_k || null);
+            const dLine = history.map(h => h.stoch_d || null);
+            _tasCharts['stoch'] = new Chart(cvStoch, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: '%K', data: kLine, borderColor: '#a78bfa', borderWidth: 1.5,
+                          pointRadius: 0, fill: false, tension: 0.3 },
+                        { label: '%D', data: dLine, borderColor: '#f472b6', borderWidth: 1.5,
+                          pointRadius: 0, fill: false, tension: 0.3, borderDash: [4,3] },
+                    ]
+                },
+                options: {
+                    ..._chartDefaults('Stochastic'),
+                    scales: {
+                        x: _chartDefaults().scales.x,
+                        y: { ..._chartDefaults().scales.y, min: 0, max: 100,
+                            ticks: { color: 'rgba(255,255,255,0.55)', font: { size: 10 } } }
+                    },
+                    plugins: {
+                        ..._chartDefaults().plugins,
+                        annotation: {
+                            annotations: {
+                                ob: { type: 'line', yMin: 80, yMax: 80, borderColor: 'rgba(248,113,113,0.4)', borderWidth: 1, borderDash: [4,3], label: { content: 'Overbought 80', display: true, color: 'rgba(248,113,113,0.7)', font: { size: 9 } } },
+                                os: { type: 'line', yMin: 20, yMax: 20, borderColor: 'rgba(74,222,128,0.4)', borderWidth: 1, borderDash: [4,3], label: { content: 'Oversold 20', display: true, color: 'rgba(74,222,128,0.7)', font: { size: 9 } } }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+
     function renderSectorTable(sectors) {
         const tbody = document.getElementById('sector-table-body');
         if (!tbody) return;
