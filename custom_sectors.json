@@ -7,7 +7,7 @@
     "Bảo hiểm": ["BMI", "BVH", "MIG", "PVI"],
     "Bất động sản": ["AGG", "CEO", "DIG", "DTD", "DXG", "DXS", "EVG", "HDC", "HDG", "HHS", "HTN", "IJC", "ITC", "KDH", "NHA", "NLG", "NTL", "NVL", "PDR", "SCR", "TCH", "TIG"],
     "BĐS Khu công nghiệp": ["BCM", "D2D", "DPR", "GVR", "IDC", "KBC", "LDG", "LHG", "NTC", "PHR", "SIP", "SZC", "TIP", "VGC"],
-    "Đầu tư - Xây dựng": ["C4G", "CII", "CSC", "CTD", "DPG", "FCN", "G36", "HBC", "HHV", "LCG", "VCG"],
+    "Đầu tư công - Xây dựng": ["C4G", "CII", "CSC", "CTD", "DPG", "FCN", "G36", "HBC", "HHV", "LCG", "VCG"],
     "Vật liệu xây dựng": ["BCC", "BMP", "CTI", "DHA", "GDT", "HOM", "HT1", "KSB", "NTP", "PLC", "VCS"],
     "Logistics": ["GMD", "HAH", "MVN", "PHP", "SGP", "VIP", "VOS", "VSC", "VTP"],
     "Bán lẻ - Tiêu dùng": ["DBC", "DGW", "FRT", "LTG", "MCH", "MSN", "MWG", "PAN", "PET", "PNJ", "SAB", "VNM", "VRE"],
