@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (!appData) throw new Error("Dữ liệu trống");
             initSectorModal(appData);
+            renderIndexSnapshot();
             renderDashboard();
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -49,6 +50,33 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('[Auto-refresh] Reloading data...');
         fetchData();
     }, 5 * 60 * 1000);
+
+    // ─── Index Snapshot Bar (topbar — 3 ô cố định) ───────────────
+    function renderIndexSnapshot() {
+        const indices = ['VNINDEX', 'VN30', 'HNXINDEX'];
+        indices.forEach(sym => {
+            const d = appData && appData[sym];
+            const priceEl = document.getElementById(`snap-price-${sym}`);
+            const chgEl   = document.getElementById(`snap-chg-${sym}`);
+            const card    = document.getElementById(`snap-${sym}`);
+            if (!priceEl || !chgEl || !card) return;
+
+            if (!d) {
+                priceEl.textContent = '—';
+                chgEl.textContent   = '—';
+                return;
+            }
+            const close = d.close || 0;
+            const chg   = d.change_pc !== undefined ? d.change_pc : 0;
+            const sign  = chg > 0 ? '+' : '';
+            const color = chg > 0 ? 'var(--positive)' : chg < 0 ? 'var(--negative)' : 'var(--flat)';
+
+            priceEl.textContent = close.toLocaleString('vi-VN', {maximumFractionDigits: 2});
+            chgEl.textContent   = `${sign}${chg.toFixed(2)}%`;
+            chgEl.style.color   = color;
+            card.style.borderColor = chg > 0 ? 'rgba(74,222,128,0.3)' : chg < 0 ? 'rgba(248,113,113,0.3)' : 'rgba(255,255,255,0.1)';
+        });
+    }
 
     // ─── Candle Pattern Badges ────────────────────────────────────
     function renderCandleBadges(patterns) {

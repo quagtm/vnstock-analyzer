@@ -1368,15 +1368,16 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
         return None
 
 def main():
-    symbols = ["VNINDEX", "VN30", "VN100"]
+    symbols = ["VNINDEX", "VN30", "VN100", "HNXINDEX"]
     all_data = {}
 
     # ── Pre-fetch price boards cho từng index (3 calls, không lặp) ───
     # Mapping: symbol -> group name dùng trong symbols_by_group
     GROUP_MAP = {
-        "VNINDEX": "VN100",   # dùng VN100 làm proxy (100 mã đại diện tốt)
-        "VN30":    "VN30",
-        "VN100":   "VN100",
+        "VNINDEX":  "VN100",   # dùng VN100 làm proxy (100 mã đại diện tốt)
+        "VN30":     "VN30",
+        "VN100":    "VN100",
+        "HNXINDEX": None,      # HNX — không cần price_board HOSE
     }
     # VN30/VN100 fallback (nếu API không lấy được group syms)
     VN30_FALLBACK = [
