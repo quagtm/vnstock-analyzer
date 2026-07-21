@@ -8,6 +8,8 @@ on:
   schedule:
     # Chạy lúc 15:30 VN (08:30 UTC) — sau giờ đóng cửa thị trường (15:00 VN)
     - cron: '30 8 * * 1-5'  # 15:30 VN (Thứ 2 - Thứ 6)
+    # Backup: 16:30 VN (09:30 UTC) — đề phòng lần đầu bị GitHub delay
+    - cron: '30 9 * * 1-5'  # 16:30 VN (Thứ 2 - Thứ 6)
   workflow_dispatch:
     inputs:
       force_run:
