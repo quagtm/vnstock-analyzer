@@ -1367,6 +1367,78 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
         traceback.print_exc()
         return None
 
+def fetch_historical_vndirect(sym, start_ts, end_ts):
+    import urllib.request
+    import json
+    url = f'https://dchart-api.vndirect.com.vn/dchart/history?resolution=D&symbol={sym}&from={start_ts}&to={end_ts}'
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        resp = urllib.request.urlopen(req, timeout=5)
+        data = json.loads(resp.read())
+        return sym, data
+    except Exception as e:
+        return sym, None
+
+def enrich_raw_stocks_with_breadth(raw_stocks):
+    import time, concurrent.futures
+    import pandas as pd
+    
+    end_ts = int(time.time())
+    start_ts = end_ts - 365*24*3600
+    symbols = list(raw_stocks.keys())
+    
+    print(f"[BREADTH] Fetching 1Y history for {len(symbols)} stocks via VNDIRECT API...")
+    
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        futures = {executor.submit(fetch_historical_vndirect, sym, start_ts, end_ts): sym for sym in symbols}
+        for future in concurrent.futures.as_completed(futures):
+            sym = futures[future]
+            try:
+                _, data = future.result()
+                if not data or 'c' not in data or len(data['c']) == 0:
+                    continue
+                
+                closes = pd.Series(data['c'])
+                highs = pd.Series(data['h'])
+                lows = pd.Series(data['l'])
+                
+                if len(closes) < 10:
+                    continue
+                    
+                cur_close = float(closes.iloc[-1])
+                
+                # SMA
+                sma20 = float(closes.rolling(window=20).mean().iloc[-1]) if len(closes) >= 20 else cur_close
+                sma50 = float(closes.rolling(window=50).mean().iloc[-1]) if len(closes) >= 50 else cur_close
+                sma200 = float(closes.rolling(window=200).mean().iloc[-1]) if len(closes) >= 200 else cur_close
+                
+                # 52W High/Low (1 year roughly 250 trading days)
+                high_52w = float(highs.max())
+                low_52w = float(lows.min())
+                
+                # Flags
+                # Giá >= đỉnh 52T hoặc cách đỉnh 1%
+                is_new_high_52w = bool(cur_close >= high_52w * 0.99)
+                is_new_low_52w = bool(cur_close <= low_52w * 1.01)
+                
+                is_above_sma50 = bool(cur_close > sma50)
+                is_above_sma200 = bool(cur_close > sma200)
+                is_uptrend = bool(cur_close > sma50 and sma50 > sma200)
+                is_strong = bool(cur_close > sma20 and sma20 > sma50 and sma50 > sma200)
+                
+                # Cập nhật vào raw_stocks
+                raw_stocks[sym]['is_above_sma50'] = is_above_sma50
+                raw_stocks[sym]['is_above_sma200'] = is_above_sma200
+                raw_stocks[sym]['is_uptrend'] = is_uptrend
+                raw_stocks[sym]['is_strong'] = is_strong
+                raw_stocks[sym]['is_new_high_52w'] = is_new_high_52w
+                raw_stocks[sym]['is_new_low_52w'] = is_new_low_52w
+                
+            except Exception as e:
+                pass
+    print("[BREADTH] Historical data fetch & compute completed.")
+    return raw_stocks
+
 def main():
     symbols = ["VNINDEX", "VN30", "VN100", "HNXINDEX"]
     all_data = {}
@@ -1591,6 +1663,7 @@ def main():
     if board_for_sector is not None and not board_for_sector.empty:
         sector_heatmap, raw_stocks = compute_sector_heatmap(board_for_sector, icb_mapping)
         print(f"[SECTOR] {len(sector_heatmap)} ngành computed from {len(board_for_sector)} stocks")
+        raw_stocks = enrich_raw_stocks_with_breadth(raw_stocks)
 
     # Gắn sector_heatmap vào tất cả index
     for sym in all_data:
