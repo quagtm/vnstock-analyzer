@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!appData) throw new Error("Dữ liệu trống");
             initSectorModal(appData);
             renderIndexSnapshot();
+            renderMarketBreadth();
             renderDashboard();
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -76,6 +77,77 @@ document.addEventListener('DOMContentLoaded', () => {
             chgEl.style.color   = color;
             card.style.borderColor = chg > 0 ? 'rgba(74,222,128,0.3)' : chg < 0 ? 'rgba(248,113,113,0.3)' : 'rgba(255,255,255,0.1)';
         });
+    }
+
+    // ─── Market Breadth Bar ───────────────────────────────────────
+    function renderMarketBreadth() {
+        const bar = document.getElementById('market-breadth-bar');
+        const raw = appData && appData['__global__'] && appData['__global__']['raw_stocks'];
+        
+        if (!bar || !raw) {
+            if (bar) bar.style.display = 'none';
+            return;
+        }
+
+        const stocks = Object.values(raw);
+        const total = stocks.length;
+        if (total === 0) return;
+
+        let up = 0, down = 0;
+        let h52 = 0, l52 = 0;
+        let sma50_up = 0, sma200_up = 0;
+        let trend_up = 0;
+
+        stocks.forEach(s => {
+            if (s.change_pc > 0) up++;
+            if (s.change_pc < 0) down++;
+            if (s.is_new_high_52w) h52++;
+            if (s.is_new_low_52w) l52++;
+            if (s.is_above_sma50) sma50_up++;
+            if (s.is_above_sma200) sma200_up++;
+            if (s.is_uptrend) trend_up++;
+        });
+
+        // 1. Tăng/Giảm
+        const up_pct = Math.round((up / total) * 100) || 0;
+        const down_pct = Math.round((down / total) * 100) || 0;
+        document.getElementById('br-up-label').textContent = `Tăng (${up_pct}%)`;
+        document.getElementById('br-down-label').textContent = `(${down_pct}%) Giảm`;
+        document.getElementById('br-up-fill').style.width = `${up_pct}%`;
+        document.getElementById('br-down-fill').style.width = `${down_pct}%`;
+
+        // 2. Đỉnh/Đáy 52T (Dùng max là tổng số mã chạm đỉnh+đáy hoặc min 1 để tránh /0)
+        const hl_total = h52 + l52;
+        const h_pct = hl_total > 0 ? Math.round((h52 / hl_total) * 100) : 0;
+        const l_pct = hl_total > 0 ? Math.round((l52 / hl_total) * 100) : 0;
+        document.getElementById('br-high-label').textContent = `Đỉnh mới (${h52})`;
+        document.getElementById('br-low-label').textContent = `(${l52}) Đáy mới`;
+        document.getElementById('br-high-fill').style.width = hl_total > 0 ? `${h_pct}%` : '50%';
+        document.getElementById('br-low-fill').style.width = hl_total > 0 ? `${l_pct}%` : '50%';
+
+        // 3. SMA50
+        const s50_up_pct = Math.round((sma50_up / total) * 100) || 0;
+        const s50_dn_pct = 100 - s50_up_pct;
+        document.getElementById('br-sma50-up-label').textContent = `Trên (${s50_up_pct}%)`;
+        document.getElementById('br-sma50-down-label').textContent = `(${s50_dn_pct}%) Dưới`;
+        document.getElementById('br-sma50-fill').style.width = `${s50_up_pct}%`;
+
+        // 4. SMA200
+        const s200_up_pct = Math.round((sma200_up / total) * 100) || 0;
+        const s200_dn_pct = 100 - s200_up_pct;
+        document.getElementById('br-sma200-up-label').textContent = `Trên (${s200_up_pct}%)`;
+        document.getElementById('br-sma200-down-label').textContent = `(${s200_dn_pct}%) Dưới`;
+        document.getElementById('br-sma200-fill').style.width = `${s200_up_pct}%`;
+
+        // 5. Xu hướng tăng
+        const trend_up_pct = Math.round((trend_up / total) * 100) || 0;
+        const trend_dn_pct = 100 - trend_up_pct;
+        document.getElementById('br-trend-up-label').textContent = `Có (${trend_up_pct}%)`;
+        document.getElementById('br-trend-down-label').textContent = `(${trend_dn_pct}%) Không`;
+        document.getElementById('br-trend-fill').style.width = `${trend_up_pct}%`;
+
+        // Hiển thị bar (chỉ hiện khi đang ở tab VNINDEX)
+        bar.style.display = (currentSymbol === 'VNINDEX') ? 'flex' : 'none';
     }
 
     // ─── Candle Pattern Badges ────────────────────────────────────
@@ -561,6 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        renderMarketBreadth();
         const data = appData[currentSymbol];
         
         // Update Titles

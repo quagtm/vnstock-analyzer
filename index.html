@@ -104,6 +104,74 @@
                 </div>
             </header>
 
+            <!-- MARKET BREADTH BAR -->
+            <div class="market-breadth-bar" id="market-breadth-bar" style="display: none;">
+                <!-- 1. Tăng / Giảm -->
+                <div class="breadth-card">
+                    <div class="breadth-title">Tăng / Giảm (phiên)</div>
+                    <div class="breadth-labels">
+                        <span class="breadth-label positive" id="br-up-label">Tăng (0%)</span>
+                        <span class="breadth-label negative" id="br-down-label">(0%) Giảm</span>
+                    </div>
+                    <div class="breadth-progress">
+                        <div class="breadth-fill positive-fill" id="br-up-fill" style="width: 50%"></div>
+                        <div class="breadth-fill negative-fill" id="br-down-fill" style="width: 50%"></div>
+                    </div>
+                </div>
+                
+                <!-- 2. Đỉnh / Đáy 52T -->
+                <div class="breadth-card">
+                    <div class="breadth-title">Đỉnh 52T / Đáy 52T</div>
+                    <div class="breadth-labels">
+                        <span class="breadth-label positive" id="br-high-label">Đỉnh mới (0)</span>
+                        <span class="breadth-label negative" id="br-low-label">(0) Đáy mới</span>
+                    </div>
+                    <div class="breadth-progress">
+                        <div class="breadth-fill positive-fill" id="br-high-fill" style="width: 50%"></div>
+                        <div class="breadth-fill negative-fill" id="br-low-fill" style="width: 50%"></div>
+                    </div>
+                </div>
+
+                <!-- 3. SMA50 -->
+                <div class="breadth-card">
+                    <div class="breadth-title">SMA50</div>
+                    <div class="breadth-labels">
+                        <span class="breadth-label positive" id="br-sma50-up-label">Trên (0%)</span>
+                        <span class="breadth-label negative" id="br-sma50-down-label">(0%) Dưới</span>
+                    </div>
+                    <div class="breadth-progress">
+                        <div class="breadth-fill positive-fill" id="br-sma50-fill" style="width: 50%"></div>
+                        <div class="breadth-fill negative-fill" style="flex: 1"></div>
+                    </div>
+                </div>
+
+                <!-- 4. SMA200 -->
+                <div class="breadth-card">
+                    <div class="breadth-title">SMA200</div>
+                    <div class="breadth-labels">
+                        <span class="breadth-label positive" id="br-sma200-up-label">Trên (0%)</span>
+                        <span class="breadth-label negative" id="br-sma200-down-label">(0%) Dưới</span>
+                    </div>
+                    <div class="breadth-progress">
+                        <div class="breadth-fill positive-fill" id="br-sma200-fill" style="width: 50%"></div>
+                        <div class="breadth-fill negative-fill" style="flex: 1"></div>
+                    </div>
+                </div>
+
+                <!-- 5. Xu hướng tăng -->
+                <div class="breadth-card">
+                    <div class="breadth-title">Xu hướng tăng & CP khỏe</div>
+                    <div class="breadth-labels">
+                        <span class="breadth-label positive" id="br-trend-up-label">Có (0%)</span>
+                        <span class="breadth-label negative" id="br-trend-down-label">(0%) Không</span>
+                    </div>
+                    <div class="breadth-progress">
+                        <div class="breadth-fill positive-fill" id="br-trend-fill" style="width: 50%"></div>
+                        <div class="breadth-fill negative-fill" style="flex: 1"></div>
+                    </div>
+                </div>
+            </div>
+
             <div class="dashboard" id="dashboard-content">
                 <!-- Data will be populated here by JS -->
                 <div class="loading">
