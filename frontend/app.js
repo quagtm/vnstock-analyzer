@@ -146,8 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('br-trend-down-label').textContent = `(${trend_dn_pct}%) Không`;
         document.getElementById('br-trend-fill').style.width = `${trend_up_pct}%`;
 
-        // Hiển thị bar (chỉ hiện khi đang ở tab VNINDEX)
-        bar.style.display = (currentSymbol === 'VNINDEX') ? 'flex' : 'none';
+        // Hiển thị bar trên mọi tab
+        bar.style.display = 'flex';
     }
 
     // ─── Candle Pattern Badges ────────────────────────────────────
