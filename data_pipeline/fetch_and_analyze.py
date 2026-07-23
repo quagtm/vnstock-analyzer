@@ -1474,11 +1474,20 @@ def main():
         import os
         hardcoded = []
         try:
-            if os.path.exists('custom_sectors.json'):
-                with open('custom_sectors.json', 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                    for sector, syms in data.items():
-                        hardcoded.extend(syms)
+            _script_dir = os.path.dirname(os.path.abspath(__file__))
+            _parent_dir = os.path.dirname(_script_dir)
+            _paths = [
+                os.path.join(_script_dir, 'custom_sectors.json'),
+                os.path.join(_parent_dir, 'custom_sectors.json'),
+                'custom_sectors.json'
+            ]
+            for p in _paths:
+                if os.path.exists(p):
+                    with open(p, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        for sector, syms in data.items():
+                            hardcoded.extend(syms)
+                    break
             hardcoded = list(set(hardcoded + VN100_FALLBACK))
             print(f"  [BOARDS] Fallback to custom_sectors + VN100: {len(hardcoded)} mã")
             return hardcoded
