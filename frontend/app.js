@@ -392,64 +392,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function renderSectorTable(sectors) {
-        const dropdown = document.getElementById('sector-dropdown');
-        const details = document.getElementById('sector-details');
-        if (!dropdown || !details) return;
-        
-        // Clear old options
-        dropdown.innerHTML = '<option value="">-- Chọn một nhóm ngành --</option>';
-        details.style.display = 'none';
-        
+        const container = document.getElementById('sector-accordion');
+        if (!container) return;
+        container.innerHTML = '';
+
         if (!sectors || sectors.length === 0) {
+            container.innerHTML = '<p style="color:var(--text-secondary);padding:10px">Không có dữ liệu ngành</p>';
             return;
         }
 
-        // Add options
-        sectors.forEach((s, index) => {
-            const opt = document.createElement('option');
-            opt.value = index;
-            // Format: Ngành (Giá trị tỷ VNĐ | Biến động %)
-            const chg = (s.avg_change || 0);
-            const chgSign = chg > 0 ? '+' : '';
-            const totalVal = (s.total_val || s.total_value || 0);
-            opt.textContent = `${s.sector} (${totalVal.toFixed(1)} tỷ | ${chgSign}${chg.toFixed(2)}%)`;
-            dropdown.appendChild(opt);
-        });
-
-        // Event listener
-        dropdown.onchange = function() {
-            const idx = this.value;
-            if (idx === "") {
-                details.style.display = 'none';
-                return;
-            }
-            const s = sectors[idx];
+        sectors.forEach((s) => {
             const chg = (s.avg_change || 0);
             const isPos = chg > 0;
-            const colorClass = isPos ? 'var(--positive)' : (chg < 0 ? 'var(--negative)' : 'var(--text-secondary)');
-            const sign = isPos ? '+' : '';
-            
-            // Format money flow ratio
-            const ratio = (s.cap_ref > 0) ? ((s.cap_up - s.cap_down) / s.cap_ref * 100).toFixed(2) : '0.00';
-            const ratioVal = parseFloat(ratio);
-            const ratioSign = ratioVal > 0 ? '+' : '';
-            const ratioColor = ratioVal > 0 ? 'var(--positive)' : (ratioVal < 0 ? 'var(--negative)' : 'var(--text-secondary)');
+            const chgColor = isPos ? 'var(--positive)' : (chg < 0 ? 'var(--negative)' : 'var(--text-secondary)');
+            const chgSign = isPos ? '+' : '';
+            const totalVal = (s.total_val || 0);
 
-            details.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap;">
-                    <div style="font-size: 1.1rem; font-weight: bold; color: #fff;">${s.sector}</div>
-                    <div style="text-align: right; display: flex; gap: 15px; font-size: 0.9rem; margin-top: 5px;">
-                        <div>Biến động: <span style="color: ${colorClass}; font-weight: bold;">${sign}${chg.toFixed(2)}%</span></div>
-                        <div>Dòng tiền: <span style="color: ${ratioColor}; font-weight: bold;">${ratioSign}${ratio}%</span></div>
+            // Cap_up / cap_down money flow bar
+            const capUp   = s.cap_up   || 0;
+            const capDown = s.cap_down || 0;
+            const capRef  = s.cap_ref  || 0;
+            const totalCap = capUp + capDown + capRef;
+            let pctUp = 0, pctDown = 0, pctRef = 0;
+            if (totalCap > 0) {
+                pctUp   = (capUp   / totalCap * 100).toFixed(1);
+                pctDown = (capDown / totalCap * 100).toFixed(1);
+                pctRef  = (capRef  / totalCap * 100).toFixed(1);
+            }
+            const netFlow = capRef > 0 ? ((capUp - capDown) / capRef * 100).toFixed(2) : '0.00';
+            const netVal  = parseFloat(netFlow);
+            const netColor = netVal > 0 ? 'var(--positive)' : (netVal < 0 ? 'var(--negative)' : 'var(--text-secondary)');
+            const netSign  = netVal > 0 ? '+' : '';
+
+            const item = document.createElement('div');
+            item.className = 'sector-accordion-item';
+
+            item.innerHTML = `
+                <div class="sector-accordion-header">
+                    <span class="sec-name">${s.sector}</span>
+                    <div class="sec-meta">
+                        <span>${(s.tickers || []).length} mã</span>
+                        <span>${totalVal.toFixed(1)} tỷ</span>
+                        <span style="color:${chgColor};font-weight:600">${chgSign}${chg.toFixed(2)}%</span>
+                        <span style="color:${netColor};font-weight:600">${netSign}${netFlow}% dòng tiền</span>
+                    </div>
+                    <i class='bx bx-chevron-down sec-arrow'></i>
+                </div>
+                <div class="sector-accordion-body">
+                    <div class="sec-flow-row">
+                        <span class="sec-flow-label">Mua ròng</span>
+                        <div class="money-flow-bar" style="flex:1">
+                            <div class="flow-up"   style="width:${pctUp}%"  title="Tăng ${pctUp}%"></div>
+                            <div class="flow-ref"  style="width:${pctRef}%" title="Tham chiếu ${pctRef}%"></div>
+                            <div class="flow-down" style="width:${pctDown}%" title="Giảm ${pctDown}%"></div>
+                        </div>
+                        <span style="min-width:90px;text-align:right;font-size:0.8rem">
+                            <span style="color:var(--positive)">${pctUp}%</span> /
+                            <span style="color:var(--neutral)">${pctRef}%</span> /
+                            <span style="color:var(--negative)">${pctDown}%</span>
+                        </span>
+                    </div>
+                    <div class="sec-tickers">
+                        <strong>Cổ phiếu (${(s.tickers || []).length}):</strong> ${(s.tickers || []).join(', ')}
                     </div>
                 </div>
-                <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
-                    <strong>Danh sách mã (${s.tickers ? s.tickers.length : 0}):</strong><br/>
-                    <span style="color: #ddd;">${s.tickers ? s.tickers.join(', ') : ''}</span>
-                </div>
             `;
-            details.style.display = 'block';
-        };
+
+            // Toggle open/close
+            item.querySelector('.sector-accordion-header').addEventListener('click', () => {
+                item.classList.toggle('open');
+            });
+
+            container.appendChild(item);
+        });
     }
 
     function renderTASChart(history) {
