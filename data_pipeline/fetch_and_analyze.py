@@ -663,7 +663,11 @@ def compute_sector_heatmap(price_board, icb_mapping=None):
             'cap_ref':    float(round(cap_ref, 2))
         })
 
-    result.sort(key=lambda x: x['avg_change'], reverse=True)
+    # Lọc bỏ nhóm 'Tất cả HOSE' khỏi heatmap/bảng phân tích
+    result = [s for s in result if s['sector'] != 'Tất cả HOSE']
+    
+    # Sắp xếp theo avg_change giảm dần
+    result = sorted(result, key=lambda x: x['avg_change'], reverse=True)
     return result, raw_stocks
 
 

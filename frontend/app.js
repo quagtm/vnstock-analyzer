@@ -392,95 +392,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function renderSectorTable(sectors) {
-        const tbody = document.getElementById('sector-table-body');
-        if (!tbody) return;
-        tbody.innerHTML = '';
+        const dropdown = document.getElementById('sector-dropdown');
+        const details = document.getElementById('sector-details');
+        if (!dropdown || !details) return;
+        
+        // Clear old options
+        dropdown.innerHTML = '<option value="">-- Chọn một nhóm ngành --</option>';
+        details.style.display = 'none';
         
         if (!sectors || sectors.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4">Không có dữ liệu ngành</td></tr>';
             return;
         }
 
-        sectors.forEach(s => {
-            const tr = document.createElement('tr');
-            
-            // Name & Tickers
-            const tdName = document.createElement('td');
-            const nameDiv = document.createElement('div');
-            nameDiv.textContent = s.sector;
-            tdName.appendChild(nameDiv);
-            
-            if (s.tickers && s.tickers.length > 0) {
-                const tickDiv = document.createElement('div');
-                tickDiv.style.fontSize = '0.75rem';
-                tickDiv.style.color = 'var(--text-secondary)';
-                tickDiv.style.marginTop = '4px';
-                tickDiv.style.maxWidth = '250px';
-                tickDiv.style.whiteSpace = 'normal';
-                tickDiv.style.lineHeight = '1.4';
-                // Show up to 15 tickers, then append ... if more
-                const displayTickers = s.tickers.length > 15 ? s.tickers.slice(0, 15).join(', ') + '...' : s.tickers.join(', ');
-                tickDiv.textContent = displayTickers;
-                tdName.appendChild(tickDiv);
+        // Add options
+        sectors.forEach((s, index) => {
+            const opt = document.createElement('option');
+            opt.value = index;
+            // Format: Ngành (Giá trị tỷ VNĐ | Biến động %)
+            const chg = (s.avg_change || 0);
+            const chgSign = chg > 0 ? '+' : '';
+            opt.textContent = `${s.sector} (${s.total_value.toFixed(1)} tỷ | ${chgSign}${chg.toFixed(2)}%)`;
+            dropdown.appendChild(opt);
+        });
+
+        // Event listener
+        dropdown.onchange = function() {
+            const idx = this.value;
+            if (idx === "") {
+                details.style.display = 'none';
+                return;
             }
-            
-            // Change
-            const tdChange = document.createElement('td');
+            const s = sectors[idx];
             const chg = (s.avg_change || 0);
             const isPos = chg > 0;
-            const isNeg = chg < 0;
-            tdChange.textContent = (isPos ? '+' : '') + chg.toFixed(2) + '%';
-            tdChange.style.color = isPos ? 'var(--positive)' : (isNeg ? 'var(--negative)' : 'var(--text-secondary)');
+            const colorClass = isPos ? 'var(--positive)' : (chg < 0 ? 'var(--negative)' : 'var(--text-secondary)');
+            const sign = isPos ? '+' : '';
             
-            // Value
-            const tdVal = document.createElement('td');
-            tdVal.textContent = (s.total_val || 0).toLocaleString('vi-VN', {maximumFractionDigits: 2});
-            
-            // Money Flow Bar
-            const tdFlow = document.createElement('td');
-            const capUp = s.cap_up || 0;
-            const capDown = s.cap_down || 0;
-            const capRef = s.cap_ref || 0;
-            const totalCap = capUp + capDown + capRef;
-            
-            let pctUp = 0, pctDown = 0, pctRef = 0;
-            if (totalCap > 0) {
-                pctUp = (capUp / totalCap) * 100;
-                pctDown = (capDown / totalCap) * 100;
-                pctRef = (capRef / totalCap) * 100;
-            }
-            
-            const barWrap = document.createElement('div');
-            barWrap.className = 'money-flow-bar';
-            
-            if (pctUp > 0) {
-                const bUp = document.createElement('div');
-                bUp.className = 'flow-up';
-                bUp.style.width = pctUp + '%';
-                barWrap.appendChild(bUp);
-            }
-            if (pctRef > 0) {
-                const bRef = document.createElement('div');
-                bRef.className = 'flow-ref';
-                bRef.style.width = pctRef + '%';
-                barWrap.appendChild(bRef);
-            }
-            if (pctDown > 0) {
-                const bDown = document.createElement('div');
-                bDown.className = 'flow-down';
-                bDown.style.width = pctDown + '%';
-                barWrap.appendChild(bDown);
-            }
-            
-            tdFlow.appendChild(barWrap);
-            
-            tr.appendChild(tdName);
-            tr.appendChild(tdChange);
-            tr.appendChild(tdVal);
-            tr.appendChild(tdFlow);
-            
-            tbody.appendChild(tr);
-        });
+            // Format money flow ratio
+            const ratio = (s.cap_ref > 0) ? ((s.cap_up - s.cap_down) / s.cap_ref * 100).toFixed(2) : '0.00';
+            const ratioVal = parseFloat(ratio);
+            const ratioSign = ratioVal > 0 ? '+' : '';
+            const ratioColor = ratioVal > 0 ? 'var(--positive)' : (ratioVal < 0 ? 'var(--negative)' : 'var(--text-secondary)');
+
+            details.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap;">
+                    <div style="font-size: 1.1rem; font-weight: bold; color: #fff;">${s.sector}</div>
+                    <div style="text-align: right; display: flex; gap: 15px; font-size: 0.9rem; margin-top: 5px;">
+                        <div>Biến động: <span style="color: ${colorClass}; font-weight: bold;">${sign}${chg.toFixed(2)}%</span></div>
+                        <div>Dòng tiền: <span style="color: ${ratioColor}; font-weight: bold;">${ratioSign}${ratio}%</span></div>
+                    </div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                    <strong>Danh sách mã (${s.tickers ? s.tickers.length : 0}):</strong><br/>
+                    <span style="color: #ddd;">${s.tickers ? s.tickers.join(', ') : ''}</span>
+                </div>
+            `;
+            details.style.display = 'block';
+        };
     }
 
     function renderTASChart(history) {
