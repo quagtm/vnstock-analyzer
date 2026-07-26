@@ -239,19 +239,11 @@
             <div id="sector-heatmap" class="sector-heatmap"></div>
             
             <div class="sector-table-wrapper" style="margin-top: 20px; overflow-x: auto;">
-                <table class="sector-table" id="sector-table">
-                    <thead>
-                        <tr>
-                            <th style="text-align: left;">Ngành</th>
-                            <th>Biến Động</th>
-                            <th>Giá Trị (tỷ VNĐ)</th>
-                            <th style="width: 30%;">Dòng Tiền</th>
-                        </tr>
-                    </thead>
-                    <tbody id="sector-table-body">
-                        <!-- Populated by JS -->
-                    </tbody>
-                </table>
+                <select id="sector-dropdown" style="width: 100%; padding: 10px; border-radius: 6px; background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.1); outline: none; margin-bottom: 15px;">
+                    <option value="">-- Chọn một nhóm ngành --</option>
+                </select>
+                <div id="sector-details" style="display: none; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                </div>
             </div>
         </div>
 
