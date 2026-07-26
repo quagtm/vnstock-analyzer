@@ -411,7 +411,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Format: Ngành (Giá trị tỷ VNĐ | Biến động %)
             const chg = (s.avg_change || 0);
             const chgSign = chg > 0 ? '+' : '';
-            opt.textContent = `${s.sector} (${s.total_value.toFixed(1)} tỷ | ${chgSign}${chg.toFixed(2)}%)`;
+            const totalVal = (s.total_val || s.total_value || 0);
+            opt.textContent = `${s.sector} (${totalVal.toFixed(1)} tỷ | ${chgSign}${chg.toFixed(2)}%)`;
             dropdown.appendChild(opt);
         });
 
