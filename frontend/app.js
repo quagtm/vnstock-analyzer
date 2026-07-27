@@ -432,24 +432,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="sec-name">${s.sector}</span>
                     <div class="sec-meta">
                         <span>${(s.tickers || []).length} mã</span>
-                        <span>${totalVal.toFixed(1)} tỷ</span>
+                        <span>${totalVal.toFixed(1)} tỷ GT</span>
                         <span style="color:${chgColor};font-weight:600">${chgSign}${chg.toFixed(2)}%</span>
-                        <span style="color:${netColor};font-weight:600">${netSign}${netFlow}% dòng tiền</span>
+                        <span style="color:${netColor};font-weight:600">${netSign}${(Math.abs(capUp - capDown)/1000).toFixed(1)}k tỷ VH ròng</span>
                     </div>
                     <i class='bx bx-chevron-down sec-arrow'></i>
                 </div>
                 <div class="sector-accordion-body">
                     <div class="sec-flow-row">
-                        <span class="sec-flow-label">Mua ròng</span>
+                        <span class="sec-flow-label">Vốn hóa</span>
                         <div class="money-flow-bar" style="flex:1">
-                            <div class="flow-up"   style="width:${pctUp}%"  title="Tăng ${pctUp}%"></div>
-                            <div class="flow-ref"  style="width:${pctRef}%" title="Tham chiếu ${pctRef}%"></div>
-                            <div class="flow-down" style="width:${pctDown}%" title="Giảm ${pctDown}%"></div>
+                            <div class="flow-up"   style="width:${pctUp}%"  title="Tăng: ${(capUp/1000).toFixed(1)} nghìn tỷ"></div>
+                            <div class="flow-ref"  style="width:${pctRef}%" title="Tham chiếu: ${(capRef/1000).toFixed(1)} nghìn tỷ"></div>
+                            <div class="flow-down" style="width:${pctDown}%" title="Giảm: ${(capDown/1000).toFixed(1)} nghìn tỷ"></div>
                         </div>
-                        <span style="min-width:90px;text-align:right;font-size:0.8rem">
-                            <span style="color:var(--positive)">${pctUp}%</span> /
-                            <span style="color:var(--neutral)">${pctRef}%</span> /
-                            <span style="color:var(--negative)">${pctDown}%</span>
+                        <span style="min-width:130px;text-align:right;font-size:0.8rem">
+                            <span style="color:var(--positive)">↑${(capUp/1000).toFixed(1)}k tỷ</span> /
+                            <span style="color:var(--negative)">↓${(capDown/1000).toFixed(1)}k tỷ</span>
                         </span>
                     </div>
                     <div class="sec-tickers">
