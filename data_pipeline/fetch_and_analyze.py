@@ -561,10 +561,22 @@ def get_sector_mapping():
             try:
                 with open(custom_path, 'r', encoding='utf-8') as f:
                     custom_map = json.load(f)
+                # Các nhóm "tổng hợp" không được ghi đè ngành chuyên biệt
+                GENERAL_BUCKETS = {'Tất cả HOSE', 'VN30', 'VN100'}
                 mapping = {}
+                # Pass 1: ngành chuyên biệt trước
                 for sector, tickers in custom_map.items():
+                    if sector in GENERAL_BUCKETS:
+                        continue
                     for t in tickers:
                         mapping[t] = sector
+                # Pass 2: nhóm tổng hợp chỉ điền vào các mã chưa có ngành
+                for sector, tickers in custom_map.items():
+                    if sector not in GENERAL_BUCKETS:
+                        continue
+                    for t in tickers:
+                        if t not in mapping:
+                            mapping[t] = sector
                 print(f"[ICB] Loaded custom sector mapping from {custom_path}")
                 return mapping
             except Exception as e:
