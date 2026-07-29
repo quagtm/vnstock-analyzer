@@ -403,14 +403,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sectors
             .filter(s => s.sector !== 'VN30')   // Bỏ VN30 khỏi bảng ngành
-            .forEach((s) => {
+            .forEach((s, idx) => {
             const chg = (s.avg_change || 0);
             const isPos = chg > 0;
             const chgColor = isPos ? 'var(--positive)' : (chg < 0 ? 'var(--negative)' : 'var(--text-secondary)');
             const chgSign = isPos ? '+' : '';
             const totalVal = (s.total_val || 0);
 
-            // Cap_up / cap_down money flow bar
             const capUp   = s.cap_up   || 0;
             const capDown = s.cap_down || 0;
             const capRef  = s.cap_ref  || 0;
@@ -421,16 +420,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 pctDown = (capDown / totalCap * 100).toFixed(1);
                 pctRef  = (capRef  / totalCap * 100).toFixed(1);
             }
-            const netCap  = capUp - capDown;
-            const netVal  = netCap;
-            const netColor = netVal > 0 ? 'var(--positive)' : (netVal < 0 ? 'var(--negative)' : 'var(--text-secondary)');
-            const netSign  = netVal > 0 ? '+' : '';
+            const netCap   = capUp - capDown;
+            const netColor = netCap > 0 ? 'var(--positive)' : (netCap < 0 ? 'var(--negative)' : 'var(--text-secondary)');
+            const netSign  = netCap > 0 ? '+' : '';
 
+            const sectorId = `sector-item-${idx}`;
             const item = document.createElement('div');
-            item.className = 'sector-accordion-item';
+            item.className = 'sector-full-item';
+            item.id = sectorId;
 
             item.innerHTML = `
-                <div class="sector-accordion-header">
+                <div class="sector-full-header">
                     <span class="sec-name">${s.sector}</span>
                     <div class="sec-meta">
                         <span>${(s.tickers || []).length} mã</span>
@@ -438,9 +438,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span style="color:${chgColor};font-weight:600">${chgSign}${chg.toFixed(2)}%</span>
                         <span style="color:${netColor};font-weight:600">${netSign}${Math.abs(netCap).toFixed(0)} tỷ ròng</span>
                     </div>
-                    <i class='bx bx-chevron-down sec-arrow'></i>
                 </div>
-                <div class="sector-accordion-body">
+                <div class="sector-full-body">
                     <div class="sec-flow-row">
                         <span class="sec-flow-label">Vốn hóa</span>
                         <div class="money-flow-bar" style="flex:1">
@@ -458,14 +457,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
-
-            // Toggle open/close
-            item.querySelector('.sector-accordion-header').addEventListener('click', () => {
-                item.classList.toggle('open');
-            });
-
             container.appendChild(item);
         });
+
+        // Populate jump dropdown
+        const jumpDd = document.getElementById('sector-jump-dropdown');
+        if (jumpDd) {
+            jumpDd.innerHTML = '<option value="">-- Chọn ngành để xem chi tiết --</option>';
+            sectors.filter(s => s.sector !== 'VN30').forEach((s, idx) => {
+                const chg = (s.avg_change || 0);
+                const sign = chg > 0 ? '+' : '';
+                const opt = document.createElement('option');
+                opt.value = `sector-item-${idx}`;
+                opt.textContent = `${s.sector}  ${sign}${chg.toFixed(2)}%`;
+                jumpDd.appendChild(opt);
+            });
+            jumpDd.onchange = function() {
+                if (!this.value) return;
+                const el = document.getElementById(this.value);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    el.style.outline = '2px solid var(--accent)';
+                    setTimeout(() => el.style.outline = '', 2000);
+                }
+                this.value = '';
+            };
+        }
     }
 
     function renderTASChart(history) {
