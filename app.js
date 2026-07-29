@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('sector-heatmap');
         if (!el) return;
         if (!sectors || sectors.length === 0) { el.innerHTML = '<span style="color:var(--text-secondary);font-size:.8rem;padding:8px">Chưa có dữ liệu ngành</span>'; return; }
-        el.innerHTML = sectors.map(s => {
+        el.innerHTML = sectors.filter(s => s.sector !== 'VN30').map(s => {
             const v   = s.avg_change;
             const abs = Math.abs(v);
             // Color intensity: capped at 3%
