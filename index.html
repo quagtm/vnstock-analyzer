@@ -238,7 +238,17 @@
             </div>
             <div id="sector-heatmap" class="sector-heatmap"></div>
             
-            <div class="sector-table-wrapper" style="margin-top: 20px; overflow-x: auto;">
+            <!-- Dropdown Diễn biến dòng tiền -->
+            <div style="margin-top: 20px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <label style="font-weight: 600; font-size: 0.9rem; color: #fff; white-space: nowrap;">
+                    <i class='bx bx-trending-up' style="color: var(--accent);"></i> Diễn biến dòng tiền
+                </label>
+                <select id="sector-jump-dropdown" style="flex:1; min-width:200px; padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,0.07); color: #fff; border: 1px solid rgba(255,255,255,0.15); outline: none; font-size: 0.85rem; cursor: pointer;">
+                    <option value="">-- Chọn ngành để xem chi tiết --</option>
+                </select>
+            </div>
+
+            <div class="sector-table-wrapper" style="overflow-x: auto;">
                 <div id="sector-accordion"></div>
             </div>
         </div>
