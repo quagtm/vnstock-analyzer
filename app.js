@@ -401,7 +401,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        sectors.forEach((s) => {
+        sectors
+            .filter(s => s.sector !== 'VN30')   // Bỏ VN30 khỏi bảng ngành
+            .forEach((s) => {
             const chg = (s.avg_change || 0);
             const isPos = chg > 0;
             const chgColor = isPos ? 'var(--positive)' : (chg < 0 ? 'var(--negative)' : 'var(--text-secondary)');
@@ -419,8 +421,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 pctDown = (capDown / totalCap * 100).toFixed(1);
                 pctRef  = (capRef  / totalCap * 100).toFixed(1);
             }
-            const netFlow = capRef > 0 ? ((capUp - capDown) / capRef * 100).toFixed(2) : '0.00';
-            const netVal  = parseFloat(netFlow);
+            const netCap  = capUp - capDown;
+            const netVal  = netCap;
             const netColor = netVal > 0 ? 'var(--positive)' : (netVal < 0 ? 'var(--negative)' : 'var(--text-secondary)');
             const netSign  = netVal > 0 ? '+' : '';
 
@@ -434,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span>${(s.tickers || []).length} mã</span>
                         <span>${totalVal.toFixed(1)} tỷ GT</span>
                         <span style="color:${chgColor};font-weight:600">${chgSign}${chg.toFixed(2)}%</span>
-                        <span style="color:${netColor};font-weight:600">${netSign}${(Math.abs(capUp - capDown)/1000).toFixed(1)}k tỷ VH ròng</span>
+                        <span style="color:${netColor};font-weight:600">${netSign}${Math.abs(netCap).toFixed(0)} tỷ ròng</span>
                     </div>
                     <i class='bx bx-chevron-down sec-arrow'></i>
                 </div>
@@ -442,13 +444,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="sec-flow-row">
                         <span class="sec-flow-label">Vốn hóa</span>
                         <div class="money-flow-bar" style="flex:1">
-                            <div class="flow-up"   style="width:${pctUp}%"  title="Tăng: ${(capUp/1000).toFixed(1)} nghìn tỷ"></div>
-                            <div class="flow-ref"  style="width:${pctRef}%" title="Tham chiếu: ${(capRef/1000).toFixed(1)} nghìn tỷ"></div>
-                            <div class="flow-down" style="width:${pctDown}%" title="Giảm: ${(capDown/1000).toFixed(1)} nghìn tỷ"></div>
+                            <div class="flow-up"   style="width:${pctUp}%"  title="Tăng: ${capUp.toFixed(0)} tỷ"></div>
+                            <div class="flow-ref"  style="width:${pctRef}%" title="Tham chiếu: ${capRef.toFixed(0)} tỷ"></div>
+                            <div class="flow-down" style="width:${pctDown}%" title="Giảm: ${capDown.toFixed(0)} tỷ"></div>
                         </div>
                         <span style="min-width:130px;text-align:right;font-size:0.8rem">
-                            <span style="color:var(--positive)">↑${(capUp/1000).toFixed(1)}k tỷ</span> /
-                            <span style="color:var(--negative)">↓${(capDown/1000).toFixed(1)}k tỷ</span>
+                            <span style="color:var(--positive)">↑${capUp.toFixed(0)} tỷ</span> /
+                            <span style="color:var(--negative)">↓${capDown.toFixed(0)} tỷ</span>
                         </span>
                     </div>
                     <div class="sec-tickers">
