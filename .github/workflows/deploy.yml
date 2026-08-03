@@ -10,6 +10,8 @@ on:
     - cron: '30 8 * * 1-5'  # 15:30 VN (Thứ 2 - Thứ 6)
     # Backup: 16:30 VN (09:30 UTC) — đề phòng lần đầu bị GitHub delay
     - cron: '30 9 * * 1-5'  # 16:30 VN (Thứ 2 - Thứ 6)
+    # Extra backup: 17:30 VN (10:30 UTC) — đảm bảo chạy ít nhất 1 lần
+    - cron: '30 10 * * 1-5' # 17:30 VN (Thứ 2 - Thứ 6)
   workflow_dispatch:
     inputs:
       force_run:
