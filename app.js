@@ -391,6 +391,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // Helper: format số có dấu phẩy ngăn hàng nghìn
+    function fmt(n, decimals = 0) {
+        return Number(n).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+
     function renderSectorTable(sectors) {
         const container = document.getElementById('sector-accordion');
         if (!container) return;
@@ -434,22 +439,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="sec-name">${s.sector}</span>
                     <div class="sec-meta">
                         <span>${(s.tickers || []).length} mã</span>
-                        <span>${totalVal.toFixed(1)} tỷ GT</span>
+                        <span>${fmt(totalVal, 1)} tỷ GT</span>
                         <span style="color:${chgColor};font-weight:600">${chgSign}${chg.toFixed(2)}%</span>
-                        <span style="color:${netColor};font-weight:600">${netSign}${Math.abs(netCap).toFixed(0)} tỷ ròng</span>
+                        <span style="color:${netColor};font-weight:600">${netSign}${fmt(Math.abs(netCap))} tỷ ròng</span>
                     </div>
                 </div>
                 <div class="sector-full-body">
                     <div class="sec-flow-row">
                         <span class="sec-flow-label">Vốn hóa</span>
                         <div class="money-flow-bar" style="flex:1">
-                            <div class="flow-up"   style="width:${pctUp}%"  title="Tăng: ${capUp.toFixed(0)} tỷ"></div>
-                            <div class="flow-ref"  style="width:${pctRef}%" title="Tham chiếu: ${capRef.toFixed(0)} tỷ"></div>
-                            <div class="flow-down" style="width:${pctDown}%" title="Giảm: ${capDown.toFixed(0)} tỷ"></div>
+                            <div class="flow-up"   style="width:${pctUp}%"  title="Tăng: ${fmt(capUp)} tỷ"></div>
+                            <div class="flow-ref"  style="width:${pctRef}%" title="Tham chiếu: ${fmt(capRef)} tỷ"></div>
+                            <div class="flow-down" style="width:${pctDown}%" title="Giảm: ${fmt(capDown)} tỷ"></div>
                         </div>
-                        <span style="min-width:130px;text-align:right;font-size:0.8rem">
-                            <span style="color:var(--positive)">↑${capUp.toFixed(0)} tỷ</span> /
-                            <span style="color:var(--negative)">↓${capDown.toFixed(0)} tỷ</span>
+                        <span style="min-width:150px;text-align:right;font-size:0.8rem">
+                            <span style="color:var(--positive)">↑${fmt(capUp)} tỷ</span> /
+                            <span style="color:var(--negative)">↓${fmt(capDown)} tỷ</span>
                         </span>
                     </div>
                     <div class="sec-tickers">
