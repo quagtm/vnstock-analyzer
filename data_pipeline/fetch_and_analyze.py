@@ -1398,12 +1398,17 @@ def fetch_historical_vndirect(sym, start_ts, end_ts):
 def enrich_raw_stocks_with_breadth(raw_stocks):
     import time, concurrent.futures
     import pandas as pd
+    from collections import defaultdict
     
     end_ts = int(time.time())
     start_ts = end_ts - 365*24*3600
     symbols = list(raw_stocks.keys())
     
     print(f"[BREADTH] Fetching 1Y history for {len(symbols)} stocks via VNDIRECT API...")
+    
+    # Per-date advance/decline tracking for A/D line
+    date_advance = defaultdict(int)
+    date_decline = defaultdict(int)
     
     with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
         futures = {executor.submit(fetch_historical_vndirect, sym, start_ts, end_ts): sym for sym in symbols}
@@ -1417,6 +1422,7 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                 closes = pd.Series(data['c'])
                 highs = pd.Series(data['h'])
                 lows = pd.Series(data['l'])
+                timestamps = data.get('t', [])
                 
                 if len(closes) < 10:
                     continue
@@ -1433,7 +1439,6 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                 low_52w = float(lows.min())
                 
                 # Flags
-                # Giá >= đỉnh 52T hoặc cách đỉnh 1%
                 is_new_high_52w = bool(cur_close >= high_52w * 0.99)
                 is_new_low_52w = bool(cur_close <= low_52w * 1.01)
                 
@@ -1450,10 +1455,46 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                 raw_stocks[sym]['is_new_high_52w'] = is_new_high_52w
                 raw_stocks[sym]['is_new_low_52w'] = is_new_low_52w
                 
+                # Tính A/D daily từ daily returns
+                if len(timestamps) == len(closes) and len(closes) >= 2:
+                    daily_ret = closes.diff()
+                    # Chỉ lấy 55 phiên gần nhất để tính A/D line
+                    recent_ret = daily_ret.iloc[-55:]
+                    recent_ts  = timestamps[-55:]
+                    for ts, ret in zip(recent_ts, recent_ret):
+                        if pd.isna(ret):
+                            continue
+                        import datetime
+                        date_str = datetime.datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d')
+                        if ret > 0:
+                            date_advance[date_str] += 1
+                        elif ret < 0:
+                            date_decline[date_str] += 1
+                
             except Exception as e:
                 pass
+
     print("[BREADTH] Historical data fetch & compute completed.")
-    return raw_stocks
+    
+    # Build A/D line: sorted dates, cumulative (advance - decline)
+    all_dates = sorted(set(date_advance.keys()) | set(date_decline.keys()))
+    all_dates = all_dates[-50:]  # Lấy 50 phiên gần nhất
+    
+    ad_history = []
+    cumulative = 0
+    for d in all_dates:
+        net = date_advance.get(d, 0) - date_decline.get(d, 0)
+        cumulative += net
+        ad_history.append({
+            'date': d,
+            'advance': date_advance.get(d, 0),
+            'decline': date_decline.get(d, 0),
+            'net': net,
+            'cumulative': cumulative
+        })
+    
+    print(f"[BREADTH] A/D Line: {len(ad_history)} phiên computed")
+    return raw_stocks, ad_history
 
 def main():
     symbols = ["VNINDEX", "VN30", "VN100", "HNXINDEX"]
@@ -1688,14 +1729,17 @@ def main():
     if board_for_sector is not None and not board_for_sector.empty:
         sector_heatmap, raw_stocks = compute_sector_heatmap(board_for_sector, icb_mapping)
         print(f"[SECTOR] {len(sector_heatmap)} ngành computed from {len(board_for_sector)} stocks")
-        raw_stocks = enrich_raw_stocks_with_breadth(raw_stocks)
+        raw_stocks, ad_history = enrich_raw_stocks_with_breadth(raw_stocks)
+    else:
+        ad_history = []
 
     # Gắn sector_heatmap vào tất cả index
     for sym in all_data:
         all_data[sym]['sector_heatmap'] = sector_heatmap
         
     all_data['__global__'] = {
-        'raw_stocks': raw_stocks
+        'raw_stocks': raw_stocks,
+        'ad_history': ad_history
     }
     
     def clean_nan(obj):

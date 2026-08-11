@@ -781,7 +781,106 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSectorHeatmap(sectorData);
         renderSectorTable(sectorData);
         
+        // Render A/D Line chart
+        const adHistory = (appData['__global__'] || {}).ad_history || [];
+        renderADLineChart(adHistory);
+        
         if (window.bindEditSectorButton) window.bindEditSectorButton();
+    }
+
+    // ── A/D Line Chart ──────────────────────────────────────────────
+    let adChartInstance = null;
+    function renderADLineChart(adHistory) {
+        const canvas = document.getElementById('ad-line-chart');
+        if (!canvas || !adHistory || adHistory.length === 0) return;
+
+        if (adChartInstance) { adChartInstance.destroy(); adChartInstance = null; }
+
+        const labels   = adHistory.map(d => d.date.slice(5));   // MM-DD
+        const cumData  = adHistory.map(d => d.cumulative);
+        const advances = adHistory.map(d => d.advance);
+        const declines = adHistory.map(d => -d.decline);
+
+        // Color A/D line by slope: green if rising, red if falling
+        const gradient = canvas.getContext('2d').createLinearGradient(0, 0, canvas.width, 0);
+        gradient.addColorStop(0, 'rgba(74,222,128,0.8)');
+        gradient.addColorStop(1, 'rgba(74,222,128,0.8)');
+
+        adChartInstance = new Chart(canvas, {
+            type: 'bar',
+            data: {
+                labels,
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'A/D Line (tích lũy)',
+                        data: cumData,
+                        borderColor: '#60a5fa',
+                        backgroundColor: 'rgba(96,165,250,0.1)',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        tension: 0.3,
+                        fill: true,
+                        yAxisID: 'yLine',
+                        order: 0
+                    },
+                    {
+                        type: 'bar',
+                        label: 'Tăng',
+                        data: advances,
+                        backgroundColor: 'rgba(74,222,128,0.55)',
+                        borderWidth: 0,
+                        yAxisID: 'yBar',
+                        order: 1
+                    },
+                    {
+                        type: 'bar',
+                        label: 'Giảm',
+                        data: declines,
+                        backgroundColor: 'rgba(248,113,113,0.55)',
+                        borderWidth: 0,
+                        yAxisID: 'yBar',
+                        order: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: { display: true, labels: { color: '#94a3b8', font: { size: 11 }, boxWidth: 12, padding: 12 } },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => {
+                                if (ctx.dataset.label === 'Giảm') return `Giảm: ${Math.abs(ctx.raw)}`;
+                                return `${ctx.dataset.label}: ${ctx.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#64748b', font: { size: 10 }, maxRotation: 45 },
+                        grid: { color: 'rgba(255,255,255,0.04)' }
+                    },
+                    yLine: {
+                        position: 'right',
+                        ticks: { color: '#60a5fa', font: { size: 10 } },
+                        grid: { color: 'rgba(255,255,255,0.06)' },
+                        title: { display: true, text: 'A/D tích lũy', color: '#60a5fa', font: { size: 10 } }
+                    },
+                    yBar: {
+                        position: 'left',
+                        ticks: { color: '#94a3b8', font: { size: 10 },
+                            callback: v => v < 0 ? Math.abs(v) : v
+                        },
+                        grid: { display: false },
+                        title: { display: true, text: 'Số CP', color: '#94a3b8', font: { size: 10 } }
+                    }
+                }
+            }
+        });
     }
 
     // Expose for sectors.js

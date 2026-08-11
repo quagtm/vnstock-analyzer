@@ -224,7 +224,18 @@
         <!-- S/R Zones strip -->
         <div id="sr-zones" class="sr-zones-strip glass"></div>
 
+        <!-- A/D Line Chart -->
+        <div class="glass" style="padding: 20px; margin-bottom: 20px; border-radius: 16px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                <i class='bx bx-line-chart' style="font-size: 1.3rem; color: var(--accent);"></i>
+                <span style="font-weight: 700; font-size: 1rem;">Đường A/D Line – 50 phiên gần nhất</span>
+                <span style="font-size: 0.8rem; color: var(--text-secondary);">(Tích lũy Tăng − Giảm)</span>
+            </div>
+            <canvas id="ad-line-chart" style="width:100%; height:180px;"></canvas>
+        </div>
+
         <!-- Sector Heatmap -->
+
         <div class="sector-section glass">
             <div class="sector-header" style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
