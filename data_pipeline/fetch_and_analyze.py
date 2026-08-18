@@ -1396,7 +1396,7 @@ def fetch_historical_vndirect(sym, start_ts, end_ts):
         return sym, None
 
 def enrich_raw_stocks_with_breadth(raw_stocks):
-    import time, concurrent.futures
+    import time, concurrent.futures, datetime
     import pandas as pd
     from collections import defaultdict
     
@@ -1464,7 +1464,6 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                     for ts, ret in zip(recent_ts, recent_ret):
                         if pd.isna(ret):
                             continue
-                        import datetime
                         date_str = datetime.datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d')
                         if ret > 0:
                             date_advance[date_str] += 1
