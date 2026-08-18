@@ -781,11 +781,89 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSectorHeatmap(sectorData);
         renderSectorTable(sectorData);
         
+        // Render Swing Signals (Accurate Swing Trading System)
+        const swingSignals = data.swing_signals || (appData['__global__'] || {}).swing_signals;
+        renderSwingSignals(swingSignals);
+
         // Render A/D Line chart
         const adHistory = (appData['__global__'] || {}).ad_history || [];
         renderADLineChart(adHistory);
         
         if (window.bindEditSectorButton) window.bindEditSectorButton();
+    }
+
+    // ── Swing Trading System Signals ─────────────────────────────────
+    function renderSwingSignals(swingData) {
+        const buyContainer  = document.getElementById('swing-buy-list');
+        const sellContainer = document.getElementById('swing-sell-list');
+        const buyCountEl    = document.getElementById('swing-buy-count');
+        const sellCountEl   = document.getElementById('swing-sell-count');
+        const statsEl       = document.getElementById('swing-breadth-stats');
+
+        if (!buyContainer || !sellContainer) return;
+
+        if (!swingData) {
+            buyContainer.innerHTML  = '<span style="color:var(--text-secondary);font-size:0.8rem">Không có dữ liệu</span>';
+            sellContainer.innerHTML = '<span style="color:var(--text-secondary);font-size:0.8rem">Không có dữ liệu</span>';
+            return;
+        }
+
+        const buyList  = swingData.buy_today  || [];
+        const sellList = swingData.sell_today || [];
+
+        if (buyCountEl)  buyCountEl.textContent  = buyList.length;
+        if (sellCountEl) sellCountEl.textContent = sellList.length;
+
+        if (statsEl && swingData.total) {
+            const upPct = (swingData.uptrend_count / swingData.total * 100).toFixed(1);
+            statsEl.innerHTML = `Thị trường: <span style="color:#10e89a;font-weight:600">${swingData.uptrend_count} CP (${upPct}%) Uptrend</span> • <span style="color:#ff4d6d;font-weight:600">${swingData.downtrend_count} CP Downtrend</span>`;
+        }
+
+        // Render BUY list
+        if (buyList.length === 0) {
+            buyContainer.innerHTML = '<span style="color:#64748b;font-size:0.8rem;padding:6px">Phiên hôm nay không có mã phát tín hiệu MUA mới</span>';
+        } else {
+            buyContainer.innerHTML = buyList.map(s => {
+                const chgColor = s.change_pc >= 0 ? '#10e89a' : '#ff4d6d';
+                const chgSign  = s.change_pc >= 0 ? '+' : '';
+                return `
+                    <div class="swing-card swing-buy-card" title="Giá: ${fmt(s.price)}đ | SL: ${fmt(s.tsl)}đ | ${s.sector}">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+                            <span class="swing-sym">${s.ticker}</span>
+                            <span style="color:${chgColor};font-size:0.75rem;font-weight:600">${chgSign}${s.change_pc}%</span>
+                        </div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;font-size:0.75rem;color:#94a3b8">
+                            <span>SL: <strong style="color:#e2e8f0">${fmt(s.tsl)}</strong></span>
+                            <button class="btn-add-wl-quick" onclick="window.addWatchlistFromSwing && window.addWatchlistFromSwing('${s.ticker}', ${s.price}, ${s.tsl})" title="Thêm vào Khuyến nghị">
+                                <i class='bx bx-plus'></i> KN
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render SELL list
+        if (sellList.length === 0) {
+            sellContainer.innerHTML = '<span style="color:#64748b;font-size:0.8rem;padding:6px">Phiên hôm nay không có mã phát tín hiệu BÁN</span>';
+        } else {
+            sellContainer.innerHTML = sellList.map(s => {
+                const chgColor = s.change_pc >= 0 ? '#10e89a' : '#ff4d6d';
+                const chgSign  = s.change_pc >= 0 ? '+' : '';
+                return `
+                    <div class="swing-card swing-sell-card" title="Giá: ${fmt(s.price)}đ | TSL: ${fmt(s.tsl)}đ | ${s.sector}">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+                            <span class="swing-sym">${s.ticker}</span>
+                            <span style="color:${chgColor};font-size:0.75rem;font-weight:600">${chgSign}${s.change_pc}%</span>
+                        </div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;font-size:0.75rem;color:#94a3b8">
+                            <span>TSL: <strong style="color:#e2e8f0">${fmt(s.tsl)}</strong></span>
+                            <span style="color:#ff4d6d;font-weight:600;font-size:0.7rem;background:rgba(255,77,109,0.15);padding:1px 5px;border-radius:4px">EXIT</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
     }
 
     // ── A/D Line Chart ──────────────────────────────────────────────

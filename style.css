@@ -1420,3 +1420,48 @@ body {
     font-size: 0.88rem;
     letter-spacing: 0.05em;
 }
+
+/* ══════════════════════════════════════════
+   SWING TRADING SYSTEM CARDS
+   ══════════════════════════════════════════ */
+.swing-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 8px 10px;
+    min-width: 120px;
+    flex: 1 1 120px;
+    max-width: 180px;
+    transition: transform 0.15s, border-color 0.15s;
+}
+.swing-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.2);
+}
+.swing-buy-card {
+    border-left: 3px solid #10e89a;
+}
+.swing-sell-card {
+    border-left: 3px solid #ff4d6d;
+}
+.swing-sym {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #fff;
+    letter-spacing: 0.04em;
+}
+.btn-add-wl-quick {
+    background: rgba(16, 232, 154, 0.15);
+    color: #10e89a;
+    border: 1px solid rgba(16, 232, 154, 0.3);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+.btn-add-wl-quick:hover {
+    background: #10e89a;
+    color: #0f172a;
+}
