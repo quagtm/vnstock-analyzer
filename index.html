@@ -68,6 +68,11 @@
                     </ul>
                 </li>
             </ul>
+            <!-- Khuyến nghị Tab -->
+            <div class="nav-item watchlist-nav-item" id="btn-open-watchlist" title="Khuyến nghị">
+                <i class='bx bx-star'></i>
+                <span>Khuyến nghị</span>
+            </div>
             <div class="sidebar-footer">
                 <p>Updated: <span id="update-date">...</span></p>
                 <p class="credit">© Whatif Investment — Powered by DeepSeek & Vnstock</p>
@@ -379,5 +384,45 @@
             </div>
         </div>
     </div>
+    <!-- ── Watchlist / Khuyến nghị Panel ── -->
+    <div id="watchlist-overlay" class="watchlist-overlay" style="display:none;"></div>
+    <div id="watchlist-panel" class="watchlist-panel" style="display:none;">
+        <div class="watchlist-header">
+            <span><i class='bx bx-star'></i> Danh sách Khuyến nghị</span>
+            <button id="btn-close-watchlist" class="btn-icon"><i class='bx bx-x'></i></button>
+        </div>
+        <div class="watchlist-body">
+            <!-- Add form -->
+            <div class="wl-add-form glass">
+                <div class="wl-form-row">
+                    <input id="wl-ticker"    class="wl-input" type="text"   placeholder="Mã CP (VD: HPG)" maxlength="10" />
+                    <input id="wl-rec-price" class="wl-input" type="number" placeholder="Giá KN (đ)" min="0" />
+                    <input id="wl-sl-price"  class="wl-input" type="number" placeholder="Stoploss (đ)" min="0" />
+                    <input id="wl-date"      class="wl-input" type="date" />
+                    <button id="btn-wl-add" class="btn-primary" style="white-space:nowrap;"><i class='bx bx-plus'></i> Thêm</button>
+                </div>
+            </div>
+            <!-- Table -->
+            <div class="wl-table-wrap">
+                <table class="wl-table">
+                    <thead>
+                        <tr>
+                            <th>Mã</th>
+                            <th>Ngày KN</th>
+                            <th>Giá KN</th>
+                            <th>Giá hiện tại</th>
+                            <th>Stoploss</th>
+                            <th>Lãi/Lỗ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="watchlist-tbody"></tbody>
+                </table>
+                <p id="wl-empty" style="text-align:center;color:#64748b;padding:24px;display:none;">Chưa có khuyến nghị nào. Thêm mã phía trên!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="watchlist.js"></script>
 </body>
 </html>
