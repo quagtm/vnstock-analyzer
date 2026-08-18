@@ -1579,7 +1579,10 @@ def main():
                     if syms:
                         return syms
             except Exception as e:
-                print(f"  [BOARDS] all_symbols filter failed: {e}")
+                err_str = str(e)
+                # Bỏ qua lỗi nội bộ của vnstock library (hosting_service bug)
+                if 'hosting_service' not in err_str and 'Expecting value' not in err_str:
+                    print(f"  [BOARDS] all_symbols filter failed: {err_str}")
             return fallback  # hardcode fallback
 
         def _normalize_board(raw):
