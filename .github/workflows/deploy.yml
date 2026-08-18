@@ -88,9 +88,8 @@ jobs:
             echo "Copied custom_sectors.json to data_pipeline/"
           fi
           cd data_pipeline
-          python fetch_and_analyze.py
+          python -u fetch_and_analyze.py || (echo "=== PIPELINE FAILED ===" && exit 1)
 
-          
       - name: Copy data.json to frontend/public
         if: steps.market_check.outputs.skip != 'true'
         run: |
