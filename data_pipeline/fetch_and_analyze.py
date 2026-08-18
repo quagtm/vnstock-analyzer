@@ -1455,6 +1455,64 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                 raw_stocks[sym]['is_new_high_52w'] = is_new_high_52w
                 raw_stocks[sym]['is_new_low_52w'] = is_new_low_52w
                 
+                # ── Accurate Swing Trading System (Pine Script port) ──
+                # no = 5
+                # res = highest(high, no), sup = lowest(low, no)
+                # avd = iff(close > res[1], 1, iff(close < sup[1], -1, 0))
+                # avn = valuewhen(avd != 0, avd, 0)
+                # tsl = iff(avn == 1, sup, res)
+                # Buy = crossover(close, tsl)
+                # Sell = crossunder(close, tsl)
+                swing_period = 5
+                if len(closes) >= swing_period + 2:
+                    h_s = highs.values
+                    l_s = lows.values
+                    c_s = closes.values
+                    n_b = len(c_s)
+                    
+                    roll_res = highs.rolling(window=swing_period).max().values
+                    roll_sup = lows.rolling(window=swing_period).min().values
+                    
+                    avn_state = 0
+                    tsl_val = c_s[0]
+                    buy_today = False
+                    sell_today = False
+                    
+                    for idx in range(swing_period, n_b):
+                        res_p = roll_res[idx - 1]
+                        sup_p = roll_sup[idx - 1]
+                        c_val = c_s[idx]
+                        
+                        if c_val > res_p:
+                            avd = 1
+                        elif c_val < sup_p:
+                            avd = -1
+                        else:
+                            avd = 0
+                            
+                        prev_avn = avn_state
+                        if avd != 0:
+                            avn_state = avd
+                            
+                        if avn_state == 1:
+                            cur_tsl = roll_sup[idx]
+                        else:
+                            cur_tsl = roll_res[idx]
+                            
+                        if idx == n_b - 1:
+                            tsl_val = cur_tsl
+                            prev_c = c_s[idx - 1]
+                            prev_tsl = roll_sup[idx - 1] if prev_avn == 1 else roll_res[idx - 1]
+                            if c_val > cur_tsl and prev_c <= prev_tsl:
+                                buy_today = True
+                            elif c_val < cur_tsl and prev_c >= prev_tsl:
+                                sell_today = True
+                                
+                    raw_stocks[sym]['swing_buy'] = bool(buy_today)
+                    raw_stocks[sym]['swing_sell'] = bool(sell_today)
+                    raw_stocks[sym]['swing_trend'] = 'BUY' if avn_state == 1 else 'SELL'
+                    raw_stocks[sym]['swing_tsl'] = round(float(tsl_val), 1)
+                
                 # Tính A/D daily từ daily returns
                 if len(timestamps) == len(closes) and len(closes) >= 2:
                     daily_ret = closes.diff()
@@ -1464,7 +1522,7 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                     for ts, ret in zip(recent_ts, recent_ret):
                         if pd.isna(ret):
                             continue
-                        date_str = datetime.datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d')
+                        date_str = datetime.datetime.fromtimestamp(ts, datetime.timezone.utc).strftime('%Y-%m-%d')
                         if ret > 0:
                             date_advance[date_str] += 1
                         elif ret < 0:
@@ -1492,8 +1550,42 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
             'cumulative': cumulative
         })
     
+    # Build Swing trading signals summary
+    buy_signals = []
+    sell_signals = []
+    uptrend_signals = []
+    
+    for sym, info in raw_stocks.items():
+        item = {
+            'ticker': sym,
+            'price': info.get('match_price') or info.get('close') or 0,
+            'tsl': info.get('swing_tsl', 0),
+            'change_pc': round(info.get('change_pc', 0), 2),
+            'sector': info.get('sector', 'Khác'),
+            'is_strong': info.get('is_strong', False),
+            'is_uptrend': info.get('is_uptrend', False)
+        }
+        if info.get('swing_buy'):
+            buy_signals.append(item)
+        elif info.get('swing_sell'):
+            sell_signals.append(item)
+        elif info.get('swing_trend') == 'BUY':
+            uptrend_signals.append(item)
+            
+    buy_signals.sort(key=lambda x: x['change_pc'], reverse=True)
+    sell_signals.sort(key=lambda x: x['change_pc'])
+    
+    swing_signals = {
+        'buy_today': buy_signals,
+        'sell_today': sell_signals,
+        'uptrend_count': len(uptrend_signals) + len(buy_signals),
+        'downtrend_count': len(raw_stocks) - (len(uptrend_signals) + len(buy_signals)),
+        'total': len(raw_stocks)
+    }
+    
+    print(f"[SWING] Signals today: {len(buy_signals)} BUY | {len(sell_signals)} SELL | {swing_signals['uptrend_count']}/{len(raw_stocks)} in Uptrend")
     print(f"[BREADTH] A/D Line: {len(ad_history)} phiên computed")
-    return raw_stocks, ad_history
+    return raw_stocks, ad_history, swing_signals
 
 def main():
     symbols = ["VNINDEX", "VN30", "VN100", "HNXINDEX"]
@@ -1731,17 +1823,20 @@ def main():
     if board_for_sector is not None and not board_for_sector.empty:
         sector_heatmap, raw_stocks = compute_sector_heatmap(board_for_sector, icb_mapping)
         print(f"[SECTOR] {len(sector_heatmap)} ngành computed from {len(board_for_sector)} stocks")
-        raw_stocks, ad_history = enrich_raw_stocks_with_breadth(raw_stocks)
+        raw_stocks, ad_history, swing_signals = enrich_raw_stocks_with_breadth(raw_stocks)
     else:
         ad_history = []
+        swing_signals = {'buy_today': [], 'sell_today': [], 'uptrend_count': 0, 'downtrend_count': 0, 'total': 0}
 
-    # Gắn sector_heatmap vào tất cả index
+    # Gắn sector_heatmap và swing_signals vào tất cả index
     for sym in all_data:
         all_data[sym]['sector_heatmap'] = sector_heatmap
+        all_data[sym]['swing_signals']  = swing_signals
         
     all_data['__global__'] = {
         'raw_stocks': raw_stocks,
-        'ad_history': ad_history
+        'ad_history': ad_history,
+        'swing_signals': swing_signals
     }
     
     def clean_nan(obj):

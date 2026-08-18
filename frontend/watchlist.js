@@ -107,6 +107,23 @@
         render();
     }
 
+    window.addWatchlistFromSwing = function(ticker, recPrice, slPrice) {
+        if (!ticker) return;
+        const list = loadList();
+        const exists = list.some(x => x.ticker === ticker.toUpperCase());
+        if (!exists) {
+            list.unshift({
+                id: uid(),
+                ticker: ticker.toUpperCase(),
+                rec_price: parseFloat(recPrice) || 0,
+                sl_price: parseFloat(slPrice) || 0,
+                date: new Date().toISOString().slice(0, 10)
+            });
+            saveList(list);
+        }
+        openPanel();
+    };
+
     function init() {
         document.getElementById("btn-open-watchlist")?.addEventListener("click", openPanel);
         document.getElementById("btn-close-watchlist")?.addEventListener("click", closePanel);
@@ -114,6 +131,24 @@
         document.getElementById("btn-wl-add")?.addEventListener("click", addEntry);
         ["wl-ticker","wl-rec-price","wl-sl-price","wl-date"].forEach(id => {
             document.getElementById(id)?.addEventListener("keydown", e => { if (e.key === "Enter") addEntry(); });
+        });
+
+        // Auto-fill price and stoploss when typing ticker
+        document.getElementById("wl-ticker")?.addEventListener("input", e => {
+            const sym = (e.target.value || "").trim().toUpperCase();
+            if (sym.length >= 3) {
+                const curPrice = getCurrentPrice(sym);
+                const recIn = document.getElementById("wl-rec-price");
+                const slIn = document.getElementById("wl-sl-price");
+                if (curPrice && recIn && !recIn.value) {
+                    recIn.value = curPrice;
+                }
+                const g = window.appData && window.appData["__global__"];
+                const stock = (g?.raw_stocks || {})[sym];
+                if (stock && stock.swing_tsl && slIn && !slIn.value) {
+                    slIn.value = stock.swing_tsl;
+                }
+            }
         });
     }
 
