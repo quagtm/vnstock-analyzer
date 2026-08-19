@@ -60,12 +60,12 @@
             const rec     = parseFloat(item.rec_price);
             const sl      = parseFloat(item.sl_price) || 0;
 
-            // Tính Lãi/Lỗ:
-            // BUY:  Nếu cur > rec -> Lãi (+), cur < rec -> Lỗ (-)
-            // SELL: Nếu cur < rec -> Lãi (+) (giá giảm có lợi), cur > rec -> Lỗ (-) (giá tăng gây lỗ)
+            // Tính Lãi/Lỗ: (Giá hiện tại - Giá KN) / Giá KN * 100%
+            // Giá giảm dưới giá KN -> LỖ (âm, màu đỏ)
+            // Giá tăng trên giá KN -> LÃI (dương, màu xanh)
             let pnlPct = null;
             if (cur != null && rec > 0) {
-                const diff = isSell ? (rec - cur) : (cur - rec);
+                const diff = cur - rec;
                 pnlPct = (diff / rec) * 100;
             }
 
@@ -73,23 +73,21 @@
             let pnlText = "—";
             if (pnlPct != null) {
                 if (pnlPct > 0.001) {
-                    pColor = "#10e89a"; // Xanh lá = LÃI
+                    pColor = "#10e89a"; // Xanh lá = LÃI (+)
                     pnlText = "+" + pnlPct.toFixed(2) + "%";
                 } else if (pnlPct < -0.001) {
-                    pColor = "#ff4d6d"; // ĐỎ = LỖ (số âm)
-                    pnlText = pnlPct.toFixed(2) + "%"; // Đã có dấu -
+                    pColor = "#ff4d6d"; // ĐỎ = LỖ (-)
+                    pnlText = pnlPct.toFixed(2) + "%"; // Đã có sẵn dấu âm -
                 } else {
                     pColor = "#e2e8f0";
                     pnlText = "0.00%";
                 }
             }
 
-            // Check Stoploss hit:
-            // BUY:  cur <= sl
-            // SELL: cur >= sl (nếu sl > 0)
+            // Check Stoploss hit: cur <= sl (chạm hoặc thủng mức cắt lỗ)
             let slHit = false;
             if (cur != null && sl > 0) {
-                slHit = isSell ? (cur >= sl) : (cur <= sl);
+                slHit = (cur <= sl);
             }
             const slStyle = slHit ? "color:#ff4d6d;font-weight:700;" : "";
 
