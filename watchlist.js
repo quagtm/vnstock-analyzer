@@ -54,24 +54,35 @@
         if (empty) empty.style.display = "none";
 
         tbody.innerHTML = list.map(item => {
-            const isSell  = (item.type === "SELL");
-            const type    = isSell ? "SELL" : "BUY";
+            const isSell  = (item.type || "").toUpperCase() === "SELL";
             const autoCur = getAutoMarketPrice(item.ticker);
             const cur     = getEffectiveCurrentPrice(item);
             const rec     = parseFloat(item.rec_price);
             const sl      = parseFloat(item.sl_price) || 0;
 
             // Tính Lãi/Lỗ:
-            // BUY:  Lãi = Giá HT - Giá KN
-            // SELL: Lãi = Giá KN - Giá HT
-            let pnlAbs = null;
+            // BUY:  Nếu cur > rec -> Lãi (+), cur < rec -> Lỗ (-)
+            // SELL: Nếu cur < rec -> Lãi (+) (giá giảm có lợi), cur > rec -> Lỗ (-) (giá tăng gây lỗ)
             let pnlPct = null;
             if (cur != null && rec > 0) {
-                pnlAbs = isSell ? (rec - cur) : (cur - rec);
-                pnlPct = (pnlAbs / rec) * 100;
+                const diff = isSell ? (rec - cur) : (cur - rec);
+                pnlPct = (diff / rec) * 100;
             }
 
-            const pColor = pnlPct == null ? "#94a3b8" : (pnlPct > 0 ? "#10e89a" : (pnlPct < 0 ? "#ff4d6d" : "#94a3b8"));
+            let pColor = "#94a3b8";
+            let pnlText = "—";
+            if (pnlPct != null) {
+                if (pnlPct > 0.001) {
+                    pColor = "#10e89a"; // Xanh lá = LÃI
+                    pnlText = "+" + pnlPct.toFixed(2) + "%";
+                } else if (pnlPct < -0.001) {
+                    pColor = "#ff4d6d"; // ĐỎ = LỖ (số âm)
+                    pnlText = pnlPct.toFixed(2) + "%"; // Đã có dấu -
+                } else {
+                    pColor = "#e2e8f0";
+                    pnlText = "0.00%";
+                }
+            }
 
             // Check Stoploss hit:
             // BUY:  cur <= sl
@@ -101,9 +112,7 @@
             `;
 
             // Ô Lãi / Lỗ (chỉ hiện %)
-            const pnlCell = pnlPct == null
-                ? `<td style="color:#64748b">—</td>`
-                : `<td style="color:${pColor};font-weight:700;font-size:0.92rem;">${fmtPct(pnlPct)}</td>`;
+            const pnlCell = `<td style="color:${pColor};font-weight:700;font-size:0.92rem;">${pnlText}</td>`;
 
             return `<tr class="wl-row${slHit ? ' wl-sl-hit' : ''}">
                 <td>${badgeHtml}</td>
