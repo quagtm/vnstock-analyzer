@@ -950,7 +950,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 maintainAspectRatio: false,
                 interaction: { mode: 'index', intersect: false },
                 plugins: {
-                    legend: { display: true, labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 10, padding: 8 } },
+                    legend: { display: true, labels: { color: '#94a3b8', font: { size: 11 }, boxWidth: 12, padding: 12 } },
                     tooltip: {
                         callbacks: {
                             label: ctx => {
@@ -962,22 +962,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 scales: {
                     x: {
-                        ticks: { color: '#64748b', font: { size: 9 }, maxRotation: 45, maxTicksLimit: 12 },
+                        ticks: { color: '#64748b', font: { size: 10 }, maxRotation: 45, maxTicksLimit: 18 },
                         grid: { color: 'rgba(255,255,255,0.04)' }
                     },
                     yLine: {
                         position: 'right',
-                        ticks: { color: '#60a5fa', font: { size: 9 }, maxTicksLimit: 4 },
+                        ticks: { color: '#60a5fa', font: { size: 10 }, maxTicksLimit: 6 },
                         grid: { color: 'rgba(255,255,255,0.06)' },
-                        title: { display: false }
+                        title: { display: true, text: 'A/D tích lũy', color: '#60a5fa', font: { size: 10 } }
                     },
                     yBar: {
                         position: 'left',
-                        ticks: { color: '#94a3b8', font: { size: 9 }, maxTicksLimit: 4,
+                        ticks: { color: '#94a3b8', font: { size: 10 }, maxTicksLimit: 6,
                             callback: v => v < 0 ? Math.abs(v) : v
                         },
                         grid: { display: false },
-                        title: { display: false }
+                        title: { display: true, text: 'Số CP', color: '#94a3b8', font: { size: 10 } }
                     }
                 }
             }
