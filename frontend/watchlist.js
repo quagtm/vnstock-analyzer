@@ -100,10 +100,10 @@
                 </td>
             `;
 
-            // Ô Lãi / Lỗ
+            // Ô Lãi / Lỗ (chỉ hiện %)
             const pnlCell = pnlPct == null
                 ? `<td style="color:#64748b">—</td>`
-                : `<td style="color:${pColor};font-weight:600;">${fmtPct(pnlPct)}<br><small style="font-weight:400;font-size:0.75rem">${pnlAbs > 0 ? "+" : ""}${fmt(Math.round(pnlAbs))}đ</small></td>`;
+                : `<td style="color:${pColor};font-weight:700;font-size:0.92rem;">${fmtPct(pnlPct)}</td>`;
 
             return `<tr class="wl-row${slHit ? ' wl-sl-hit' : ''}">
                 <td>${badgeHtml}</td>
