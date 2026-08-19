@@ -706,8 +706,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (currentMiniTab === 'scenario') {
             titleText = "Kịch bản Thị trường";
             markdownText = data.scenario_markdown || "Không có dữ liệu kịch bản.";
-        } else if (currentMiniTab === 'volume') {
-            titleText = "Phân tích Dòng tiền (Khối lượng)";
+        } else if (currentMiniTab === 'volume' || currentMiniTab === 'flow') {
+            titleText = "Phân tích Dòng tiền";
             markdownText = data.volume_markdown || "Không có dữ liệu.";
         } else if (currentMiniTab === 'trend') {
             titleText = "Phân tích Xu hướng (Biến động)";
@@ -759,6 +759,27 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // Tab-specific visibility flags
+        const isFlowTab = (currentMiniTab === 'volume' || currentMiniTab === 'flow');
+        const isGeneralTab = (currentMiniTab === 'general');
+        const isScenarioTab = (currentMiniTab === 'scenario');
+        const isTrendTab = (currentMiniTab === 'trend');
+
+        // Toggle sections visibility based on mini sidetab
+        const adCard = document.getElementById('ad-line-card');
+        const sectorCard = document.getElementById('sector-section') || document.querySelector('.sector-section');
+        const tasSection = document.getElementById('tas-section');
+        const candleBadges = document.getElementById('candle-badges');
+        const srZones = document.getElementById('sr-zones');
+        const swingSection = document.querySelector('.swing-signal-section');
+
+        if (adCard) adCard.style.display = isFlowTab ? 'block' : 'none';
+        if (sectorCard) sectorCard.style.display = isFlowTab ? 'block' : 'none';
+        if (tasSection) tasSection.style.display = (isGeneralTab || isTrendTab) ? 'block' : 'none';
+        if (candleBadges) candleBadges.style.display = (isGeneralTab || isTrendTab) ? 'flex' : 'none';
+        if (srZones) srZones.style.display = (isGeneralTab || isScenarioTab || isTrendTab) ? 'flex' : 'none';
+        if (swingSection) swingSection.style.display = (isGeneralTab || isTrendTab) ? 'block' : 'none';
+
         // Render TAS + sparkline + narrative
         const tas = data.tas;
         if (tas) {
@@ -785,9 +806,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const swingSignals = data.swing_signals || (appData['__global__'] || {}).swing_signals;
         renderSwingSignals(swingSignals);
 
-        // Render A/D Line chart
+        // Render A/D Line chart (only if in flow tab)
         const adHistory = (appData['__global__'] || {}).ad_history || [];
-        renderADLineChart(adHistory);
+        if (isFlowTab) {
+            renderADLineChart(adHistory);
+        }
         
         if (window.bindEditSectorButton) window.bindEditSectorButton();
     }

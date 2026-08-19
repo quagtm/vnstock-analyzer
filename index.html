@@ -37,7 +37,7 @@
                     <ul class="sub-nav">
                         <li class="sub-nav-item active" data-tab="general"><i class='bx bx-layer'></i> Tổng quan</li>
                         <li class="sub-nav-item" data-tab="scenario"><i class='bx bx-map-alt'></i> Kịch bản</li>
-                        <li class="sub-nav-item" data-tab="volume"><i class='bx bx-bar-chart-alt'></i> Khối lượng</li>
+                        <li class="sub-nav-item" data-tab="flow"><i class='bx bx-water'></i> Dòng tiền</li>
                         <li class="sub-nav-item" data-tab="trend"><i class='bx bx-line-chart-down'></i> Xu hướng</li>
                     </ul>
                 </li>
@@ -50,7 +50,7 @@
                     <ul class="sub-nav">
                         <li class="sub-nav-item active" data-tab="general"><i class='bx bx-layer'></i> Tổng quan</li>
                         <li class="sub-nav-item" data-tab="scenario"><i class='bx bx-map-alt'></i> Kịch bản</li>
-                        <li class="sub-nav-item" data-tab="volume"><i class='bx bx-bar-chart-alt'></i> Khối lượng</li>
+                        <li class="sub-nav-item" data-tab="flow"><i class='bx bx-water'></i> Dòng tiền</li>
                         <li class="sub-nav-item" data-tab="trend"><i class='bx bx-line-chart-down'></i> Xu hướng</li>
                     </ul>
                 </li>
@@ -63,7 +63,7 @@
                     <ul class="sub-nav">
                         <li class="sub-nav-item active" data-tab="general"><i class='bx bx-layer'></i> Tổng quan</li>
                         <li class="sub-nav-item" data-tab="scenario"><i class='bx bx-map-alt'></i> Kịch bản</li>
-                        <li class="sub-nav-item" data-tab="volume"><i class='bx bx-bar-chart-alt'></i> Khối lượng</li>
+                        <li class="sub-nav-item" data-tab="flow"><i class='bx bx-water'></i> Dòng tiền</li>
                         <li class="sub-nav-item" data-tab="trend"><i class='bx bx-line-chart-down'></i> Xu hướng</li>
                     </ul>
                 </li>
@@ -259,7 +259,7 @@
         </div>
 
         <!-- A/D Line Chart -->
-        <div class="glass" style="padding: 16px; margin-bottom: 16px; border-radius: 16px;">
+        <div id="ad-line-card" class="glass" style="padding: 16px; margin-bottom: 16px; border-radius: 16px;">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
                 <i class='bx bx-line-chart' style="font-size: 1.1rem; color: var(--accent);"></i>
                 <span style="font-weight: 700; font-size: 0.9rem;">A/D Line – 50 phiên gần nhất</span>
@@ -271,8 +271,7 @@
         </div>
 
         <!-- Sector Heatmap -->
-
-        <div class="sector-section glass">
+        <div id="sector-section" class="sector-section glass">
             <div class="sector-header" style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <i class='bx bx-grid-alt'></i>
@@ -424,8 +423,13 @@
             <!-- Add form -->
             <div class="wl-add-form glass">
                 <div class="wl-form-row">
+                    <select id="wl-type" class="wl-input wl-select-type">
+                        <option value="BUY">🟢 MUA</option>
+                        <option value="SELL">🔴 BÁN</option>
+                    </select>
                     <input id="wl-ticker"    class="wl-input" type="text"   placeholder="Mã CP (VD: HPG)" maxlength="10" />
                     <input id="wl-rec-price" class="wl-input" type="number" placeholder="Giá KN (đ)" min="0" />
+                    <input id="wl-cur-price" class="wl-input" type="number" placeholder="Giá HT (tùy chọn)" min="0" />
                     <input id="wl-sl-price"  class="wl-input" type="number" placeholder="Stoploss (đ)" min="0" />
                     <input id="wl-date"      class="wl-input" type="date" />
                     <button id="btn-wl-add" class="btn-primary" style="white-space:nowrap;"><i class='bx bx-plus'></i> Thêm</button>
@@ -436,6 +440,7 @@
                 <table class="wl-table">
                     <thead>
                         <tr>
+                            <th>Lệnh</th>
                             <th>Mã</th>
                             <th>Ngày KN</th>
                             <th>Giá KN</th>
