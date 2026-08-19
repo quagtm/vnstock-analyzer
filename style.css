@@ -1414,15 +1414,15 @@ body {
 }
 .wl-table th {
     text-align: left;
-    padding: 12px 14px;
-    color: #94a3b8;
-    font-weight: 600;
-    font-size: 0.76rem;
+    padding: 13px 14px;
+    color: #f59e0b;
+    font-weight: 700;
+    font-size: 0.82rem;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid rgba(245, 158, 11, 0.35);
     white-space: nowrap;
-    background: rgba(0,0,0,0.2);
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.12) 0%, rgba(30, 38, 54, 0.5) 100%);
 }
 .wl-table td {
     padding: 10px 14px;
