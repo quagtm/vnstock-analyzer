@@ -1419,9 +1419,10 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                 if not data or 'c' not in data or len(data['c']) == 0:
                     continue
                 
-                closes = pd.Series(data['c'])
-                highs = pd.Series(data['h'])
-                lows = pd.Series(data['l'])
+                closes = pd.Series(data['c'], dtype=float)
+                highs = pd.Series(data['h'], dtype=float)
+                lows = pd.Series(data['l'], dtype=float)
+                volumes = pd.Series(data.get('v', []), dtype=float)
                 timestamps = data.get('t', [])
                 
                 if len(closes) < 10:
@@ -1461,8 +1462,8 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                 # avd = iff(close > res[1], 1, iff(close < sup[1], -1, 0))
                 # avn = valuewhen(avd != 0, avd, 0)
                 # tsl = iff(avn == 1, sup, res)
-                # Buy = crossover(close, tsl)
-                # Sell = crossunder(close, tsl)
+                # Buy = crossover(close, tsl) AND volume > volume_sma5
+                # Sell = crossunder(close, tsl) AND volume > volume_sma5
                 swing_period = 5
                 if len(closes) >= swing_period + 2:
                     h_s = highs.values
@@ -1472,6 +1473,14 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                     
                     roll_res = highs.rolling(window=swing_period).max().values
                     roll_sup = lows.rolling(window=swing_period).min().values
+                    
+                    # Điều kiện Volume: Khối lượng phiên hôm nay > Khối lượng trung bình 5 phiên gần nhất
+                    vol_breakout = True
+                    if len(volumes) >= 5:
+                        vol_sma5 = float(volumes.rolling(window=5).mean().iloc[-1])
+                        cur_vol = float(volumes.iloc[-1])
+                        if vol_sma5 > 0:
+                            vol_breakout = bool(cur_vol > vol_sma5)
                     
                     avn_state = 0
                     tsl_val = c_s[0]
@@ -1503,9 +1512,11 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                             tsl_val = cur_tsl
                             prev_c = c_s[idx - 1]
                             prev_tsl = roll_sup[idx - 1] if prev_avn == 1 else roll_res[idx - 1]
-                            if c_val > cur_tsl and prev_c <= prev_tsl:
+                            
+                            # Tín hiệu Mua/Bán chỉ chấp nhận khi khối lượng vượt TB 5 phiên
+                            if c_val > cur_tsl and prev_c <= prev_tsl and vol_breakout:
                                 buy_today = True
-                            elif c_val < cur_tsl and prev_c >= prev_tsl:
+                            elif c_val < cur_tsl and prev_c >= prev_tsl and vol_breakout:
                                 sell_today = True
                                 
                     raw_stocks[sym]['swing_buy'] = bool(buy_today)
