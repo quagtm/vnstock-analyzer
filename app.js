@@ -874,13 +874,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const chgColor = s.change_pc >= 0 ? '#10e89a' : '#ff4d6d';
                 const chgSign  = s.change_pc >= 0 ? '+' : '';
                 return `
-                    <div class="swing-card swing-sell-card" title="Giá: ${fmt(s.price)}đ | TSL: ${fmt(s.tsl)}đ | ${s.sector}">
+                    <div class="swing-card swing-sell-card" title="Giá: ${fmt(s.price)}đ | ${s.sector}">
                         <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
                             <span class="swing-sym">${s.ticker}</span>
                             <span style="color:${chgColor};font-size:0.75rem;font-weight:600">${chgSign}${s.change_pc}%</span>
                         </div>
                         <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;font-size:0.75rem;color:#94a3b8">
-                            <span>TSL: <strong style="color:#e2e8f0">${fmt(s.tsl)}</strong></span>
+                            <span>Giá: <strong style="color:#e2e8f0">${fmt(s.price)}</strong></span>
                             <span style="color:#ff4d6d;font-weight:600;font-size:0.7rem;background:rgba(255,77,109,0.15);padding:1px 5px;border-radius:4px">EXIT</span>
                         </div>
                     </div>
