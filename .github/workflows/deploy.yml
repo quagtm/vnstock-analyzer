@@ -6,8 +6,10 @@ on:
       - main
       - master
   schedule:
-    # Chạy lúc 16:00 VN (09:00 UTC) — sau giờ đóng cửa thị trường (15:00 VN)
-    - cron: '0 9 * * 1-5'   # 16:00 VN (Thứ 2 - Thứ 6)
+    # Chạy lúc 16:15 VN (09:15 UTC) — tránh nghẽn giờ chẵn :00 của GitHub Actions
+    - cron: '15 9 * * 1-5'
+    # Trigger dự phòng lúc 16:45 VN (09:45 UTC)
+    - cron: '45 9 * * 1-5'
   workflow_dispatch:
     inputs:
       force_run:
