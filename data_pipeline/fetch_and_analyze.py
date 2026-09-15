@@ -1519,6 +1519,18 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                             elif c_val < cur_tsl and prev_c >= prev_tsl and vol_breakout:
                                 sell_today = True
                                 
+                    cur_vol = float(volumes.iloc[-1]) if len(volumes) > 0 else 0
+                    vol_sma5 = float(volumes.rolling(window=5).mean().iloc[-1]) if len(volumes) >= 5 else cur_vol
+                    vol_sma20 = float(volumes.rolling(window=20).mean().iloc[-1]) if len(volumes) >= 20 else cur_vol
+                    vol_ratio_20 = round(cur_vol / vol_sma20, 2) if vol_sma20 > 0 else 1.0
+
+                    raw_stocks[sym]['volume'] = int(cur_vol)
+                    raw_stocks[sym]['vol_sma5'] = int(vol_sma5)
+                    raw_stocks[sym]['vol_sma20'] = int(vol_sma20)
+                    raw_stocks[sym]['vol_ratio_20'] = vol_ratio_20
+                    raw_stocks[sym]['is_vol_breakout_5'] = bool(cur_vol > vol_sma5) if vol_sma5 > 0 else False
+                    raw_stocks[sym]['is_vol_breakout_20'] = bool(vol_ratio_20 >= 1.5)
+                    
                     raw_stocks[sym]['swing_buy'] = bool(buy_today)
                     raw_stocks[sym]['swing_sell'] = bool(sell_today)
                     raw_stocks[sym]['swing_trend'] = 'BUY' if avn_state == 1 else 'SELL'

@@ -68,6 +68,12 @@
                     </ul>
                 </li>
             </ul>
+            <!-- Smart Screener Tab -->
+            <div class="nav-item screener-nav-item" id="btn-open-screener" title="Smart Screener">
+                <i class='bx bx-filter-alt'></i>
+                <span>Smart Screener</span>
+                <span class="screener-pro-badge">PRO</span>
+            </div>
             <!-- Khuyến nghị Tab -->
             <div class="nav-item watchlist-nav-item" id="btn-open-watchlist" title="Khuyến nghị">
                 <i class='bx bx-star'></i>
@@ -459,6 +465,135 @@
         </div>
     </div>
 
+    <!-- ── Smart Screener Panel ── -->
+    <div id="screener-overlay" class="screener-overlay" style="display:none;"></div>
+    <div id="screener-panel" class="screener-panel" style="display:none;">
+        <div class="screener-header">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div class="screener-title-icon"><i class='bx bx-filter-alt'></i></div>
+                <div>
+                    <h2 class="screener-title">Smart Screener — Bộ Lọc Cổ Phiếu Thông Minh</h2>
+                    <p class="screener-subtitle">Lọc 414 mã toàn sàn theo Tín hiệu QW, Sức mạnh giá MA & Bùng nổ Khối lượng</p>
+                </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div class="screener-counter-badge">
+                    Đang hiển thị: <strong id="scr-count" style="color:#f59e0b;">0</strong> / <span id="scr-total">414</span> mã
+                </div>
+                <button id="btn-close-screener" class="btn-icon" title="Đóng bộ lọc"><i class='bx bx-x'></i></button>
+            </div>
+        </div>
+
+        <div class="screener-body">
+            <!-- Preset Quick Filters -->
+            <div class="scr-presets-bar">
+                <span class="scr-preset-label"><i class='bx bx-zap'></i> Preset nhanh:</span>
+                <button class="scr-preset-btn active" data-preset="all">🌟 Tất cả</button>
+                <button class="scr-preset-btn" data-preset="swing_buy">🟢 Tín hiệu MUA QW</button>
+                <button class="scr-preset-btn" data-preset="strong_leader">💪 Siêu CP Leader</button>
+                <button class="scr-preset-btn" data-preset="vol_breakout">⚡ Bùng Nổ Khối Lượng</button>
+                <button class="scr-preset-btn" data-preset="new_high_52w">🏆 Đỉnh 52 Tuần</button>
+                <button class="scr-preset-btn" data-preset="uptrend_gain">🚀 Uptrend Tăng Mạnh</button>
+                <button class="scr-preset-btn" data-preset="swing_sell">🔴 Tín hiệu BÁN QW</button>
+                <button id="btn-scr-reset" class="scr-reset-btn" title="Xóa bộ lọc"><i class='bx bx-refresh'></i> Đặt lại</button>
+            </div>
+
+            <!-- Detailed Multi-criteria Filter Toolbar -->
+            <div class="scr-filter-toolbar glass">
+                <div class="scr-filter-grid">
+                    <!-- Search Input -->
+                    <div class="scr-field">
+                        <label><i class='bx bx-search'></i> Tìm mã CP</label>
+                        <input type="text" id="scr-keyword" placeholder="VD: HPG, SSI, VCB..." maxlength="10" />
+                    </div>
+
+                    <!-- Sector Select -->
+                    <div class="scr-field">
+                        <label><i class='bx bx-category'></i> Nhóm Ngành</label>
+                        <select id="scr-sector">
+                            <option value="all">Tất cả ngành</option>
+                        </select>
+                    </div>
+
+                    <!-- Signal Select -->
+                    <div class="scr-field">
+                        <label><i class='bx bx-line-chart'></i> Tín hiệu Kỹ thuật</label>
+                        <select id="scr-signal">
+                            <option value="all">Tất cả tín hiệu</option>
+                            <option value="swing_buy">🟢 Tín hiệu MUA QW hôm nay</option>
+                            <option value="uptrend">🚀 Đang trong Uptrend Swing</option>
+                            <option value="is_strong">💪 Siêu khỏe (Giá > MA20 > MA50 > MA200)</option>
+                            <option value="is_uptrend">📈 Xu hướng tăng (Giá > MA50 > MA200)</option>
+                            <option value="new_high_52w">🏆 Vượt đỉnh 52 tuần</option>
+                            <option value="swing_sell">🔴 Tín hiệu BÁN QW hôm nay</option>
+                        </select>
+                    </div>
+
+                    <!-- Price Change Select -->
+                    <div class="scr-field">
+                        <label><i class='bx bx-trending-up'></i> Biến động Giá (% Thay đổi)</label>
+                        <select id="scr-change">
+                            <option value="all">Tất cả biến động</option>
+                            <option value="up">🟢 Tăng giá (> 0%)</option>
+                            <option value="up_2">🟢 Tăng từ +2% trở lên</option>
+                            <option value="up_3">🚀 Tăng mạnh từ +3% trở lên</option>
+                            <option value="ceil">🟣 Giá Trần / Tím (≥ +6.7%)</option>
+                            <option value="down">🔴 Giảm giá (< 0%)</option>
+                        </select>
+                    </div>
+
+                    <!-- Volume & Liquidity Select -->
+                    <div class="scr-field">
+                        <label><i class='bx bx-bar-chart-alt-2'></i> Thanh khoản & Khối lượng</label>
+                        <select id="scr-volume">
+                            <option value="all">Tất cả thanh khoản</option>
+                            <option value="vol_sma5">⚡ Vol > TB 5 phiên (SMA5)</option>
+                            <option value="vol_15x">💥 Vol đột biến ≥ 1.5x SMA20</option>
+                            <option value="vol_500k">📊 KLGD ≥ 500,000 CP</option>
+                            <option value="vol_1m">📊 KLGD ≥ 1,000,000 CP</option>
+                            <option value="val_10b">💰 GTGD ≥ 10 tỷ VNĐ</option>
+                            <option value="val_20b">💰 GTGD ≥ 20 tỷ VNĐ</option>
+                            <option value="val_50b">💰 GTGD ≥ 50 tỷ VNĐ</option>
+                        </select>
+                    </div>
+
+                    <!-- Sort Select -->
+                    <div class="scr-field">
+                        <label><i class='bx bx-sort-alt-2'></i> Sắp xếp theo</label>
+                        <select id="scr-sort">
+                            <option value="chg_desc">% Thay đổi (Cao → Thấp)</option>
+                            <option value="chg_asc">% Thay đổi (Thấp → Cao)</option>
+                            <option value="val_desc">Giá trị GD (Cao → Thấp)</option>
+                            <option value="vol_desc">Khối lượng GD (Cao → Thấp)</option>
+                            <option value="ticker_asc">Mã Cổ phiếu (A → Z)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Results -->
+            <div class="scr-table-wrap">
+                <table class="scr-table">
+                    <thead>
+                        <tr>
+                            <th>MÃ</th>
+                            <th>NGÀNH</th>
+                            <th>GIÁ (đ)</th>
+                            <th>THAY ĐỔI</th>
+                            <th>KLGD (CP)</th>
+                            <th>GTGD (TỶ)</th>
+                            <th>TÍN HIỆU & SỨC MẠNH</th>
+                            <th>STOPLOSS (TSL)</th>
+                            <th style="text-align:center;">THAO TÁC</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scr-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <script src="watchlist.js"></script>
+    <script src="screener.js"></script>
 </body>
 </html>
