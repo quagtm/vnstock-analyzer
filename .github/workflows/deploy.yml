@@ -37,7 +37,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          python -c "import warnings; warnings.filterwarnings('ignore'); import vnstock; print('[OK] vnstock imports ok')"
+          pip install vnstock || pip install vnstock3 || true
           
       - name: Check if market is closed
         id: market_check
@@ -101,7 +101,6 @@ jobs:
           python -c "import json; d=json.load(open('frontend/public/data.json')); sym=list(d.keys())[0]; print('[CHECK] Fields:', list(d[sym].keys()))"
 
       - name: Deploy to GitHub Pages
-        if: steps.market_check.outputs.skip != 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

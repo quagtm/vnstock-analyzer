@@ -1,5 +1,5 @@
-vnstock
 pandas
 ta
 requests
 openai
+beautifulsoup4
