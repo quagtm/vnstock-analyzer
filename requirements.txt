@@ -1,4 +1,4 @@
-vnstock==4.0.5
+vnstock
 pandas
 ta
 requests
