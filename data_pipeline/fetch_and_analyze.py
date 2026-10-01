@@ -11,14 +11,152 @@ import pandas as pd
 import numpy as np
 import ta
 import requests
-# vnstock v4 - dùng explorer.vci trực tiếp (API stable)
+# vnstock v4 - thử import, nếu không có thì dùng direct API
 import logging
+import urllib.request
+import concurrent.futures
 warnings.filterwarnings('ignore')
 logging.disable(logging.CRITICAL)
-from vnstock.explorer.vci import Quote as VCIQuote
-from vnstock.explorer.vci import Listing as VCIListing
-from vnstock.explorer.vci import Trading as VCITrading
+
+_HAS_VNSTOCK = False
+try:
+    from vnstock.explorer.vci import Quote as VCIQuote
+    from vnstock.explorer.vci import Listing as VCIListing
+    from vnstock.explorer.vci import Trading as VCITrading
+    _HAS_VNSTOCK = True
+    print("[INIT] vnstock available — using VCI API")
+except ImportError:
+    VCIQuote = None
+    VCIListing = None
+    VCITrading = None
+    print("[INIT] vnstock NOT available — using direct VNDIRECT/Wifeed API")
+
 from openai import OpenAI
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# DIRECT API REPLACEMENTS (no vnstock dependency)
+# ═══════════════════════════════════════════════════════════════════════
+
+def _vndirect_ohlcv(symbol, start_ts, end_ts):
+    """Fetch OHLCV from VNDIRECT DChart API. Returns dict {t,o,h,l,c,v} or None."""
+    url = f'https://dchart-api.vndirect.com.vn/dchart/history?resolution=D&symbol={symbol}&from={start_ts}&to={end_ts}'
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        resp = urllib.request.urlopen(req, timeout=15)
+        data = json.loads(resp.read())
+        if data.get('s') == 'ok' and data.get('c'):
+            return data
+    except Exception as e:
+        print(f"  [VNDIRECT] Error fetching {symbol}: {e}")
+    return None
+
+
+def _vndirect_to_dataframe(data, symbol=None):
+    """Convert VNDIRECT DChart response to DataFrame matching VCI format."""
+    from datetime import datetime as dt
+    df = pd.DataFrame({
+        'time': [dt.fromtimestamp(t) for t in data['t']],
+        'open': pd.Series(data['o'], dtype=float),
+        'high': pd.Series(data['h'], dtype=float),
+        'low': pd.Series(data['l'], dtype=float),
+        'close': pd.Series(data['c'], dtype=float),
+        'volume': pd.Series(data.get('v', [0]*len(data['c'])), dtype=float),
+    })
+    df.sort_values('time', inplace=True)
+    df.reset_index(drop=True, inplace=True)
+    return df
+
+
+def fetch_ohlcv_direct(symbol, days=730):
+    """Fetch OHLCV history as DataFrame — tries VCI first, then VNDIRECT."""
+    if _HAS_VNSTOCK:
+        try:
+            start_date = (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d")
+            end_date = datetime.now().strftime("%Y-%m-%d")
+            q = VCIQuote(symbol=symbol, show_log=False)
+            df = q.history(start=start_date, end=end_date, interval='1D')
+            if df is not None and not df.empty:
+                return df
+        except Exception as e:
+            print(f"  [VCI] Fallback to VNDIRECT for {symbol}: {e}")
+    
+    # Direct VNDIRECT API
+    end_ts = int(time.time())
+    start_ts = end_ts - days * 86400
+    data = _vndirect_ohlcv(symbol, start_ts, end_ts)
+    if data:
+        return _vndirect_to_dataframe(data, symbol)
+    return None
+
+
+def fetch_price_board_direct(symbols_list):
+    """Build price board DataFrame from VNDIRECT DChart (last 2 bars).
+    Returns DataFrame with columns: listing_symbol, listing_code, match_match_price,
+    listing_ref_price, change_pc — matching VCI price_board format."""
+    end_ts = int(time.time())
+    start_ts = end_ts - 10 * 86400  # last 10 days to ensure we get 2+ trading bars
+    
+    results = []
+    
+    def _fetch_one(sym):
+        data = _vndirect_ohlcv(sym, start_ts, end_ts)
+        if data and len(data.get('c', [])) >= 2:
+            closes = data['c']
+            ref_price = float(closes[-2])   # previous close = reference
+            match_price = float(closes[-1]) # latest close = match price
+            return {
+                'listing_symbol': sym,
+                'listing_code': sym,
+                'match_match_price': match_price,
+                'listing_ref_price': ref_price,
+            }
+        elif data and len(data.get('c', [])) == 1:
+            p = float(data['c'][0])
+            return {
+                'listing_symbol': sym,
+                'listing_code': sym,
+                'match_match_price': p,
+                'listing_ref_price': p,
+            }
+        return None
+    
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        futures = {executor.submit(_fetch_one, s): s for s in symbols_list}
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                result = future.result()
+                if result:
+                    results.append(result)
+            except Exception:
+                pass
+    
+    if not results:
+        return pd.DataFrame()
+    
+    df = pd.DataFrame(results)
+    df['change_pc'] = ((df['match_match_price'] - df['listing_ref_price']) / 
+                        df['listing_ref_price'].replace(0, float('nan')) * 100).fillna(0.0)
+    return df
+
+
+def fetch_hose_symbols_direct():
+    """Get list of HOSE stock symbols without vnstock — tries Wifeed then fallback."""
+    try:
+        url = 'https://wifeed.vn/api/thong-tin-co-phieu/danh-sach-ma-chung-khoan'
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        resp = urllib.request.urlopen(req, timeout=10)
+        data = json.loads(resp.read())
+        items = data.get('data', [])
+        # Filter HOSE stocks (loaidn=1 is typically 'Cổ phiếu', san='HOSE')
+        hose_syms = [item['code'] for item in items 
+                     if item.get('san', '').upper() == 'HOSE']
+        if hose_syms:
+            print(f"[LISTING] Wifeed: {len(hose_syms)} HOSE stocks")
+            return hose_syms
+    except Exception as e:
+        print(f"[LISTING] Wifeed failed: {e}")
+    return None  # caller should use fallback
 
 
 class _SafeEncoder(json.JSONEncoder):
@@ -520,6 +658,8 @@ SECTOR_MAP_FALLBACK = {
 def fetch_icb_mapping():
     """Lấy mapping symbol → sector từ VCI ICB API (Level 2).
     Returns dict {symbol: sector_name} hoặc {} nếu thất bại."""
+    if not _HAS_VNSTOCK:
+        return {}
     try:
         _listing = VCIListing(show_log=False)
         df_icb = _listing.symbols_by_industries(lang='vi')
@@ -984,11 +1124,8 @@ def compute_breadth_from_board(board_vn30):
 def process_symbol(symbol, index_board=None, ma_breadth=None):
     print(f"Processing {symbol}...")
     try:
-        start_date = (datetime.now() - timedelta(days=730)).strftime("%Y-%m-%d")
-        end_date = datetime.now().strftime("%Y-%m-%d")
-        # ── Lấy lịch sử giá bằng vnstock.explorer.vci (source code đã xác nhận) ──
-        q = VCIQuote(symbol=symbol, show_log=False)
-        df = q.history(start=start_date, end=end_date, interval='1D')
+        # ── Lấy lịch sử giá — ưu tiên VCI, fallback VNDIRECT DChart ──
+        df = fetch_ohlcv_direct(symbol, days=730)
 
         if df is None or df.empty:
             print(f"No data for {symbol}")
@@ -1669,153 +1806,186 @@ def main():
     price_boards = {}
     print("[BOARDS] Pre-fetching index price boards...")
     sys.stdout.flush()
-    try:
-        _listing  = VCIListing(show_log=False)
-        _trading  = VCITrading(show_log=False)
 
-        # Lấy danh sách mã — fallback sang hardcode nếu API không có phương thức
-        def _get_group_syms(group, fallback):
-            try:
-                df_all = _listing.all_symbols()
-                # Tìm cột chứa thông tin group/index
-                grp_col = next(
-                    (c for c in df_all.columns
-                     if 'group' in c.lower() or 'index' in c.lower() or 'type' in c.lower()),
-                    None
-                )
-                if grp_col:
-                    filtered = df_all[df_all[grp_col].str.contains(group, case=False, na=False)]
-                    ticker_col = next(
-                        (c for c in filtered.columns
-                         if 'ticker' in c.lower() or 'symbol' in c.lower() or 'code' in c.lower()),
-                        filtered.columns[0]
-                    )
-                    syms = filtered[ticker_col].tolist()
-                    if syms:
-                        return syms
-            except Exception as e:
-                err_str = str(e)
-                # Bỏ qua lỗi nội bộ của vnstock library (hosting_service bug)
-                if 'hosting_service' not in err_str and 'Expecting value' not in err_str:
-                    print(f"  [BOARDS] all_symbols filter failed: {err_str}")
-            return fallback  # hardcode fallback
-
-        def _normalize_board(raw):
-            """Chuẩn hoá columns price_board."""
-            if hasattr(raw.columns, 'levels'):
-                raw.columns = ['_'.join(str(x) for x in col if str(x))
-                               for col in raw.columns.values]
-            raw.columns = [str(c).strip() for c in raw.columns]
-            cp = 'match_match_price' if 'match_match_price' in raw.columns else next((c for c in raw.columns if c in ('close', 'price') or ('match_price' in c and 'ato' not in c and 'atc' not in c)), None)
-            rp = 'listing_ref_price' if 'listing_ref_price' in raw.columns else next((c for c in raw.columns if c in ('ref', 'ref_price') or 'ref_price' in c), None)
-            if cp and rp:
-                # Nếu cổ phiếu chưa có giao dịch, VCI trả về match_price = 0
-                # Cần gán lại bằng giá tham chiếu để thay đổi = 0%, tránh bị lỗi -100%
-                raw[cp] = raw.apply(lambda row: row[rp] if pd.isna(row[cp]) or row[cp] == 0 else row[cp], axis=1)
-                
-                raw['change_pc'] = (raw[cp] - raw[rp]) / raw[rp].replace(0, float('nan')) * 100
-                if 'match_match_price' not in raw.columns:
-                    raw['match_match_price'] = raw[cp]
-                if 'listing_ref_price' not in raw.columns:
-                    raw['listing_ref_price'] = raw[rp]
-            else:
-                raw['change_pc'] = 0.0
+    def _normalize_board(raw):
+        """Chuẩn hoá columns price_board."""
+        if hasattr(raw.columns, 'levels'):
+            raw.columns = ['_'.join(str(x) for x in col if str(x))
+                           for col in raw.columns.values]
+        raw.columns = [str(c).strip() for c in raw.columns]
+        cp = 'match_match_price' if 'match_match_price' in raw.columns else next((c for c in raw.columns if c in ('close', 'price') or ('match_price' in c and 'ato' not in c and 'atc' not in c)), None)
+        rp = 'listing_ref_price' if 'listing_ref_price' in raw.columns else next((c for c in raw.columns if c in ('ref', 'ref_price') or 'ref_price' in c), None)
+        if cp and rp:
+            # Nếu cổ phiếu chưa có giao dịch, VCI trả về match_price = 0
+            # Cần gán lại bằng giá tham chiếu để thay đổi = 0%, tránh bị lỗi -100%
+            raw[cp] = raw.apply(lambda row: row[rp] if pd.isna(row[cp]) or row[cp] == 0 else row[cp], axis=1)
             
-            # Lấp đầy các giá trị NaN để không bị drop
-            raw['change_pc'] = raw['change_pc'].fillna(0.0)
-            tc = next((c for c in raw.columns
-                       if 'code' in c.lower() or c in ('ticker', 'symbol')), None)
-            if tc and 'listing_code' not in raw.columns:
-                raw['listing_code'] = raw[tc]
-            return raw
-
-        # Fetch VN30
-        vn30_syms = _get_group_syms('VN30', VN30_FALLBACK)
-        print(f"[BOARDS] VN30={len(vn30_syms)} mã")
-        sys.stdout.flush()
-        raw_vn30 = _trading.price_board(symbols_list=vn30_syms)
-        price_boards['VN30'] = _normalize_board(raw_vn30).sort_values('change_pc', ascending=False)
-        time.sleep(2)
-
-        # Fetch VN100
-        vn100_syms = _get_group_syms('VN100', VN100_FALLBACK)
-        print(f"[BOARDS] VN100={len(vn100_syms)} mã")
-        sys.stdout.flush()
-        raw_vn100 = _trading.price_board(symbols_list=vn100_syms)
-        price_boards['VN100'] = _normalize_board(raw_vn100).sort_values('change_pc', ascending=False)
-
-        # Fetch VNINDEX (HOSE) — chỉ cổ phiếu, loại CW/ETF
-        vnindex_syms = []
-        try:
-            df_all = _listing.symbols_by_exchange()
-            # Lọc: exchange HOSE + type STOCK (loại CW, ETF, ...)
-            hose_stocks = df_all[
-                (df_all['exchange'].str.upper() == 'HOSE') &
-                (df_all['type'].str.upper() == 'STOCK')
-            ]['symbol'].tolist()
-            if hose_stocks:
-                vnindex_syms = hose_stocks
-                print(f"[BOARDS] HOSE stocks (excl CW/ETF): {len(vnindex_syms)} mã")
-        except Exception as e:
-            print(f"  [BOARDS] symbols_by_exchange for VNINDEX failed: {e}")
-        
-        if not vnindex_syms:
-            vnindex_syms = fetch_hose_stocks_fallback()
-        print(f"[BOARDS] VNINDEX={len(vnindex_syms)} mã")
-        sys.stdout.flush()
-        
-        vnindex_dfs = []
-        failed_syms = []
-        # Split into chunks of 50 initially
-        chunks_50 = [vnindex_syms[i:i+50] for i in range(0, len(vnindex_syms), 50)]
-        for chunk in chunks_50:
-            try:
-                raw_chunk = _trading.price_board(symbols_list=chunk)
-                if not raw_chunk.empty:
-                    vnindex_dfs.append(raw_chunk)
-                time.sleep(1)
-                continue
-            except Exception as e:
-                print(f"  [BOARDS] Chunk 50 failed: {e}. Splitting to 10...")
-                # Split into 10
-                chunks_10 = [chunk[i:i+10] for i in range(0, len(chunk), 10)]
-                for sub in chunks_10:
-                    try:
-                        raw_sub = _trading.price_board(symbols_list=sub)
-                        if not raw_sub.empty:
-                            vnindex_dfs.append(raw_sub)
-                        time.sleep(0.5)
-                        continue
-                    except Exception as e2:
-                        # Fallback to individual
-                        for sym in sub:
-                            try:
-                                raw_ind = _trading.price_board(symbols_list=[sym])
-                                if not raw_ind.empty:
-                                    vnindex_dfs.append(raw_ind)
-                                time.sleep(0.2)
-                            except:
-                                failed_syms.append(sym)
-                                
-        if failed_syms:
-            print(f"  [BOARDS] Completely failed {len(failed_syms)} symbols: {failed_syms[:10]}...")
-            
-        if vnindex_dfs:
-            raw_vnindex = pd.concat(vnindex_dfs, ignore_index=True)
-            # Remove duplicates if any
-            raw_vnindex = raw_vnindex.loc[raw_vnindex.astype(str).drop_duplicates().index]
-            price_boards['VNINDEX'] = _normalize_board(raw_vnindex).sort_values('change_pc', ascending=False)
+            raw['change_pc'] = (raw[cp] - raw[rp]) / raw[rp].replace(0, float('nan')) * 100
+            if 'match_match_price' not in raw.columns:
+                raw['match_match_price'] = raw[cp]
+            if 'listing_ref_price' not in raw.columns:
+                raw['listing_ref_price'] = raw[rp]
         else:
-            if 'VN100' in price_boards:
+            raw['change_pc'] = 0.0
+        
+        # Lấp đầy các giá trị NaN để không bị drop
+        raw['change_pc'] = raw['change_pc'].fillna(0.0)
+        tc = next((c for c in raw.columns
+                   if 'code' in c.lower() or c in ('ticker', 'symbol')), None)
+        if tc and 'listing_code' not in raw.columns:
+            raw['listing_code'] = raw[tc]
+        # Ensure listing_symbol exists
+        if 'listing_symbol' not in raw.columns:
+            if 'listing_code' in raw.columns:
+                raw['listing_symbol'] = raw['listing_code']
+        return raw
+
+    if _HAS_VNSTOCK:
+        # ─── Path A: vnstock available → use VCI Trading ───
+        try:
+            _listing  = VCIListing(show_log=False)
+            _trading  = VCITrading(show_log=False)
+
+            def _get_group_syms(group, fallback):
+                try:
+                    df_all = _listing.all_symbols()
+                    grp_col = next(
+                        (c for c in df_all.columns
+                         if 'group' in c.lower() or 'index' in c.lower() or 'type' in c.lower()),
+                        None
+                    )
+                    if grp_col:
+                        filtered = df_all[df_all[grp_col].str.contains(group, case=False, na=False)]
+                        ticker_col = next(
+                            (c for c in filtered.columns
+                             if 'ticker' in c.lower() or 'symbol' in c.lower() or 'code' in c.lower()),
+                            filtered.columns[0]
+                        )
+                        syms = filtered[ticker_col].tolist()
+                        if syms:
+                            return syms
+                except Exception as e:
+                    err_str = str(e)
+                    if 'hosting_service' not in err_str and 'Expecting value' not in err_str:
+                        print(f"  [BOARDS] all_symbols filter failed: {err_str}")
+                return fallback
+
+            # Fetch VN30
+            vn30_syms = _get_group_syms('VN30', VN30_FALLBACK)
+            print(f"[BOARDS] VN30={len(vn30_syms)} mã")
+            sys.stdout.flush()
+            raw_vn30 = _trading.price_board(symbols_list=vn30_syms)
+            price_boards['VN30'] = _normalize_board(raw_vn30).sort_values('change_pc', ascending=False)
+            time.sleep(2)
+
+            # Fetch VN100
+            vn100_syms = _get_group_syms('VN100', VN100_FALLBACK)
+            print(f"[BOARDS] VN100={len(vn100_syms)} mã")
+            sys.stdout.flush()
+            raw_vn100 = _trading.price_board(symbols_list=vn100_syms)
+            price_boards['VN100'] = _normalize_board(raw_vn100).sort_values('change_pc', ascending=False)
+
+            # Fetch VNINDEX (HOSE)
+            vnindex_syms = []
+            try:
+                df_all = _listing.symbols_by_exchange()
+                hose_stocks = df_all[
+                    (df_all['exchange'].str.upper() == 'HOSE') &
+                    (df_all['type'].str.upper() == 'STOCK')
+                ]['symbol'].tolist()
+                if hose_stocks:
+                    vnindex_syms = hose_stocks
+                    print(f"[BOARDS] HOSE stocks (excl CW/ETF): {len(vnindex_syms)} mã")
+            except Exception as e:
+                print(f"  [BOARDS] symbols_by_exchange for VNINDEX failed: {e}")
+            
+            if not vnindex_syms:
+                vnindex_syms = fetch_hose_stocks_fallback()
+            print(f"[BOARDS] VNINDEX={len(vnindex_syms)} mã")
+            sys.stdout.flush()
+            
+            vnindex_dfs = []
+            failed_syms = []
+            chunks_50 = [vnindex_syms[i:i+50] for i in range(0, len(vnindex_syms), 50)]
+            for chunk in chunks_50:
+                try:
+                    raw_chunk = _trading.price_board(symbols_list=chunk)
+                    if not raw_chunk.empty:
+                        vnindex_dfs.append(raw_chunk)
+                    time.sleep(1)
+                    continue
+                except Exception as e:
+                    print(f"  [BOARDS] Chunk 50 failed: {e}. Splitting to 10...")
+                    chunks_10 = [chunk[i:i+10] for i in range(0, len(chunk), 10)]
+                    for sub in chunks_10:
+                        try:
+                            raw_sub = _trading.price_board(symbols_list=sub)
+                            if not raw_sub.empty:
+                                vnindex_dfs.append(raw_sub)
+                            time.sleep(0.5)
+                            continue
+                        except Exception as e2:
+                            for sym in sub:
+                                try:
+                                    raw_ind = _trading.price_board(symbols_list=[sym])
+                                    if not raw_ind.empty:
+                                        vnindex_dfs.append(raw_ind)
+                                    time.sleep(0.2)
+                                except:
+                                    failed_syms.append(sym)
+                                    
+            if failed_syms:
+                print(f"  [BOARDS] Completely failed {len(failed_syms)} symbols: {failed_syms[:10]}...")
+                
+            if vnindex_dfs:
+                raw_vnindex = pd.concat(vnindex_dfs, ignore_index=True)
+                raw_vnindex = raw_vnindex.loc[raw_vnindex.astype(str).drop_duplicates().index]
+                price_boards['VNINDEX'] = _normalize_board(raw_vnindex).sort_values('change_pc', ascending=False)
+            else:
+                if 'VN100' in price_boards:
+                    price_boards['VNINDEX'] = price_boards['VN100'].copy()
+
+            print(f"[BOARDS] Done (VCI): VN30={len(price_boards.get('VN30',[]))} | VN100={len(price_boards.get('VN100',[]))} | VNINDEX={len(price_boards.get('VNINDEX',[]))}")
+            sys.stdout.flush()
+
+        except Exception as e:
+            print(f"[BOARDS] VCI failed: {e}")
+            traceback.print_exc()
+            sys.stdout.flush()
+    
+    # ─── Path B: No vnstock OR VCI failed → use VNDIRECT DChart API ───
+    if not price_boards:
+        print("[BOARDS] Using VNDIRECT DChart API (no vnstock)...")
+        sys.stdout.flush()
+        try:
+            # VN30
+            print(f"[BOARDS] VN30={len(VN30_FALLBACK)} mã (fallback)")
+            raw_vn30 = fetch_price_board_direct(VN30_FALLBACK)
+            if not raw_vn30.empty:
+                price_boards['VN30'] = raw_vn30.sort_values('change_pc', ascending=False)
+
+            # VN100
+            print(f"[BOARDS] VN100={len(VN100_FALLBACK)} mã (fallback)")
+            raw_vn100 = fetch_price_board_direct(VN100_FALLBACK)
+            if not raw_vn100.empty:
+                price_boards['VN100'] = raw_vn100.sort_values('change_pc', ascending=False)
+
+            # VNINDEX (HOSE) — Wifeed or fallback
+            vnindex_syms = fetch_hose_symbols_direct() or fetch_hose_stocks_fallback()
+            print(f"[BOARDS] VNINDEX={len(vnindex_syms)} mã")
+            sys.stdout.flush()
+            raw_vnindex = fetch_price_board_direct(vnindex_syms)
+            if not raw_vnindex.empty:
+                price_boards['VNINDEX'] = raw_vnindex.sort_values('change_pc', ascending=False)
+            elif 'VN100' in price_boards:
                 price_boards['VNINDEX'] = price_boards['VN100'].copy()
 
-        print(f"[BOARDS] Done: VN30={len(price_boards.get('VN30',[]))} | VN100={len(price_boards.get('VN100',[]))} | VNINDEX={len(price_boards.get('VNINDEX',[]))}")
-        sys.stdout.flush()
-
-    except Exception as e:
-        print(f"[BOARDS] Failed: {e}")
-        traceback.print_exc()
-        sys.stdout.flush()
+            print(f"[BOARDS] Done (VNDIRECT): VN30={len(price_boards.get('VN30',[]))} | VN100={len(price_boards.get('VN100',[]))} | VNINDEX={len(price_boards.get('VNINDEX',[]))}")
+            sys.stdout.flush()
+        except Exception as e:
+            print(f"[BOARDS] VNDIRECT fallback failed: {e}")
+            traceback.print_exc()
+            sys.stdout.flush()
 
 
     # ── Compute breadth từ VN30 board — ZERO extra API calls ─────────
