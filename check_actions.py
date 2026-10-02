@@ -1,5 +1,5 @@
 import urllib.request, json
-req = urllib.request.Request("https://api.github.com/repos/quagtm/vnstock-analyzer/actions/runs?per_page=5")
+req = urllib.request.Request("https://api.github.com/repos/quagtm/vnstock-analyzer/actions/runs?per_page=10")
 req.add_header('User-Agent', 'Mozilla/5.0')
 try:
     resp = urllib.request.urlopen(req)
