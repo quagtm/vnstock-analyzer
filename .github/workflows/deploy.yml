@@ -6,13 +6,13 @@ on:
       - main
       - master
   schedule:
-    # Spread triggers across 16:15-17:15 VN (09:15-10:15 UTC) để tránh GitHub Actions bỏ qua
-    # Market guard trong code sẽ tự skip nếu chạy trước 14:45 VN
-    - cron: '15 9 * * 1-5'   # 16:15 VN
-    - cron: '30 9 * * 1-5'   # 16:30 VN
-    - cron: '45 9 * * 1-5'   # 16:45 VN
-    - cron: '0 10 * * 1-5'   # 17:00 VN
-    - cron: '15 10 * * 1-5'  # 17:15 VN
+    # Chạy lúc 19:00 VN (12:00 UTC) — sau khi thị trường đóng cửa vài tiếng, dữ liệu ổn định
+    # Spread 19:00-20:00 VN để tránh GitHub Actions bỏ qua
+    - cron: '0 12 * * 1-5'   # 19:00 VN
+    - cron: '15 12 * * 1-5'  # 19:15 VN
+    - cron: '30 12 * * 1-5'  # 19:30 VN
+    - cron: '45 12 * * 1-5'  # 19:45 VN
+    - cron: '0 13 * * 1-5'   # 20:00 VN
   workflow_dispatch:
     inputs:
       force_run:
