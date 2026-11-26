@@ -11,13 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Boxicons for icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <!-- Marked.js for Markdown -->
-    <!-- Marked.js for Markdown -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Marked.js for Markdown (ghim phiên bản; từ v16 không còn file marked.min.js ở gốc) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/marked@18.2.0/lib/marked.umd.js"></script>
+    <!-- Chart.js (ghim phiên bản) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="style.css?v=20261127">
-    <script src="app.js?v=20261127"></script>
 </head>
 <body>
     <div class="app-container">
@@ -495,7 +493,7 @@
     </template>
 
     <script src="sectors.js?v=20260720"></script>
-    <script src="app.js?v=20261127"></script>
+    <script src="app.js?v=20261128"></script>
 
     <!-- Modal Tùy chỉnh Nhóm Ngành -->
     <div id="sector-modal" class="modal-overlay" style="display: none;">
@@ -696,7 +694,7 @@
         </div>
     </div>
 
-    <script src="watchlist.js"></script>
-    <script src="screener.js"></script>
+    <script src="watchlist.js?v=20261128"></script>
+    <script src="screener.js?v=20261128"></script>
 </body>
 </html>

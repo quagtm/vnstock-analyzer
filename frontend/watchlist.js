@@ -227,6 +227,11 @@
     };
 
     function init() {
+        // Khi app.js nạp xong dữ liệu (hoặc làm mới), cập nhật giá tự động nếu panel đang mở
+        document.addEventListener("appdata:loaded", () => {
+            const panel = document.getElementById("watchlist-panel");
+            if (panel && panel.style.display !== "none") render();
+        });
         document.getElementById("btn-open-watchlist")?.addEventListener("click", openPanel);
         document.getElementById("btn-close-watchlist")?.addEventListener("click", closePanel);
         document.getElementById("watchlist-overlay")?.addEventListener("click", closePanel);

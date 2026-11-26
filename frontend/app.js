@@ -16,25 +16,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Fetch Data với cache-busting để luôn lấy dữ liệu mới nhất
-    async function fetchData() {
-        const ts = Date.now(); // timestamp để bypass browser cache
-        try {
-            const response = await fetch(`public/data.json?v=${ts}`);
-            if (!response.ok) {
-                const fallbackResponse = await fetch(`data.json?v=${ts}`);
-                if (!fallbackResponse.ok) throw new Error("Data not found");
-                appData = await fallbackResponse.json();
-            } else {
-                appData = await response.json();
+    // Dữ liệu chỉ đổi một lần mỗi tối (pipeline 19:00-20:00 VN), nên dùng URL cố định
+    // và cache: 'no-cache' — trình duyệt hỏi lại máy chủ bằng ETag/Last-Modified và
+    // nhận 304 (không tải lại ~600KB) khi file chưa đổi, thay vì ?v=Date.now() luôn tải mới.
+    const DATA_URLS = ['public/data.json', 'data.json'];
+    const REFRESH_MIN_INTERVAL = 30 * 60 * 1000; // tối thiểu 30 phút giữa hai lần kiểm tra
+    let lastFetchAt = 0;
+    let lastDataSignature = null;
+
+    function dataSignature(data) {
+        return Object.keys(data)
+            .map(k => `${k}:${(data[k] && data[k].date) || ''}`)
+            .join('|');
+    }
+
+    async function loadDataJson() {
+        let lastErr = null;
+        for (const url of DATA_URLS) {
+            try {
+                const res = await fetch(url, { cache: 'no-cache' });
+                if (res.ok) return await res.json();
+                lastErr = new Error(`HTTP ${res.status}`);
+            } catch (e) {
+                lastErr = e;
             }
-            if (!appData) throw new Error("Dữ liệu trống");
+        }
+        throw lastErr || new Error('Data not found');
+    }
+
+    async function fetchData({ background = false } = {}) {
+        lastFetchAt = Date.now();
+        try {
+            const data = await loadDataJson();
+            if (!data) throw new Error("Dữ liệu trống");
+            const sig = dataSignature(data);
+            // Lần làm mới nền mà dữ liệu chưa đổi: giữ nguyên giao diện, không vẽ lại biểu đồ
+            if (background && sig === lastDataSignature) return;
+            lastDataSignature = sig;
+            appData = data;
+            window.appData = appData; // screener.js và watchlist.js đọc window.appData
             initSectorModal(appData);
             renderIndexSnapshot();
             renderMarketBreadth();
             renderDashboard();
+            document.dispatchEvent(new CustomEvent('appdata:loaded', { detail: appData }));
         } catch (error) {
             console.error('Error fetching data:', error);
+            if (background && appData) return; // đã có dữ liệu cũ thì không đè bằng màn hình lỗi
             dashboardContent.innerHTML = `
                 <div class="glass" style="padding: 32px; text-align: center; color: var(--negative);">
                     <i class='bx bx-error-circle' style="font-size: 48px; margin-bottom: 16px;"></i>
@@ -46,11 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Tự động reload data mỗi 5 phút (300.000ms)
+    // Làm mới khi người dùng quay lại tab (nếu đã quá 30 phút), thay cho polling 5 phút liên tục
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && Date.now() - lastFetchAt >= REFRESH_MIN_INTERVAL) {
+            fetchData({ background: true });
+        }
+    });
+    // Tab vẫn mở và đang xem: kiểm tra mỗi 30 phút (rẻ vì thường nhận 304)
     setInterval(() => {
-        console.log('[Auto-refresh] Reloading data...');
-        fetchData();
-    }, 5 * 60 * 1000);
+        if (document.visibilityState === 'visible') fetchData({ background: true });
+    }, REFRESH_MIN_INTERVAL);
 
     // ─── Index Snapshot Bar (topbar — 3 ô cố định) ───────────────
     function renderIndexSnapshot() {
