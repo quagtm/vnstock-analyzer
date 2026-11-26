@@ -20,15 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchData() {
         const ts = Date.now(); // timestamp để bypass browser cache
         try {
+            let base = 'public/';
             const response = await fetch(`public/data.json?v=${ts}`);
             if (!response.ok) {
                 const fallbackResponse = await fetch(`data.json?v=${ts}`);
                 if (!fallbackResponse.ok) throw new Error("Data not found");
                 appData = await fallbackResponse.json();
+                base = '';
             } else {
                 appData = await response.json();
             }
             if (!appData) throw new Error("Dữ liệu trống");
+            if (window.VNData) window.VNData.setMain(appData, base);
+            else window.appData = appData;
             initSectorModal(appData);
             renderIndexSnapshot();
             renderMarketBreadth();
@@ -82,31 +86,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // ─── Market Breadth Bar ───────────────────────────────────────
     function renderMarketBreadth() {
         const bar = document.getElementById('market-breadth-bar');
-        const raw = appData && appData['__global__'] && appData['__global__']['raw_stocks'];
-        
-        if (!bar || !raw) {
+        const g = (appData && appData['__global__']) || {};
+        const raw = g['raw_stocks'];
+        // Ưu tiên số đếm tính sẵn trong data.json (không cần tải raw_stocks.json)
+        let b = g['breadth'];
+        if (!b && raw) {
+            b = { total: 0, up: 0, down: 0, high_52w: 0, low_52w: 0, sma50_up: 0, sma200_up: 0, trend_up: 0 };
+            Object.values(raw).forEach(s => {
+                b.total++;
+                if (s.change_pc > 0) b.up++;
+                if (s.change_pc < 0) b.down++;
+                if (s.is_new_high_52w) b.high_52w++;
+                if (s.is_new_low_52w) b.low_52w++;
+                if (s.is_above_sma50) b.sma50_up++;
+                if (s.is_above_sma200) b.sma200_up++;
+                if (s.is_uptrend) b.trend_up++;
+            });
+        }
+
+        if (!bar || !b) {
             if (bar) bar.style.display = 'none';
             return;
         }
 
-        const stocks = Object.values(raw);
-        const total = stocks.length;
+        const total = b.total || 0;
         if (total === 0) return;
 
-        let up = 0, down = 0;
-        let h52 = 0, l52 = 0;
-        let sma50_up = 0, sma200_up = 0;
-        let trend_up = 0;
-
-        stocks.forEach(s => {
-            if (s.change_pc > 0) up++;
-            if (s.change_pc < 0) down++;
-            if (s.is_new_high_52w) h52++;
-            if (s.is_new_low_52w) l52++;
-            if (s.is_above_sma50) sma50_up++;
-            if (s.is_above_sma200) sma200_up++;
-            if (s.is_uptrend) trend_up++;
-        });
+        const up = b.up || 0, down = b.down || 0;
+        const h52 = b.high_52w || 0, l52 = b.low_52w || 0;
+        const sma50_up = b.sma50_up || 0, sma200_up = b.sma200_up || 0;
+        const trend_up = b.trend_up || 0;
 
         // 1. Tăng/Giảm
         const up_pct = Math.round((up / total) * 100) || 0;
@@ -803,20 +812,27 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSRZones(data.sr_zones || []);
 
         // Render sector heatmap
-        let sectorData = data.sector_heatmap || [];
-        if (typeof customSectors !== 'undefined' && customSectors && appData['__global__'] && appData['__global__'].raw_stocks) {
-            sectorData = computeCustomSectors(appData['__global__'].raw_stocks) || sectorData;
+        const globalData = appData['__global__'] || {};
+        let sectorData = data.sector_heatmap || globalData.sector_heatmap || [];
+        if (typeof customSectors !== 'undefined' && customSectors) {
+            const rawStocks = globalData.raw_stocks || (window.VNData && window.VNData.getRawStocks());
+            if (rawStocks) {
+                sectorData = computeCustomSectors(rawStocks) || sectorData;
+            } else if (window.VNData) {
+                // Nhóm ngành tùy chỉnh cần raw_stocks → tải rồi vẽ lại
+                window.VNData.loadRawStocks().then(raw => { if (raw) renderDashboard(); });
+            }
         }
 
         renderSectorHeatmap(sectorData);
         renderSectorTable(sectorData);
         
         // Render Swing Signals (Accurate Swing Trading System)
-        const swingSignals = data.swing_signals || (appData['__global__'] || {}).swing_signals;
+        const swingSignals = data.swing_signals || globalData.swing_signals;
         renderSwingSignals(swingSignals);
 
         // Render A/D Line chart (only if in flow tab)
-        const adHistory = (appData['__global__'] || {}).ad_history || [];
+        const adHistory = globalData.ad_history || [];
         if (isFlowTab) {
             renderADLineChart(adHistory);
         }

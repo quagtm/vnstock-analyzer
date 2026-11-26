@@ -2458,6 +2458,58 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
     print(f"[BREADTH] A/D Line: {len(ad_history)} phiên computed")
     return raw_stocks, ad_history, swing_signals
 
+
+# ─── Output writers ────────────────────────────────────────────────────────────
+RAW_STOCKS_FILE = "raw_stocks.json"
+FLOAT_DECIMALS = 4  # đủ cho giá/chỉ báo hiển thị; bỏ đuôi kiểu 8.333333333333332
+
+
+def summarize_breadth(raw_stocks):
+    """Đếm độ rộng thị trường từ raw_stocks để thanh breadth không cần tải raw_stocks.json."""
+    stocks = list((raw_stocks or {}).values())
+    return {
+        'total':     len(stocks),
+        'up':        sum(1 for s in stocks if (s.get('change_pc') or 0) > 0),
+        'down':      sum(1 for s in stocks if (s.get('change_pc') or 0) < 0),
+        'high_52w':  sum(1 for s in stocks if s.get('is_new_high_52w')),
+        'low_52w':   sum(1 for s in stocks if s.get('is_new_low_52w')),
+        'sma50_up':  sum(1 for s in stocks if s.get('is_above_sma50')),
+        'sma200_up': sum(1 for s in stocks if s.get('is_above_sma200')),
+        'trend_up':  sum(1 for s in stocks if s.get('is_uptrend')),
+    }
+
+
+def _compact(obj):
+    """NaN/Inf → None, numpy → python, làm tròn float."""
+    if isinstance(obj, dict):
+        return {k: _compact(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_compact(v) for v in obj]
+    if isinstance(obj, (bool, np.bool_)):
+        return bool(obj)
+    if isinstance(obj, (int, np.integer)):
+        return int(obj)
+    if isinstance(obj, (float, np.floating)):
+        v = float(obj)
+        if math.isnan(v) or math.isinf(v):
+            return None
+        v = round(v, FLOAT_DECIMALS)
+        return int(v) if v.is_integer() and abs(v) < 2**53 else v
+    return obj
+
+
+def _dump_compact(obj, path):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(_compact(obj), f, ensure_ascii=False, separators=(",", ":"), cls=_SafeEncoder)
+    print(f"Successfully generated {path} ({os.path.getsize(path) / 1024:.1f} KB)")
+
+
+def write_outputs(all_data, raw_stocks, out_dir):
+    """Ghi data.json (dashboard) và raw_stocks.json (tải lazy) dạng JSON gọn."""
+    _dump_compact(all_data, os.path.join(out_dir, "data.json"))
+    _dump_compact(raw_stocks, os.path.join(out_dir, RAW_STOCKS_FILE))
+
+
 def main():
     symbols = ["VNINDEX", "VN30", "VN100", "HNXINDEX"]
     all_data = {}
@@ -2732,33 +2784,21 @@ def main():
         ad_history = []
         swing_signals = {'buy_today': [], 'sell_today': [], 'uptrend_count': 0, 'downtrend_count': 0, 'total': 0}
 
-    # Gắn sector_heatmap và swing_signals vào tất cả index
-    for sym in all_data:
-        all_data[sym]['sector_heatmap'] = sector_heatmap
-        all_data[sym]['swing_signals']  = swing_signals
-        
+    # sector_heatmap / swing_signals / ad_history là dữ liệu toàn thị trường, giống hệt nhau
+    # cho mọi index → chỉ lưu 1 lần trong __global__ (frontend fallback về __global__).
+    # raw_stocks (~400 mã) tách ra file riêng raw_stocks.json, frontend chỉ tải khi cần
+    # (screener, watchlist, sửa nhóm ngành, nhóm ngành tùy chỉnh).
     all_data['__global__'] = {
-        'raw_stocks': raw_stocks,
+        'generated_at': datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
+        'raw_stocks_file': RAW_STOCKS_FILE,
+        'raw_stocks_count': len(raw_stocks),
+        'breadth': summarize_breadth(raw_stocks),
+        'sector_heatmap': sector_heatmap,
         'ad_history': ad_history,
-        'swing_signals': swing_signals
+        'swing_signals': swing_signals,
     }
-    
-    def clean_nan(obj):
-        if isinstance(obj, dict):
-            return {k: clean_nan(v) for k, v in obj.items()}
-        elif isinstance(obj, list):
-            return [clean_nan(v) for v in obj]
-        elif isinstance(obj, float):
-            if math.isnan(obj) or math.isinf(obj):
-                return None
-            return obj
-        return obj
-        
-    all_data = clean_nan(all_data)
 
-    with open(f"{out_dir}/data.json", "w", encoding="utf-8") as f:
-        json.dump(all_data, f, ensure_ascii=False, indent=2, cls=_SafeEncoder)
-    print(f"Successfully generated {out_dir}/data.json")
+    write_outputs(all_data, raw_stocks, out_dir)
 
 if __name__ == "__main__":
     main()

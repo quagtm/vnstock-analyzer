@@ -95,14 +95,15 @@ jobs:
           cd data_pipeline
           python -u fetch_and_analyze.py || echo "=== Using pre-built / committed data.json ==="
 
-      - name: Copy data.json to frontend/public
+      - name: Copy data.json + raw_stocks.json to frontend/public
         run: |
           mkdir -p frontend/public
-          if [ -f data_pipeline/output/data.json ]; then
+          if [ -f data_pipeline/output/data.json ] && [ -f data_pipeline/output/raw_stocks.json ]; then
             cp data_pipeline/output/data.json frontend/public/data.json
-            echo "Copied data_pipeline/output/data.json to frontend/public/data.json"
+            cp data_pipeline/output/raw_stocks.json frontend/public/raw_stocks.json
+            echo "Copied data.json + raw_stocks.json to frontend/public/"
           fi
-          python -c "import json; d=json.load(open('frontend/public/data.json')); print('[CHECK] data.json verified successfully with', len(d), 'keys')"
+          python -c "import json; d=json.load(open('frontend/public/data.json')); r=json.load(open('frontend/public/raw_stocks.json')); print('[CHECK] data.json OK with', len(d), 'keys; raw_stocks.json OK with', len(r), 'stocks')"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

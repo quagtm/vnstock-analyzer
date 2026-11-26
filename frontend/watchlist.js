@@ -22,12 +22,20 @@
         return (n > 0 ? "+" : "") + Number(n).toFixed(2) + "%";
     }
 
+    // raw_stocks nằm ở file riêng (tải lazy qua VNData)
+    function getRawStocks() {
+        const g = window.appData && window.appData["__global__"];
+        return (window.VNData && window.VNData.getRawStocks()) || (g && g.raw_stocks) || null;
+    }
+    function ensureRawStocks() {
+        if (getRawStocks() || !window.VNData) return Promise.resolve(getRawStocks());
+        return window.VNData.loadRawStocks();
+    }
+
     // Giá tự động từ bảng giá thị trường
     function getAutoMarketPrice(ticker) {
         try {
-            const g = window.appData && window.appData["__global__"];
-            if (!g) return null;
-            const s = (g.raw_stocks || {})[ticker.toUpperCase()];
+            const s = (getRawStocks() || {})[ticker.toUpperCase()];
             if (!s) return null;
             return s.match_price || s.close || s.ref || null;
         } catch { return null; }
@@ -172,6 +180,8 @@
         if (panel) { panel.style.display = "flex"; panel.classList.add("open"); }
         if (ov)    { ov.style.display = "block"; }
         render();
+        // Tải giá thị trường lần đầu rồi vẽ lại
+        if (!getRawStocks()) ensureRawStocks().then(raw => { if (raw) render(); });
         const d = document.getElementById("wl-date");
         if (d && !d.value) d.value = new Date().toISOString().slice(0, 10);
     }
@@ -237,9 +247,11 @@
         });
 
         // Auto-fill price and stoploss when typing ticker in add form
-        document.getElementById("wl-ticker")?.addEventListener("input", e => {
+        document.getElementById("wl-ticker")?.addEventListener("input", async e => {
             const sym = (e.target.value || "").trim().toUpperCase();
             if (sym.length >= 3) {
+                await ensureRawStocks();
+                if ((e.target.value || "").trim().toUpperCase() !== sym) return;
                 const curPrice = getAutoMarketPrice(sym);
                 const recIn = document.getElementById("wl-rec-price");
                 const curIn = document.getElementById("wl-cur-price");
@@ -250,8 +262,7 @@
                 if (curPrice && curIn && !curIn.value) {
                     curIn.value = curPrice;
                 }
-                const g = window.appData && window.appData["__global__"];
-                const stock = (g?.raw_stocks || {})[sym];
+                const stock = (getRawStocks() || {})[sym];
                 if (stock && stock.swing_tsl && slIn && !slIn.value) {
                     slIn.value = stock.swing_tsl;
                 }
