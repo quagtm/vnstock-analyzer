@@ -33,6 +33,9 @@ except ImportError:
 
 from openai import OpenAI
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import market_rules  # bộ rule luận giải nhận định thị trường
+
 
 # ═══════════════════════════════════════════════════════════════════════
 # DIRECT API REPLACEMENTS (no vnstock dependency)
@@ -233,95 +236,6 @@ def ask_ai(prompt, system_prompt="Bạn là chuyên gia phân tích chứng kho�
 
     print("  ✗ All DeepSeek models failed — using rule-based fallback.")
     return None
-
-
-def generate_rule_based_analysis(symbol, close, open_price, high, low, current_vol,
-                                  vol_status, vol_diff, ma_str, mas_sorted,
-                                  cmf, vwap, obv, adx, atr, keltner_h, keltner_l,
-                                  top_movers_str, time_val, tab_type):
-    """Tự sinh bài phân tích từ dữ liệu số khi AI không khả dụng."""
-    change = close - open_price
-    change_pc = (change / open_price * 100) if open_price > 0 else 0
-    direction = "tăng" if change >= 0 else "giảm"
-    direction_emoji = "🟢" if change >= 0 else "🔴"
-    
-    # Đánh giá vị trí MAs
-    support_levels = [(name, val) for name, val in mas_sorted if close >= val]
-    resist_levels = [(name, val) for name, val in mas_sorted if close < val]
-    
-    support_str = ", ".join([f"{n} ({v:.2f})" for n, v in support_levels]) if support_levels else "không có"
-    resist_str = ", ".join([f"{n} ({v:.2f})" for n, v in resist_levels]) if resist_levels else "không có"
-    
-    if tab_type == "general":
-        top_info = top_movers_str
-
-        return f"""### 1. Diễn biến phiên giao dịch
-
-{direction_emoji} **{symbol}** đóng cửa tại **{close:.2f}** điểm, **{direction} {abs(change):.2f} điểm ({abs(change_pc):.2f}%)** so với tham chiếu {open_price:.2f}.
-
-Khối lượng giao dịch: **{current_vol:,.0f} CP** — {vol_status} so với trung bình 20 phiên.
-
-**Vùng Hỗ trợ (từ gần đến xa):** {support_str}
-**Vùng Kháng cự (từ gần đến xa):** {resist_str}
-
-### 2. Thống kê Cổ phiếu & Nhóm ngành
-
-{top_info}
-
----
-*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*"""
-
-    elif tab_type == "volume":
-        cmf_signal = "Tích cực (dòng tiền vào)" if cmf > 0.05 else ("Trung tính" if cmf > -0.05 else "Tiêu cực (dòng tiền rút ra)")
-        vwap_signal = "Giá > VWAP → Xu hướng tích cực trong ngày" if close > vwap else "Giá < VWAP → Áp lực bán chiếm ưu thế"
-        
-        return f"""### 1. Thống kê Chỉ báo Khối lượng
-
-| Chỉ báo | Giá trị | Nhận định |
-|---|---|---|
-| **CMF** | `{cmf:.4f}` | {cmf_signal} |
-| **VWAP** | `{vwap:.2f}` | {vwap_signal} |
-| **OBV** | `{obv:,.0f}` | {"Tích lũy — dòng tiền ròng vào" if obv > 0 else "Phân phối — dòng tiền ròng ra"} |
-| **KL Hiện tại** | `{current_vol:,.0f} CP` | {vol_status} so với TB 20 phiên |
-
-### 2. Nhận định Dòng tiền chung
-
-{"🟢 **Dòng tiền ĐANG VÀO**" if cmf > 0 else "🔴 **Dòng tiền ĐANG RÚT RA**"} — CMF = `{cmf:.4f}` cho thấy {"áp lực mua" if cmf > 0 else "áp lực bán"} đang chiếm ưu thế.
-
-{"Giá giao dịch trên VWAP (" + f"{vwap:.2f}" + "), tín hiệu tích cực cho xu hướng nội phiên." if close > vwap else "Giá dưới VWAP (" + f"{vwap:.2f}" + "), bên bán đang kiểm soát phiên giao dịch."}
-
-{"Khối lượng " + vol_status + " cho thấy " + ("sự tham gia mạnh, có thể từ tổ chức." if abs(vol_diff) > 20 else "giao dịch bình thường, chủ yếu nhà đầu tư cá nhân.")}
-
----
-*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*"""
-
-    elif tab_type == "trend":
-        adx_signal = "Xu hướng MẠNH" if adx > 25 else ("Xu hướng TRUNG BÌNH" if adx > 15 else "Thị trường ĐI NGANG — không có xu hướng rõ")
-        keltner_pos = "Giá > Keltner Upper → QUÁ MUA" if close > keltner_h else ("Giá < Keltner Lower → QUÁ BÁN" if close < keltner_l else "Giá trong kênh Keltner → Bình thường")
-        
-        return f"""### 1. Thống kê Xu hướng & Biến động
-
-| Chỉ báo | Giá trị | Nhận định |
-|---|---|---|
-| **ADX** | `{adx:.2f}` | {adx_signal} |
-| **ATR** | `{atr:.2f}` | Biến động trung bình {atr:.2f} điểm/phiên |
-| **Keltner Upper** | `{keltner_h:.2f}` | {"⚠️ Giá đang vượt trên" if close > keltner_h else "Kháng cự trên"} |
-| **Keltner Lower** | `{keltner_l:.2f}` | {"⚠️ Giá đang thủng dưới" if close < keltner_l else "Hỗ trợ dưới"} |
-
-### 2. Nhận định Rủi ro & Hành động
-
-**Xu hướng hiện tại:** {direction_emoji} {"Tăng" if change >= 0 else "Giảm"} — ADX = `{adx:.2f}` ({adx_signal}).
-
-**Vị trí giá so với Keltner:** {keltner_pos}
-
-**Mức biến động:** ATR = `{atr:.2f}` điểm — {"Biến động cao, cần cẩn thận với đòn bẩy." if atr > 30 else "Biến động bình thường, rủi ro được kiểm soát."}
-
-**Khuyến nghị:** {"🟢 Tín hiệu giữ vị thế mua nếu ADX > 25 và giá trên " + (support_levels[0][0] if support_levels else "MA gần nhất") + "." if change >= 0 and adx > 20 else "🔴 Thận trọng, chờ tín hiệu xác nhận đảo chiều trước khi hành động."}
-
----
-*⚠️ Phân tích tự động từ dữ liệu kỹ thuật — AI đang được bảo trì.*"""
-
-    return "Không có dữ liệu phân tích."
 
 
 def calculate_technical_indicators(df):
@@ -1901,6 +1815,8 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
         market_breadth_str = ""
         sector_flow_str  = ""
         ma_breadth_str   = ""
+        breadth_nums     = None   # dùng cho bộ rule nhận định
+        sector_perf_list = []
         try:
             board = index_board  # đã được fetch sẵn cho đúng group
             if board is None or board.empty:
@@ -1911,7 +1827,7 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
             # Top movers — chỉ thống kê, không phân tích lý do
             top5 = board.head(5)[['listing_symbol', 'change_pc']]
             bot5 = board.tail(5)[['listing_symbol', 'change_pc']]
-            top_lines = ", ".join([f"{r['listing_symbol']} (+{r['change_pc']:.2f}%)" for _, r in top5.iterrows()])
+            top_lines = ", ".join([f"{r['listing_symbol']} ({r['change_pc']:+.2f}%)" for _, r in top5.iterrows()])
             bot_lines  = ", ".join([f"{r['listing_symbol']} ({r['change_pc']:.2f}%)"  for _, r in bot5.iterrows()])
             top_movers_str = (
                 f"**Top 5 tăng mạnh nhất ({group_label}):** {top_lines}\n"
@@ -1924,6 +1840,7 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
             n_flat = int((board['change_pc'] == 0).sum())
             total  = len(board)
             ratio  = round(n_up / max(n_down, 1), 2)
+            breadth_nums = {'n_up': n_up, 'n_down': n_down, 'n_flat': n_flat, 'total': total}
             if n_up > n_down:
                 breadth_signal = "Bên mua chiếm ưu thế"
             elif n_down > n_up:
@@ -1953,6 +1870,7 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
             # Sector money flow (dùng SECTOR_MAP — chủ yếu chính xác với VN30)
             board['sector'] = board['listing_symbol'].map(SECTOR_MAP).fillna('Khác')
             sector_perf = board.groupby('sector')['change_pc'].mean().sort_values(ascending=False)
+            sector_perf_list = [(str(k), float(v)) for k, v in sector_perf.items()]
             attract = sector_perf[sector_perf > 0]
             drain   = sector_perf[sector_perf < 0]
             attract_lines = ", ".join([f"{s} (+{v:.2f}%)" for s, v in attract.items()]) if not attract.empty else "Không có"
@@ -1966,7 +1884,6 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
             top_movers_str = f"Dữ liệu {symbol} board không khả dụng."
             print(f"Error using {symbol} price board: {e}")
 
-        combined_market_str = "\n\n".join(filter(None, [top_movers_str, market_breadth_str, ma_breadth_str, sector_flow_str]))
 
         # ── TÍNH TOÁN CÁC BIẾN CHO KỊCH BẢN THỊ TRƯỜNG ──
         sr_zones_res = find_sr_zones(df, close)
@@ -1981,222 +1898,54 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
         highest_20 = float(sub_20['high'].max()) if not sub_20.empty else close
         lowest_20 = float(sub_20['low'].min()) if not sub_20.empty else close
         volatility_value = round((highest_20 - lowest_20) / close * 100, 2) if close > 0 else 0
-        volatility_regime = "ELEVATED_VOL" if volatility_value > 10 else "LOW_VOL"
 
         tas_res = compute_tas(close, latest, vol_diff, mas)
         tas_score = tas_res['score']
         tas_status = tas_res['label']
 
-        rb_args = dict(
-            symbol=symbol, close=close, open_price=safe_float(latest['open']),
-            high=safe_float(latest['high']), low=safe_float(latest['low']),
-            current_vol=current_vol, vol_status=vol_status, vol_diff=vol_diff,
-            ma_str=ma_str, mas_sorted=mas_sorted,
-            cmf=safe_float(latest.get('cmf', 0)),
-            vwap=safe_float(latest.get('vwap', 0)),
-            obv=safe_float(latest.get('obv', 0)),
-            adx=safe_float(latest.get('adx', 0)),
-            atr=safe_float(latest.get('atr', 0)),
-            keltner_h=safe_float(latest.get('keltner_h', 0)),
-            keltner_l=safe_float(latest.get('keltner_l', 0)),
-            top_movers_str=combined_market_str, time_val=time_val
+        # ── NHẬN ĐỊNH THEO BỘ RULE (data_pipeline/market_rules.py) ──
+        smc_res = compute_bigbeluga_smc(df, symbol)
+        prev_close = safe_float(latest.get('prev_close', 0)) or close
+        obv_series = df['obv'] if 'obv' in df.columns else None
+        obv_change_10 = (safe_float(obv_series.iloc[-1]) - safe_float(obv_series.iloc[-11])
+                         if obv_series is not None and len(obv_series) > 11 else None)
+        snap = {
+            'symbol': symbol, 'close': close, 'prev_close': prev_close,
+            'change_pc': (close - prev_close) / prev_close * 100 if prev_close > 0 else 0.0,
+            'high': safe_float(latest['high']), 'low': safe_float(latest['low']),
+            'volume': current_vol, 'vol_diff': vol_diff,
+            'ma': dict(mas),
+            'roc10': roc10, 'roc20': roc20,
+            'rsi14': safe_float(latest.get('rsi14', 0)),
+            'adx': safe_float(latest.get('adx', 0)),
+            'atr': safe_float(latest.get('atr', 0)),
+            'keltner_h': safe_float(latest.get('keltner_h', 0)),
+            'keltner_l': safe_float(latest.get('keltner_l', 0)),
+            'cmf': safe_float(latest.get('cmf', 0)),
+            'vwap': safe_float(latest.get('vwap', 0)),
+            'obv': safe_float(latest.get('obv', 0)),
+            'obv_change_10': obv_change_10,
+            'tas_score': int(tas_score), 'tas_label': tas_status,
+            'smc': smc_res, 'breadth': breadth_nums, 'sector_perf': sector_perf_list,
+            'sr_zones': sr_zones_res,
+        }
+        commentary = market_rules.build_commentary(
+            snap,
+            market_stats_md=top_movers_str if breadth_nums else "",
+            breadth_md="\n\n".join(filter(None, [market_breadth_str, ma_breadth_str])),
+            volatility_value=volatility_value,
         )
+        general_markdown  = commentary['general_markdown']
+        scenario_markdown = commentary['scenario_markdown']
+        volume_markdown   = commentary['volume_markdown']
+        trend_markdown    = commentary['trend_markdown']
+        if smc_res and smc_res.get('interpretation_markdown'):
+            smc_res['interpretation_markdown'] = market_rules.replace_smc_strategy(
+                smc_res['interpretation_markdown'], snap, commentary['_v'])
+        print(f"  [{symbol}] Nhận định: {commentary['verdict']['regime']} → {commentary['verdict']['action']} "
+              f"(rule {commentary['verdict']['rule_no']}, tin cậy {commentary['verdict']['confidence']})")
 
-        # ── Phân tích MA divergence — cần thiết cho TAB:TREND ──────────
-        short_mas  = [(n, v) for n, v in mas if n in ('MA10', 'MA20') and v > 0]
-        mid_mas    = [(n, v) for n, v in mas if n == 'MA50' and v > 0]
-        long_mas   = [(n, v) for n, v in mas if n in ('MA100', 'MA200') and v > 0]
-
-        def _dir(pairs):
-            if not pairs: return None
-            above = all(close >= v for _, v in pairs)
-            below = all(close < v for _, v in pairs)
-            return 'up' if above else ('down' if below else 'mixed')
-
-        d_short = _dir(short_mas)
-        d_mid   = _dir(mid_mas)
-        d_long  = _dir(long_mas)
-
-        # Đư᨟ ng bảo vệ từ từng MA xuống (hỗ trợ) + khoảng cách %
-        ma_distances = []
-        for name, val in sorted(mas, key=lambda x: x[1], reverse=True):
-            if val > 0:
-                dist_pct = (close - val) / val * 100
-                role = 'Hỗ trợ' if dist_pct >= 0 else 'Kháng cự'
-                ma_distances.append(f"{name}={val:.2f} ({dist_pct:+.2f}% | {role})")
-        ma_dist_str = ' | '.join(ma_distances)
-
-        # Xác định tình trạng phân kỳ
-        divergence_note = ""
-        if d_short == 'down' and d_long == 'up':
-            divergence_note = (
-                f"PHÂN KỲ XU HƯỚNG: {symbol} giảm ngắn hạn TRONG xu hướng tăng dài hạn. "
-                f"Cần đánh giá xu hướng tăng dài hạn có bị phá vỡ không."
-            )
-        elif d_short == 'up' and d_long == 'down':
-            divergence_note = (
-                f"PHÂN KỲ XU HƯỚNG: {symbol} tăng ngắn hạn NHƯNG xu hướng dài hạn vẫn giảm. "
-                f"Cần đánh giá đây là hồi phục kỹ thuật hay đảo chiều thực sự."
-            )
-        elif d_short == d_mid == d_long == 'up':
-            divergence_note = f"{symbol} trên tất cả MAs — xu hướng tăng đồng thuận toàn bộ khung thời gian."
-        elif d_short == d_mid == d_long == 'down':
-            divergence_note = f"{symbol} dưới tất cả MAs — xu hướng giảm đồng thuận toàn bộ khung thời gian."
-        else:
-            divergence_note = f"Tình trạng hỗn hợp: ngắn={'up' if d_short=='up' else 'down' if d_short else 'N/A'} | trung={'up' if d_mid=='up' else 'down' if d_mid else 'N/A'} | dài={'up' if d_long=='up' else 'down' if d_long else 'N/A'}"
-
-        # ── 1 PROMPT DUY NHẤT cho cả 3 tabs ──────────────────────
-        keltner_pos = ('Vượt trên Upper → quá mua' if close > safe_float(latest.get('keltner_h', 0))
-                       else ('Thủng dưới Lower → quá bán' if close < safe_float(latest.get('keltner_l', 0))
-                             else 'Trong kênh Keltner'))
-        vwap_pos = 'trên' if close > safe_float(latest.get('vwap', 0)) else 'dưới'
-
-        prompt_all = f"""Bạn là chuyên gia phân tích kỹ thuật thị trường chứng khoán Việt Nam.
-Chỉ dùng số liệu được cung cấp. KHÔNG suy đoán nguyên nhân tăng/giảm của từng mã, KHÔNG đưa ra xác suất.
-
-=== DỮ LIỆU {symbol} — {time_val} ===
-
-[GIÁ & KHỐI LƯỢNG]
-- Đóng cửa: {close:.2f} | Mở: {safe_float(latest['open']):.2f} | Cao: {safe_float(latest['high']):.2f} | Thấp: {safe_float(latest['low']):.2f}
-- Khối lượng khớp lệnh: {current_vol/1_000_000:.3f} triệu CP — {vol_status} so với TB 20 phiên
-
-[XU HƯỚNG MA & ĐỘNG LƯỢNG]
-{trend_assessment}
-- Khoảng cách tới từng MA: {ma_dist_str}
-- Nhận xét phân kỳ: {divergence_note}
-- ROC: {roc_str} → {roc_signal}
-- ADX: {safe_float(latest['adx']):.2f} (>25: mạnh | 15-25: TB | <15: đi ngang)
-- ATR: {safe_float(latest['atr']):.2f} điểm/phiên
-- Keltner: Upper {safe_float(latest['keltner_h']):.2f} / Lower {safe_float(latest['keltner_l']):.2f} → {keltner_pos}
-
-[DÒNG TIỀN]
-- CMF: {safe_float(latest['cmf']):.4f} (>0: dòng tiền vào | <0: dòng tiền ra)
-- VWAP: {safe_float(latest['vwap']):.2f} — Giá đang {vwap_pos} VWAP
-- OBV: {safe_float(latest['obv']):.0f}
-
-[{symbol} — THỊ TRƯỜNG]
-{combined_market_str}
-
-=== YÊU CẦU OUTPUT ===
-Viết Markdown theo đúng cấu trúc sau (KHÔNG đổi tiêu đề, KHÔNG thêm block mới):
-
-## [TAB:GENERAL]
-### 1. Diễn biến phiên giao dịch
-Giá đóng cửa, biến động so tham chiếu, khối lượng (triệu CP) vs TB 20 phiên.
-### 2. Xu hướng & Động lượng
-Liệt kê bullet points: từng mã MA (ngắn/trung/dài hạn), ROC, nhận xét tổng hợp.
-### 3. Nhận định Xu hướng Tổng hợp
-Viết theo đúng 7 mục dưới đây, mỗi mục 1–2 câu ngắn gọn, dùng đúng số liệu được cung cấp:
-
-**Mở đầu:** Một câu đánh giá tổng quan xu hướng và tâm lý thị trường hiện tại ({divergence_note}), kèm lý do chính dựa trên MA và ROC.
-
-**Độ rộng thị trường:** Dựa trên số mã tăng/giảm/đứng và tỷ lệ A/D trong dữ liệu đã cho — đà tăng/giảm có lan tỏa hay chỉ tập trung vào một số mã?
-
-**Thanh khoản:** Khối lượng hiện tại {current_vol/1_000_000:.2f} triệu CP, {vol_status} so TB 20 phiên. Nhận xét mức độ thận trọng hay hưng phấn của dòng tiền.
-
-**Sức khỏe thị trường:** Nhận xét về % mã trên MA20/50/200 từ dữ liệu breadth đã cho. Nếu không có số chính xác, nhận xét từ tỷ lệ A/D và vị trí giá so với MA. Đưa ra kết luận về mức độ lan tỏa của đợt phục hồi/điều chỉnh.
-
-**Khuỳn nghị hành động:**
-- *Cảnh báo:* Một câu cảnh báo chung dựa trên ADX={safe_float(latest['adx']):.1f}, CMF={safe_float(latest['cmf']):.4f}.
-- *Chiến lược:* Giảm tỷ trọng / Đứng ngoài / Mua nhỏ lẻ / Chờ tín hiệu — chỉ chọn một phương án phù hợp nhất.
-
-**Kết luận:** ➡️ **[Tạm đứng ngoài / Giảm tỷ trọng / Tăng tỷ trọng]** (chọn một) — một câu ngắn gói gọn trạng thái thị trường.
-
-### 4. Thống kê Cổ phiếu & Nhóm ngành
-Top 5 tăng/giảm kèm % theo đúng nhóm {symbol} | Ngành thu hút/rút tiền kèm % TB.
-### 5. Market Breadth & Độ rộng thị trường
-Số mã tăng/giảm/đứng, tỷ lệ A/D, phân tích độ phân hóa.
-
-## [TAB:SCENARIO]
-Bạn PHẢI trả về ĐẦY ĐỦ 3 KỊCH BẢN: TÍCH CỰC, TRUNG TÍNH, TIÊU CỰC. Kịch bản nào có xác suất xảy ra cao nhất, hãy thêm cụm "(Xác suất cao nhất)" vào tiêu đề kịch bản đó. Viết theo đúng cấu trúc Markdown sau:
-
-### 1. KỊCH BẢN TÍCH CỰC [Thêm (Xác suất cao nhất) nếu đúng]
-* **Xác suất xảy ra:** [Điền số]%
-* **Độ tin cậy:** [Điền điểm]/10
-
-**Điều kiện kích hoạt:**
-- Giá vượt dứt khoát kháng cự {resistance_price} với độ rộng thị trường (Breadth) tích cực.
-- [Thêm 1-2 điều kiện phụ dựa trên dữ liệu]
-
-### 2. KỊCH BẢN TRUNG TÍNH (Dao động trong range {support_price} - {resistance_price}) [Thêm (Xác suất cao nhất) nếu đúng]
-* **Xác suất xảy ra:** [Điền số]%
-* **Độ tin cậy:** [Điền điểm]/10
-
-**Điều kiện kích hoạt:**
-- Giá tiếp tục dao động, không thể vượt {resistance_price} nhưng cũng không thủng {support_price}.
-- Biến động duy trì ở mức {volatility_regime} và Trend Agreement Score duy trì [trên/dưới] mức 50.
-
-### 3. KỊCH BẢN TIÊU CỰC [Thêm (Xác suất cao nhất) nếu đúng]
-* **Xác suất xảy ra:** [Điền số]%
-* **Độ tin cậy:** [Điền điểm]/10
-
-**Điều kiện kích hoạt:**
-- Giá thủng dứt khoát hỗ trợ {support_price} với khối lượng lớn, độ rộng thị trường tiêu cực.
-- [Thêm 1-2 điều kiện phụ dựa trên dữ liệu]
-
-### Dẫn chứng chung cho các kịch bản:
-- **Volatility regime = {volatility_regime}:** Biên độ dao động (20 phiên) ≈ {volatility_value}% của giá, hỗ trợ cho kịch bản [sideway biên độ rộng / xu hướng rõ ràng].
-- **Trend agreement score = {tas_score}/100 ({tas_status}):** Cho thấy xu hướng [giảm/tăng] vẫn chi phối, khiến mọi đợt [hồi/chỉnh] khó bền vững.
-- **Khoảng đệm kỹ thuật:** Khoảng cách tới hỗ trợ/kháng cự hiện tại là {support_distance}% / {resistance_distance}% cho thấy thị trường đang ở vị trí "[giữa hai mốc / sát vùng ranh giới]" quan trọng.
-- **Horizon (Tầm nhìn):** 5-15 phiên.
-
-*Quy tắc đánh giá:* Nếu Tas_score thấp (<30) nhưng Volatility cao và giá nằm giữa range hỗ trợ/kháng cự, ưu tiên kịch bản Trung tính (45-55%) hoặc Tiêu cực. Nếu Tas_score > 70 và Breadth tích cực, ưu tiên kịch bản Tích cực. Độ tin cậy (Thang điểm 10): Chấm điểm dựa trên tính đồng thuận của dữ liệu. Nếu Volatility đồng nhất với cấu trúc giá và khoảng đệm rõ ràng -> Chấm điểm từ 7-9/10. Nếu các chỉ báo đá nhau (Nhiễu) -> Chấm dưới 6/10.
-
-
-## [TAB:VOLUME]
-### 1. Thống kê Chỉ báo Khối lượng
-Bảng CMF/VWAP/OBV với giá trị thực và nhận định ngắn.
-### 2. Nhận định Dòng tiền
-Dòng tiền ròng vào/ra? Áp lực mua/bán vs VWAP? Dấu hiệu phân phối?
-
-## [TAB:TREND]
-### 1. Thống kê Xu hướng & Động lượng
-Bảng: từng MA với giá trị, khoảng cách % tới giá hiện tại (hỗ trợ/kháng cự), ROC, ADX, ATR, Keltner.
-### 2. Phân tích Xu hướng Chi tiết
-Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
-
-**Tình trạng xu hướng:** Một câu mô tả rõ {symbol} đang trong xu hướng ngắn hạn/trung hạn/dài hạn gì (ví dụ: “Giảm ngắn và trung hạn, tăng dài hạn”). Phân kỳ: {divergence_note}
-
-**Sức bền xu hướng dài hạn:** Dựa trên:
-- ADX = {safe_float(latest['adx']):.1f} → sức mạnh xu hướng hiện tại (>25 mạnh, <15 yếu)
-- CMF = {safe_float(latest['cmf']):.4f} → dòng tiền vào/ra
-- Khối lượng: {vol_status} so TB 20 phiên
-- Khoảng cách tới MA dài hạn: {ma_dist_str}
-Đưa ra nhận xét: xu hướng dài hạn có dễ/khó bị phá vỡ không?
-
-**Ngưỡng giá then chốt:** Liệt kê 2–3 mức hỗ trợ/kháng cự quan trọng nhất từ các MA, kèm giá trị.
-
-**Kết luận:** ➡️ **[Tạm đứng ngoài / Giảm tỷ trọng / Tăng tỷ trọng]** — một câu ngắn gói gọn trạng thái và định hướng hành động.
-"""
-
-
-        ai_response = ask_ai(prompt_all,
-            "Bạn là chuyên gia phân tích kỹ thuật và chiến lược thị trường chứng khoán. "
-            "Dùng đúng số liệu được cung cấp, viết ngắn gọn súc tích, không thêm số liệu bẺ, "
-            "không đưa ra xác suất hay kịch bản tự đoán ngoài yêu cầu. "
-            "Output phải có đúng 4 block ## [TAB:GENERAL], ## [TAB:SCENARIO], ## [TAB:VOLUME], ## [TAB:TREND].")
-
-        def parse_tab(response, tag):
-            """Tách nội dung theo tag ## [TAB:XXX]"""
-            if not response:
-                return None
-            import re
-            pattern = rf'## \[TAB:{tag}\](.*?)(?=## \[TAB:|$)'
-            match = re.search(pattern, response, re.DOTALL)
-            return match.group(1).strip() if match else None
-
-        if ai_response:
-            general_markdown  = parse_tab(ai_response, "GENERAL") or generate_rule_based_analysis(**rb_args, tab_type="general")
-            scenario_markdown = parse_tab(ai_response, "SCENARIO")
-            volume_markdown   = parse_tab(ai_response, "VOLUME")  or generate_rule_based_analysis(**rb_args, tab_type="volume")
-            trend_markdown    = parse_tab(ai_response, "TREND")   or generate_rule_based_analysis(**rb_args, tab_type="trend")
-        else:
-            general_markdown  = generate_rule_based_analysis(**rb_args, tab_type="general")
-            scenario_markdown = None
-            volume_markdown   = generate_rule_based_analysis(**rb_args, tab_type="volume")
-            trend_markdown    = generate_rule_based_analysis(**rb_args, tab_type="trend")
-
-        # Delay giữa các symbol để tránh rate limit
+        # Delay giữa các symbol để tránh rate limit nguồn dữ liệu
         time.sleep(5)
 
         return {
@@ -2216,13 +1965,14 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
             "scenario_markdown": scenario_markdown,
             "volume_markdown": volume_markdown,
             "trend_markdown": trend_markdown,
+            "commentary": commentary['verdict'],
             "tas": {
                 **tas_res,
                 "history": compute_tas_history_fast(df)
             },
             "candle_patterns": detect_candle_patterns(df),
             "sr_zones":        sr_zones_res,
-            "smc":             compute_bigbeluga_smc(df, symbol),
+            "smc":             smc_res,
         }
 
         
