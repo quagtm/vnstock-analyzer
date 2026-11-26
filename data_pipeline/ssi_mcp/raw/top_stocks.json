@@ -1,0 +1,447 @@
+{
+ "tool": "marketdata_list_top_stocks",
+ "params": {
+  "range": "1d",
+  "toDate": "26/11/2026",
+  "limit": 10
+ },
+ "asOfUtc": "2026-11-26T18:43:35Z",
+ "lists": {
+  "HOSE": {
+   "topIncreaseByPercent": [
+    {
+     "symbol": "SRC",
+     "change_by_value": 2400.0,
+     "change_by_percent": 6.98,
+     "avg_volume": 200.0,
+     "avg_trading_amount": 7000000.0
+    },
+    {
+     "symbol": "TNC",
+     "change_by_value": 2250.0,
+     "change_by_percent": 6.9,
+     "avg_volume": 450.0,
+     "avg_trading_amount": 15570000.0
+    },
+    {
+     "symbol": "VRC",
+     "change_by_value": 630.0,
+     "change_by_percent": 6.87,
+     "avg_volume": 229700.0,
+     "avg_trading_amount": 1963608500.0
+    },
+    {
+     "symbol": "HU1",
+     "change_by_value": 350.0,
+     "change_by_percent": 6.84,
+     "avg_volume": 200.0,
+     "avg_trading_amount": 1041500.0
+    },
+    {
+     "symbol": "PGI",
+     "change_by_value": 1500.0,
+     "change_by_percent": 6.82,
+     "avg_volume": 1500.0,
+     "avg_trading_amount": 33867500.0
+    },
+    {
+     "symbol": "VNG",
+     "change_by_value": 330.0,
+     "change_by_percent": 6.8,
+     "avg_volume": 100.0,
+     "avg_trading_amount": 501500.0
+    },
+    {
+     "symbol": "TNI",
+     "change_by_value": 260.0,
+     "change_by_percent": 6.79,
+     "avg_volume": 1566100.0,
+     "avg_trading_amount": 6155711500.0
+    },
+    {
+     "symbol": "SFI",
+     "change_by_value": 1600.0,
+     "change_by_percent": 6.69,
+     "avg_volume": 150.0,
+     "avg_trading_amount": 3665000.0
+    },
+    {
+     "symbol": "LAF",
+     "change_by_value": 1050.0,
+     "change_by_percent": 5.54,
+     "avg_volume": 350.0,
+     "avg_trading_amount": 6680000.0
+    },
+    {
+     "symbol": "MHC",
+     "change_by_value": 290.0,
+     "change_by_percent": 5.46,
+     "avg_volume": 8700.0,
+     "avg_trading_amount": 46311500.0
+    }
+   ],
+   "topDecreaseByPercent": [
+    {
+     "symbol": "MSH",
+     "change_by_value": -5700.0,
+     "change_by_percent": -16.47,
+     "avg_volume": 320350.0,
+     "avg_trading_amount": 10049170000.0
+    },
+    {
+     "symbol": "GDA",
+     "change_by_value": -1050.0,
+     "change_by_percent": -8.57,
+     "avg_volume": 68450.0,
+     "avg_trading_amount": 797777500.0
+    },
+    {
+     "symbol": "SVD",
+     "change_by_value": -310.0,
+     "change_by_percent": -6.97,
+     "avg_volume": 2100.0,
+     "avg_trading_amount": 9214000.0
+    },
+    {
+     "symbol": "VBB",
+     "change_by_value": -800.0,
+     "change_by_percent": -6.96,
+     "avg_volume": 2850.0,
+     "avg_trading_amount": 31312500.0
+    },
+    {
+     "symbol": "GMD",
+     "change_by_value": -3650.0,
+     "change_by_percent": -6.95,
+     "avg_volume": 3227900.0,
+     "avg_trading_amount": 163834287500.0
+    },
+    {
+     "symbol": "HSL",
+     "change_by_value": -390.0,
+     "change_by_percent": -6.95,
+     "avg_volume": 1323650.0,
+     "avg_trading_amount": 7302378000.0
+    },
+    {
+     "symbol": "SZC",
+     "change_by_value": -1300.0,
+     "change_by_percent": -6.95,
+     "avg_volume": 962850.0,
+     "avg_trading_amount": 17228267500.0
+    },
+    {
+     "symbol": "VSC",
+     "change_by_value": -900.0,
+     "change_by_percent": -6.95,
+     "avg_volume": 8697350.0,
+     "avg_trading_amount": 109368890000.0
+    },
+    {
+     "symbol": "DGW",
+     "change_by_value": -2700.0,
+     "change_by_percent": -6.94,
+     "avg_volume": 1066900.0,
+     "avg_trading_amount": 39597407500.0
+    },
+    {
+     "symbol": "ADG",
+     "change_by_value": -520.0,
+     "change_by_percent": -6.93,
+     "avg_volume": 2550.0,
+     "avg_trading_amount": 18143000.0
+    }
+   ],
+   "topbytradingamount": [
+    {
+     "symbol": "VIX",
+     "change_by_value": -400.0,
+     "change_by_percent": -3.25,
+     "avg_volume": 44204900.0,
+     "avg_trading_amount": 540370232500.0
+    },
+    {
+     "symbol": "FPT",
+     "change_by_value": -1550.0,
+     "change_by_percent": -3.37,
+     "avg_volume": 11648900.0,
+     "avg_trading_amount": 535861430000.0
+    },
+    {
+     "symbol": "VIC",
+     "change_by_value": -15400.0,
+     "change_by_percent": -6.28,
+     "avg_volume": 1731050.0,
+     "avg_trading_amount": 415868355000.0
+    },
+    {
+     "symbol": "SSI",
+     "change_by_value": -400.0,
+     "change_by_percent": -2.07,
+     "avg_volume": 21359500.0,
+     "avg_trading_amount": 409809405000.0
+    },
+    {
+     "symbol": "HPG",
+     "change_by_value": -450.0,
+     "change_by_percent": -2.24,
+     "avg_volume": 17908450.0,
+     "avg_trading_amount": 358197662500.0
+    },
+    {
+     "symbol": "TCB",
+     "change_by_value": -1050.0,
+     "change_by_percent": -5.07,
+     "avg_volume": 17226850.0,
+     "avg_trading_amount": 349404492500.0
+    },
+    {
+     "symbol": "MSN",
+     "change_by_value": -800.0,
+     "change_by_percent": -1.16,
+     "avg_volume": 4949650.0,
+     "avg_trading_amount": 338333265000.0
+    },
+    {
+     "symbol": "VPB",
+     "change_by_value": -550.0,
+     "change_by_percent": -2.72,
+     "avg_volume": 14690000.0,
+     "avg_trading_amount": 295822655000.0
+    },
+    {
+     "symbol": "SHB",
+     "change_by_value": -200.0,
+     "change_by_percent": -1.94,
+     "avg_volume": 27723600.0,
+     "avg_trading_amount": 283473035000.0
+    },
+    {
+     "symbol": "MWG",
+     "change_by_value": -2900.0,
+     "change_by_percent": -4.15,
+     "avg_volume": 3950250.0,
+     "avg_trading_amount": 271410895000.0
+    }
+   ]
+  },
+  "HNX": {
+   "topIncreaseByPercent": [
+    {
+     "symbol": "AMV",
+     "change_by_value": 100.0,
+     "change_by_percent": 10.0,
+     "avg_volume": 169600.0,
+     "avg_trading_amount": 171010000.0
+    },
+    {
+     "symbol": "PJC",
+     "change_by_value": 2900.0,
+     "change_by_percent": 10.0,
+     "avg_volume": 100.0,
+     "avg_trading_amount": 3045000.0
+    },
+    {
+     "symbol": "UNI",
+     "change_by_value": 600.0,
+     "change_by_percent": 10.0,
+     "avg_volume": 400.0,
+     "avg_trading_amount": 2580000.0
+    },
+    {
+     "symbol": "VSM",
+     "change_by_value": 1400.0,
+     "change_by_percent": 10.0,
+     "avg_volume": 850.0,
+     "avg_trading_amount": 11695000.0
+    },
+    {
+     "symbol": "THD",
+     "change_by_value": 5000.0,
+     "change_by_percent": 9.92,
+     "avg_volume": 179350.0,
+     "avg_trading_amount": 8243830000.0
+    },
+    {
+     "symbol": "NAP",
+     "change_by_value": 1000.0,
+     "change_by_percent": 9.9,
+     "avg_volume": 250.0,
+     "avg_trading_amount": 2675000.0
+    },
+    {
+     "symbol": "HMH",
+     "change_by_value": 1400.0,
+     "change_by_percent": 9.46,
+     "avg_volume": 1550.0,
+     "avg_trading_amount": 23055000.0
+    },
+    {
+     "symbol": "TKU",
+     "change_by_value": 1100.0,
+     "change_by_percent": 9.4,
+     "avg_volume": 1300.0,
+     "avg_trading_amount": 16490000.0
+    },
+    {
+     "symbol": "GDW",
+     "change_by_value": 3500.0,
+     "change_by_percent": 9.21,
+     "avg_volume": 200.0,
+     "avg_trading_amount": 7960000.0
+    },
+    {
+     "symbol": "MKV",
+     "change_by_value": 800.0,
+     "change_by_percent": 8.89,
+     "avg_volume": 100.0,
+     "avg_trading_amount": 940000.0
+    }
+   ],
+   "topDecreaseByPercent": [
+    {
+     "symbol": "VTV",
+     "change_by_value": -900.0,
+     "change_by_percent": -9.68,
+     "avg_volume": 600.0,
+     "avg_trading_amount": 5535000.0
+    },
+    {
+     "symbol": "TSB",
+     "change_by_value": -1100.0,
+     "change_by_percent": -9.57,
+     "avg_volume": 9150.0,
+     "avg_trading_amount": 100220000.0
+    },
+    {
+     "symbol": "MST",
+     "change_by_value": -800.0,
+     "change_by_percent": -9.41,
+     "avg_volume": 729750.0,
+     "avg_trading_amount": 6057960000.0
+    },
+    {
+     "symbol": "MDC",
+     "change_by_value": -800.0,
+     "change_by_percent": -9.2,
+     "avg_volume": 3150.0,
+     "avg_trading_amount": 24970000.0
+    },
+    {
+     "symbol": "THB",
+     "change_by_value": -800.0,
+     "change_by_percent": -9.2,
+     "avg_volume": 550.0,
+     "avg_trading_amount": 4385000.0
+    },
+    {
+     "symbol": "VTC",
+     "change_by_value": -800.0,
+     "change_by_percent": -9.2,
+     "avg_volume": 8850.0,
+     "avg_trading_amount": 72605000.0
+    },
+    {
+     "symbol": "MIC",
+     "change_by_value": -700.0,
+     "change_by_percent": -8.54,
+     "avg_volume": 1900.0,
+     "avg_trading_amount": 14985000.0
+    },
+    {
+     "symbol": "VC7",
+     "change_by_value": -600.0,
+     "change_by_percent": -8.11,
+     "avg_volume": 155650.0,
+     "avg_trading_amount": 1114555000.0
+    },
+    {
+     "symbol": "LIG",
+     "change_by_value": -200.0,
+     "change_by_percent": -7.14,
+     "avg_volume": 74550.0,
+     "avg_trading_amount": 202230000.0
+    },
+    {
+     "symbol": "TIG",
+     "change_by_value": -200.0,
+     "change_by_percent": -7.14,
+     "avg_volume": 4598350.0,
+     "avg_trading_amount": 12566250000.0
+    }
+   ],
+   "topbytradingamount": [
+    {
+     "symbol": "SHS",
+     "change_by_value": -500.0,
+     "change_by_percent": -3.88,
+     "avg_volume": 12700550.0,
+     "avg_trading_amount": 162915640000.0
+    },
+    {
+     "symbol": "CEO",
+     "change_by_value": -600.0,
+     "change_by_percent": -5.45,
+     "avg_volume": 9247550.0,
+     "avg_trading_amount": 100654510000.0
+    },
+    {
+     "symbol": "HUT",
+     "change_by_value": -100.0,
+     "change_by_percent": -0.81,
+     "avg_volume": 6746700.0,
+     "avg_trading_amount": 82176410000.0
+    },
+    {
+     "symbol": "PVS",
+     "change_by_value": -1200.0,
+     "change_by_percent": -4.58,
+     "avg_volume": 2920750.0,
+     "avg_trading_amount": 76217640000.0
+    },
+    {
+     "symbol": "MBS",
+     "change_by_value": -600.0,
+     "change_by_percent": -3.97,
+     "avg_volume": 3323400.0,
+     "avg_trading_amount": 49566075000.0
+    },
+    {
+     "symbol": "IDC",
+     "change_by_value": -1000.0,
+     "change_by_percent": -2.86,
+     "avg_volume": 1000400.0,
+     "avg_trading_amount": 34559190000.0
+    },
+    {
+     "symbol": "VC3",
+     "change_by_value": -300.0,
+     "change_by_percent": -1.27,
+     "avg_volume": 1244000.0,
+     "avg_trading_amount": 29087005000.0
+    },
+    {
+     "symbol": "BVS",
+     "change_by_value": -700.0,
+     "change_by_percent": -2.77,
+     "avg_volume": 714800.0,
+     "avg_trading_amount": 17974460000.0
+    },
+    {
+     "symbol": "NVB",
+     "change_by_value": -100.0,
+     "change_by_percent": -0.68,
+     "avg_volume": 992400.0,
+     "avg_trading_amount": 14607395000.0
+    },
+    {
+     "symbol": "TNG",
+     "change_by_value": -1100.0,
+     "change_by_percent": -6.63,
+     "avg_volume": 826350.0,
+     "avg_trading_amount": 13217870000.0
+    }
+   ]
+  }
+ }
+}

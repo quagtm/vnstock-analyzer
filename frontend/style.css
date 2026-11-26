@@ -2155,3 +2155,19 @@ body {
 .ssi-note-title { font-weight: 600; font-size: 0.75rem; color: var(--accent-primary); margin-bottom: 4px; }
 .ssi-note-text { font-size: 0.8rem; color: var(--text-secondary); }
 .ssi-foot { margin-top: 8px; font-size: 0.7rem; color: var(--text-secondary); }
+
+/* SSI top movers (ssi_top_stocks.js) */
+.ssi-top-stocks { margin-bottom: 20px; padding: 16px 20px; border-radius: 14px; }
+.ssi-mv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .ssi-mv-grid { grid-template-columns: 1fr; } }
+.ssi-mv-title { font-size: 0.8rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.ssi-mv-col ol { list-style: none; margin: 0; padding: 0; }
+.ssi-mv-col li { display: grid; grid-template-columns: 18px 48px 64px 1fr; align-items: center; gap: 6px; padding: 5px 4px; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.ssi-mv-rank { color: var(--text-secondary); font-size: 0.7rem; }
+.ssi-mv-sym { font-weight: 700; color: var(--text-primary); }
+.ssi-mv-pct { font-weight: 700; text-align: right; }
+.ssi-mv-pct.up { color: var(--positive); }
+.ssi-mv-pct.down { color: var(--negative); }
+.ssi-mv-pct.ref { color: var(--text-secondary); }
+.ssi-mv-extra { text-align: right; color: var(--text-secondary); font-size: 0.72rem; }
+.ssi-mv-empty { display: block !important; color: var(--text-secondary); }

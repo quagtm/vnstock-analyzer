@@ -92,19 +92,26 @@
         });
     }
 
-    async function load() {
+    // #ssi-sector-panel nằm trong <template id="dashboard-template">, được app.js
+    // clone lại mỗi lần đổi mã/tab. Theo dõi DOM để vẽ lại khi panel mới xuất hiện.
+    function renderIfEmpty() {
         const box = document.getElementById('ssi-sector-panel');
-        if (!box) return;
+        if (box && ssiData && !box.hasChildNodes()) render();
+    }
+
+    async function load() {
         try {
             const res = await fetch(`public/ssi_sectors.json?v=${Date.now()}`);
             if (!res.ok) throw new Error(res.status);
             ssiData = await res.json();
             if (!(ssiData.exchanges || []).includes(currentEx)) currentEx = (ssiData.exchanges || [])[0];
-            render();
         } catch (e) {
             console.warn('[SSI sectors] không tải được ssi_sectors.json:', e);
-            box.style.display = 'none';
+            return;
         }
+        renderIfEmpty();
+        const root = document.getElementById('dashboard-content') || document.body;
+        new MutationObserver(renderIfEmpty).observe(root, { childList: true, subtree: true });
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
