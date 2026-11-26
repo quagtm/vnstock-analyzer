@@ -121,7 +121,13 @@ def classify_factors(snap):
         ma_dir = 0
     hz_word = {1: "tăng", -1: "giảm", 0: "hỗn hợp", None: "không đủ dữ liệu"}
     ma_detail = ", ".join(f"{'trên' if close >= v else 'dưới'} {n} ({_p(v)})" for n, v in key_mas)
+    def _join(names):
+        return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " và " + names[-1]
+    ab = [n for n, v in key_mas if close >= v]
+    be = [n for n, v in key_mas if close < v]
+    ma_short = ", ".join(x for x in (f"trên {_join(ab)}" if ab else "", f"dưới {_join(be)}" if be else "") if x)
     f["ma"] = {
+        "short": f"giá {ma_short}" if key_mas else "không đủ dữ liệu MA",
         "group": "Cấu trúc MA",
         "dir": ma_dir,
         "state": "; ".join(f"{k.lower()} {hz_word[v]}" for k, v in horizons.items()).capitalize(),
@@ -139,6 +145,7 @@ def classify_factors(snap):
         m_dir, m_state = 0, "Trung tính"
     f["momentum"] = {
         "group": "Động lượng", "dir": m_dir, "state": m_state,
+        "short": f"động lượng {m_state.lower()} (ROC20 {_pct(r20)})",
         "fact": f"ROC10 {_pct(r10)}, ROC20 {_pct(r20)}: động lượng {m_state.lower()}",
     }
 
@@ -163,6 +170,7 @@ def classify_factors(snap):
         session_note = f"; phiên cầu chủ động (tăng {chg:.2f}% với KL {_pct(vd, 0)} so với TB20)"
     f["flow"] = {
         "group": "Dòng tiền", "dir": fl_dir, "state": fl_state,
+        "short": f"dòng tiền {fl_state.lower()} (CMF {cmf:+.3f})",
         "fact": f"CMF {cmf:+.3f}: dòng tiền {fl_state.lower()}{session_note}",
         "distribution": distribution, "demand": demand,
     }
@@ -183,6 +191,7 @@ def classify_factors(snap):
             br_dir, br_state = -1, "Lan tỏa giảm"
         f["breadth"] = {
             "group": "Độ rộng", "dir": br_dir, "state": br_state, "ratio": ratio,
+            "short": f"độ rộng {br_state.lower()} (A/D {ratio:.2f})",
             "fact": f"A/D {ratio:.2f} ({b['n_up']} tăng / {b['n_down']} giảm): {br_state.lower()}",
         }
     else:
@@ -206,6 +215,7 @@ def classify_factors(snap):
         lag = ", ".join(f"{n} ({_pct(v)})" for n, v in srt[::-1][:k]) if k else ""
         f["sector"] = {
             "group": "Ngành", "dir": s_dir, "state": s_state,
+            "short": f"nhóm ngành {s_state.lower()} ({n_up}/{len(sp)} ngành tăng)",
             "fact": f"{n_up}/{len(sp)} ngành tăng: {s_state.lower()}",
             "lead": lead, "lag": lag,
         }
@@ -223,6 +233,7 @@ def classify_factors(snap):
             ev_txt = f", sự kiện gần nhất {ev['txt']} {'tăng' if ev.get('dir') == 'bull' else 'giảm'} tại {_p(ev.get('y'))}"
         f["smc"] = {
             "group": "Cấu trúc SMC", "dir": t, "state": "Tăng" if t == 1 else "Giảm",
+            "short": f"cấu trúc SMC {'tăng' if t == 1 else 'giảm'}",
             "fact": f"Cấu trúc SMC {'tăng' if t == 1 else 'giảm'}{ev_txt}",
         }
     else:
@@ -432,6 +443,36 @@ def action_sentence(v):
     return sent
 
 
+def summary_sentence(snap, v):
+    """Một câu nhận định tổng quan: trạng thái → lý do chính → điểm cần lưu ý → hành động."""
+    f = v["factors"]
+    if v["bias"] == 0:
+        why = f"chưa có xu hướng rõ (ADX {snap['adx']:.1f}, TAS {snap['tas_score']:+d})"
+    elif v["reasons"]:
+        why = ", ".join(x["short"] for x in v["reasons"][:2])
+    else:
+        why = f"TAS {snap['tas_score']:+d}, {f['ma']['short']}"
+    watch = None
+    if v["downgrade_reasons"]:
+        watch = ", ".join(v["downgrade_reasons"])
+    elif v["bias"] >= 0 and f["overbought"]:
+        watch = "đang quá mua (" + ", ".join(f["overbought"]) + ")"
+    elif v["bias"] < 0 and f["oversold"]:
+        watch = "đang quá bán (" + ", ".join(f["oversold"]) + "), có thể có nhịp hồi ngắn"
+    elif v["risks"]:
+        watch = v["risks"][0]["short"]
+    out = (f"{snap['symbol']} đang ở trạng thái **{v['regime']}** (độ tin cậy {v['confidence']}): {why}")
+    if watch:
+        out += f"; cần lưu ý {watch}"
+    out += f". Hành động: **{v['action']}**"
+    if v["bias"] == 0 and v["support"] and v["resistance"]:
+        out += f", chờ đóng cửa ra khỏi vùng {_p(v['support'][0])} – {_p(v['resistance'][0])}"
+    elif v["invalidation"] is not None:
+        side = "dưới" if v["bias"] > 0 else "trên"
+        out += f", nhận định đổi nếu đóng cửa {side} {_p(v['invalidation'])}"
+    return out + "."
+
+
 def verdict_line(v):
     return f"{EMOJI[v['bias']]} **{v['regime']}** → **{v['action']}** (độ tin cậy {v['confidence']})"
 
@@ -501,6 +542,8 @@ def build_general_md(snap, v, market_stats_md="", breadth_md=""):
     vd = snap["vol_diff"]
     vol_word = f"cao hơn {vd:.2f}%" if vd >= 0 else f"thấp hơn {abs(vd):.2f}%"
     md = [
+        f"{EMOJI[v['bias']]} **Nhận định tổng quan:** {summary_sentence(snap, v)}",
+        "",
         "### 1. Diễn biến phiên giao dịch",
         f"{em} **{snap['symbol']}** đóng cửa tại **{_p(snap['close'])}** điểm, **{word} {abs(chg):,.2f} điểm "
         f"({_pct(chg_pc)})** so với phiên trước ({_p(snap['prev_close'])}). "
@@ -703,6 +746,7 @@ def build_commentary(snap, market_stats_md="", breadth_md="", volatility_value=N
             "action": v["action"], "base_action": v["base_action"], "confidence": v["confidence"],
             "main_scenario": SCENARIO_LABEL[v["main_scenario"]],
             "invalidation": v["invalidation"], "version": RULES_VERSION,
+            "summary": summary_sentence(snap, v),
         },
         "general_markdown": build_general_md(snap, v, market_stats_md, breadth_md),
         "scenario_markdown": build_scenario_md(snap, v, volatility_value),
