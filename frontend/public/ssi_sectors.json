@@ -1,0 +1,748 @@
+{
+ "source": "SSI MCP (marketdata_list_icb_industry, research_get_ssi100_industry_assessment)",
+ "as_of": "2026-11-26T17:28:54Z",
+ "built_at": "2026-11-26T17:31:45Z",
+ "exchanges": [
+  "VNINDEX",
+  "HOHAUP",
+  "HNXINDEX"
+ ],
+ "units": {
+  "market_cap": "VND",
+  "roe,roa,net_profit_margin,sale_growth_rate": "fraction (0.15 = 15%)"
+ },
+ "sectors": [
+  {
+   "icb_code": "8300",
+   "name": "Ngân hàng",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 9.23415,
+     "pb": 1.52917,
+     "ps": 4.01631,
+     "eps": 3539.73583,
+     "roe": 0.17793,
+     "roa": 0.01603,
+     "market_cap": 2544695379479750.0,
+     "sale_growth_rate": 0.0,
+     "net_profit_margin": 0.39948,
+     "ev_to_ebitda": 0.0,
+     "total_liabilities_to_equity": 11.10115,
+     "close_index": 616.66
+    },
+    "HNXINDEX": {
+     "pe": 27.63708,
+     "pb": 1.22219,
+     "ps": 5.93868,
+     "eps": 412.96026,
+     "roe": 0.03433,
+     "roa": 0.00238,
+     "market_cap": 32879253217000.0,
+     "sale_growth_rate": 0.0,
+     "net_profit_margin": 0.1067,
+     "ev_to_ebitda": 0.0,
+     "total_liabilities_to_equity": 12.00562,
+     "close_index": 797.6
+    }
+   },
+   "assessment": {
+    "title": "Ngân hàng",
+    "text": "Trong bối cảnh mặt bằng lãi suất duy trì ở mức cao nhằm đảm bảo thanh khoản hệ thống ở mức an toàn, ngành ngân hàng năm 2026 được dự báo sẽ chịu áp lực gia tăng về chi phí vốn. NIM sẽ phân hóa rõ nét hơn, khi nhóm ngân hàng quốc doanh – với nền tảng huy động ổn định và chi phí vốn thấp hơn – có điều kiện thuận lợi để cải thiện khả năng sinh lời. Về chất lượng tài sản, tỷ lệ nợ xấu có thể nhích lên nhẹ do mặt bằng lãi suất cho vay tăng, ảnh hưởng đến năng lực trả nợ của khách hàng, đặc biệt ở phân khúc bán lẻ. SSI Research ước tính tăng trưởng tín dụng của các ngân hàng thuộc phạm vi nghiên cứu có thể đạt khoảng 17,5%, trong đó động lực chính đến từ các ngân hàng tham gia quá trình tái cơ cấu tổ chức tín dụng yếu kém.Trong kịch bản cơ sở, lợi nhuận trước thuế của các ngân hàng trong phạm vi nghiên cứu được kỳ vọng tăng trưởng khoảng 17% so với cùng kỳ."
+   }
+  },
+  {
+   "icb_code": "8600",
+   "name": "Bất động sản",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 23.93101,
+     "pb": 2.62537,
+     "ps": 4.18041,
+     "eps": 3510.18591,
+     "roe": 0.10889,
+     "roa": 0.03058,
+     "market_cap": 1908818365409400.0,
+     "sale_growth_rate": 0.37477,
+     "net_profit_margin": 0.1685,
+     "ev_to_ebitda": -4677.18936,
+     "total_liabilities_to_equity": 4.25572,
+     "close_index": 690.3
+    },
+    "HNXINDEX": {
+     "pe": 11.12569,
+     "pb": 2.6043,
+     "ps": 4.64063,
+     "eps": 5107.1122,
+     "roe": 0.48614,
+     "roa": 0.09054,
+     "market_cap": 126780245270100.0,
+     "sale_growth_rate": 2.77433,
+     "net_profit_margin": 0.37363,
+     "ev_to_ebitda": -1126.52051,
+     "total_liabilities_to_equity": 3.33568,
+     "close_index": 162.61
+    }
+   },
+   "assessment": {
+    "title": "Bất động sản",
+    "text": "Ngành BĐS nhà ở dự kiến phục hồi nhờ nguồn cung tăng từ các dự án được gỡ pháp lý và hạ tầng cải thiện. Tuy nhiên, ngành vẫn còn nhiều thách thức khi lãi suất cao ảnh hưởng đến nhu cầu mua nhà, đặc biệt là trong bối cảnh giá nhà tăng mạnh trong 2 năm qua, nguồn cung cao cấp chiếm tỷ trọng lớn và chi phí phát triển gia tăng."
+   }
+  },
+  {
+   "icb_code": "3500",
+   "name": "Thực phẩm và đồ uống",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 16.81779,
+     "pb": 3.11742,
+     "ps": 2.97807,
+     "eps": 4223.71752,
+     "roe": 0.27837,
+     "roa": 0.13932,
+     "market_cap": 625389627623530.0,
+     "sale_growth_rate": 0.01071,
+     "net_profit_margin": 0.15382,
+     "ev_to_ebitda": 16.73079,
+     "total_liabilities_to_equity": 0.94555,
+     "close_index": 504.27
+    },
+    "HNXINDEX": {
+     "pe": 9.8574,
+     "pb": 1.34847,
+     "ps": 2.72242,
+     "eps": 8373.53701,
+     "roe": 0.16512,
+     "roa": 0.10861,
+     "market_cap": 11440574991100.0,
+     "sale_growth_rate": 0.0612,
+     "net_profit_margin": 0.12419,
+     "ev_to_ebitda": 17.20541,
+     "total_liabilities_to_equity": 0.61988,
+     "close_index": 168.49
+    }
+   },
+   "assessment": {
+    "title": "Thực phẩm",
+    "text": "Ngành hàng tiêu dùng thiết yếu vẫn chưa thể hồi phục do những lo ngại về tình hình lạm phát leo thang. Nhu cầu thịt, trứng, trái cây tăng, sữa và bia giảm. Rủi ro chi phí nhập khẩu cũng như các chi phí liên quan tới vận hành tăng cao."
+   }
+  },
+  {
+   "icb_code": "8700",
+   "name": "Dịch vụ tài chính",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 16.56834,
+     "pb": 1.96523,
+     "ps": 7.30543,
+     "eps": 2022.87848,
+     "roe": 0.14792,
+     "roa": 0.07367,
+     "market_cap": 541222529184370.0,
+     "sale_growth_rate": 0.28333,
+     "net_profit_margin": 0.40391,
+     "ev_to_ebitda": 17.55696,
+     "total_liabilities_to_equity": 1.33042,
+     "close_index": 309.15
+    },
+    "HNXINDEX": {
+     "pe": 13.18028,
+     "pb": 1.20458,
+     "ps": 4.16203,
+     "eps": 1581.72249,
+     "roe": 0.11661,
+     "roa": 0.05008,
+     "market_cap": 39017108482900.0,
+     "sale_growth_rate": 0.38349,
+     "net_profit_margin": 0.3079,
+     "ev_to_ebitda": 13.75133,
+     "total_liabilities_to_equity": 1.71738,
+     "close_index": 91.87
+    }
+   },
+   "assessment": {
+    "title": "Dịch vụ tài chính",
+    "text": "Ngành chứng khoán duy trì triển vọng tích cực trong dài hạn nhờ câu chuyện nâng hạng thị trường cùng các cải cách về pháp lý và hạ tầng, góp phần nâng cao tính minh bạch và hiệu quả vận hành. Việt Nam đã vượt qua kỳ đánh giá của FTSE Russell và được kỳ vọng có thể được đưa vào danh sách theo dõi của MSCI, qua đó hỗ trợ dòng vốn ngoại và thanh khoản thị trường. Bên cạnh đó, hoạt động IPO, nhu cầu tăng vốn có thể trở thành động lực tăng trưởng dài hạn. Tuy nhiên, mặt bằng lãi suất cao có thể tạo áp lực lên sức hấp dẫn tương đối của thị trường cổ phiếu và ảnh hưởng tới giá trị giao dịch trong các quý còn lại của năm 2026."
+   }
+  },
+  {
+   "icb_code": "7500",
+   "name": "Điện, nước & xăng dầu khí đốt",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 13.41553,
+     "pb": 1.9481,
+     "ps": 2.04224,
+     "eps": 3760.94703,
+     "roe": 0.16474,
+     "roa": 0.10228,
+     "market_cap": 374872270839040.0,
+     "sale_growth_rate": 0.10742,
+     "net_profit_margin": 0.1571,
+     "ev_to_ebitda": 10.25433,
+     "total_liabilities_to_equity": 0.70622,
+     "close_index": 757.35
+    },
+    "HNXINDEX": {
+     "pe": 17.04248,
+     "pb": 1.22858,
+     "ps": 1.34114,
+     "eps": 2131.43708,
+     "roe": 0.12889,
+     "roa": 0.08178,
+     "market_cap": 17378017457300.0,
+     "sale_growth_rate": -0.02858,
+     "net_profit_margin": 0.0955,
+     "ev_to_ebitda": 7.45564,
+     "total_liabilities_to_equity": 0.7827,
+     "close_index": 226.95
+    }
+   },
+   "assessment": {
+    "title": "Sản xuất, phân phối Điện",
+    "text": "Sản lượng điện toàn hệ thống dự báo tăng 8.5% năm 2026, giá thị trường điện có thể phục hồi khi nhiệt điện chiếm tỷ trọng cao trong cơ cấu phát điện. Rủi ro thiếu điện trong ngắn hạn và trung hạn hiện hữu với sự trở lại của El Niño."
+   }
+  },
+  {
+   "icb_code": "6500",
+   "name": "Viễn thông",
+   "primary_exchange": "HOHAUP",
+   "metrics": {
+    "HOHAUP": {
+     "pe": 26.44138,
+     "pb": 6.40794,
+     "ps": 5.67367,
+     "eps": 3357.87349,
+     "roe": 0.26065,
+     "roa": 0.13017,
+     "market_cap": 342325829777082.0,
+     "sale_growth_rate": 0.03217,
+     "net_profit_margin": 0.24006,
+     "ev_to_ebitda": 16.35381,
+     "total_liabilities_to_equity": 0.97984,
+     "close_index": 1071.0
+    },
+    "HNXINDEX": {
+     "pe": 7.61135,
+     "pb": 1.39667,
+     "ps": 0.58649,
+     "eps": 3468.50572,
+     "roe": 0.18474,
+     "roa": 0.12509,
+     "market_cap": 102960000000.0,
+     "sale_growth_rate": 0.10484,
+     "net_profit_margin": 0.07705,
+     "ev_to_ebitda": 4.52933,
+     "total_liabilities_to_equity": 0.56232,
+     "close_index": 128.08
+    }
+   },
+   "assessment": {
+    "title": "Viễn thông",
+    "text": "Thị trường viễn thông Việt Nam đã gần như đạt trạng thái bão hòa. Tiềm năng tăng trưởng trong tương lai sẽ đến từ việc đổi mới công nghệ, đẩy mạnh sản phẩm mới và nâng cao chất lượng sản phẩm, dịch vụ."
+   }
+  },
+  {
+   "icb_code": "5700",
+   "name": "Du lịch và Giải trí",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 27.7324,
+     "pb": 4.29192,
+     "ps": 5.08532,
+     "eps": 2130.33484,
+     "roe": 0.0679,
+     "roa": 0.04128,
+     "market_cap": 316084478244900.0,
+     "sale_growth_rate": 0.0673,
+     "net_profit_margin": 0.06497,
+     "ev_to_ebitda": 20.67353,
+     "total_liabilities_to_equity": 4.06258,
+     "close_index": 35.29
+    },
+    "HNXINDEX": {
+     "pe": 11.71927,
+     "pb": 1.23772,
+     "ps": 2.46512,
+     "eps": 2385.70124,
+     "roe": 0.12327,
+     "roa": 0.07284,
+     "market_cap": 704945257500.0,
+     "sale_growth_rate": 0.19,
+     "net_profit_margin": 0.18834,
+     "ev_to_ebitda": 33.75551,
+     "total_liabilities_to_equity": 0.51044,
+     "close_index": 23.52
+    }
+   },
+   "assessment": {
+    "title": "Du lịch và Giải trí",
+    "text": "Nhu cầu ngành hàng không vẫn duy trì tăng trưởng ở mức 2 con số, đặc biệt cho nhu cầu du lịch và công tác quốc tế. Việc đưa vào hoạt động các sân bay mới (Long Thành, Gia Bình…) sẽ giúp các hãng hàng không có thêm không gian tăng trưởng trong thời gian tới. Tuy nhiên, giá dầu sẽ là yếu tố ảnh hưởng tiêu cực lên biên lợi nhuận của các hãng hàng không trong 2026. Ngoài ra ngành hàng không nội địa cũng bị ảnh hưởng tiêu cực khi cạnh tranh ngành tăng với sự gia nhập/mở rộng của các hãng như Sun Phu Quoc Air, Bamboo, Vietravel ảnh hưởng đến thị phần và giá vé của các doanh nghiệp chiếm thị phần lớn như HVN và VJC. Ngoài ra, nguồn cung xăng dầu máy bay cũng sẽ là yếu tố quyết định cho khả năng tăng trưởng về khách và đường bay của doanh nghiệp."
+   }
+  },
+  {
+   "icb_code": "1700",
+   "name": "Tài nguyên cơ bản",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 14.05787,
+     "pb": 1.44238,
+     "ps": 1.20507,
+     "eps": 2001.45319,
+     "roe": 0.11845,
+     "roa": 0.06045,
+     "market_cap": 244542146408020.0,
+     "sale_growth_rate": -0.02022,
+     "net_profit_margin": 0.09037,
+     "ev_to_ebitda": 11.78361,
+     "total_liabilities_to_equity": 1.02542,
+     "close_index": 527.88
+    },
+    "HNXINDEX": {
+     "pe": 13.05185,
+     "pb": 2.18158,
+     "ps": 1.97778,
+     "eps": 8681.85725,
+     "roe": 0.37478,
+     "roa": 0.18962,
+     "market_cap": 51996096835100.0,
+     "sale_growth_rate": 0.01421,
+     "net_profit_margin": 0.14091,
+     "ev_to_ebitda": 22.3705,
+     "total_liabilities_to_equity": 0.84823,
+     "close_index": 133.65
+    }
+   },
+   "assessment": {
+    "title": "Kim loại",
+    "text": "Thép: Sản lượng tiêu thụ thép xây dựng dự kiến tăng trưởng ở mức 10% svck trong năm 2026, với các động lực chính như xây dựng cơ sở hạ tầng, xây dựng công trình bất động sản dân dụng và xây dựng khu công nghiệp đều rất mạnh trong năm nay. Giá thép có thể được cải thiện từ giá năm 2025 do nhu cầu tăng và chi phí nguyên liệu đầu vào tăng. Các chính sách bảo hộ thị trường nội địa được đẩy mạnh trong năm 2025 cho HRC và thép mạ sẽ giúp thúc đẩy sản lượng cho các doanh nghiệp thép nội địa. Tuy nhiên, với ngành tôn mạ, kênh xuất khẩu sẽ khó hơn do tăng bảo hộ ở các thị trường xuất khẩu chính, nên các doanh nghiệp tôn mạ sẽ gặp cạnh tranh mạnh hơn ở thị trường nội địa."
+   }
+  },
+  {
+   "icb_code": "2700",
+   "name": "Hàng & Dịch vụ Công nghiệp",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 16.38442,
+     "pb": 2.41242,
+     "ps": 2.50403,
+     "eps": 5098.87281,
+     "roe": 0.24578,
+     "roa": 0.12419,
+     "market_cap": 229290741458800.0,
+     "sale_growth_rate": 0.15978,
+     "net_profit_margin": 0.17109,
+     "ev_to_ebitda": 15.00873,
+     "total_liabilities_to_equity": 0.99623,
+     "close_index": 278.46
+    },
+    "HNXINDEX": {
+     "pe": 8.95924,
+     "pb": 0.97323,
+     "ps": 2.35762,
+     "eps": 3430.90477,
+     "roe": 0.13684,
+     "roa": 0.08305,
+     "market_cap": 20558759644000.0,
+     "sale_growth_rate": 0.87071,
+     "net_profit_margin": 0.25122,
+     "ev_to_ebitda": 11.37058,
+     "total_liabilities_to_equity": 1.21846,
+     "close_index": 82.77
+    }
+   },
+   "assessment": null
+  },
+  {
+   "icb_code": "1300",
+   "name": "Hóa chất",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 16.02235,
+     "pb": 1.82576,
+     "ps": 3.25358,
+     "eps": 2531.94483,
+     "roe": 0.12367,
+     "roa": 0.08132,
+     "market_cap": 223818679441320.0,
+     "sale_growth_rate": 0.09482,
+     "net_profit_margin": 0.18831,
+     "ev_to_ebitda": 13.68536,
+     "total_liabilities_to_equity": 0.4466,
+     "close_index": 178.69
+    },
+    "HNXINDEX": {
+     "pe": 14.09614,
+     "pb": 1.46388,
+     "ps": 0.59051,
+     "eps": 2054.00022,
+     "roe": 0.13139,
+     "roa": 0.08177,
+     "market_cap": 8368994053100.0,
+     "sale_growth_rate": 0.08498,
+     "net_profit_margin": 0.04046,
+     "ev_to_ebitda": 11.84205,
+     "total_liabilities_to_equity": 1.32982,
+     "close_index": 469.52
+    }
+   },
+   "assessment": {
+    "title": "Hóa chất",
+    "text": "Thuế xuất khẩu phốt pho vàng sẽ tăng từ mức 5% hiện tại lên 10% từ 2026 và 15% từ 2027. Điều này làm giảm mức cạnh tranh của phốt pho vàng Việt Nam so với Kazakhstan, vốn không áp thuế xuất khẩu lên mặt hàng này. Những doanh nghiệp tự chủ được nguồn quặng giá thành thấp vẫn có thể duy trì tăng trưởng nhờ tăng sản lượng kinh doanh. Tuy nhiên gần đây nhà nước siết chặt việc cấp giấy phép khai thác quặng, làm giảm nguồn cung quặng và làm tăng giá thành sản xuất cho các công ty phốt pho vàng."
+   }
+  },
+  {
+   "icb_code": "0500",
+   "name": "Dầu khí",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 23.37347,
+     "pb": 2.02152,
+     "ps": 0.85234,
+     "eps": 1382.81391,
+     "roe": 0.09078,
+     "roa": 0.05138,
+     "market_cap": 209128386820700.0,
+     "sale_growth_rate": 0.13826,
+     "net_profit_margin": 0.03572,
+     "ev_to_ebitda": 18.50304,
+     "total_liabilities_to_equity": 0.8018,
+     "close_index": 112.39
+    },
+    "HNXINDEX": {
+     "pe": 11.81155,
+     "pb": 1.39477,
+     "ps": 0.62031,
+     "eps": 3398.2992,
+     "roe": 0.12398,
+     "roa": 0.04915,
+     "market_cap": 22954626200400.0,
+     "sale_growth_rate": 1.0821,
+     "net_profit_margin": 0.05611,
+     "ev_to_ebitda": 9.61992,
+     "total_liabilities_to_equity": 1.41245,
+     "close_index": 106.19
+    }
+   },
+   "assessment": {
+    "title": "Dầu khí",
+    "text": "Hiện tại, ngành dầu khí đang hưởng lợi tích cực từ môi trường giá dầu tăng cao dẫn đến biên lợi nhuận của các doanh nghiệp mở rộng nhanh, đặc biệt là các doanh nghiệp trung nguồn và hạ nguồn. Bất ổn ở khu vực Trung Đông cũng làm gia tăng nhu cầu mở rộng trữ lượng và công suất khai thác dầu khí, tăng khối lượng công việc cho nhóm công ty thượng nguồn. Trong nước, các dự án dầu khí lớn vẫn đang hoặc sắp được triển khai như Lô B Ô Môn, Lạc Đà Vàng, Sư Tử Trắng Pha 2B, Nam Du - U Minh.... sẽ tạo nguồn công việc cho các doanh nghiệp dịch vụ dầu khí thượng nguồn."
+   }
+  },
+  {
+   "icb_code": "2300",
+   "name": "Xây dựng và Vật liệu",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 12.52712,
+     "pb": 1.52564,
+     "ps": 6.27505,
+     "eps": 3307.33663,
+     "roe": 0.15579,
+     "roa": 0.06337,
+     "market_cap": 182164248980800.0,
+     "sale_growth_rate": 0.30848,
+     "net_profit_margin": 1.11942,
+     "ev_to_ebitda": 11.19346,
+     "total_liabilities_to_equity": 1.68174,
+     "close_index": 181.77
+    },
+    "HNXINDEX": {
+     "pe": 12.35415,
+     "pb": 1.17172,
+     "ps": 1.70001,
+     "eps": 3234.8954,
+     "roe": 0.13285,
+     "roa": 0.06969,
+     "market_cap": 46226268990600.0,
+     "sale_growth_rate": 0.38732,
+     "net_profit_margin": 0.12909,
+     "ev_to_ebitda": 27.66846,
+     "total_liabilities_to_equity": 1.86428,
+     "close_index": 134.02
+    }
+   },
+   "assessment": {
+    "title": "Vật liệu xây dựng",
+    "text": "Đá xây dựng: Sản lượng tiêu thụ đá xây dựng dự kiến tăng trưởng 12% YoY trong năm 2026 chủ yếu từ nhu cầu hạ tầng tại các dự án trọng điểm như cao tốc Bắc Nam, các đường nối đến dự án sân bay Long Thành. Nguồn cung cấp đá xây dựng chủ yếu tập trung 70% tại các tỉnh Đồng Nai, Bình Dương. Chúng tôi dự báo giá đá xây dựng tăng 12-15% trong năm 2026. Đồng thời, nguồn cung được hỗ trợ khi các mỏ phục vụ cho các công trình công không thông qua đấu giá làm giảm thủ tục liên quan đến cấp mỏ mới và mở rộng mỏ hiện hữu. \n\nXi măng: Đầu tư công tiếp tục là động lực thúc đẩy tăng trưởng với các dự án hạ tầng chiến lược như Vành đai 3, Vành đai 4, cao tốc Biên Hòa - Vũng Tàu, TP.HCM - Mộc Bài, Quốc lộ 13 và tuyến đường liên vùng. \nPhía Nam bước vào giai đoạn bùng nổ đầu tư công với hàng loạt dự án hạ tầng quy mô lớn (LTIA, Vành Đai 3 TPHCM, các tuyến metro, hệ thống cao tốc miền Tây thuộc tổng hệ thống CT Bắc Nam + các nhóm cao tốc nhánh).\nDự báo tình hình thị trường xi măng 2026, tổng cung ngành khoảng 126 triệu tấn, với mức giá bán bình quân tăng cao do ảnh hưởng từ việc giá năng lượng phục vụ sản xuất bị đẩy lên hơn 30% kể từ đầu năm."
+   }
+  },
+  {
+   "icb_code": "5300",
+   "name": "Bán lẻ",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 18.47025,
+     "pb": 3.67332,
+     "ps": 0.72489,
+     "eps": 4527.61341,
+     "roe": 0.23227,
+     "roa": 0.08156,
+     "market_cap": 167586905128050.0,
+     "sale_growth_rate": 0.47015,
+     "net_profit_margin": 0.04399,
+     "ev_to_ebitda": 17.0574,
+     "total_liabilities_to_equity": 1.95998,
+     "close_index": 1545.36
+    },
+    "HNXINDEX": {
+     "pe": 6.24927,
+     "pb": 1.18978,
+     "ps": 0.11029,
+     "eps": 2684.39979,
+     "roe": 0.21517,
+     "roa": 0.03732,
+     "market_cap": 897438619200.0,
+     "sale_growth_rate": 0.34304,
+     "net_profit_margin": 0.0178,
+     "ev_to_ebitda": 27.43784,
+     "total_liabilities_to_equity": 5.45083,
+     "close_index": 336.38
+    }
+   },
+   "assessment": {
+    "title": "Bán lẻ",
+    "text": "Việc bỏ thuế khoán từ 2026 dự kiến sẽ gia tăng áp lực thuế và áp lực tuân thủ các thủ tục hành chính lên cửa hàng truyền thống, giúp thu hẹp chênh lệch giá giữa thương mại truyền thống và thương mại hiện đại. Các chuỗi siêu thị hiện đại (Winmart, BHX...) dự kiến hưởng lợi từ việc thay đổi chính sách này. Ngoài ra, minh bạch hóa nguồn gốc sản phẩm cũng góp phần giúp kênh thương mại hiện đại gia tăng thị phần."
+   }
+  },
+  {
+   "icb_code": "9500",
+   "name": "Công nghệ Thông tin",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 13.56581,
+     "pb": 2.92299,
+     "ps": 1.711,
+     "eps": 5097.78625,
+     "roe": 0.26561,
+     "roa": 0.10935,
+     "market_cap": 142007753413250.0,
+     "sale_growth_rate": 0.26452,
+     "net_profit_margin": 0.15113,
+     "ev_to_ebitda": 11.09556,
+     "total_liabilities_to_equity": 1.04188,
+     "close_index": 404.66
+    },
+    "HNXINDEX": {
+     "pe": 40.61317,
+     "pb": 0.94647,
+     "ps": 22.37809,
+     "eps": 414.41534,
+     "roe": 0.02599,
+     "roa": 0.00471,
+     "market_cap": 1112983957800.0,
+     "sale_growth_rate": 0.41461,
+     "net_profit_margin": 0.00483,
+     "ev_to_ebitda": 277.83722,
+     "total_liabilities_to_equity": 3.92622,
+     "close_index": 33.83
+    }
+   },
+   "assessment": {
+    "title": "Công nghệ Thông tin",
+    "text": "Chi tiêu CNTT toàn cầu kỳ vọng sẽ tăng trưởng ở mức 11% trong năm 2026. Tuy nhiên, tình hình bất ổn vĩ mô, đặc biệt là rủi ro căng thẳng Trung Đông cũng như các xu hướng phát triển công nghệ (như AI) vẫn cần được theo dõi và đánh giá."
+   }
+  },
+  {
+   "icb_code": "8500",
+   "name": "Bảo hiểm",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 19.74209,
+     "pb": 2.12516,
+     "ps": 1.38647,
+     "eps": 3471.33539,
+     "roe": 0.11724,
+     "roa": 0.01267,
+     "market_cap": 75106640233200.0,
+     "sale_growth_rate": 0.05231,
+     "net_profit_margin": 0.07724,
+     "ev_to_ebitda": -6.99261,
+     "total_liabilities_to_equity": 8.95543,
+     "close_index": 126.3
+    },
+    "HNXINDEX": {
+     "pe": 13.9353,
+     "pb": 1.73242,
+     "ps": 1.80147,
+     "eps": 3856.62851,
+     "roe": 0.13142,
+     "roa": 0.03275,
+     "market_cap": 28863694015000.0,
+     "sale_growth_rate": 0.14776,
+     "net_profit_margin": 0.12912,
+     "ev_to_ebitda": -29.27252,
+     "total_liabilities_to_equity": 3.47106,
+     "close_index": 383.41
+    }
+   },
+   "assessment": {
+    "title": "Bảo hiểm",
+    "text": "Tổng doanh thu phí bảo hiểm năm 2026 dự báo đạt 250.133 tỷ đồng, tăng 5,45%. Trong đó, doanh thu phí bảo hiểm nhân thọ đạt 151.762 tỷ đồng, tăng 2%, và bảo hiểm phi nhân thọ dự kiến đạt 98.371 tỷ đồng, tăng 11,25%. Lợi nhuận của các công ty bảo hiểm dự báo khởi sắc do mặt bằng lãi suất huy động đã tăng mạnh 200-300 bps từ mức đáy của năm 2025, hỗ trợ thu nhập từ đầu tư. Lợi suất trái phiếu chính phủ các kỳ hạn 10 năm trở lên cũng đã tăng hơn 20 bps kể từ đầu năm, qua đó giảm áp lực dự phòng kỹ thuật đối với các công ty bảo hiểm nhân thọ"
+   }
+  },
+  {
+   "icb_code": "3700",
+   "name": "Hàng cá nhân & Gia dụng",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 10.96734,
+     "pb": 1.66665,
+     "ps": 0.96047,
+     "eps": 6869.95175,
+     "roe": 0.20723,
+     "roa": 0.12526,
+     "market_cap": 61919493816160.0,
+     "sale_growth_rate": 0.03284,
+     "net_profit_margin": 0.08002,
+     "ev_to_ebitda": 9.98629,
+     "total_liabilities_to_equity": 0.68077,
+     "close_index": 164.73
+    },
+    "HNXINDEX": {
+     "pe": 9.54462,
+     "pb": 1.60843,
+     "ps": 18.70635,
+     "eps": 3736.84941,
+     "roe": 0.2015,
+     "roa": 0.08481,
+     "market_cap": 6593014151600.0,
+     "sale_growth_rate": 0.10436,
+     "net_profit_margin": -0.97295,
+     "ev_to_ebitda": 8.62149,
+     "total_liabilities_to_equity": 1.66673,
+     "close_index": 184.24
+    }
+   },
+   "assessment": null
+  },
+  {
+   "icb_code": "4500",
+   "name": "Y tế",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 19.5195,
+     "pb": 1.9185,
+     "ps": 2.43256,
+     "eps": 3689.95091,
+     "roe": 0.14043,
+     "roa": 0.10527,
+     "market_cap": 42528670051630.0,
+     "sale_growth_rate": 0.02431,
+     "net_profit_margin": 0.1099,
+     "ev_to_ebitda": 21.23589,
+     "total_liabilities_to_equity": 0.36276,
+     "close_index": 442.78
+    },
+    "HNXINDEX": {
+     "pe": 30.40437,
+     "pb": 1.56225,
+     "ps": 2.2904,
+     "eps": 2467.63057,
+     "roe": 0.11177,
+     "roa": 0.07847,
+     "market_cap": 10330520236700.0,
+     "sale_growth_rate": -0.06628,
+     "net_profit_margin": 0.07439,
+     "ev_to_ebitda": 66.72002,
+     "total_liabilities_to_equity": 0.60688,
+     "close_index": 304.66
+    }
+   },
+   "assessment": {
+    "title": "Y tế",
+    "text": "Mặc dù gặp khó khăn ngắn hạn do sức tiêu dùng giảm, hiện ngành Y Tế đang bước vào chu kỳ tái đầu tư mạnh mẽ hơn nhờ cơ chế \"luồng xanh\" cấp số lưu hành thuốc nội địa. Xu hướng cốt lõi là tự chủ R&D (tối thiểu 3% doanh thu) để nắm công nghệ lõi. Động lực dài hạn đến từ già hóa dân số và vốn ngoại vào bệnh viện tư nhân. Lợi thế thuộc về doanh nghiệp có nhà máy đạt chuẩn cao (EU-GMP), giúp bảo vệ biên lợi nhuận trước áp lực đấu thầu khốc liệt tại kênh ETC."
+   }
+  },
+  {
+   "icb_code": "3300",
+   "name": "Ô tô và phụ tùng",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 4.03068,
+     "pb": 1.04513,
+     "ps": 2.40879,
+     "eps": 5439.91571,
+     "roe": 0.29865,
+     "roa": 0.10241,
+     "market_cap": 18645449221700.0,
+     "sale_growth_rate": 0.23548,
+     "net_profit_margin": 1.28664,
+     "ev_to_ebitda": -117.78314,
+     "total_liabilities_to_equity": 2.13271,
+     "close_index": 787.84
+    },
+    "HNXINDEX": {
+     "pe": 45.0495,
+     "pb": 1.77762,
+     "ps": 0.48915,
+     "eps": 466.79794,
+     "roe": 0.0441,
+     "roa": 0.01001,
+     "market_cap": 19621340494300.0,
+     "sale_growth_rate": 0.26583,
+     "net_profit_margin": 0.01621,
+     "ev_to_ebitda": 23.84694,
+     "total_liabilities_to_equity": 1.84977,
+     "close_index": 20.67
+    }
+   },
+   "assessment": {
+    "title": "Ô tô và phụ tùng",
+    "text": "Điểm nhấn 2026 là cuộc đua giữa xe điện hóa, xe hybrid và xe xăng truyền thống. Tiêu thụ nội địa vẫn tăng trưởng tốt nhờ các chính sách mua xe hấp dẫn và sự quyết liệt của VinFast, giúp phân khúc xe điện tiếp tục dẫn dắt tăng trưởng. Rủi ro chính là chi phí logistics và cạnh tranh giá gay gắt."
+   }
+  },
+  {
+   "icb_code": "5500",
+   "name": "Truyền thông",
+   "primary_exchange": "VNINDEX",
+   "metrics": {
+    "VNINDEX": {
+     "pe": 22.77083,
+     "pb": 0.92669,
+     "ps": 1.01773,
+     "eps": 465.80248,
+     "roe": 0.04371,
+     "roa": 0.0284,
+     "market_cap": 2429609497250.0,
+     "sale_growth_rate": 0.21812,
+     "net_profit_margin": 0.04254,
+     "ev_to_ebitda": 15.85877,
+     "total_liabilities_to_equity": 0.54265,
+     "close_index": 8.32
+    },
+    "HNXINDEX": {
+     "pe": 9.17857,
+     "pb": 0.70304,
+     "ps": -10.22467,
+     "eps": 2222.6038,
+     "roe": 0.08808,
+     "roa": 0.05498,
+     "market_cap": 1599312856800.0,
+     "sale_growth_rate": -0.28859,
+     "net_profit_margin": -2.01847,
+     "ev_to_ebitda": -10.72719,
+     "total_liabilities_to_equity": 0.44993,
+     "close_index": 59.87
+    }
+   },
+   "assessment": null
+  }
+ ]
+}
