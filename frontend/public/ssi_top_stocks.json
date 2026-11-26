@@ -1,0 +1,446 @@
+{
+ "source": "SSI MCP (marketdata_list_top_stocks)",
+ "as_of": "2026-11-26T18:43:35Z",
+ "built_at": "2026-11-26T18:44:10Z",
+ "range": "1d",
+ "to_date": "26/11/2026",
+ "note": "range=1d: SSI gộp 2 ngày dương lịch (toDate-1 và toDate)",
+ "exchanges": {
+  "HOSE": {
+   "gainers": [
+    {
+     "symbol": "SRC",
+     "change": 2400.0,
+     "change_pct": 6.98,
+     "avg_volume": 200.0,
+     "avg_value": 7000000.0
+    },
+    {
+     "symbol": "TNC",
+     "change": 2250.0,
+     "change_pct": 6.9,
+     "avg_volume": 450.0,
+     "avg_value": 15570000.0
+    },
+    {
+     "symbol": "VRC",
+     "change": 630.0,
+     "change_pct": 6.87,
+     "avg_volume": 229700.0,
+     "avg_value": 1963608500.0
+    },
+    {
+     "symbol": "HU1",
+     "change": 350.0,
+     "change_pct": 6.84,
+     "avg_volume": 200.0,
+     "avg_value": 1041500.0
+    },
+    {
+     "symbol": "PGI",
+     "change": 1500.0,
+     "change_pct": 6.82,
+     "avg_volume": 1500.0,
+     "avg_value": 33867500.0
+    },
+    {
+     "symbol": "VNG",
+     "change": 330.0,
+     "change_pct": 6.8,
+     "avg_volume": 100.0,
+     "avg_value": 501500.0
+    },
+    {
+     "symbol": "TNI",
+     "change": 260.0,
+     "change_pct": 6.79,
+     "avg_volume": 1566100.0,
+     "avg_value": 6155711500.0
+    },
+    {
+     "symbol": "SFI",
+     "change": 1600.0,
+     "change_pct": 6.69,
+     "avg_volume": 150.0,
+     "avg_value": 3665000.0
+    },
+    {
+     "symbol": "LAF",
+     "change": 1050.0,
+     "change_pct": 5.54,
+     "avg_volume": 350.0,
+     "avg_value": 6680000.0
+    },
+    {
+     "symbol": "MHC",
+     "change": 290.0,
+     "change_pct": 5.46,
+     "avg_volume": 8700.0,
+     "avg_value": 46311500.0
+    }
+   ],
+   "losers": [
+    {
+     "symbol": "MSH",
+     "change": -5700.0,
+     "change_pct": -16.47,
+     "avg_volume": 320350.0,
+     "avg_value": 10049170000.0
+    },
+    {
+     "symbol": "GDA",
+     "change": -1050.0,
+     "change_pct": -8.57,
+     "avg_volume": 68450.0,
+     "avg_value": 797777500.0
+    },
+    {
+     "symbol": "SVD",
+     "change": -310.0,
+     "change_pct": -6.97,
+     "avg_volume": 2100.0,
+     "avg_value": 9214000.0
+    },
+    {
+     "symbol": "VBB",
+     "change": -800.0,
+     "change_pct": -6.96,
+     "avg_volume": 2850.0,
+     "avg_value": 31312500.0
+    },
+    {
+     "symbol": "GMD",
+     "change": -3650.0,
+     "change_pct": -6.95,
+     "avg_volume": 3227900.0,
+     "avg_value": 163834287500.0
+    },
+    {
+     "symbol": "HSL",
+     "change": -390.0,
+     "change_pct": -6.95,
+     "avg_volume": 1323650.0,
+     "avg_value": 7302378000.0
+    },
+    {
+     "symbol": "SZC",
+     "change": -1300.0,
+     "change_pct": -6.95,
+     "avg_volume": 962850.0,
+     "avg_value": 17228267500.0
+    },
+    {
+     "symbol": "VSC",
+     "change": -900.0,
+     "change_pct": -6.95,
+     "avg_volume": 8697350.0,
+     "avg_value": 109368890000.0
+    },
+    {
+     "symbol": "DGW",
+     "change": -2700.0,
+     "change_pct": -6.94,
+     "avg_volume": 1066900.0,
+     "avg_value": 39597407500.0
+    },
+    {
+     "symbol": "ADG",
+     "change": -520.0,
+     "change_pct": -6.93,
+     "avg_volume": 2550.0,
+     "avg_value": 18143000.0
+    }
+   ],
+   "hot": [
+    {
+     "symbol": "VIX",
+     "change": -400.0,
+     "change_pct": -3.25,
+     "avg_volume": 44204900.0,
+     "avg_value": 540370232500.0
+    },
+    {
+     "symbol": "FPT",
+     "change": -1550.0,
+     "change_pct": -3.37,
+     "avg_volume": 11648900.0,
+     "avg_value": 535861430000.0
+    },
+    {
+     "symbol": "VIC",
+     "change": -15400.0,
+     "change_pct": -6.28,
+     "avg_volume": 1731050.0,
+     "avg_value": 415868355000.0
+    },
+    {
+     "symbol": "SSI",
+     "change": -400.0,
+     "change_pct": -2.07,
+     "avg_volume": 21359500.0,
+     "avg_value": 409809405000.0
+    },
+    {
+     "symbol": "HPG",
+     "change": -450.0,
+     "change_pct": -2.24,
+     "avg_volume": 17908450.0,
+     "avg_value": 358197662500.0
+    },
+    {
+     "symbol": "TCB",
+     "change": -1050.0,
+     "change_pct": -5.07,
+     "avg_volume": 17226850.0,
+     "avg_value": 349404492500.0
+    },
+    {
+     "symbol": "MSN",
+     "change": -800.0,
+     "change_pct": -1.16,
+     "avg_volume": 4949650.0,
+     "avg_value": 338333265000.0
+    },
+    {
+     "symbol": "VPB",
+     "change": -550.0,
+     "change_pct": -2.72,
+     "avg_volume": 14690000.0,
+     "avg_value": 295822655000.0
+    },
+    {
+     "symbol": "SHB",
+     "change": -200.0,
+     "change_pct": -1.94,
+     "avg_volume": 27723600.0,
+     "avg_value": 283473035000.0
+    },
+    {
+     "symbol": "MWG",
+     "change": -2900.0,
+     "change_pct": -4.15,
+     "avg_volume": 3950250.0,
+     "avg_value": 271410895000.0
+    }
+   ]
+  },
+  "HNX": {
+   "gainers": [
+    {
+     "symbol": "AMV",
+     "change": 100.0,
+     "change_pct": 10.0,
+     "avg_volume": 169600.0,
+     "avg_value": 171010000.0
+    },
+    {
+     "symbol": "PJC",
+     "change": 2900.0,
+     "change_pct": 10.0,
+     "avg_volume": 100.0,
+     "avg_value": 3045000.0
+    },
+    {
+     "symbol": "UNI",
+     "change": 600.0,
+     "change_pct": 10.0,
+     "avg_volume": 400.0,
+     "avg_value": 2580000.0
+    },
+    {
+     "symbol": "VSM",
+     "change": 1400.0,
+     "change_pct": 10.0,
+     "avg_volume": 850.0,
+     "avg_value": 11695000.0
+    },
+    {
+     "symbol": "THD",
+     "change": 5000.0,
+     "change_pct": 9.92,
+     "avg_volume": 179350.0,
+     "avg_value": 8243830000.0
+    },
+    {
+     "symbol": "NAP",
+     "change": 1000.0,
+     "change_pct": 9.9,
+     "avg_volume": 250.0,
+     "avg_value": 2675000.0
+    },
+    {
+     "symbol": "HMH",
+     "change": 1400.0,
+     "change_pct": 9.46,
+     "avg_volume": 1550.0,
+     "avg_value": 23055000.0
+    },
+    {
+     "symbol": "TKU",
+     "change": 1100.0,
+     "change_pct": 9.4,
+     "avg_volume": 1300.0,
+     "avg_value": 16490000.0
+    },
+    {
+     "symbol": "GDW",
+     "change": 3500.0,
+     "change_pct": 9.21,
+     "avg_volume": 200.0,
+     "avg_value": 7960000.0
+    },
+    {
+     "symbol": "MKV",
+     "change": 800.0,
+     "change_pct": 8.89,
+     "avg_volume": 100.0,
+     "avg_value": 940000.0
+    }
+   ],
+   "losers": [
+    {
+     "symbol": "VTV",
+     "change": -900.0,
+     "change_pct": -9.68,
+     "avg_volume": 600.0,
+     "avg_value": 5535000.0
+    },
+    {
+     "symbol": "TSB",
+     "change": -1100.0,
+     "change_pct": -9.57,
+     "avg_volume": 9150.0,
+     "avg_value": 100220000.0
+    },
+    {
+     "symbol": "MST",
+     "change": -800.0,
+     "change_pct": -9.41,
+     "avg_volume": 729750.0,
+     "avg_value": 6057960000.0
+    },
+    {
+     "symbol": "MDC",
+     "change": -800.0,
+     "change_pct": -9.2,
+     "avg_volume": 3150.0,
+     "avg_value": 24970000.0
+    },
+    {
+     "symbol": "THB",
+     "change": -800.0,
+     "change_pct": -9.2,
+     "avg_volume": 550.0,
+     "avg_value": 4385000.0
+    },
+    {
+     "symbol": "VTC",
+     "change": -800.0,
+     "change_pct": -9.2,
+     "avg_volume": 8850.0,
+     "avg_value": 72605000.0
+    },
+    {
+     "symbol": "MIC",
+     "change": -700.0,
+     "change_pct": -8.54,
+     "avg_volume": 1900.0,
+     "avg_value": 14985000.0
+    },
+    {
+     "symbol": "VC7",
+     "change": -600.0,
+     "change_pct": -8.11,
+     "avg_volume": 155650.0,
+     "avg_value": 1114555000.0
+    },
+    {
+     "symbol": "LIG",
+     "change": -200.0,
+     "change_pct": -7.14,
+     "avg_volume": 74550.0,
+     "avg_value": 202230000.0
+    },
+    {
+     "symbol": "TIG",
+     "change": -200.0,
+     "change_pct": -7.14,
+     "avg_volume": 4598350.0,
+     "avg_value": 12566250000.0
+    }
+   ],
+   "hot": [
+    {
+     "symbol": "SHS",
+     "change": -500.0,
+     "change_pct": -3.88,
+     "avg_volume": 12700550.0,
+     "avg_value": 162915640000.0
+    },
+    {
+     "symbol": "CEO",
+     "change": -600.0,
+     "change_pct": -5.45,
+     "avg_volume": 9247550.0,
+     "avg_value": 100654510000.0
+    },
+    {
+     "symbol": "HUT",
+     "change": -100.0,
+     "change_pct": -0.81,
+     "avg_volume": 6746700.0,
+     "avg_value": 82176410000.0
+    },
+    {
+     "symbol": "PVS",
+     "change": -1200.0,
+     "change_pct": -4.58,
+     "avg_volume": 2920750.0,
+     "avg_value": 76217640000.0
+    },
+    {
+     "symbol": "MBS",
+     "change": -600.0,
+     "change_pct": -3.97,
+     "avg_volume": 3323400.0,
+     "avg_value": 49566075000.0
+    },
+    {
+     "symbol": "IDC",
+     "change": -1000.0,
+     "change_pct": -2.86,
+     "avg_volume": 1000400.0,
+     "avg_value": 34559190000.0
+    },
+    {
+     "symbol": "VC3",
+     "change": -300.0,
+     "change_pct": -1.27,
+     "avg_volume": 1244000.0,
+     "avg_value": 29087005000.0
+    },
+    {
+     "symbol": "BVS",
+     "change": -700.0,
+     "change_pct": -2.77,
+     "avg_volume": 714800.0,
+     "avg_value": 17974460000.0
+    },
+    {
+     "symbol": "NVB",
+     "change": -100.0,
+     "change_pct": -0.68,
+     "avg_volume": 992400.0,
+     "avg_value": 14607395000.0
+    },
+    {
+     "symbol": "TNG",
+     "change": -1100.0,
+     "change_pct": -6.63,
+     "avg_volume": 826350.0,
+     "avg_value": 13217870000.0
+    }
+   ]
+  }
+ }
+}

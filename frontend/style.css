@@ -2131,3 +2131,43 @@ body {
 .smc-guide-badge.ob { background: rgba(167,139,250,0.2); color: #c4b5fd; }
 .smc-guide-badge.fvg { background: rgba(242,54,69,0.2); color: #ff4d6d; }
 
+
+/* ════════════════════════════════════════════
+   SSI SECTOR VALUATION (ssi_sectors.js)
+   ════════════════════════════════════════════ */
+.ssi-sector-panel { margin-top: 24px; }
+.ssi-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.ssi-head label { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); }
+.ssi-head label i { color: var(--accent-primary); }
+.ssi-ex { display: flex; gap: 6px; }
+.ssi-ex-btn { padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.75rem; cursor: pointer; }
+.ssi-ex-btn.active { background: var(--accent-primary); border-color: var(--accent-primary); color: #fff; }
+.ssi-table-wrap { overflow-x: auto; }
+.ssi-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.ssi-table th { text-align: right; padding: 8px 10px; color: var(--text-secondary); font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer; white-space: nowrap; user-select: none; }
+.ssi-table th:first-child, .ssi-table td.ssi-name { text-align: left; }
+.ssi-table td { text-align: right; padding: 7px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-primary); white-space: nowrap; }
+.ssi-row.has-note { cursor: pointer; }
+.ssi-row:hover td { background: rgba(255,255,255,0.04); }
+.ssi-toggle { margin-right: 4px; transition: transform 0.2s; vertical-align: middle; }
+.ssi-row.open .ssi-toggle { transform: rotate(180deg); }
+.ssi-note td { text-align: left; white-space: normal; background: rgba(255,255,255,0.03); padding: 10px 14px; line-height: 1.5; }
+.ssi-note-title { font-weight: 600; font-size: 0.75rem; color: var(--accent-primary); margin-bottom: 4px; }
+.ssi-note-text { font-size: 0.8rem; color: var(--text-secondary); }
+.ssi-foot { margin-top: 8px; font-size: 0.7rem; color: var(--text-secondary); }
+
+/* SSI top movers (ssi_top_stocks.js) */
+.ssi-top-stocks { margin-bottom: 20px; padding: 16px 20px; border-radius: 14px; }
+.ssi-mv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .ssi-mv-grid { grid-template-columns: 1fr; } }
+.ssi-mv-title { font-size: 0.8rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.ssi-mv-col ol { list-style: none; margin: 0; padding: 0; }
+.ssi-mv-col li { display: grid; grid-template-columns: 18px 48px 64px 1fr; align-items: center; gap: 6px; padding: 5px 4px; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.ssi-mv-rank { color: var(--text-secondary); font-size: 0.7rem; }
+.ssi-mv-sym { font-weight: 700; color: var(--text-primary); }
+.ssi-mv-pct { font-weight: 700; text-align: right; }
+.ssi-mv-pct.up { color: var(--positive); }
+.ssi-mv-pct.down { color: var(--negative); }
+.ssi-mv-pct.ref { color: var(--text-secondary); }
+.ssi-mv-extra { text-align: right; color: var(--text-secondary); font-size: 0.72rem; }
+.ssi-mv-empty { display: block !important; color: var(--text-secondary); }
