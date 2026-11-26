@@ -82,7 +82,8 @@ function initSectorModal(appData) {
     let workingSectors = {};
 
     function extractDefaultSectors() {
-        const rawStocks = (appData['__global__'] && appData['__global__'].raw_stocks) || {};
+        const rawStocks = (window.VNData && window.VNData.getRawStocks())
+            || (appData['__global__'] && appData['__global__'].raw_stocks) || {};
         let defaults = {};
         for (const [sym, data] of Object.entries(rawStocks)) {
             let sec = data.sector;
@@ -156,7 +157,9 @@ function initSectorModal(appData) {
     window.bindEditSectorButton = () => {
         const btnEdit = document.getElementById('btn-edit-sectors');
         if (btnEdit) {
-            btnEdit.onclick = () => {
+            btnEdit.onclick = async () => {
+                // Danh sách ngành mặc định cần raw_stocks (tải lazy)
+                if (!customSectors && window.VNData) await window.VNData.loadRawStocks();
                 if (customSectors) {
                     workingSectors = JSON.parse(JSON.stringify(customSectors));
                 } else {

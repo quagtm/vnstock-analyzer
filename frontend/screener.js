@@ -43,11 +43,24 @@
         if (overlay) overlay.style.display = 'block';
         if (panel) panel.style.display = 'flex';
 
-        // Load sector dropdown options if needed
-        populateSectorDropdown();
+        // raw_stocks nằm ở file riêng, chỉ tải khi mở screener lần đầu
+        const tbody = document.getElementById('scr-tbody');
+        if (!getRawStocks() && window.VNData) {
+            if (tbody) tbody.innerHTML = '<tr><td colspan="99" style="text-align:center;padding:24px;opacity:.7">Đang tải dữ liệu cổ phiếu...</td></tr>';
+            window.VNData.loadRawStocks().then(() => {
+                populateSectorDropdown();
+                loadDataAndRender();
+            });
+            return;
+        }
 
-        // Load data from global appData
+        populateSectorDropdown();
         loadDataAndRender();
+    }
+
+    function getRawStocks() {
+        const globalData = window.appData && window.appData.__global__;
+        return (window.VNData && window.VNData.getRawStocks()) || (globalData && globalData.raw_stocks) || null;
     }
 
     function closeScreener() {
@@ -61,8 +74,7 @@
         const select = document.getElementById('scr-sector');
         if (!select || select.options.length > 1) return;
 
-        const globalData = window.appData && window.appData.__global__;
-        const raw = (globalData && globalData.raw_stocks) || {};
+        const raw = getRawStocks() || {};
         const sectors = new Set();
 
         Object.values(raw).forEach(s => {
@@ -226,12 +238,14 @@
     }
 
     function loadDataAndRender() {
-        const globalData = window.appData && window.appData.__global__;
-        if (!globalData || !globalData.raw_stocks) {
+        const raw = getRawStocks();
+        if (!raw) {
             console.warn('[SmartScreener] Chưa có raw_stocks data');
+            const tbody = document.getElementById('scr-tbody');
+            if (tbody) tbody.innerHTML = '<tr><td colspan="99" style="text-align:center;padding:24px;opacity:.7">Không tải được dữ liệu cổ phiếu.</td></tr>';
             return;
         }
-        currentRawStocks = globalData.raw_stocks;
+        currentRawStocks = raw;
         renderFilteredStocks();
     }
 

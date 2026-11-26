@@ -1,12 +1,15 @@
 import urllib.request, json, time, io, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-url = f'https://quagtm.github.io/vnstock-analyzer/public/data.json?t={int(time.time())}'
-req = urllib.request.Request(url, headers={'Cache-Control': 'no-cache'})
-data = json.loads(urllib.request.urlopen(req).read())
+base = 'https://quagtm.github.io/vnstock-analyzer/public/'
+def fetch(name):
+    req = urllib.request.Request(f'{base}{name}?t={int(time.time())}', headers={'Cache-Control': 'no-cache'})
+    return json.loads(urllib.request.urlopen(req).read())
 
-# Check raw_stocks sector field
-raw = data.get('__global__', {}).get('raw_stocks', {})
+data = fetch('data.json')
+
+# raw_stocks nằm trong file riêng (định dạng cũ: nằm trong data.json)
+raw = data.get('__global__', {}).get('raw_stocks') or fetch(data.get('__global__', {}).get('raw_stocks_file', 'raw_stocks.json'))
 print(f"raw_stocks total: {len(raw)} ma")
 
 # Print sector values for sample stocks
