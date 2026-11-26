@@ -13,7 +13,7 @@ Nguyên tắc:
 Mọi ngưỡng nằm trong CONFIG để chỉnh mà không phải sửa logic.
 """
 
-RULES_VERSION = "rules v1"
+RULES_VERSION = "rules v2"
 
 CONFIG = {
     # Động lượng
@@ -37,6 +37,16 @@ CONFIG = {
     "atr_low_pct": 1.5, "atr_high_pct": 3.0,
     # Độ tin cậy (% nhóm cùng chiều)
     "conf_high": 75, "conf_mid": 50,
+    # v2 — quá mua / quá bán ngắn hạn (RSI5)
+    "rsi5_overbought": 75, "rsi5_oversold": 25,
+    # v2 — động lượng độ rộng: TB 5 phiên của (tăng − giảm) / (tăng + giảm) × 100
+    "bmom_broad": 20, "bmom_lean": 5,
+    # v2 — xu hướng dài hạn đi ngang: giá cách MA200 < x% và MA200 thay đổi < y% trong 20 phiên
+    "sideway_ma200_pct": 3.0, "ma200_flat_pct": 1.0,
+    # v2 — độ rộng nội bộ: % mã trên MA20 cao nhưng trên MA50 thấp = đà tăng ngắn hạn
+    "internal_short_pct": 70, "internal_mid_pct": 50,
+    # v2 — nhóm dẫn dắt: chênh lệch % 20 phiên tối thiểu để gọi là dẫn dắt
+    "leader_gap": 1.5,
 }
 
 # ── Từ điển cố định ────────────────────────────────────────────────
@@ -72,6 +82,10 @@ def _p(x):
     return f"{x:,.2f}" if x is not None else "N/A"
 
 
+def _pc(x):
+    return f"{x:.1f}%" if x is not None else "N/A"
+
+
 def _pct(x, digits=2):
     return f"{x:+.{digits}f}%"
 
@@ -88,6 +102,109 @@ def _long_ma(snap):
     if _ma(snap, "MA100"):
         return "MA100", _ma(snap, "MA100")
     return None, None
+
+
+# ── Xu hướng theo 3 khung (có trạng thái chuyển tiếp) ───────────────
+HORIZON_MAS = (("Ngắn hạn", ("MA5", "MA10")), ("Trung hạn", ("MA20", "MA50")), ("Dài hạn", ("MA200",)))
+
+
+def _ma_any(snap, name):
+    if name == "MA5":
+        v = snap.get("ma5") or 0
+        return v if v > 0 else None
+    return _ma(snap, name)
+
+
+def trend_horizons(snap):
+    """Trạng thái từng khung: Tăng / Giảm / Chuyển tăng / Chuyển giảm / Hỗn hợp / Sideway (dài hạn).
+    "Chuyển" = giá vừa cắt MA ngắn nhất của khung trong 5 phiên gần nhất."""
+    c = CONFIG
+    close, cp = snap["close"], snap.get("close_prev5")
+    prev = snap.get("ma_prev5") or {}
+    out = {}
+    for key, names in HORIZON_MAS:
+        if key == "Dài hạn" and not _ma(snap, "MA200") and _ma(snap, "MA100"):
+            names = ("MA100",)
+        pairs = [(n, _ma_any(snap, n)) for n in names if _ma_any(snap, n)]
+        if not pairs:
+            out[key] = (None, names)
+            continue
+        now = [close >= v for _, v in pairs]
+        was = [cp >= prev[n] for n, _ in pairs] if cp and all(n in prev for n, _ in pairs) else None
+        if key == "Dài hạn":
+            ma200 = pairs[0][1]
+            p20 = snap.get("ma200_prev20")
+            if (abs(close - ma200) / ma200 * 100 < c["sideway_ma200_pct"] and p20
+                    and abs(ma200 / p20 - 1) * 100 < c["ma200_flat_pct"]):
+                out[key] = ("Sideway", names)
+                continue
+        if all(now):
+            st = "Chuyển tăng" if was is not None and not was[0] else "Tăng"
+        elif not any(now):
+            st = "Chuyển giảm" if was is not None and was[0] else "Giảm"
+        elif was is not None and now[0] and not was[0]:
+            st = "Chuyển tăng"
+        elif was is not None and not now[0] and was[0]:
+            st = "Chuyển giảm"
+        else:
+            st = "Hỗn hợp"
+        out[key] = (st, names)
+    return out
+
+
+def _horizon_text(hz):
+    return "; ".join(f"{k.lower()} {(v[0] or 'không đủ dữ liệu').lower()}" for k, v in hz.items())
+
+
+# ── Độ rộng mở rộng (lịch sử A/D) ───────────────────────────────────
+def breadth_history_stats(ad_history):
+    if not ad_history or len(ad_history) < 5:
+        return None
+    def ratio(r):
+        t = r["advance"] + r["decline"]
+        return (r["advance"] - r["decline"]) / t * 100 if t else 0.0
+    last5 = ad_history[-5:]
+    last10 = ad_history[-10:]
+    mom = sum(ratio(r) for r in last5) / len(last5)
+    persistence = sum(1 for r in last10 if r["advance"] > r["decline"]) / len(last10) * 100
+    sign = 1 if ad_history[-1]["net"] > 0 else (-1 if ad_history[-1]["net"] < 0 else 0)
+    streak = 0
+    for r in reversed(ad_history):
+        if sign and (1 if r["net"] > 0 else (-1 if r["net"] < 0 else 0)) == sign:
+            streak += 1
+        else:
+            break
+    return {"momentum": mom, "persistence": persistence, "n": len(last10), "streak": streak, "streak_dir": sign}
+
+
+# ── Nhóm dẫn dắt ────────────────────────────────────────────────────
+LEADER_LABEL = {"VN30": "vốn hóa lớn (VN30)", "VN100": "VN100", "VNMIDCAP": "vốn hóa trung bình (VNMIDCAP)"}
+
+
+def _corr(a, b):
+    """Tương quan lợi suất ngày của hai chuỗi giá đóng cửa cùng độ dài."""
+    n = min(len(a), len(b))
+    if n < 6:
+        return None
+    ra = [a[-n:][i] / a[-n:][i - 1] - 1 for i in range(1, n)]
+    rb = [b[-n:][i] / b[-n:][i - 1] - 1 for i in range(1, n)]
+    ma_, mb_ = sum(ra) / len(ra), sum(rb) / len(rb)
+    cov = sum((x - ma_) * (y - mb_) for x, y in zip(ra, rb))
+    va = sum((x - ma_) ** 2 for x in ra) ** 0.5
+    vb = sum((y - mb_) ** 2 for y in rb) ** 0.5
+    return cov / (va * vb) if va and vb else None
+
+
+def leader_analysis(snap):
+    rows = []
+    mkt = snap.get("market_index_hist") or snap.get("close_hist")
+    for L in snap.get("leaders") or []:
+        rows.append({**L, "corr": _corr(L.get("close_hist") or [], mkt or [])})
+    if len(rows) < 2:
+        return rows, None
+    srt = sorted(rows, key=lambda x: x["return_20d"], reverse=True)
+    lead = srt[0] if srt[0]["return_20d"] - srt[-1]["return_20d"] >= CONFIG["leader_gap"] else None
+    return rows, lead
 
 
 # ── Bước 1: quy từng nhóm tín hiệu về trạng thái + chiều ────────────
@@ -126,11 +243,13 @@ def classify_factors(snap):
     ab = [n for n, v in key_mas if close >= v]
     be = [n for n, v in key_mas if close < v]
     ma_short = ", ".join(x for x in (f"trên {_join(ab)}" if ab else "", f"dưới {_join(be)}" if be else "") if x)
+    hz3 = trend_horizons(snap)
     f["ma"] = {
         "short": f"giá {ma_short}" if key_mas else "không đủ dữ liệu MA",
         "group": "Cấu trúc MA",
         "dir": ma_dir,
-        "state": "; ".join(f"{k.lower()} {hz_word[v]}" for k, v in horizons.items()).capitalize(),
+        "state": _horizon_text(hz3).capitalize(),
+        "hz3": hz3,
         "fact": f"Giá {ma_detail}" if key_mas else "Không đủ dữ liệu MA",
         "horizons": horizons,
     }
@@ -189,10 +308,31 @@ def classify_factors(snap):
             br_dir, br_state = -1, "Nghiêng giảm"
         else:
             br_dir, br_state = -1, "Lan tỏa giảm"
+        fact = f"A/D {ratio:.2f} ({b['n_up']} tăng / {b['n_down']} giảm)"
+        short = f"độ rộng {br_state.lower()} (A/D {ratio:.2f})"
+        hist = breadth_history_stats(snap.get("ad_history"))
+        if hist:
+            m = hist["momentum"]
+            if m >= c["bmom_broad"]:
+                br_dir, br_state = 1, "Lan tỏa tăng"
+            elif m >= c["bmom_lean"]:
+                br_dir, br_state = 1, "Nghiêng tăng"
+            elif m > -c["bmom_lean"]:
+                br_dir, br_state = 0, "Phân hóa"
+            elif m > -c["bmom_broad"]:
+                br_dir, br_state = -1, "Nghiêng giảm"
+            else:
+                br_dir, br_state = -1, "Lan tỏa giảm"
+            sd = {1: "tăng", -1: "giảm", 0: "cân bằng"}[hist["streak_dir"]]
+            fact += (f"; động lượng độ rộng {m:+.0f}, độ bền {hist['persistence']:.0f}% "
+                     f"({hist['n']} phiên), chuỗi {hist['streak']} phiên {sd}")
+            short = f"độ rộng {br_state.lower()} (động lượng {m:+.0f})"
+        ext = snap.get("breadth_ext")
+        if ext:
+            fact += f"; {ext['new_high']} mã lập đỉnh / {ext['new_low']} mã lập đáy 52 tuần"
         f["breadth"] = {
             "group": "Độ rộng", "dir": br_dir, "state": br_state, "ratio": ratio,
-            "short": f"độ rộng {br_state.lower()} (A/D {ratio:.2f})",
-            "fact": f"A/D {ratio:.2f} ({b['n_up']} tăng / {b['n_down']} giảm): {br_state.lower()}",
+            "short": short, "fact": f"{fact}: {br_state.lower()}", "hist": hist, "ext": ext,
         }
     else:
         f["breadth"] = {"group": "Độ rộng", "dir": 0, "state": "Không đủ dữ liệu", "ratio": None,
@@ -245,6 +385,11 @@ def classify_factors(snap):
     ob_reasons, os_reasons = [], []
     if rsi > c["rsi_overbought"]:
         ob_reasons.append(f"RSI14 {rsi:.1f}")
+    rsi5 = snap.get("rsi5") or 0
+    if rsi5 > c["rsi5_overbought"]:
+        ob_reasons.append(f"RSI5 {rsi5:.1f}")
+    if 0 < rsi5 < c["rsi5_oversold"]:
+        os_reasons.append(f"RSI5 {rsi5:.1f}")
     if kh and close > kh:
         ob_reasons.append(f"giá trên Keltner trên ({_p(kh)})")
     if 0 < rsi < c["rsi_oversold"]:
@@ -386,14 +531,44 @@ def build_verdict(snap):
         elif fac["dir"] == -bias:
             risks.append(fac)
 
+    # Tín hiệu bổ sung (v2): đỉnh/đáy 52 tuần, độ rộng nội bộ — chỉ thêm vào lý do/rủi ro, không đổi trạng thái
+    def _extra(fact, d):
+        item = {"fact": fact, "short": fact[:1].lower() + fact[1:], "dir": d, "extra": True}
+        if bias != 0 and d == bias:
+            reasons.append(item)
+        elif bias != 0 and d == -bias:
+            risks.append(item)
+        elif bias == 0 and d != 0:
+            risks.append(item)
+
+    ext = f["breadth"].get("ext")
+    if ext and ext["new_high"] != ext["new_low"]:
+        more_high = ext["new_high"] > ext["new_low"]
+        _extra(f"Số mã lập {'đỉnh' if more_high else 'đáy'} 52 tuần ({max(ext['new_high'], ext['new_low'])}) "
+               f"nhiều hơn số mã lập {'đáy' if more_high else 'đỉnh'} ({min(ext['new_high'], ext['new_low'])})",
+               1 if more_high else -1)
+    ib = snap.get("vn30_breadth")
+    if ib and ib.get("pct_above_ma20") is not None and ib.get("pct_above_ma50") is not None:
+        if ib["pct_above_ma20"] >= c["internal_short_pct"] and ib["pct_above_ma50"] < c["internal_mid_pct"]:
+            _extra(f"Đà tăng chủ yếu ngắn hạn: {ib['pct_above_ma20']:.1f}% mã VN30 trên MA20 nhưng chỉ "
+                   f"{ib['pct_above_ma50']:.1f}% trên MA50", -1)
+        elif ib["pct_above_ma20"] >= c["internal_short_pct"] and ib["pct_above_ma50"] >= c["internal_short_pct"]:
+            _extra(f"Độ rộng VN30 vững: {ib['pct_above_ma20']:.1f}% mã trên MA20, {ib['pct_above_ma50']:.1f}% trên MA50", 1)
+        elif ib["pct_above_ma20"] <= 100 - c["internal_short_pct"]:
+            _extra(f"Độ rộng VN30 yếu: chỉ {ib['pct_above_ma20']:.1f}% mã trên MA20", -1)
+
     # Độ tin cậy
     if bias == 0:
         confidence = "Cao" if snap["adx"] < c["adx_very_flat"] else "Trung bình"
+        conf_score = 8 if confidence == "Cao" else 6
     else:
         nonneutral = [f[k] for k in DIRECTIONAL if not f[k].get("missing") and f[k]["dir"] != 0]
         agree = sum(1 for x in nonneutral if x["dir"] == bias)
         share = agree / len(nonneutral) * 100 if nonneutral else 0
         confidence = "Cao" if share >= c["conf_high"] else ("Trung bình" if share >= c["conf_mid"] else "Thấp")
+        conf_score = max(1, round(share / 10))
+
+    leaders, lead = leader_analysis(snap)
 
     sup, res = key_levels(snap)
     inv, inv_src = invalidation_level(snap, bias, sup, res)
@@ -401,7 +576,8 @@ def build_verdict(snap):
     return {
         "regime_key": key, "regime": label, "rule_no": rule_no, "bias": bias,
         "base_action": base_action, "action": action, "downgrade_reasons": downgrade_reasons,
-        "confidence": confidence, "main_scenario": main_scenario,
+        "confidence": confidence, "conf_score": conf_score, "main_scenario": main_scenario,
+        "leaders": leaders, "lead": lead,
         "factors": f, "reasons": reasons, "risks": risks,
         "support": sup, "resistance": res, "invalidation": inv, "invalidation_src": inv_src,
     }
@@ -440,6 +616,10 @@ def action_sentence(v):
         sent += f" Không mua đuổi vì đang quá mua ({', '.join(f['overbought'])})."
     if v["bias"] < 0 and f["oversold"]:
         sent += f" Theo dõi tín hiệu tạo đáy vì đang quá bán ({', '.join(f['oversold'])})."
+    if v["bias"] >= 0 and v.get("lead") and v["lead"]["return_20d"] > 0 and v["action"] != "Đứng ngoài":
+        L = v["lead"]
+        sent += (f" Ưu tiên cổ phiếu nhóm {LEADER_LABEL.get(L['symbol'], L['symbol'])}, "
+                 f"nhóm đang dẫn dắt với {_pct(L['return_20d'])} trong 20 phiên.")
     return sent
 
 
@@ -461,10 +641,16 @@ def summary_sentence(snap, v):
         watch = "đang quá bán (" + ", ".join(f["oversold"]) + "), có thể có nhịp hồi ngắn"
     elif v["risks"]:
         watch = v["risks"][0]["short"]
-    out = (f"{snap['symbol']} đang ở trạng thái **{v['regime']}** (độ tin cậy {v['confidence']}): {why}")
+    ret = ""
+    if snap.get("return_5d") is not None and snap.get("return_20d") is not None:
+        ret = f", 5 phiên {_pct(snap['return_5d'])}, 20 phiên {_pct(snap['return_20d'])}"
+    out = (f"{snap['symbol']} đang ở trạng thái **{v['regime']}** (độ tin cậy {v['confidence']}{ret}): {why}")
     if watch:
         out += f"; cần lưu ý {watch}"
+    out += f". Xu hướng: {_horizon_text(f['ma']['hz3'])}"
     out += f". Hành động: **{v['action']}**"
+    if v["bias"] >= 0 and v.get("lead") and v["lead"]["return_20d"] > 0 and v["action"] != "Đứng ngoài":
+        out += f", ưu tiên nhóm {LEADER_LABEL.get(v['lead']['symbol'], v['lead']['symbol'])}"
     if v["bias"] == 0 and v["support"] and v["resistance"]:
         out += f", chờ đóng cửa ra khỏi vùng {_p(v['support'][0])} – {_p(v['resistance'][0])}"
     elif v["invalidation"] is not None:
@@ -549,7 +735,9 @@ def build_general_md(snap, v, market_stats_md="", breadth_md=""):
         f"({_pct(chg_pc)})** so với phiên trước ({_p(snap['prev_close'])}). "
         f"Biên độ phiên {_p(snap['low'])} – {_p(snap['high'])}.",
         "",
-        f"Khối lượng: **{snap['volume'] / 1_000_000:,.2f} triệu CP**, {vol_word} so với TB 20 phiên.",
+        f"Khối lượng: **{snap['volume'] / 1_000_000:,.2f} triệu CP**, {vol_word} so với TB 20 phiên."
+        + (f" Thay đổi 5 phiên **{_pct(snap['return_5d'])}**, 20 phiên **{_pct(snap['return_20d'])}**."
+           if snap.get("return_5d") is not None and snap.get("return_20d") is not None else ""),
         "",
         "### 2. Nhận định tổng hợp",
         build_assessment_md(snap, v),
@@ -562,9 +750,60 @@ def build_general_md(snap, v, market_stats_md="", breadth_md=""):
             md.append("")
         if market_stats_md:
             md.append(market_stats_md)
-    if breadth_md:
-        md += ["", "### 4. Độ rộng thị trường", breadth_md]
+    br = breadth_section_md(snap, v)
+    if breadth_md or br:
+        md += ["", "### 4. Độ rộng thị trường"] + ([br, ""] if br else []) + ([breadth_md] if breadth_md else [])
+    ld = leaders_section_md(snap, v)
+    if ld:
+        md += ["", "### 5. Nhóm dẫn dắt", ld]
     return "\n".join(md) + FOOTER
+
+
+def breadth_section_md(snap, v):
+    f = v["factors"]["breadth"]
+    rows = []
+    hist = f.get("hist")
+    if hist:
+        sd = {1: "tăng", -1: "giảm", 0: "cân bằng"}[hist["streak_dir"]]
+        rows.append(f"| Động lượng độ rộng (TB 5 phiên) | **{hist['momentum']:+.0f}** | {f['state']} |")
+        rows.append(f"| Độ bền (số phiên A/D > 1 trong {hist['n']} phiên) | **{hist['persistence']:.0f}%** | "
+                    f"Chuỗi {hist['streak']} phiên {sd} |")
+    ext = f.get("ext")
+    if ext:
+        rows.append(f"| Mã lập đỉnh / đáy 52 tuần | **{ext['new_high']} / {ext['new_low']}** | {ext['total']} mã |")
+        rows.append(f"| % mã trên MA20 / MA50 / MA200 | **{_pc(ext['pct_above_ma20'])} / {_pc(ext['pct_above_ma50'])} / "
+                    f"{_pc(ext['pct_above_ma200'])}** | Toàn rổ {snap['symbol']} |")
+    ib = snap.get("vn30_breadth")
+    if ib and snap["symbol"] != "VN30":
+        rows.append(f"| VN30: % mã trên MA20 / MA50 / MA200 | **{_pc(ib['pct_above_ma20'])} / {_pc(ib['pct_above_ma50'])} / "
+                    f"{_pc(ib['pct_above_ma200'])}** | {ib['total']} mã |")
+    if not rows:
+        return ""
+    return "\n".join(["| Chỉ báo | Giá trị | Ghi chú |", "|---|---|---|", *rows])
+
+
+def leaders_section_md(snap, v):
+    rows = v.get("leaders") or []
+    if len(rows) < 2:
+        return ""
+    out = ["| Chỉ số | 20 phiên | KL so với TB20 | Tương quan 20 phiên với VNINDEX |", "|---|---|---|---|"]
+    for r in sorted(rows, key=lambda x: x["return_20d"], reverse=True):
+        corr = f"{r['corr']:.2f}" if r.get("corr") is not None else "N/A"
+        out.append(f"| **{r['symbol']}** | {_pct(r['return_20d'])} | {_pct(r['vol_diff'])} | {corr} |")
+    L = v.get("lead")
+    out.append("")
+    if L and L["return_20d"] > 0:
+        out.append(f"Nhóm dẫn dắt: **{LEADER_LABEL.get(L['symbol'], L['symbol'])}**, mạnh hơn nhóm yếu nhất từ "
+                   f"{CONFIG['leader_gap']} điểm % trở lên trong 20 phiên.")
+    elif L:
+        out.append(f"Các nhóm đều giảm trong 20 phiên; nhóm chống chịu tốt nhất là "
+                   f"**{LEADER_LABEL.get(L['symbol'], L['symbol'])}** ({_pct(L['return_20d'])}).")
+    else:
+        out.append(f"Chưa có nhóm dẫn dắt rõ: chênh lệch 20 phiên giữa các nhóm dưới {CONFIG['leader_gap']} điểm %.")
+    weak_vol = [r for r in rows if r["vol_diff"] < -CONFIG["vol_spike_pct"] + 5]
+    for r in weak_vol:
+        out.append(f"KL nhóm {r['symbol']} thấp hơn TB20 {abs(r['vol_diff']):.1f}%: dòng tiền chưa vào nhóm này.")
+    return "\n".join(out)
 
 
 def build_volume_md(snap, v):
@@ -613,8 +852,8 @@ def build_trend_md(snap, v):
     f = v["factors"]
     close = snap["close"]
     rows = []
-    for n in ("MA10", "MA20", "MA50", "MA100", "MA200"):
-        val = _ma(snap, n)
+    for n in ("MA5", "MA10", "MA20", "MA50", "MA100", "MA200"):
+        val = _ma_any(snap, n)
         if val:
             d = (close - val) / val * 100
             rows.append(f"| **{n}** | `{_p(val)}` | {_pct(d)} | {'Hỗ trợ' if d >= 0 else 'Kháng cự'} |")
@@ -625,8 +864,7 @@ def build_trend_md(snap, v):
         kpos = "Dưới Keltner dưới: quá bán ngắn hạn, áp lực bán còn mạnh"
     else:
         kpos = "Trong kênh Keltner"
-    hz = f["ma"]["horizons"]
-    hz_word = {1: "Tăng", -1: "Giảm", 0: "Hỗn hợp", None: "Không đủ dữ liệu"}
+    hz3 = f["ma"]["hz3"]
     md = [
         "### 1. Thống kê Xu hướng & Động lượng",
         "| MA | Giá trị | Khoảng cách | Vai trò |",
@@ -638,12 +876,13 @@ def build_trend_md(snap, v):
         f"| **ADX** | `{snap['adx']:.2f}` | Xu hướng {f['adx_state']} |",
         f"| **ATR** | `{snap['atr']:.2f}` ({f['atr_pct']:.2f}% giá) | Biến động {f['volatility_state']} |",
         f"| **ROC10 / ROC20** | `{_pct(snap['roc10'])}` / `{_pct(snap['roc20'])}` | Động lượng {f['momentum']['state'].lower()} |",
+        f"| **RSI5 / RSI14** | `{(snap.get('rsi5') or 0):.1f}` / `{snap['rsi14']:.1f}` | "
+        + ("Quá mua ngắn hạn" if (snap.get('rsi5') or 0) > CONFIG['rsi5_overbought']
+           else ("Quá bán ngắn hạn" if 0 < (snap.get('rsi5') or 0) < CONFIG['rsi5_oversold'] else "Trung tính")) + " |",
         f"| **Keltner** | `{_p(kl)} – {_p(kh)}` | {kpos} |",
         "",
         "### 2. Xu hướng theo khung thời gian",
-        f"- **Ngắn hạn** (MA10, MA20): {hz_word[hz['Ngắn hạn']]}",
-        f"- **Trung hạn** (MA50): {hz_word[hz['Trung hạn']]}",
-        f"- **Dài hạn** (MA100, MA200): {hz_word[hz['Dài hạn']]}",
+        *[f"- **{k}** ({', '.join(names)}): {st or 'Không đủ dữ liệu'}" for k, (st, names) in hz3.items()],
         "",
         "**Ngưỡng giá then chốt:**",
     ]
@@ -657,52 +896,69 @@ def build_trend_md(snap, v):
     return "\n".join(md) + FOOTER
 
 
-def build_scenario_md(snap, v, volatility_value=None):
+def scenario_levels(snap, v):
+    """Vùng dao động gần (đóng cửa ± 1 ATR, kẹp theo S/R gần) và hỗ trợ / kháng cự xa."""
+    close, atr = snap["close"], snap["atr"] or 0
     sup, res = v["support"], v["resistance"]
-    s1 = sup[0] if sup else None
-    s2 = sup[1] if len(sup) > 1 else None
-    r1 = res[0] if res else None
-    r2 = res[1] if len(res) > 1 else None
+    lo = sup[0] if sup and close - sup[0] <= atr else close - atr
+    hi = res[0] if res and res[0] - close <= atr else close + atr
+    far_s = next((x for x in sup if x < lo), None)
+    far_r = next((x for x in res if x > hi), None)
+    return lo, hi, far_s, far_r
+
+
+def build_scenario_md(snap, v, volatility_value=None):
+    lo, hi, far_s, far_r = scenario_levels(snap, v)
     idx = ACTIONS.index(v["action"])
     up_action = ACTIONS[min(idx + 1, len(ACTIONS) - 1)]
     down_action = ACTIONS[max(idx - 1, 0)]
     main = v["main_scenario"]
+    fail = {
+        "positive": f"đóng cửa dưới {_p(lo)} kèm KL trên TB20",
+        "neutral": f"đóng cửa ngoài vùng {_p(lo)} – {_p(hi)} kèm KL trên TB20 và độ rộng đổi chiều",
+        "negative": f"đóng cửa trên {_p(hi)} kèm KL trên TB20 và A/D ≥ {CONFIG['ad_lean_up']}",
+    }
 
     def title(n, key, extra=""):
         tag = " — Kịch bản chính" if key == main else ""
         return f"### {n}. Kịch bản {SCENARIO_LABEL[key].upper()}{extra}{tag}"
 
     md = [
-        f"**Kịch bản chính:** {SCENARIO_LABEL[main]} (theo trạng thái {v['regime']}, độ tin cậy {v['confidence']}). "
-        "Tầm nhìn 5–15 phiên.",
+        f"**Kịch bản chính:** {SCENARIO_LABEL[main]} (theo trạng thái {v['regime']}). "
+        f"**Độ tin cậy:** {v['confidence']} ({v['conf_score']}/10). **Tầm nhìn:** 5–15 phiên.",
+        "",
+        f"**Điều kiện thất bại của kịch bản chính:** {fail[main]}.",
         "",
         title(1, "positive"),
-        f"- **Điều kiện:** đóng cửa vượt kháng cự {_p(r1)} với KL trên TB20 và A/D ≥ {CONFIG['ad_lean_up']}."
-        if r1 else f"- **Điều kiện:** giữ trên mọi MA với KL trên TB20 và A/D ≥ {CONFIG['ad_lean_up']}.",
-        f"- **Mục tiêu:** {_p(r2)}." if r2 else "- **Mục tiêu:** chưa có kháng cự kế tiếp trong vùng 52 tuần.",
-        f"- **Hành động khi xảy ra:** nâng lên {up_action}.",
+        f"- **Điều kiện kích hoạt:** đóng cửa vượt {_p(hi)} với KL trên TB20 và A/D ≥ {CONFIG['ad_lean_up']}.",
+        f"- **Mục tiêu:** kháng cự xa {_p(far_r)}." if far_r else "- **Mục tiêu:** chưa có kháng cự xa trong vùng 52 tuần.",
+        f"- **Hành động khi xảy ra:** " + (f"nâng lên {up_action}." if up_action != v["action"] else f"giữ {v['action']}."),
         "",
-        title(2, "neutral", f" (dao động {_p(s1)} – {_p(r1)})" if s1 and r1 else ""),
-        f"- **Điều kiện:** giá đóng cửa trong vùng {_p(s1)} – {_p(r1)}, ADX dưới {CONFIG['adx_strong']}."
-        if s1 and r1 else f"- **Điều kiện:** giá đi ngang, ADX dưới {CONFIG['adx_strong']}.",
+        title(2, "neutral", f" (dao động {_p(lo)} – {_p(hi)})"),
+        f"- **Điều kiện kích hoạt:** giá đóng cửa trong vùng {_p(lo)} – {_p(hi)}, ADX dưới {CONFIG['adx_strong']}.",
         f"- **Hành động khi xảy ra:** giữ {v['action']}.",
         "",
         title(3, "negative"),
-        f"- **Điều kiện:** đóng cửa thủng hỗ trợ {_p(s1)} với KL trên TB20 và A/D ≤ {CONFIG['ad_lean_down']}."
-        if s1 else f"- **Điều kiện:** tiếp tục đóng cửa dưới các MA với KL trên TB20 và A/D ≤ {CONFIG['ad_lean_down']}.",
-        f"- **Mục tiêu:** {_p(s2)}." if s2 else "- **Mục tiêu:** chưa có hỗ trợ kế tiếp trong vùng 52 tuần.",
-        f"- **Hành động khi xảy ra:** hạ xuống {down_action}.",
+        f"- **Điều kiện kích hoạt:** đóng cửa dưới {_p(lo)} với KL trên TB20 và A/D ≤ {CONFIG['ad_lean_down']}.",
+        f"- **Mục tiêu:** hỗ trợ xa {_p(far_s)}." if far_s else "- **Mục tiêu:** chưa có hỗ trợ xa trong vùng 52 tuần.",
+        f"- **Hành động khi xảy ra:** " + (f"hạ xuống {down_action}." if down_action != v["action"] else f"giữ {v['action']}."),
         "",
         "### Dẫn chứng",
         f"- **TAS:** {snap['tas_score']:+d}/100 ({snap.get('tas_label', '')}).",
+        f"- **Xu hướng:** {_horizon_text(v['factors']['ma']['hz3'])}.",
         f"- **Sức mạnh xu hướng:** ADX {snap['adx']:.1f}, xu hướng {v['factors']['adx_state']}.",
-        f"- **Biến động:** ATR {v['factors']['atr_pct']:.2f}% giá/phiên ({v['factors']['volatility_state']})"
+        f"- **Biến động:** ATR {_p(snap['atr'])} điểm ({v['factors']['atr_pct']:.2f}% giá/phiên, {v['factors']['volatility_state']})"
         + (f"; biên độ 20 phiên {volatility_value:.2f}% giá." if volatility_value is not None else "."),
+        f"- **Độ rộng:** {v['factors']['breadth']['fact']}.",
     ]
-    if s1 and r1:
-        ds = (snap["close"] - s1) / snap["close"] * 100
-        dr = (r1 - snap["close"]) / snap["close"] * 100
-        md.append(f"- **Khoảng đệm:** cách hỗ trợ {ds:.2f}%, cách kháng cự {dr:.2f}%.")
+    if far_s or far_r:
+        c = snap["close"]
+        parts = []
+        if far_s:
+            parts.append(f"tới hỗ trợ xa {_p(far_s)} là {(c - far_s) / c * 100:.1f}%")
+        if far_r:
+            parts.append(f"tới kháng cự xa {_p(far_r)} là {(far_r - c) / c * 100:.1f}%")
+        md.append(f"- **Khoảng đệm:** {', '.join(parts)}.")
     return "\n".join(md) + FOOTER
 
 
@@ -747,6 +1003,8 @@ def build_commentary(snap, market_stats_md="", breadth_md="", volatility_value=N
             "main_scenario": SCENARIO_LABEL[v["main_scenario"]],
             "invalidation": v["invalidation"], "version": RULES_VERSION,
             "summary": summary_sentence(snap, v),
+            "confidence_score": v["conf_score"],
+            "horizons": {k: st for k, (st, _) in v["factors"]["ma"]["hz3"].items()},
         },
         "general_markdown": build_general_md(snap, v, market_stats_md, breadth_md),
         "scenario_markdown": build_scenario_md(snap, v, volatility_value),

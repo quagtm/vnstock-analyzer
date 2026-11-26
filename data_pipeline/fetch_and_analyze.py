@@ -1745,6 +1745,104 @@ def compute_bigbeluga_smc(df, symbol="", mslen=5, oblast=5, fvg_num=5, swing_lim
         return None
 
 
+_SNAPS = {}  # dữ liệu đầu vào bộ rule theo từng chỉ số, dùng lại ở bước refresh_commentary
+
+
+def _ma_values_at(df, pos):
+    """Giá trị MA tại một phiên trong quá khứ (pos âm, -6 = 5 phiên trước)."""
+    if len(df) < abs(pos):
+        return {}
+    row = df.iloc[pos]
+    out = {}
+    for n in ("ma5", "ma10", "ma20", "ma50", "ma100", "ma200"):
+        v = row.get(n)
+        if v is not None and pd.notna(v) and v > 0:
+            out[n.upper()] = float(v)
+    return out
+
+
+def _board_breadth(raw_stocks, symbols):
+    """Độ rộng nội bộ của một rổ: % mã trên MA20/50/200, số mã lập đỉnh/đáy 52 tuần."""
+    rows = [raw_stocks[s] for s in symbols if s in raw_stocks and 'is_above_sma50' in raw_stocks[s]]
+    if not rows:
+        return None
+    n = len(rows)
+    pct = lambda key: (round(sum(1 for r in rows if r.get(key)) / n * 100, 1)
+                       if any(key in r for r in rows) else None)
+    return {
+        'total': n,
+        'pct_above_ma20': pct('is_above_sma20'),
+        'pct_above_ma50': pct('is_above_sma50'),
+        'pct_above_ma200': pct('is_above_sma200'),
+        'new_high': sum(1 for r in rows if r.get('is_new_high_52w')),
+        'new_low': sum(1 for r in rows if r.get('is_new_low_52w')),
+    }
+
+
+LEADER_INDICES = ("VN30", "VN100", "VNMIDCAP")
+
+
+def _index_snapshot(sym):
+    """Thay đổi 20 phiên, KL so với TB20 và 21 giá đóng cửa của một chỉ số (dùng cho nhóm dẫn dắt)."""
+    if sym in _SNAPS:
+        s = _SNAPS[sym]
+        return {'symbol': sym, 'return_20d': s['return_20d'], 'vol_diff': s['vol_diff'],
+                'close_hist': s['close_hist']}
+    try:
+        df = None
+        for name in ((sym, "VNMID") if sym == "VNMIDCAP" else (sym,)):
+            df = fetch_ohlcv_direct(name, days=60)
+            if df is not None and len(df) >= 22:
+                break
+        if df is None or len(df) < 22:
+            return None
+        c = df['close'].astype(float)
+        v = df['volume'].astype(float)
+        vol20 = v.rolling(20).mean().iloc[-1]
+        return {'symbol': sym,
+                'return_20d': float((c.iloc[-1] - c.iloc[-21]) / c.iloc[-21] * 100),
+                'vol_diff': float((v.iloc[-1] - vol20) / vol20 * 100) if vol20 > 0 else 0.0,
+                'close_hist': [float(x) for x in c.tail(21).tolist()]}
+    except Exception as e:
+        print(f"  [LEADERS] Không lấy được {sym}: {e}")
+        return None
+
+
+def refresh_commentary(all_data, raw_stocks, ad_history, price_boards):
+    """Sinh lại nhận định sau khi đã có độ rộng chi tiết (MA breadth, đỉnh/đáy 52 tuần,
+    lịch sử A/D) và dữ liệu nhóm dẫn dắt. Lỗi ở bước này giữ nguyên nhận định đã có."""
+    try:
+        leaders = [x for x in (_index_snapshot(s) for s in LEADER_INDICES) if x]
+        vn30_syms = []
+        if price_boards.get('VN30') is not None and not price_boards['VN30'].empty:
+            vn30_syms = price_boards['VN30']['listing_symbol'].tolist()
+        vn30_breadth = _board_breadth(raw_stocks, vn30_syms)
+        for sym, snap in _SNAPS.items():
+            if sym not in all_data:
+                continue
+            board = price_boards.get(sym)
+            syms = board['listing_symbol'].tolist() if board is not None and not board.empty else []
+            snap['breadth_ext'] = _board_breadth(raw_stocks, syms)
+            snap['ad_history'] = ad_history if sym == 'VNINDEX' else None
+            snap['vn30_breadth'] = vn30_breadth
+            snap['leaders'] = leaders
+            snap['market_index_hist'] = _SNAPS.get('VNINDEX', {}).get('close_hist')
+            c = market_rules.build_commentary(snap, market_stats_md=snap['market_stats_md'],
+                                              breadth_md=snap['breadth_md'],
+                                              volatility_value=snap['volatility_value'])
+            d = all_data[sym]
+            for k in ('general_markdown', 'scenario_markdown', 'volume_markdown', 'trend_markdown'):
+                d[k] = c[k]
+            d['commentary'] = c['verdict']
+            if d.get('smc') and d['smc'].get('interpretation_markdown'):
+                d['smc']['interpretation_markdown'] = market_rules.replace_smc_strategy(
+                    d['smc']['interpretation_markdown'], snap, c['_v'])
+            print(f"  [{sym}] Nhận định (đủ độ rộng): {c['verdict']['regime']} → {c['verdict']['action']}")
+    except Exception as e:
+        print(f"[COMMENTARY] Không cập nhật được nhận định mở rộng: {e}")
+        traceback.print_exc()
+
+
 def process_symbol(symbol, index_board=None, ma_breadth=None):
     print(f"Processing {symbol}...")
     try:
@@ -1928,7 +2026,19 @@ def process_symbol(symbol, index_board=None, ma_breadth=None):
             'tas_score': int(tas_score), 'tas_label': tas_status,
             'smc': smc_res, 'breadth': breadth_nums, 'sector_perf': sector_perf_list,
             'sr_zones': sr_zones_res,
+            # bổ sung v2
+            'return_5d': return_5d, 'return_20d': return_20d,
+            'rsi5': safe_float(latest.get('rsi5', 0)),
+            'ma5': safe_float(latest.get('ma5', 0)),
+            'ma_prev5': _ma_values_at(df, -6),
+            'close_prev5': _c5,
+            'ma200_prev20': (safe_float(df['ma200'].iloc[-21]) if len(df) > 21 else None),
+            'close_hist': [float(x) for x in close_series.tail(21).tolist()],
+            'market_stats_md': top_movers_str if breadth_nums else "",
+            'breadth_md': "\n\n".join(filter(None, [market_breadth_str, ma_breadth_str])),
+            'volatility_value': volatility_value,
         }
+        _SNAPS[symbol] = snap
         commentary = market_rules.build_commentary(
             snap,
             market_stats_md=top_movers_str if breadth_nums else "",
@@ -2047,6 +2157,7 @@ def enrich_raw_stocks_with_breadth(raw_stocks):
                 is_strong = bool(cur_close > sma20 and sma20 > sma50 and sma50 > sma200)
                 
                 # Cập nhật vào raw_stocks
+                raw_stocks[sym]['is_above_sma20'] = bool(cur_close > sma20)
                 raw_stocks[sym]['is_above_sma50'] = is_above_sma50
                 raw_stocks[sym]['is_above_sma200'] = is_above_sma200
                 raw_stocks[sym]['is_uptrend'] = is_uptrend
@@ -2478,6 +2589,7 @@ def main():
         sector_heatmap, raw_stocks = compute_sector_heatmap(board_for_sector, icb_mapping)
         print(f"[SECTOR] {len(sector_heatmap)} ngành computed from {len(board_for_sector)} stocks")
         raw_stocks, ad_history, swing_signals = enrich_raw_stocks_with_breadth(raw_stocks)
+        refresh_commentary(all_data, raw_stocks, ad_history, price_boards)
     else:
         ad_history = []
         swing_signals = {'buy_today': [], 'sell_today': [], 'uptrend_count': 0, 'downtrend_count': 0, 'total': 0}

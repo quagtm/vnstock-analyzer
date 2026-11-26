@@ -57,6 +57,34 @@ def test_grid_consistency():
         assert mr.ACTIONS.index(v["base_action"]) - mr.ACTIONS.index(v["action"]) in (0, 1)
 
 
+def test_v2_horizon_transition():
+    s = snap(close=100, ma=(99, 98, 102, 105, 110))
+    s.update(ma5=99.5, close_prev5=97, ma_prev5={"MA5": 98, "MA10": 98.5, "MA20": 101, "MA50": 104, "MA200": 109})
+    hz = mr.trend_horizons(s)
+    assert hz["Ngắn hạn"][0] == "Chuyển tăng" and hz["Trung hạn"][0] == "Chuyển tăng" and hz["Dài hạn"][0] == "Giảm"
+
+
+def test_v2_breadth_history_and_leaders():
+    hist = [{"advance": 300, "decline": 100, "net": 200} for _ in range(10)]
+    st = mr.breadth_history_stats(hist)
+    assert st["momentum"] == 50 and st["persistence"] == 100 and st["streak"] == 10
+    s = snap()
+    s.update(ad_history=hist, close_hist=[100 + i for i in range(21)],
+             leaders=[{"symbol": "VN30", "return_20d": 4.0, "vol_diff": 5, "close_hist": [100 + i for i in range(21)]},
+                      {"symbol": "VNMIDCAP", "return_20d": 0.5, "vol_diff": -19, "close_hist": [100 + i * 0.5 for i in range(21)]}],
+             breadth_ext={"total": 400, "pct_above_ma20": 60, "pct_above_ma50": 50, "pct_above_ma200": 40,
+                          "new_high": 3, "new_low": 8},
+             vn30_breadth={"total": 30, "pct_above_ma20": 86.7, "pct_above_ma50": 43.3, "pct_above_ma200": 50})
+    out = mr.build_commentary(s)
+    v = out["_v"]
+    assert v["lead"]["symbol"] == "VN30"
+    assert "ưu tiên nhóm vốn hóa lớn (VN30)" in out["verdict"]["summary"]
+    assert any("đáy 52 tuần" in x["fact"] for x in v["risks"])
+    assert any("chủ yếu ngắn hạn" in x["fact"] for x in v["risks"])
+    assert all(x["dir"] == v["bias"] for x in v["reasons"])
+    assert "Điều kiện thất bại" in out["scenario_markdown"]
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):
