@@ -16,8 +16,8 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="style.css?v=20260720">
-    <script src="app.js"></script>
+    <link rel="stylesheet" href="style.css?v=20261127">
+    <script src="app.js?v=20261127"></script>
 </head>
 <body>
     <div class="app-container">
@@ -39,6 +39,7 @@
                         <li class="sub-nav-item" data-tab="scenario"><i class='bx bx-map-alt'></i> Kịch bản</li>
                         <li class="sub-nav-item" data-tab="flow"><i class='bx bx-water'></i> Dòng tiền</li>
                         <li class="sub-nav-item" data-tab="trend"><i class='bx bx-line-chart-down'></i> Xu hướng</li>
+                        <li class="sub-nav-item" data-tab="smc"><i class='bx bx-cube-alt'></i> Smart Money (SMC)</li>
                     </ul>
                 </li>
                 <li class="nav-item-container" data-symbol="VN30">
@@ -52,6 +53,7 @@
                         <li class="sub-nav-item" data-tab="scenario"><i class='bx bx-map-alt'></i> Kịch bản</li>
                         <li class="sub-nav-item" data-tab="flow"><i class='bx bx-water'></i> Dòng tiền</li>
                         <li class="sub-nav-item" data-tab="trend"><i class='bx bx-line-chart-down'></i> Xu hướng</li>
+                        <li class="sub-nav-item" data-tab="smc"><i class='bx bx-cube-alt'></i> Smart Money (SMC)</li>
                     </ul>
                 </li>
                 <li class="nav-item-container" data-symbol="VN100">
@@ -65,6 +67,7 @@
                         <li class="sub-nav-item" data-tab="scenario"><i class='bx bx-map-alt'></i> Kịch bản</li>
                         <li class="sub-nav-item" data-tab="flow"><i class='bx bx-water'></i> Dòng tiền</li>
                         <li class="sub-nav-item" data-tab="trend"><i class='bx bx-line-chart-down'></i> Xu hướng</li>
+                        <li class="sub-nav-item" data-tab="smc"><i class='bx bx-cube-alt'></i> Smart Money (SMC)</li>
                     </ul>
                 </li>
             </ul>
@@ -380,6 +383,106 @@
             </div>
         </div>
 
+        <!-- BigBeluga Smart Money Concepts (SMC) Section -->
+        <div class="smc-section glass" id="smc-section" style="display: none;">
+            <div class="smc-header">
+                <div class="smc-title-wrap">
+                    <div class="smc-icon-badge"><i class='bx bx-cube-alt'></i></div>
+                    <div>
+                        <h2 style="margin:0; font-size:1.15rem; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                            BigBeluga — Smart Money Concepts
+                            <span class="smc-version-badge">v1.0.0</span>
+                            <span id="smc-trend-pill" class="smc-trend-pill">—</span>
+                        </h2>
+                        <p class="smc-subtitle">Cấu trúc Thị trường (BOS / CHoCH / Sweep x), Volumetric Order Blocks & Fair Value Gaps</p>
+                    </div>
+                </div>
+                <div class="smc-controls">
+                    <label class="smc-toggle"><input type="checkbox" id="smc-chk-ob" checked> <span>Order Blocks</span></label>
+                    <label class="smc-toggle"><input type="checkbox" id="smc-chk-fvg" checked> <span>FVG</span></label>
+                    <label class="smc-toggle"><input type="checkbox" id="smc-chk-ms" checked> <span>BOS / CHoCH / x</span></label>
+                </div>
+            </div>
+
+            <!-- 4 KPI Cards -->
+            <div class="smc-kpi-grid" id="smc-kpi-grid">
+                <div class="smc-kpi-card">
+                    <span class="smc-kpi-label">Cấu trúc & Tín hiệu gần nhất</span>
+                    <strong class="smc-kpi-val" id="smc-kpi-struct">—</strong>
+                    <span class="smc-kpi-sub" id="smc-kpi-struct-sub">—</span>
+                </div>
+                <div class="smc-kpi-card">
+                    <span class="smc-kpi-label">Mốc Đảo Chiều (CHoCH)</span>
+                    <strong class="smc-kpi-val" id="smc-kpi-choch">—</strong>
+                    <span class="smc-kpi-sub" id="smc-kpi-choch-sub">—</span>
+                </div>
+                <div class="smc-kpi-card">
+                    <span class="smc-kpi-label">Bullish OB (Vùng Cầu)</span>
+                    <strong class="smc-kpi-val" id="smc-kpi-bullob" style="color:#089981;">—</strong>
+                    <span class="smc-kpi-sub" id="smc-kpi-bullob-sub">—</span>
+                </div>
+                <div class="smc-kpi-card">
+                    <span class="smc-kpi-label">Bearish OB (Vùng Cung)</span>
+                    <strong class="smc-kpi-val" id="smc-kpi-bearob" style="color:#f23645;">—</strong>
+                    <span class="smc-kpi-sub" id="smc-kpi-bearob-sub">—</span>
+                </div>
+            </div>
+
+            <!-- Interactive SMC Candlestick + Zones Chart -->
+            <div class="smc-chart-wrap">
+                <canvas id="smc-canvas"></canvas>
+                <div id="smc-tooltip" class="smc-tooltip" style="display:none;"></div>
+            </div>
+
+            <!-- Order Blocks & Structure Events Tables -->
+            <div class="smc-details-grid">
+                <div class="smc-detail-box">
+                    <h3><i class='bx bx-layer'></i> Volumetric Order Blocks đang hiệu lực</h3>
+                    <div id="smc-ob-list" class="smc-list-container"></div>
+                </div>
+                <div class="smc-detail-box">
+                    <h3><i class='bx bx-git-branch'></i> Sự kiện Cấu trúc Thị trường (BOS / CHoCH / Sweep)</h3>
+                    <div id="smc-events-list" class="smc-list-container"></div>
+                </div>
+            </div>
+
+            <!-- Luận giải chỉ báo SMC -->
+            <div class="smc-interpretation-box">
+                <div class="section-header" style="margin-bottom: 14px;">
+                    <i class='bx bx-bulb' style="color:#fbbf24;"></i>
+                    <h2>Luận giải Chỉ báo BigBeluga Smart Money Concepts</h2>
+                </div>
+                <div id="smc-interpretation-md" class="markdown-body"></div>
+
+                <!-- Cẩm nang đọc hiểu phương pháp luận SMC -->
+                <div class="smc-guide-section">
+                    <h3 class="smc-guide-title"><i class='bx bx-book-open'></i> Cẩm nang Đọc hiểu & Ứng dụng Chỉ báo SMC</h3>
+                    <div class="smc-guide-grid">
+                        <div class="smc-guide-card">
+                            <div class="smc-guide-badge bull">BOS — Break of Structure</div>
+                            <p><strong>Phá vỡ cấu trúc tiếp diễn:</strong> Xảy ra khi thân nến <em>đóng cửa</em> vượt đỉnh cũ (xu hướng Tăng) hoặc thủng đáy cũ (xu hướng Giảm). Xác nhận dòng tiền thông minh đang đẩy giá đi tiếp theo xu hướng chủ đạo.</p>
+                        </div>
+                        <div class="smc-guide-card">
+                            <div class="smc-guide-badge choch">CHoCH — Change of Character</div>
+                            <p><strong>Thay đổi tính chất xu hướng:</strong> Dấu hiệu đảo chiều cấu trúc đầu tiên khi giá đóng cửa phá vỡ đỉnh/đáy bảo vệ xu hướng trước đó. Là tín hiệu cảnh báo sớm dòng tiền lớn bắt đầu đổi chiều.</p>
+                        </div>
+                        <div class="smc-guide-card">
+                            <div class="smc-guide-badge sweep">Sweep (x) — Quét Thanh khoản</div>
+                            <p><strong>Bẫy giá (Stop Hunt):</strong> Râu nến chọc qua đỉnh/đáy cũ nhưng thân nến <em>đóng cửa rút ngược lại</em> vào trong. Phản ánh Smart Money quét stoploss nhỏ lẻ trước khi đảo chiều hoặc đi tiếp.</p>
+                        </div>
+                        <div class="smc-guide-card">
+                            <div class="smc-guide-badge ob">Volumetric Order Block (OB)</div>
+                            <p><strong>Dấu chân Dòng tiền Tổ chức:</strong> Vùng nến ngược chiều cuối cùng trước cú bứt phá BOS/CHoCH. Tỷ trọng <code>% Volume</code> cho biết lực cầu/cung tập trung mạnh nhất ở vùng nào; đường nét đứt giữa là <strong>Mid-line (50% OB)</strong> thường cho phản ứng giá chuẩn xác.</p>
+                        </div>
+                        <div class="smc-guide-card">
+                            <div class="smc-guide-badge fvg">FVG — Fair Value Gap</div>
+                            <p><strong>Khoảng trống Giá trị Hợp lý:</strong> Khoảng trống mất cân bằng cung-cầu giữa 3 cây nến liên tiếp. Giá thường có xu hướng quay lại lấp khoảng trống (rebalance) trước khi tiếp tục xu hướng chính.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="analysis-section glass mt-6">
             <div class="section-header">
                 <i class='bx bx-brain'></i>
@@ -392,7 +495,7 @@
     </template>
 
     <script src="sectors.js?v=20260720"></script>
-    <script src="app.js?v=20260720"></script>
+    <script src="app.js?v=20261127"></script>
 
     <!-- Modal Tùy chỉnh Nhóm Ngành -->
     <div id="sector-modal" class="modal-overlay" style="display: none;">

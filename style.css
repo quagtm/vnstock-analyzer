@@ -1880,3 +1880,254 @@ body {
     box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
 }
 
+/* ── BigBeluga Smart Money Concepts (SMC) ── */
+.smc-section {
+    padding: 22px 24px;
+    margin-bottom: 24px;
+    border-radius: 16px;
+}
+
+.smc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.smc-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.smc-icon-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(8,153,129,0.22), rgba(79,142,247,0.22));
+    border: 1px solid rgba(8,153,129,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: #10e89a;
+}
+
+.smc-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-top: 3px;
+}
+
+.smc-version-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(79,142,247,0.16);
+    color: #60a5fa;
+    border: 1px solid rgba(79,142,247,0.3);
+}
+
+.smc-trend-pill {
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.3px;
+}
+.smc-trend-pill.bull {
+    background: rgba(8,153,129,0.18);
+    color: #10e89a;
+    border: 1px solid rgba(8,153,129,0.45);
+}
+.smc-trend-pill.bear {
+    background: rgba(242,54,69,0.18);
+    color: #ff4d6d;
+    border: 1px solid rgba(242,54,69,0.45);
+}
+.smc-trend-pill.neutral {
+    background: rgba(148,163,184,0.15);
+    color: #cbd5e1;
+}
+
+.smc-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.smc-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.8rem;
+    color: #e2e8f0;
+    cursor: pointer;
+    user-select: none;
+}
+.smc-toggle input { accent-color: #089981; cursor: pointer; }
+
+.smc-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.smc-kpi-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.smc-kpi-label { font-size: 0.75rem; color: var(--text-secondary); }
+.smc-kpi-val { font-size: 1.05rem; font-weight: 700; color: #f8fafc; }
+.smc-kpi-sub { font-size: 0.74rem; color: #94a3b8; }
+
+.smc-chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background: rgba(6, 11, 23, 0.65);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    overflow: hidden;
+}
+
+.smc-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 0.76rem;
+    color: #e2e8f0;
+    z-index: 10;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+}
+
+.smc-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.smc-detail-box {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.smc-detail-box h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #f1f5f9;
+}
+
+.smc-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.smc-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid transparent;
+}
+.smc-list-item.bull { border-left-color: #089981; }
+.smc-list-item.bear { border-left-color: #f23645; }
+
+.smc-item-left { display: flex; align-items: center; gap: 10px; }
+.smc-item-right { text-align: right; }
+.smc-item-range { font-size: 0.85rem; font-weight: 700; color: #f8fafc; }
+.smc-item-meta { font-size: 0.72rem; color: #94a3b8; }
+.smc-vol-pct { font-size: 0.8rem; font-weight: 700; color: #fbbf24; }
+
+.smc-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+.smc-badge.bull { background: rgba(8,153,129,0.2); color: #10e89a; }
+.smc-badge.bear { background: rgba(242,54,69,0.2); color: #ff4d6d; }
+.smc-badge.sweep { background: rgba(251,191,36,0.2); color: #fbbf24; }
+
+.smc-interpretation-box {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 18px;
+}
+
+.smc-guide-section {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px dashed rgba(255,255,255,0.1);
+}
+
+.smc-guide-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.smc-guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 12px;
+}
+
+.smc-guide-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #cbd5e1;
+}
+
+.smc-guide-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+.smc-guide-badge.bull { background: rgba(8,153,129,0.2); color: #10e89a; }
+.smc-guide-badge.choch { background: rgba(79,142,247,0.2); color: #60a5fa; }
+.smc-guide-badge.sweep { background: rgba(251,191,36,0.2); color: #fbbf24; }
+.smc-guide-badge.ob { background: rgba(167,139,250,0.2); color: #c4b5fd; }
+.smc-guide-badge.fvg { background: rgba(242,54,69,0.2); color: #ff4d6d; }
+

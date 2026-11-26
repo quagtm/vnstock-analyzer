@@ -764,11 +764,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const isGeneralTab = (currentMiniTab === 'general');
         const isScenarioTab = (currentMiniTab === 'scenario');
         const isTrendTab = (currentMiniTab === 'trend');
+        const isSmcTab = (currentMiniTab === 'smc');
 
         // Toggle sections visibility based on mini sidetab
         const adCard = document.getElementById('ad-line-card');
         const sectorCard = document.getElementById('sector-section') || document.querySelector('.sector-section');
         const tasSection = document.getElementById('tas-section');
+        const smcSection = document.getElementById('smc-section');
+        const analysisSection = document.querySelector('.analysis-section');
         const candleBadges = document.getElementById('candle-badges');
         const srZones = document.getElementById('sr-zones');
         const swingSection = document.querySelector('.swing-signal-section');
@@ -776,9 +779,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (adCard) adCard.style.display = isFlowTab ? 'block' : 'none';
         if (sectorCard) sectorCard.style.display = isFlowTab ? 'block' : 'none';
         if (tasSection) tasSection.style.display = (isGeneralTab || isTrendTab) ? 'block' : 'none';
+        if (smcSection) smcSection.style.display = isSmcTab ? 'block' : 'none';
+        if (analysisSection) analysisSection.style.display = isSmcTab ? 'none' : 'block';
         if (candleBadges) candleBadges.style.display = (isGeneralTab || isTrendTab) ? 'flex' : 'none';
         if (srZones) srZones.style.display = (isGeneralTab || isScenarioTab || isTrendTab) ? 'flex' : 'none';
         if (swingSection) swingSection.style.display = (isGeneralTab || isTrendTab) ? 'block' : 'none';
+
+        if (isSmcTab) {
+            renderSMC(data.smc, currentSymbol);
+        }
 
         // Render TAS + sparkline + narrative
         const tas = data.tas;
@@ -982,6 +991,382 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+    }
+
+    // ── BigBeluga Smart Money Concepts (SMC) Renderer ───────────────
+    function renderSMC(smc, symbol) {
+        const smcSection = document.getElementById('smc-section');
+        if (!smcSection) return;
+
+        if (!smc || !smc.chart_series || smc.chart_series.length === 0) {
+            const mdEl = document.getElementById('smc-interpretation-md');
+            if (mdEl) mdEl.innerHTML = `<p style="color:var(--text-secondary);">Chưa có dữ liệu SMC cho ${symbol}. Vui lòng chạy lại data pipeline để cập nhật chỉ báo.</p>`;
+            return;
+        }
+
+        // 1. Trend Pill
+        const pill = document.getElementById('smc-trend-pill');
+        if (pill) {
+            const isBull = smc.trend === 1;
+            const isBear = smc.trend === -1;
+            pill.textContent = isBull ? '▲ BULLISH STRUCTURE' : isBear ? '▼ BEARISH STRUCTURE' : '— NEUTRAL';
+            pill.className = 'smc-trend-pill ' + (isBull ? 'bull' : isBear ? 'bear' : 'neutral');
+        }
+
+        // 2. KPI Cards
+        const structEl = document.getElementById('smc-kpi-struct');
+        const structSub = document.getElementById('smc-kpi-struct-sub');
+        if (structEl) {
+            const last = smc.last_event;
+            structEl.textContent = last ? `${last.txt} (${last.dir === 'bull' ? 'Tăng' : 'Giảm'})` : smc.trend_label;
+            structEl.style.color = last && last.dir === 'bull' ? '#089981' : last && last.dir === 'bear' ? '#f23645' : '#e2e8f0';
+            if (structSub) structSub.textContent = last ? `Mốc ${last.y.toLocaleString('vi-VN')} • ${last.x2_date}` : 'Chưa có tín hiệu mới';
+        }
+
+        const chochEl = document.getElementById('smc-kpi-choch');
+        const chochSub = document.getElementById('smc-kpi-choch-sub');
+        if (chochEl) {
+            chochEl.textContent = smc.choch_level != null ? smc.choch_level.toLocaleString('vi-VN', { maximumFractionDigits: 2 }) : '—';
+            if (chochSub) {
+                if (smc.bos_level != null) {
+                    chochSub.textContent = `BOS tiếp theo: ${smc.bos_level.toLocaleString('vi-VN', { maximumFractionDigits: 2 })}`;
+                } else {
+                    chochSub.textContent = smc.trend === 1 ? 'Hỗ trợ bảo vệ xu hướng Tăng' : 'Kháng cự đảo chiều sang Tăng';
+                }
+            }
+        }
+
+        const bullObEl = document.getElementById('smc-kpi-bullob');
+        const bullObSub = document.getElementById('smc-kpi-bullob-sub');
+        if (bullObEl) {
+            const b0 = (smc.bull_obs && smc.bull_obs[0]) || null;
+            bullObEl.textContent = b0 ? `${b0.btm.toLocaleString('vi-VN')} – ${b0.top.toLocaleString('vi-VN')}` : 'Không có';
+            if (bullObSub) bullObSub.textContent = b0 ? `Mid: ${b0.avg.toLocaleString('vi-VN')} • ${b0.vol_pct}% KL (${b0.dist_pct >= 0 ? '+' : ''}${b0.dist_pct}%)` : 'Đã bị xuyên thủng hết';
+        }
+
+        const bearObEl = document.getElementById('smc-kpi-bearob');
+        const bearObSub = document.getElementById('smc-kpi-bearob-sub');
+        if (bearObEl) {
+            const s0 = (smc.bear_obs && smc.bear_obs[0]) || null;
+            bearObEl.textContent = s0 ? `${s0.btm.toLocaleString('vi-VN')} – ${s0.top.toLocaleString('vi-VN')}` : 'Không có';
+            if (bearObSub) bearObSub.textContent = s0 ? `Mid: ${s0.avg.toLocaleString('vi-VN')} • ${s0.vol_pct}% KL (${s0.dist_pct >= 0 ? '+' : ''}${s0.dist_pct}%)` : 'Không gian tăng thoáng';
+        }
+
+        // 3. Volumetric Order Blocks List
+        const obListEl = document.getElementById('smc-ob-list');
+        if (obListEl) {
+            const allObs = [
+                ...(smc.bull_obs || []).map(x => ({ ...x, kind: 'BULL' })),
+                ...(smc.bear_obs || []).map(x => ({ ...x, kind: 'BEAR' }))
+            ];
+            if (allObs.length === 0) {
+                obListEl.innerHTML = '<p style="color:var(--text-secondary);font-size:0.85rem;padding:8px;">Không có Order Block nào còn hiệu lực.</p>';
+            } else {
+                obListEl.innerHTML = allObs.map(ob => {
+                    const isBull = ob.kind === 'BULL';
+                    const cls = isBull ? 'bull' : 'bear';
+                    const sign = ob.dist_pct >= 0 ? '+' : '';
+                    return `
+                        <div class="smc-list-item ${cls}">
+                            <div class="smc-item-left">
+                                <span class="smc-badge ${cls}">${isBull ? 'BULL OB' : 'BEAR OB'}</span>
+                                <div>
+                                    <div class="smc-item-range">${ob.btm.toLocaleString('vi-VN')} – ${ob.top.toLocaleString('vi-VN')}</div>
+                                    <div class="smc-item-meta">Mid: ${ob.avg.toLocaleString('vi-VN')} • ${ob.date}</div>
+                                </div>
+                            </div>
+                            <div class="smc-item-right">
+                                <div class="smc-vol-pct">${ob.vol_pct}% KL</div>
+                                <div class="smc-item-meta">${sign}${ob.dist_pct}%</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // 4. Structure Events List
+        const evListEl = document.getElementById('smc-events-list');
+        if (evListEl) {
+            const evs = smc.events || [];
+            if (evs.length === 0) {
+                evListEl.innerHTML = '<p style="color:var(--text-secondary);font-size:0.85rem;padding:8px;">Chưa ghi nhận sự kiện cấu trúc.</p>';
+            } else {
+                evListEl.innerHTML = evs.slice(0, 10).map(ev => {
+                    const isBull = ev.dir === 'bull';
+                    const cls = isBull ? 'bull' : 'bear';
+                    const label = ev.txt === 'x' ? 'Sweep (x)' : ev.txt;
+                    return `
+                        <div class="smc-list-item ${cls}">
+                            <div class="smc-item-left">
+                                <span class="smc-badge ${ev.txt === 'x' ? 'sweep' : cls}">${label}</span>
+                                <div>
+                                    <div class="smc-item-range">${ev.y.toLocaleString('vi-VN', { maximumFractionDigits: 2 })}</div>
+                                    <div class="smc-item-meta">${ev.x1_date} → ${ev.x2_date}</div>
+                                </div>
+                            </div>
+                            <div class="smc-item-right">
+                                <span style="font-size:0.78rem;font-weight:600;color:${isBull ? '#089981' : '#f23645'};">${isBull ? 'Bullish' : 'Bearish'}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // 5. Interpretation Markdown
+        const mdEl = document.getElementById('smc-interpretation-md');
+        if (mdEl) {
+            const md = smc.interpretation_markdown || '';
+            let html = window.marked ? marked.parse(md) : `<p>${md}</p>`;
+            html = html.replace(/\b(Bullish|TĂNG|MUA|Vùng Cầu|tích cực)\b/g, '<span style="color:#089981;font-weight:600;">$1</span>');
+            html = html.replace(/\b(Bearish|GIẢM|BÁN|Vùng Cung|tiêu cực)\b/g, '<span style="color:#f23645;font-weight:600;">$1</span>');
+            mdEl.innerHTML = html;
+        }
+
+        // 6. Chart + Toggles
+        const chkOb = document.getElementById('smc-chk-ob');
+        const chkFvg = document.getElementById('smc-chk-fvg');
+        const chkMs = document.getElementById('smc-chk-ms');
+        const redraw = () => {
+            const canvas = document.getElementById('smc-canvas');
+            if (!canvas) return;
+            drawSMCChart(canvas, smc, {
+                showOB: chkOb ? chkOb.checked : true,
+                showFVG: chkFvg ? chkFvg.checked : true,
+                showMS: chkMs ? chkMs.checked : true
+            });
+        };
+        [chkOb, chkFvg, chkMs].forEach(el => {
+            if (el) el.onchange = redraw;
+        });
+        requestAnimationFrame(redraw);
+    }
+
+    function drawSMCChart(canvas, smc, opts) {
+        const series = smc.chart_series || [];
+        if (series.length < 2) return;
+
+        const wrap = canvas.parentElement;
+        const width = wrap.clientWidth || 800;
+        const height = 380;
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+
+        const ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        const pad = { top: 20, right: 78, bottom: 30, left: 16 };
+        const plotW = width - pad.left - pad.right;
+        const plotH = height - pad.top - pad.bottom;
+
+        // Price bounds across candles + visible OBs
+        let minP = Infinity, maxP = -Infinity;
+        series.forEach(b => {
+            if (b.low < minP) minP = b.low;
+            if (b.high > maxP) maxP = b.high;
+        });
+        const margin = (maxP - minP) * 0.08 || 1;
+        minP -= margin;
+        maxP += margin;
+
+        const n = series.length;
+        const stepX = plotW / n;
+        const candleW = Math.max(2, Math.min(10, stepX * 0.65));
+        const dateToIdx = {};
+        series.forEach((b, i) => { dateToIdx[b.date] = i; });
+
+        const xOf = idx => pad.left + (idx + 0.5) * stepX;
+        const yOf = price => pad.top + ((maxP - price) / (maxP - minP)) * plotH;
+
+        ctx.clearRect(0, 0, width, height);
+
+        // Grid lines + Y-axis labels
+        ctx.font = '11px Inter, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        const gridCount = 5;
+        for (let g = 0; g <= gridCount; g++) {
+            const p = minP + (maxP - minP) * (g / gridCount);
+            const y = yOf(p);
+            ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad.left, y);
+            ctx.lineTo(width - pad.right, y);
+            ctx.stroke();
+            ctx.fillStyle = 'rgba(148,163,184,0.85)';
+            ctx.fillText(p.toLocaleString('vi-VN', { maximumFractionDigits: 1 }), width - pad.right + 6, y);
+        }
+
+        // Helper: clamp price to plot area
+        const clampY = y => Math.max(pad.top, Math.min(pad.top + plotH, y));
+
+        // 1. Draw FVG Zones
+        if (opts.showFVG) {
+            const fvgs = [
+                ...(smc.bull_fvgs || []).map(f => ({ ...f, bull: true })),
+                ...(smc.bear_fvgs || []).map(f => ({ ...f, bull: false }))
+            ];
+            fvgs.forEach(f => {
+                if (f.top < minP || f.btm > maxP) return;
+                const startIdx = dateToIdx[f.date] !== undefined ? dateToIdx[f.date] : 0;
+                const x1 = xOf(startIdx);
+                const x2 = width - pad.right;
+                const yTop = clampY(yOf(f.top));
+                const yBtm = clampY(yOf(f.btm));
+                ctx.fillStyle = f.bull ? 'rgba(8, 153, 129, 0.14)' : 'rgba(242, 54, 69, 0.14)';
+                ctx.fillRect(x1, yTop, Math.max(4, x2 - x1), Math.max(2, yBtm - yTop));
+                ctx.strokeStyle = f.bull ? 'rgba(8, 153, 129, 0.45)' : 'rgba(242, 54, 69, 0.45)';
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(x1, (yTop + yBtm) / 2);
+                ctx.lineTo(x2, (yTop + yBtm) / 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            });
+        }
+
+        // 2. Draw Volumetric Order Blocks
+        if (opts.showOB) {
+            const obs = [
+                ...(smc.bull_obs || []).map(o => ({ ...o, bull: true })),
+                ...(smc.bear_obs || []).map(o => ({ ...o, bull: false }))
+            ];
+            obs.forEach(o => {
+                if (o.top < minP || o.btm > maxP) return;
+                const startIdx = dateToIdx[o.date] !== undefined ? dateToIdx[o.date] : 0;
+                const x1 = xOf(startIdx);
+                const x2 = width - pad.right;
+                const yTop = clampY(yOf(o.top));
+                const yBtm = clampY(yOf(o.btm));
+                const yMid = (yTop + yBtm) / 2;
+
+                ctx.fillStyle = o.bull ? 'rgba(8, 153, 129, 0.22)' : 'rgba(242, 54, 69, 0.22)';
+                ctx.fillRect(x1, yTop, Math.max(6, x2 - x1), Math.max(3, yBtm - yTop));
+
+                // Mid-line
+                ctx.strokeStyle = o.bull ? '#089981' : '#f23645';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([4, 3]);
+                ctx.beginPath();
+                ctx.moveTo(x1, yMid);
+                ctx.lineTo(x2, yMid);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Volume % badge on right edge
+                ctx.fillStyle = o.bull ? '#10e89a' : '#ff4d6d';
+                ctx.font = '600 10px Inter, sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText(`${o.bull ? 'OB+' : 'OB-'} (${o.vol_pct}%)`, x2 - 4, yMid - 6);
+                ctx.textAlign = 'left';
+            });
+        }
+
+        // 3. Draw Candlesticks
+        series.forEach((b, i) => {
+            const x = xOf(i);
+            const isUp = b.close >= b.open;
+            const clr = isUp ? '#089981' : '#f23645';
+            const yHigh = yOf(b.high);
+            const yLow = yOf(b.low);
+            const yOpen = yOf(b.open);
+            const yClose = yOf(b.close);
+
+            // Wick
+            ctx.strokeStyle = clr;
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(x, yHigh);
+            ctx.lineTo(x, yLow);
+            ctx.stroke();
+
+            // Body
+            const bodyTop = Math.min(yOpen, yClose);
+            const bodyH = Math.max(1.5, Math.abs(yClose - yOpen));
+            ctx.fillStyle = clr;
+            ctx.fillRect(x - candleW / 2, bodyTop, candleW, bodyH);
+        });
+
+        // 4. Draw Market Structure Lines (BOS / CHoCH / Sweep x)
+        if (opts.showMS) {
+            (smc.chart_events || []).forEach(ev => {
+                if (ev.y < minP || ev.y > maxP) return;
+                const i1 = dateToIdx[ev.x1_date] !== undefined ? dateToIdx[ev.x1_date] : 0;
+                const i2 = dateToIdx[ev.x2_date] !== undefined ? dateToIdx[ev.x2_date] : n - 1;
+                const x1 = xOf(i1);
+                const x2 = xOf(i2);
+                const y = yOf(ev.y);
+                const clr = ev.dir === 'bull' ? '#089981' : '#f23645';
+
+                ctx.strokeStyle = clr;
+                ctx.lineWidth = ev.style === 'solid' ? 1.5 : 1.1;
+                if (ev.style === 'dashed') ctx.setLineDash([5, 4]);
+                else if (ev.style === 'dotted') ctx.setLineDash([2, 3]);
+                else ctx.setLineDash([]);
+
+                ctx.beginPath();
+                ctx.moveTo(x1, y);
+                ctx.lineTo(x2, y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Bubble at x1
+                ctx.fillStyle = clr;
+                ctx.beginPath();
+                ctx.arc(x1, y, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Label
+                ctx.font = '700 10px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillStyle = clr;
+                ctx.fillText(ev.txt, (x1 + x2) / 2, ev.dir === 'bull' ? y - 7 : y + 10);
+                ctx.textAlign = 'left';
+            });
+        }
+
+        // X-axis date labels
+        ctx.fillStyle = 'rgba(148,163,184,0.75)';
+        ctx.font = '10px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        const stepLbl = Math.max(1, Math.floor(n / 8));
+        for (let i = 0; i < n; i += stepLbl) {
+            const p = series[i].date.split('-');
+            const lbl = p.length >= 3 ? `${p[2]}/${p[1]}` : series[i].date;
+            ctx.fillText(lbl, xOf(i), height - 10);
+        }
+
+        // Interactive hover tooltip
+        const tooltip = document.getElementById('smc-tooltip');
+        canvas.onmousemove = e => {
+            if (!tooltip) return;
+            const rect = canvas.getBoundingClientRect();
+            const mx = e.clientX - rect.left;
+            const idx = Math.floor((mx - pad.left) / stepX);
+            if (idx < 0 || idx >= n) {
+                tooltip.style.display = 'none';
+                return;
+            }
+            const b = series[idx];
+            const isUp = b.close >= b.open;
+            tooltip.style.display = 'block';
+            tooltip.style.left = Math.min(width - 175, Math.max(10, mx + 12)) + 'px';
+            tooltip.style.top = '12px';
+            tooltip.innerHTML = `
+                <div style="font-weight:700;margin-bottom:4px;color:#f8fafc;">${b.date}</div>
+                <div>Mở: <strong>${b.open.toLocaleString('vi-VN')}</strong> | Cao: <strong>${b.high.toLocaleString('vi-VN')}</strong></div>
+                <div>Thấp: <strong>${b.low.toLocaleString('vi-VN')}</strong> | Đóng: <strong style="color:${isUp ? '#089981' : '#f23645'}">${b.close.toLocaleString('vi-VN')}</strong></div>
+                <div style="color:#94a3b8;margin-top:2px;">KL: ${b.volume.toLocaleString('vi-VN')}</div>
+            `;
+        };
+        canvas.onmouseleave = () => {
+            if (tooltip) tooltip.style.display = 'none';
+        };
     }
 
     // Expose for sectors.js
