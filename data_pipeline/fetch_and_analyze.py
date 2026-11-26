@@ -1121,6 +1121,716 @@ def compute_breadth_from_board(board_vn30):
     }
 
 
+def _smc_overlap(bull_obs, bear_obs, wichlap="Recent"):
+    """Remove overlapping order blocks matching BigBeluga overlap() logic."""
+    def _is_overlap(a, b):
+        return (
+            (a['btm'] > b['btm'] and a['btm'] < b['top']) or
+            (a['top'] < b['top'] and a['btm'] > b['btm']) or
+            (a['top'] > b['top'] and a['btm'] < b['btm']) or
+            (a['top'] < b['top'] and a['top'] > b['btm'])
+        )
+
+    if len(bull_obs) > 1:
+        current = bull_obs[0]
+        for i in range(len(bull_obs) - 1, 0, -1):
+            if _is_overlap(bull_obs[i], current):
+                v = i if wichlap == "Recent" else 0
+                if v < len(bull_obs):
+                    bull_obs.pop(v)
+                    if v == 0 and bull_obs:
+                        current = bull_obs[0]
+
+    if len(bear_obs) > 1:
+        current = bear_obs[0]
+        for i in range(len(bear_obs) - 1, 0, -1):
+            if _is_overlap(bear_obs[i], current):
+                v = i if wichlap == "Recent" else 0
+                if v < len(bear_obs):
+                    bear_obs.pop(v)
+                    if v == 0 and bear_obs:
+                        current = bear_obs[0]
+
+    if bull_obs and bear_obs:
+        current = bear_obs[0]
+        for i in range(len(bull_obs) - 1, -1, -1):
+            if _is_overlap(bull_obs[i], current):
+                v = 0 if wichlap == "Recent" else i
+                if v < len(bull_obs):
+                    bull_obs.pop(v)
+
+    if bull_obs and bear_obs:
+        current = bull_obs[0]
+        for i in range(len(bear_obs) - 1, -1, -1):
+            if _is_overlap(bear_obs[i], current):
+                v = 0 if wichlap == "Recent" else i
+                if v < len(bear_obs):
+                    bear_obs.pop(v)
+
+
+def _smc_overlap_fvg(bl_fvg, br_fvg):
+    """Remove overlapping FVGs matching BigBeluga overlapFVG() logic."""
+    def _is_overlap(a, b):
+        return (
+            (a['btm'] > b['btm'] and a['btm'] < b['top']) or
+            (a['top'] < b['top'] and a['btm'] > b['btm']) or
+            (a['top'] > b['top'] and a['btm'] < b['btm']) or
+            (a['top'] < b['top'] and a['top'] > b['btm'])
+        )
+
+    if len(bl_fvg) > 1:
+        cur = bl_fvg[0]
+        for i in range(len(bl_fvg) - 1, 0, -1):
+            if _is_overlap(bl_fvg[i], cur):
+                bl_fvg.pop(i)
+
+    if len(br_fvg) > 1:
+        cur = br_fvg[0]
+        for i in range(len(br_fvg) - 1, 0, -1):
+            if _is_overlap(br_fvg[i], cur):
+                br_fvg.pop(i)
+
+    if bl_fvg and br_fvg:
+        cur = br_fvg[0]
+        for i in range(len(bl_fvg) - 1, -1, -1):
+            if _is_overlap(bl_fvg[i], cur):
+                bl_fvg.pop(i)
+
+    if bl_fvg and br_fvg:
+        cur = bl_fvg[0]
+        for i in range(len(br_fvg) - 1, -1, -1):
+            if _is_overlap(br_fvg[i], cur):
+                br_fvg.pop(i)
+
+
+def build_smc_interpretation(symbol, close, trend, last_event, bos_level, choch_level,
+                             bull_obs, bear_obs, bull_fvgs, bear_fvgs, recent_sweeps):
+    """Sinh luận giải chi tiết bằng tiếng Việt cho chỉ báo BigBeluga Smart Money Concepts."""
+    trend_label = "TĂNG (Bullish Structure)" if trend == 1 else ("GIẢM (Bearish Structure)" if trend == -1 else "TRUNG TÍNH")
+    trend_emoji = "🟢" if trend == 1 else ("🔴" if trend == -1 else "🟡")
+
+    lines = []
+    lines.append(f"### 1. Cấu trúc Thị trường (Market Structure) — {symbol}")
+    lines.append(
+        f"{trend_emoji} **Cấu trúc chủ đạo:** **{trend_label}** tại vùng giá **{close:,.2f}**."
+    )
+
+    if last_event:
+        ev_type = last_event['txt']
+        ev_dir = "Tăng (Bullish)" if last_event['dir'] == 'bull' else "Giảm (Bearish)"
+        ev_mean = (
+            "xác nhận tiếp diễn xu hướng" if ev_type == "BOS"
+            else ("tín hiệu đảo chiều cấu trúc quan trọng" if ev_type == "CHoCH" else "cú quét thanh khoản (Liquidity Sweep)")
+        )
+        lines.append(
+            f"- **Tín hiệu cấu trúc gần nhất:** **{ev_type} {ev_dir}** tại mốc **{last_event['y']:,.2f}** (phiên `{last_event['x2_date']}`), cho thấy {ev_mean}."
+        )
+
+    if choch_level is not None:
+        dist_choch = (choch_level - close) / close * 100 if close > 0 else 0
+        choch_role = "ngưỡng hỗ trợ bảo vệ xu hướng Tăng (nếu đóng cửa thủng mốc này → đảo chiều sang Giảm)" if trend == 1 else "ngưỡng kháng cự đảo chiều (nếu đóng cửa vượt mốc này → đảo chiều sang Tăng)"
+        lines.append(f"- **Mốc CHoCH hiện tại:** `{choch_level:,.2f}` ({dist_choch:+.2f}% so với giá hiện tại) — {choch_role}.")
+
+    if bos_level is not None:
+        dist_bos = (bos_level - close) / close * 100 if close > 0 else 0
+        bos_role = "đỉnh cấu trúc cần đóng cửa vượt qua để xác nhận BOS Tăng tiếp diễn" if trend == 1 else "đáy cấu trúc cần chú ý để tránh kích hoạt BOS Giảm tiếp diễn"
+        lines.append(f"- **Mốc BOS hiện tại:** `{bos_level:,.2f}` ({dist_bos:+.2f}% so với giá hiện tại) — {bos_role}.")
+
+    # Liquidity Sweeps
+    lines.append("\n### 2. Quét Thanh khoản (Liquidity Sweep `x`)")
+    if recent_sweeps:
+        sw = recent_sweeps[0]
+        if sw['dir'] == 'bull':
+            lines.append(
+                f"- ⚠️ **Cảnh báo Bull-side Sweep (`x`)** phiên `{sw['x2_date']}` quanh **{sw['y']:,.2f}**: "
+                f"Giá đã chọc râu vượt đỉnh cũ nhưng đóng cửa quay đầu xuống dưới — dấu hiệu Smart Money quét thanh khoản phe mua (Bull Trap ngắn hạn)."
+            )
+        else:
+            lines.append(
+                f"- 🟢 **Tín hiệu Bear-side Sweep (`x`)** phiên `{sw['x2_date']}` quanh **{sw['y']:,.2f}**: "
+                f"Giá rút chân quét thủng đáy cũ rồi đóng cửa bật trở lại — dấu hiệu Smart Money gom hàng / rũ bỏ (Spring / Bear Trap)."
+            )
+    else:
+        lines.append("- Chưa ghi nhận cú quét thanh khoản (`x`) mới trong các phiên gần nhất; cấu trúc giá vận động thuần theo phá vỡ thân nến.")
+
+    # Volumetric Order Blocks
+    lines.append("\n### 3. Vùng Order Block Khối lượng lớn (Volumetric OB)")
+    near_bull_ob = None
+    near_bear_ob = None
+
+    if bull_obs:
+        top_b = bull_obs[0]
+        dist_b = (close - top_b['top']) / close * 100 if close > 0 else 0
+        in_zone = (top_b['btm'] <= close <= top_b['top'] * 1.015)
+        if in_zone:
+            near_bull_ob = top_b
+        lines.append(
+            f"- 🟢 **Bullish OB gần nhất (Vùng Cầu tổ chức):** `{top_b['btm']:,.2f} – {top_b['top']:,.2f}` "
+            f"(Mid-line: `{top_b['avg']:,.2f}`, chiếm **{top_b['vol_pct']}%** tỷ trọng KL trong top 5 OB, hình thành `{top_b['date']}`)."
+            + (" ⚡ **Giá đang tiếp cận/kiểm định trực tiếp vùng Cầu này!**" if in_zone else f" (Cách giá hiện tại {dist_b:+.2f}%).")
+        )
+    else:
+        lines.append("- 🟢 **Bullish OB:** Hiện chưa có vùng Bullish OB còn hiệu lực (các vùng cầu cũ đã bị xuyên thủng/mitigate).")
+
+    if bear_obs:
+        top_s = bear_obs[0]
+        dist_s = (top_s['btm'] - close) / close * 100 if close > 0 else 0
+        in_zone = (top_s['btm'] * 0.985 <= close <= top_s['top'])
+        if in_zone:
+            near_bear_ob = top_s
+        lines.append(
+            f"- 🔴 **Bearish OB gần nhất (Vùng Cung tổ chức):** `{top_s['btm']:,.2f} – {top_s['top']:,.2f}` "
+            f"(Mid-line: `{top_s['avg']:,.2f}`, chiếm **{top_s['vol_pct']}%** tỷ trọng KL trong top 5 OB, hình thành `{top_s['date']}`)."
+            + (" ⚡ **Giá đang chạm vùng Cung kháng cự mạnh này!**" if in_zone else f" (Cách giá hiện tại {dist_s:+.2f}%).")
+        )
+    else:
+        lines.append("- 🔴 **Bearish OB:** Hiện chưa có vùng Bearish OB cản phía trên (không gian tăng thoáng hoặc đã hấp thụ hết cung cũ).")
+
+    # FVG
+    lines.append("\n### 4. Khoảng trống Giá trị Hợp lý (Fair Value Gap — FVG)")
+    if bull_fvgs or bear_fvgs:
+        if bull_fvgs:
+            f = bull_fvgs[0]
+            lines.append(f"- 🟢 **Bullish FVG chưa lấp:** `{f['btm']:,.2f} – {f['top']:,.2f}` (`{f['date']}`) — đóng vai trò vùng đệm hỗ trợ / hút giá khi điều chỉnh.")
+        if bear_fvgs:
+            f = bear_fvgs[0]
+            lines.append(f"- 🔴 **Bearish FVG chưa lấp:** `{f['btm']:,.2f} – {f['top']:,.2f}` (`{f['date']}`) — đóng vai trò vùng kháng cự / mục tiêu hồi phục nếu giá bật tăng.")
+    else:
+        lines.append("- Không còn khoảng trống FVG mất cân bằng lớn chưa được lấp quanh vùng giá hiện tại.")
+
+    # Actionable synthesis
+    lines.append("\n### 5. Luận giải & Chiến lược Hành động")
+    if trend == 1:
+        if near_bull_ob:
+            lines.append(
+                f"➡️ **Ưu tiên Canh Mua / Nắm giữ:** Cấu trúc đang **Bullish** và giá đang kiểm định **Bullish OB** (`{near_bull_ob['btm']:,.2f}–{near_bull_ob['top']:,.2f}`). "
+                f"Nếu xuất hiện nến rút chân giữ vững trên `{near_bull_ob['btm']:,.2f}`, xác suất cao tiếp tục hướng lên phá **BOS**."
+            )
+        elif near_bear_ob:
+            lines.append(
+                f"➡️ **Thận trọng Chốt lời từng phần:** Dù cấu trúc vẫn **Bullish**, giá đang tiến sát vùng **Bearish OB** (`{near_bear_ob['btm']:,.2f}–{near_bear_ob['top']:,.2f}`). "
+                f"Hạn chế mua đuổi, chờ hấp thụ xong vùng cung này hoặc đợi nhịp pullback về hỗ trợ."
+            )
+        else:
+            lines.append(
+                f"➡️ **Theo dõi Xu hướng Tăng:** Cấu trúc **Bullish** được duy trì chừng nào giá không đóng cửa dưới mốc **CHoCH** (`{choch_level:,.2f}` nếu có). "
+                f"Điểm vào tối ưu là các nhịp hồi kiểm định lại vùng **Bullish OB** hoặc **Mid-line OB**."
+            )
+    else:
+        if near_bear_ob:
+            lines.append(
+                f"➡️ **Cảnh giác Áp lực Bán:** Cấu trúc đang **Bearish** và giá vừa hồi lên vùng **Bearish OB** (`{near_bear_ob['btm']:,.2f}–{near_bear_ob['top']:,.2f}`). "
+                f"Đây là vùng cung tiềm ẩn lực bán của tổ chức; chỉ đảo chiều tích cực nếu đóng cửa vượt dứt khoát **CHoCH**."
+            )
+        elif near_bull_ob:
+            lines.append(
+                f"➡️ **Theo dõi Phản ứng Tạo đáy:** Cấu trúc vẫn **Bearish**, nhưng giá đã về tới vùng **Bullish OB** (`{near_bull_ob['btm']:,.2f}–{near_bull_ob['top']:,.2f}`). "
+                f"Chờ tín hiệu xác nhận **CHoCH Tăng** hoặc **Liquidity Sweep đáy (`x`)** trước khi giải ngân mới."
+            )
+        else:
+            lines.append(
+                f"➡️ **Phòng thủ / Chờ Xác nhận:** Cấu trúc **Bearish** vẫn chi phối. Ưu tiên quản trị rủi ro và chờ giá đóng cửa vượt **CHoCH** (`{choch_level:,.2f}` nếu có) để xác nhận đảo chiều xu hướng."
+            )
+
+    return "\n".join(lines)
+
+
+def compute_bigbeluga_smc(df, symbol="", mslen=5, oblast=5, fvg_num=5, swing_limit=100):
+    """
+    Python port của chỉ báo BigBeluga - Smart Money Concepts [1.0.0] (Pine Script v5).
+    Tính Market Structure (BOS, CHoCH, Sweep x), Volumetric Order Blocks và Fair Value Gaps.
+    """
+    if df is None or len(df) < 20:
+        return None
+
+    try:
+        df_s = df.sort_values('time').reset_index(drop=True)
+        n = len(df_s)
+        dates = [str(t).split(' ')[0] for t in df_s['time']]
+        opens = df_s['open'].astype(float).values
+        highs = df_s['high'].astype(float).values
+        lows = df_s['low'].astype(float).values
+        closes = df_s['close'].astype(float).values
+        vols = df_s['volume'].astype(float).values if 'volume' in df_s.columns else np.zeros(n)
+
+        # ATR(200) using Wilder's RMA (matching ta.atr(200))
+        prev_close = np.roll(closes, 1)
+        prev_close[0] = closes[0]
+        tr = np.maximum(highs - lows, np.maximum(np.abs(highs - prev_close), np.abs(lows - prev_close)))
+        atr200 = pd.Series(tr).ewm(alpha=1.0 / 200.0, adjust=False).mean().values
+
+        # Helper matching ms.find(use_max, sweep=False, useob)
+        def _find_extreme(i, start_bar, use_max, useob):
+            start_bar = max(0, min(i, start_bar))
+            end_offset = (i - start_bar) - 1
+            if end_offset < 0:
+                end_offset = i - start_bar
+            max_v = -1.0
+            min_v = 1e18
+            idx = 0
+            if use_max:
+                for off in range(0, end_offset + 1):
+                    b = i - off
+                    if highs[b] > max_v:
+                        max_v = highs[b]
+                        min_v = lows[b]
+                        idx = off
+                if useob and (i - (idx + 1)) >= 0:
+                    if highs[i - (idx + 1)] > highs[i - idx]:
+                        idx = idx + 1
+            else:
+                for off in range(0, end_offset + 1):
+                    b = i - off
+                    if lows[b] < min_v:
+                        min_v = lows[b]
+                        max_v = highs[b]
+                        idx = off
+                if useob and (i - (idx + 1)) >= 0:
+                    if lows[i - (idx + 1)] < lows[i - idx]:
+                        idx = idx + 1
+            return idx
+
+        def _add_ob(block, is_bull, cords, idx, i):
+            b = max(0, i - idx)
+            top_v = float(cords) if is_bull else float(highs[b])
+            btm_v = float(lows[b]) if is_bull else float(cords)
+            if top_v < btm_v:
+                top_v, btm_v = btm_v, top_v
+            block.insert(0, {
+                'bull': bool(is_bull),
+                'top': round(top_v, 2),
+                'btm': round(btm_v, 2),
+                'avg': round((top_v + btm_v) / 2.0, 2),
+                'bar': b,
+                'date': dates[b],
+                'vol': float(vols[b]),
+                'dir': 1 if closes[b] > opens[b] else -1,
+                'isbb': False,
+            })
+
+        ms = {
+            'bos': None, 'choch': None, 'loc': 0, 'temp': 0,
+            'trend': 0, 'start': 0, 'main': None, 'xloc': 0, 'txt': None
+        }
+        blob = []
+        brob = []
+        bldw = []
+        brdw = []
+        bl_fvg = []
+        br_fvg = []
+
+        up = None
+        dn = None
+        phn, php = [], []
+        pln, plp = [], []
+
+        for i in range(n):
+            h, l, c, o = float(highs[i]), float(lows[i]), float(closes[i]), float(opens[i])
+            crossup = False
+            crossdn = False
+
+            # Pivot high/low with left=mslen, right=mslen
+            if i >= mslen * 2:
+                piv_idx = i - mslen
+                w_h = highs[piv_idx - mslen: piv_idx + mslen + 1]
+                w_l = lows[piv_idx - mslen: piv_idx + mslen + 1]
+                if highs[piv_idx] == np.max(w_h) and np.sum(w_h == highs[piv_idx]) == 1:
+                    phn.insert(0, piv_idx)
+                    php.insert(0, float(highs[piv_idx]))
+                if lows[piv_idx] == np.min(w_l) and np.sum(w_l == lows[piv_idx]) == 1:
+                    pln.insert(0, piv_idx)
+                    plp.insert(0, float(lows[piv_idx]))
+
+            if php and h > php[0]:
+                php.clear()
+                phn.clear()
+            if plp and l < plp[0]:
+                plp.clear()
+                pln.clear()
+
+            if up is None:
+                up = h
+            if dn is None:
+                dn = l
+            if h > up:
+                up = h
+                dn = l
+                crossup = True
+            if l < dn:
+                up = h
+                dn = l
+                crossdn = True
+
+            idbull = _find_extreme(i, ms['loc'], False, True)
+            idbear = _find_extreme(i, ms['loc'], True, True)
+            b_bear = max(0, i - idbear)
+            b_bull = max(0, i - idbull)
+            btmP = max(lows[b_bear], highs[b_bear] - atr200[b_bear])
+            topP = min(highs[b_bull], lows[b_bull] + atr200[b_bull])
+
+            if ms['start'] == 0:
+                ms = {
+                    'bos': h, 'choch': l, 'loc': i, 'temp': i,
+                    'trend': 0, 'start': 1, 'main': None, 'xloc': i, 'txt': None
+                }
+                bldw.insert(0, {'x1': i, 'x2': i, 'x1_date': dates[i], 'x2_date': dates[i], 'y': round(h, 2), 'txt': 'CHoCH', 'dir': 'bull', 'style': 'dashed'})
+                brdw.insert(0, {'x1': i, 'x2': i, 'x1_date': dates[i], 'x2_date': dates[i], 'y': round(l, 2), 'txt': 'CHoCH', 'dir': 'bear', 'style': 'dashed'})
+
+            elif ms['start'] == 1:
+                if l <= ms['choch'] and c >= ms['choch']:
+                    ms['choch'] = l
+                    ms['xloc'] = i
+                    brdw[0]['x2'] = i
+                    brdw[0]['x2_date'] = dates[i]
+                    brdw[0]['style'] = 'dotted'
+                    brdw[0]['txt'] = 'x'
+                    brdw.insert(0, {'x1': i, 'x2': i, 'x1_date': dates[i], 'x2_date': dates[i], 'y': round(l, 2), 'txt': 'CHoCH', 'dir': 'bear', 'style': 'dashed'})
+                elif h >= ms['bos'] and c <= ms['bos']:
+                    ms['bos'] = h
+                    ms['xloc'] = i
+                    bldw[0]['x2'] = i
+                    bldw[0]['x2_date'] = dates[i]
+                    bldw[0]['style'] = 'dotted'
+                    bldw[0]['txt'] = 'x'
+                    bldw.insert(0, {'x1': i, 'x2': i, 'x1_date': dates[i], 'x2_date': dates[i], 'y': round(h, 2), 'txt': 'CHoCH', 'dir': 'bull', 'style': 'dashed'})
+                elif c <= ms['choch']:
+                    ms['txt'] = 'choch'
+                    _add_ob(blob, True, topP, idbull, i)
+                    ms['trend'] = -1
+                    ms['choch'] = ms['bos']
+                    ms['bos'] = None
+                    ms['start'] = 2
+                    ms['loc'] = i
+                    ms['main'] = l
+                    ms['temp'] = i
+                    ms['xloc'] = i
+                    brdw[0]['x2'] = i
+                    brdw[0]['x2_date'] = dates[i]
+                    brdw[0]['style'] = 'solid'
+                elif c >= ms['bos']:
+                    ms['txt'] = 'choch'
+                    _add_ob(brob, False, btmP, idbear, i)
+                    ms['trend'] = 1
+                    ms['bos'] = None
+                    ms['start'] = 2
+                    ms['loc'] = i
+                    ms['main'] = h
+                    ms['temp'] = i
+                    ms['xloc'] = i
+                    bldw[0]['x2'] = i
+                    bldw[0]['x2_date'] = dates[i]
+                    bldw[0]['style'] = 'solid'
+
+            elif ms['start'] == 2:
+                if ms['trend'] == -1:
+                    if l <= ms['main']:
+                        ms['main'] = l
+                        ms['temp'] = i
+
+                    if i % mslen == 0 and ms['bos'] is not None and php:
+                        if php[0] < ms['choch']:
+                            ms['choch'] = php[0]
+                            ms['loc'] = phn[0]
+                            ms['xloc'] = phn[0]
+                            ms['temp'] = phn[0]
+                            bldw[0]['x1'] = phn[0]
+                            bldw[0]['x1_date'] = dates[phn[0]]
+                            bldw[0]['x2'] = i
+                            bldw[0]['x2_date'] = dates[i]
+                            bldw[0]['y'] = round(php[0], 2)
+
+                    if ms['bos'] is None and i > 0:
+                        if crossup and c > o and closes[i - 1] > opens[i - 1]:
+                            ms['bos'] = ms['main']
+                            ms['loc'] = ms['temp']
+                            ms['xloc'] = ms['loc']
+                            brdw.insert(0, {'x1': ms['loc'], 'x2': i, 'x1_date': dates[ms['loc']], 'x2_date': dates[i], 'y': round(float(lows[ms['loc']]), 2), 'txt': 'BOS', 'dir': 'bear', 'style': 'dashed'})
+
+                    if ms['bos'] is not None and brdw:
+                        brdw[0]['x2'] = i
+                        brdw[0]['x2_date'] = dates[i]
+                    if bldw:
+                        bldw[0]['x2'] = i
+                        bldw[0]['x2_date'] = dates[i]
+
+                    if ms['bos'] is not None:
+                        if l <= ms['bos'] and c >= ms['bos']:
+                            ms['bos'] = l
+                            ms['xloc'] = i
+                            brdw[0]['x2'] = i
+                            brdw[0]['x2_date'] = dates[i]
+                            brdw[0]['style'] = 'dotted'
+                            brdw[0]['txt'] = 'x'
+                            brdw.insert(0, {'x1': i, 'x2': i, 'x1_date': dates[i], 'x2_date': dates[i], 'y': round(l, 2), 'txt': 'BOS', 'dir': 'bear', 'style': 'dashed'})
+                        elif c <= ms['bos']:
+                            ms['txt'] = 'bos'
+                            _add_ob(brob, False, btmP, idbear, i)
+                            idx_h = _find_extreme(i, ms['loc'], True, False)
+                            b_h = max(0, i - idx_h)
+                            ms['xloc'] = i
+                            ms['bos'] = None
+                            ms['choch'] = float(highs[b_h])
+                            ms['loc'] = b_h
+                            brdw[0]['x2'] = i
+                            brdw[0]['x2_date'] = dates[i]
+                            brdw[0]['style'] = 'solid'
+                            bldw[0]['x1'] = b_h
+                            bldw[0]['x1_date'] = dates[b_h]
+                            bldw[0]['x2'] = i
+                            bldw[0]['x2_date'] = dates[i]
+                            bldw[0]['y'] = round(float(highs[b_h]), 2)
+
+                    if h >= ms['choch'] and c <= ms['choch']:
+                        ms['choch'] = h
+                        ms['xloc'] = i
+                        bldw[0]['x2'] = i
+                        bldw[0]['x2_date'] = dates[i]
+                        bldw[0]['style'] = 'dotted'
+                        bldw[0]['txt'] = 'x'
+                        bldw.insert(0, {'x1': i, 'x2': i, 'x1_date': dates[i], 'x2_date': dates[i], 'y': round(h, 2), 'txt': 'CHoCH', 'dir': 'bull', 'style': 'dashed'})
+                    elif c >= ms['choch']:
+                        ms['txt'] = 'choch'
+                        _add_ob(blob, True, topP, idbull, i)
+                        idx_l = _find_extreme(i, ms['loc'], False, False)
+                        b_l = max(0, i - idx_l)
+                        if ms['bos'] is None:
+                            ms['choch'] = float(lows[b_l])
+                            brdw.insert(0, {'x1': ms['temp'], 'x2': i, 'x1_date': dates[ms['temp']], 'x2_date': dates[i], 'y': round(l, 2), 'txt': 'BOS', 'dir': 'bear', 'style': 'dashed'})
+                        else:
+                            ms['choch'] = ms['bos']
+                        ms['bos'] = None
+                        ms['main'] = h
+                        ms['trend'] = 1
+                        ms['loc'] = i
+                        ms['xloc'] = i
+                        ms['temp'] = i
+                        bldw[0]['x2'] = i
+                        bldw[0]['x2_date'] = dates[i]
+                        bldw[0]['txt'] = 'CHoCH'
+                        bldw[0]['style'] = 'solid'
+                        brdw[0]['x2'] = i
+                        brdw[0]['x2_date'] = dates[i]
+                        brdw[0]['y'] = round(ms['choch'], 2)
+                        brdw[0]['txt'] = 'CHoCH'
+
+                elif ms['trend'] == 1:
+                    if h >= ms['main']:
+                        ms['main'] = h
+                        ms['temp'] = i
+
+                    if ms['bos'] is None and i > 0:
+                        if crossdn and c < o and closes[i - 1] < opens[i - 1]:
+                            ms['bos'] = ms['main']
+                            ms['loc'] = ms['temp']
+                            ms['xloc'] = ms['loc']
+                            bldw.insert(0, {'x1': ms['loc'], 'x2': i, 'x1_date': dates[ms['loc']], 'x2_date': dates[i], 'y': round(float(highs[ms['loc']]), 2), 'txt': 'BOS', 'dir': 'bull', 'style': 'dashed'})
+
+                    if i % mslen == 0 and ms['bos'] is not None and plp:
+                        if plp[0] > ms['choch']:
+                            ms['choch'] = plp[0]
+                            ms['loc'] = pln[0]
+                            ms['xloc'] = pln[0]
+                            ms['temp'] = pln[0]
+                            brdw[0]['x1'] = pln[0]
+                            brdw[0]['x1_date'] = dates[pln[0]]
+                            brdw[0]['x2'] = i
+                            brdw[0]['x2_date'] = dates[i]
+                            brdw[0]['y'] = round(plp[0], 2)
+
+                    if ms['bos'] is not None and bldw:
+                        bldw[0]['x2'] = i
+                        bldw[0]['x2_date'] = dates[i]
+                    if brdw:
+                        brdw[0]['x2'] = i
+                        brdw[0]['x2_date'] = dates[i]
+
+                    if ms['bos'] is not None:
+                        if h >= ms['bos'] and c <= ms['bos']:
+                            ms['bos'] = h
+                            ms['xloc'] = i
+                            bldw[0]['x2'] = i
+                            bldw[0]['x2_date'] = dates[i]
+                            bldw[0]['style'] = 'dotted'
+                            bldw[0]['txt'] = 'x'
+                            bldw.insert(0, {'x1': i, 'x2': i, 'x1_date': dates[i], 'x2_date': dates[i], 'y': round(h, 2), 'txt': 'BOS', 'dir': 'bull', 'style': 'dashed'})
+                        elif c >= ms['bos']:
+                            ms['txt'] = 'bos'
+                            _add_ob(blob, True, topP, idbull, i)
+                            idx_l = _find_extreme(i, ms['loc'], False, False)
+                            b_l = max(0, i - idx_l)
+                            ms['xloc'] = i
+                            ms['bos'] = None
+                            ms['choch'] = float(lows[b_l])
+                            ms['loc'] = b_l
+                            bldw[0]['x2'] = i
+                            bldw[0]['x2_date'] = dates[i]
+                            bldw[0]['style'] = 'solid'
+                            brdw[0]['x1'] = b_l
+                            brdw[0]['x1_date'] = dates[b_l]
+                            brdw[0]['x2'] = i
+                            brdw[0]['x2_date'] = dates[i]
+                            brdw[0]['y'] = round(float(lows[b_l]), 2)
+
+                    if l <= ms['choch'] and c >= ms['choch']:
+                        ms['choch'] = l
+                        ms['xloc'] = i
+                        brdw[0]['x2'] = i
+                        brdw[0]['x2_date'] = dates[i]
+                        brdw[0]['style'] = 'dotted'
+                        brdw[0]['txt'] = 'x'
+                        brdw.insert(0, {'x1': i, 'x2': i, 'x1_date': dates[i], 'x2_date': dates[i], 'y': round(l, 2), 'txt': 'CHoCH', 'dir': 'bear', 'style': 'dashed'})
+                    elif c <= ms['choch']:
+                        ms['txt'] = 'choch'
+                        _add_ob(brob, False, btmP, idbear, i)
+                        idx_h = _find_extreme(i, ms['loc'], True, False)
+                        b_h = max(0, i - idx_h)
+                        if ms['bos'] is None:
+                            ms['choch'] = float(highs[b_h])
+                            bldw.insert(0, {'x1': ms['temp'], 'x2': i, 'x1_date': dates[ms['temp']], 'x2_date': dates[i], 'y': round(h, 2), 'txt': 'BOS', 'dir': 'bull', 'style': 'dashed'})
+                        else:
+                            ms['choch'] = ms['bos']
+                        ms['bos'] = None
+                        ms['main'] = l
+                        ms['trend'] = -1
+                        ms['loc'] = i
+                        ms['temp'] = i
+                        ms['xloc'] = i
+                        brdw[0]['x2'] = i
+                        brdw[0]['x2_date'] = dates[i]
+                        brdw[0]['txt'] = 'CHoCH'
+                        brdw[0]['style'] = 'solid'
+                        bldw[0]['x2'] = i
+                        bldw[0]['x2_date'] = dates[i]
+                        bldw[0]['y'] = round(ms['choch'], 2)
+                        bldw[0]['txt'] = 'CHoCH'
+
+            # OB Mitigation (Close method, obshowbb=False)
+            blob = [ob for ob in blob if min(c, o) >= ob['btm']]
+            brob = [ob for ob in brob if max(c, o) <= ob['top']]
+            _smc_overlap(blob, brob, wichlap="Recent")
+
+            # FVG detection & mitigation (Close method)
+            if i >= 3:
+                if lows[i - 1] > highs[i - 3] and closes[i - 2] > lows[i - 2]:
+                    bl_fvg.insert(0, {
+                        'top': round(float(lows[i - 1]), 2),
+                        'btm': round(float(highs[i - 3]), 2),
+                        'avg': round(float((lows[i - 1] + highs[i - 3]) / 2.0), 2),
+                        'bar': i - 3,
+                        'date': dates[i - 3],
+                        'bull': True
+                    })
+                if lows[i - 3] > highs[i - 1] and closes[i - 2] < highs[i - 2]:
+                    br_fvg.insert(0, {
+                        'top': round(float(lows[i - 3]), 2),
+                        'btm': round(float(highs[i - 1]), 2),
+                        'avg': round(float((lows[i - 3] + highs[i - 1]) / 2.0), 2),
+                        'bar': i - 3,
+                        'date': dates[i - 3],
+                        'bull': False
+                    })
+            bl_fvg = [f for f in bl_fvg if min(c, o) >= f['btm']]
+            br_fvg = [f for f in br_fvg if max(c, o) <= f['top']]
+            _smc_overlap_fvg(bl_fvg, br_fvg)
+
+        # Finalize top OBs with volume % share
+        def _prep_obs(obs):
+            sub = obs[:oblast]
+            tot_v = sum(x['vol'] for x in sub)
+            out = []
+            for x in sub:
+                pct = int(math.floor(x['vol'] / tot_v * 100)) if tot_v > 0 else 0
+                out.append({
+                    'bull': x['bull'],
+                    'top': x['top'],
+                    'btm': x['btm'],
+                    'avg': x['avg'],
+                    'date': x['date'],
+                    'vol': int(x['vol']),
+                    'vol_pct': pct,
+                    'dist_pct': round((x['avg'] - closes[-1]) / closes[-1] * 100, 2) if closes[-1] > 0 else 0
+                })
+            return out
+
+        bull_obs_out = _prep_obs(blob)
+        bear_obs_out = _prep_obs(brob)
+        bull_fvgs_out = bl_fvg[:fvg_num]
+        bear_fvgs_out = br_fvg[:fvg_num]
+
+        # Collect structure events (solid confirmed + sweeps + active dashed)
+        all_events = [e for e in (bldw[:swing_limit] + brdw[:swing_limit]) if e['style'] in ('solid', 'dotted')]
+        all_events.sort(key=lambda e: e['x2'], reverse=True)
+        confirmed_events = [e for e in all_events if e['style'] == 'solid']
+        recent_sweeps = [e for e in all_events if e['style'] == 'dotted' and e['x2'] >= n - 10]
+        last_event = all_events[0] if all_events else None
+
+        # Chart series (last 80 bars for crisp web visualization)
+        chart_bars = min(80, n)
+        start_c = n - chart_bars
+        chart_series = []
+        for idx_c in range(start_c, n):
+            chart_series.append({
+                'date': dates[idx_c],
+                'open': round(float(opens[idx_c]), 2),
+                'high': round(float(highs[idx_c]), 2),
+                'low': round(float(lows[idx_c]), 2),
+                'close': round(float(closes[idx_c]), 2),
+                'volume': int(vols[idx_c])
+            })
+
+        # Filter events visible in chart window
+        chart_events = [
+            {
+                'x1_date': e['x1_date'],
+                'x2_date': e['x2_date'],
+                'y': e['y'],
+                'txt': e['txt'],
+                'dir': e['dir'],
+                'style': e['style']
+            }
+            for e in (bldw[:30] + brdw[:30])
+            if e['x2'] >= start_c
+        ]
+
+        bos_lvl = round(float(ms['bos']), 2) if ms['bos'] is not None else None
+        choch_lvl = round(float(ms['choch']), 2) if ms['choch'] is not None else None
+        cur_close = round(float(closes[-1]), 2)
+
+        interpretation_md = build_smc_interpretation(
+            symbol=symbol,
+            close=cur_close,
+            trend=ms['trend'],
+            last_event=last_event,
+            bos_level=bos_lvl,
+            choch_level=choch_lvl,
+            bull_obs=bull_obs_out,
+            bear_obs=bear_obs_out,
+            bull_fvgs=bull_fvgs_out,
+            bear_fvgs=bear_fvgs_out,
+            recent_sweeps=recent_sweeps
+        )
+
+        return {
+            'trend': int(ms['trend']),
+            'trend_label': 'Bullish' if ms['trend'] == 1 else ('Bearish' if ms['trend'] == -1 else 'Neutral'),
+            'bos_level': bos_lvl,
+            'choch_level': choch_lvl,
+            'last_event': last_event,
+            'recent_sweeps': recent_sweeps[:5],
+            'events': all_events[:15],
+            'chart_events': chart_events,
+            'bull_obs': bull_obs_out,
+            'bear_obs': bear_obs_out,
+            'bull_fvgs': bull_fvgs_out,
+            'bear_fvgs': bear_fvgs_out,
+            'chart_series': chart_series,
+            'interpretation_markdown': interpretation_md
+        }
+    except Exception as e:
+        print(f"  [SMC] Error computing SMC for {symbol}: {e}")
+        return None
+
+
 def process_symbol(symbol, index_board=None, ma_breadth=None):
     print(f"Processing {symbol}...")
     try:
@@ -1512,6 +2222,7 @@ Viết theo đúng 4 mục sau, dùng đúng số liệu được cung cấp:
             },
             "candle_patterns": detect_candle_patterns(df),
             "sr_zones":        sr_zones_res,
+            "smc":             compute_bigbeluga_smc(df, symbol),
         }
 
         
