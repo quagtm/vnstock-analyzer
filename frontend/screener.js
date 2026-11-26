@@ -398,6 +398,15 @@
         refresh: loadDataAndRender
     };
 
+    // Khi app.js nạp xong dữ liệu (hoặc làm mới), vẽ lại bảng lọc nếu panel đang mở
+    document.addEventListener('appdata:loaded', () => {
+        const panel = document.getElementById('screener-panel');
+        if (panel && panel.style.display !== 'none') {
+            populateSectorDropdown();
+            loadDataAndRender();
+        }
+    });
+
     // Auto init when DOM ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initScreener);
