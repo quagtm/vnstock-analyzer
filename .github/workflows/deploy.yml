@@ -103,6 +103,10 @@ jobs:
             echo "Copied data_pipeline/output/data.json to frontend/public/data.json"
           fi
           python -c "import json; d=json.load(open('frontend/public/data.json')); print('[CHECK] data.json verified successfully with', len(d), 'keys')"
+          if [ -f data_pipeline/output/portfolio.json ]; then
+            cp data_pipeline/output/portfolio.json frontend/public/portfolio.json
+            echo "Copied portfolio.json to frontend/public/"
+          fi
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

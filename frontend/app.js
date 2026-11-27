@@ -1143,6 +1143,9 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(redraw);
     }
 
+    // Cho phép module khác (portfolio.js) tái sử dụng renderer SMC
+    window.drawSMCChart = drawSMCChart;
+
     function drawSMCChart(canvas, smc, opts) {
         const series = smc.chart_series || [];
         if (series.length < 2) return;

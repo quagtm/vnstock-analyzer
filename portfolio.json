@@ -1,0 +1,25 @@
+{
+  "_huong_dan": "Danh mục đang nắm giữ. Mỗi mã: symbol, buy_date (YYYY-MM-DD), buy_price (đồng hoặc nghìn đồng), quantity (tuỳ chọn), thesis (luận điểm mua), stop_loss / target (tuỳ chọn, bỏ trống để tự tính theo ATR). Pipeline đêm sẽ tự tính ATR + SMC cho từng mã.",
+  "holdings": [
+    {
+      "symbol": "HPG",
+      "buy_date": "2026-10-20",
+      "buy_price": 21100,
+      "quantity": 1000,
+      "thesis": "VÍ DỤ — thay bằng luận điểm thật: Dung Quất 2 chạy hết công suất, giá thép phục hồi; kỹ thuật bật lên từ vùng hỗ trợ 20,000.",
+      "stop_loss": null,
+      "target": null,
+      "note": ""
+    },
+    {
+      "symbol": "FPT",
+      "buy_date": "2026-09-15",
+      "buy_price": 95000,
+      "quantity": 200,
+      "thesis": "VÍ DỤ — thay bằng luận điểm thật: tăng trưởng mảng chuyển đổi số nước ngoài >25%/năm, định giá P/E về vùng thấp lịch sử.",
+      "stop_loss": null,
+      "target": null,
+      "note": ""
+    }
+  ]
+}
