@@ -82,6 +82,11 @@
                 <i class='bx bx-star'></i>
                 <span>Khuyến nghị</span>
             </div>
+            <!-- Danh mục nắm giữ Tab -->
+            <div class="nav-item watchlist-nav-item portfolio-nav-item" id="btn-open-portfolio" title="Danh mục nắm giữ">
+                <i class='bx bx-briefcase-alt-2'></i>
+                <span>Danh mục</span>
+            </div>
             <div class="sidebar-footer">
                 <p>Updated: <span id="update-date">...</span></p>
                 <p class="credit">© Whatif Investment — Powered by DeepSeek & Vnstock</p>
@@ -568,6 +573,22 @@
         </div>
     </div>
 
+    <!-- ── Danh mục nắm giữ Panel ── -->
+    <div id="portfolio-overlay" class="screener-overlay" style="display:none;"></div>
+    <div id="portfolio-panel" class="screener-panel pf-panel" style="display:none;">
+        <div class="screener-header">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div class="screener-title-icon pf-title-icon"><i class='bx bx-briefcase-alt-2'></i></div>
+                <div>
+                    <h2 class="screener-title">Danh mục nắm giữ — Luận điểm, ATR & SMC</h2>
+                    <p class="screener-subtitle" id="pf-meta-line">Ngày mua, luận điểm mua và phân tích kỹ thuật từng mã</p>
+                </div>
+            </div>
+            <button id="btn-close-portfolio" class="btn-icon" title="Đóng"><i class='bx bx-x'></i></button>
+        </div>
+        <div class="pf-body" id="pf-body"></div>
+    </div>
+
     <!-- ── Smart Screener Panel ── -->
     <div id="screener-overlay" class="screener-overlay" style="display:none;"></div>
     <div id="screener-panel" class="screener-panel" style="display:none;">
@@ -698,5 +719,6 @@
 
     <script src="watchlist.js"></script>
     <script src="screener.js"></script>
+    <script src="portfolio.js?v=20261127"></script>
 </body>
 </html>

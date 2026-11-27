@@ -2760,5 +2760,18 @@ def main():
         json.dump(all_data, f, ensure_ascii=False, indent=2, cls=_SafeEncoder)
     print(f"Successfully generated {out_dir}/data.json")
 
+def run_portfolio_step():
+    """Phân tích Danh mục (portfolio.json) — chạy độc lập, lỗi không ảnh hưởng data.json."""
+    try:
+        from portfolio_analysis import run_portfolio
+        run_portfolio(fetch_ohlcv_direct, compute_bigbeluga_smc, out_dir="output")
+    except Exception as e:
+        print(f"[PORTFOLIO] Lỗi: {e}")
+        traceback.print_exc()
+
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    finally:
+        run_portfolio_step()
