@@ -1,7 +1,7 @@
 {
  "source": "SSI MCP (marketdata_list_icb_industry, research_get_ssi100_industry_assessment)",
- "as_of": "2026-11-26T17:28:54Z",
- "built_at": "2026-11-26T17:31:45Z",
+ "as_of": "2026-11-27T09:36:54Z",
+ "built_at": "2026-11-27T09:39:35Z",
  "exchanges": [
   "VNINDEX",
   "HOHAUP",

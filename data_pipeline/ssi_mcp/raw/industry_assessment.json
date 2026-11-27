@@ -1,6 +1,6 @@
 {
  "tool": "research_get_ssi100_industry_assessment",
- "asOfUtc": "2026-11-26T17:29:44Z",
+ "asOfUtc": "2026-11-27T09:38:05Z",
  "industries": [
   {"icb_code": "500", "icb_name": "Dầu khí", "assessment": "Hiện tại, ngành dầu khí đang hưởng lợi tích cực từ môi trường giá dầu tăng cao dẫn đến biên lợi nhuận của các doanh nghiệp mở rộng nhanh, đặc biệt là các doanh nghiệp trung nguồn và hạ nguồn. Bất ổn ở khu vực Trung Đông cũng làm gia tăng nhu cầu mở rộng trữ lượng và công suất khai thác dầu khí, tăng khối lượng công việc cho nhóm công ty thượng nguồn. Trong nước, các dự án dầu khí lớn vẫn đang hoặc sắp được triển khai như Lô B Ô Môn, Lạc Đà Vàng, Sư Tử Trắng Pha 2B, Nam Du - U Minh.... sẽ tạo nguồn công việc cho các doanh nghiệp dịch vụ dầu khí thượng nguồn."},
   {"icb_code": "1300", "icb_name": "Hóa chất", "assessment": "Thuế xuất khẩu phốt pho vàng sẽ tăng từ mức 5% hiện tại lên 10% từ 2026 và 15% từ 2027. Điều này làm giảm mức cạnh tranh của phốt pho vàng Việt Nam so với Kazakhstan, vốn không áp thuế xuất khẩu lên mặt hàng này. Những doanh nghiệp tự chủ được nguồn quặng giá thành thấp vẫn có thể duy trì tăng trưởng nhờ tăng sản lượng kinh doanh. Tuy nhiên gần đây nhà nước siết chặt việc cấp giấy phép khai thác quặng, làm giảm nguồn cung quặng và làm tăng giá thành sản xuất cho các công ty phốt pho vàng."},
